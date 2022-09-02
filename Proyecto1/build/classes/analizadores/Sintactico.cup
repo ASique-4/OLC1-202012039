@@ -5,21 +5,43 @@ import java_cup.runtime.Symbol;
 terminal String tnum;
 terminal trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
         tinterrogacioninicio,tinterrogacionfin,tcoma,tmayor, tcomentario, tcomentariovariaslineas,
-        tpuntoycoma,prIngresar,prComo,prConValor,prSi,prEntonces,prFinSi,prO_Si,prDeLoContrario,prSegun,prHacer,prPara,
+        tpuntoycoma,prIngresar,prComo,prConValor,prSi,prEntonces,prFinSi,prO_Si,prDE_LO_CONTRARIO,prSegun,prHacer,prPara,
         prHasta,prFinPara,prCon,prIncremental,prMientras,prFinMientras,prRepetir,prHastaQue,prRetornar,prMetodo,
-        prFinMetodo,prConParametros,prFuncion,prFinFuncion,prEjecutar,prImprimir,prImprimirNl,tigual,tvariable,tcadena,prString,prInt;           
+        prFinMetodo,prConParametros,prFuncion,prFinFuncion,prEjecutar,prImprimir,prImprimirNl,tigual,tvariable,tcadena,
+        prString,prInt,prFinSegun;           
 
 
 non terminal INICIO;
 non terminal CONDICION;
 non terminal INSTRUCCIONES;
+non terminal INSTRUCCIONES_CICLO;
 non terminal INSTRUCCION;
 non terminal IF;
+non terminal VALOR;
+non terminal LISTA_NOMBRES;
 non terminal VARIABLE;
 non terminal DECLARACION;
 non terminal COMENTARIO;
 non terminal E;
-
+non terminal ASIGNACION;
+non terminal DE_LO_CONTRARIO;
+non terminal EXPRESION;
+non terminal O_SI;
+non terminal SELECCION_MULTIPLE;
+non terminal SEGUN;
+non terminal FLECHA;
+non terminal PARA;
+non terminal PARA_SALTO;
+non terminal MIENTRAS;
+non terminal REPETIR;
+non terminal RETORNO;
+non terminal METODO;
+non terminal LISTA_PARAMETROS;
+non terminal TIPO;
+non terminal FUNCION;
+non terminal EJECUTAR;
+non terminal IMPRIMIR;
+non terminal IMPRIMIR_NL;
 
 precedence left tsum, trest;
 precedence left tdiv, tmul;
@@ -29,12 +51,28 @@ start with INICIO;
 
 INICIO::= prInicio E prFin;
 
-E::= DECLARACION E|IF E|prFin;
+E::= DECLARACION E|IF E|;
 
-DECLARACION::= prIngresar VARIABLE prComo prString prConValor tcadena|
-                prIngresar VARIABLE prComo prInt prConValor tnum;
+DECLARACION::= prIngresar VARIABLE prComo prString prConValor VALOR tpuntoycoma
+                |prIngresar VARIABLE prComo prInt prConValor tnum tpuntoycoma
+                |prIngresar LISTA_NOMBRES prComo prString prConValor VALOR tpuntoycoma
+                |prIngresar LISTA_NOMBRES prComo prInt prConValor tnum tpuntoycoma;
 
-IF::= prSi CONDICION prEntonces INSTRUCCIONES prFinSi;
+ASIGNACION::= VARIABLE FLECHA VALOR tpuntoycoma;
+
+SELECCION_MULTIPLE::= prSegun SEGUN prFinSegun;
+
+SEGUN::= tinterrogacioninicio VALOR tinterrogacionfin prEntonces INSTRUCCIONES SEGUN|;
+
+VALOR::= tnum|tvariable|tcadena;
+
+LISTA_NOMBRES::= VARIABLE|LISTA_NOMBRES tcoma VARIABLE;
+
+IF::= prSi CONDICION prEntonces INSTRUCCIONES O_SI DE_LO_CONTRARIO prFinSi;
+
+DE_LO_CONTRARIO::= prDE_LO_CONTRARIO INSTRUCCIONES DE_LO_CONTRARIO|;
+
+O_SI::= prO_Si CONDICION prEntonces INSTRUCCIONES O_SI|;
 
 CONDICION::= VARIABLE tigual tigual VARIABLE|
             VARIABLE tigual tigual tcadena|
@@ -42,8 +80,38 @@ CONDICION::= VARIABLE tigual tigual VARIABLE|
 
 VARIABLE::= tvariable;
 
-INSTRUCCIONES::= INSTRUCCIONES INSTRUCCION tpuntoycoma|
-                 INSTRUCCION tpuntoycoma;
-
+INSTRUCCIONES::= INSTRUCCIONES INSTRUCCION tpuntoycoma
+                 |INSTRUCCION tpuntoycoma;
+                 
+INSTRUCCIONES_CICLO::= INSTRUCCIONES_CICLO INSTRUCCION tpuntoycoma
+                       |INSTRUCCION tpuntoycoma
+                       |;
 INSTRUCCION::= DECLARACION tigual VARIABLE tsum VARIABLE;
 
+PARA::= prPara VARIABLE FLECHA tnum prHasta tnum prHacer INSTRUCCIONES_CICLO prFinPara;
+
+FLECHA::= trest tmaor;
+
+PARA_SALTO::= prPara VARIABLE FLECHA tnum prHasta tnum prCon prIncremental tnum prHacer INSTRUCCIONES_CICLO prFinPara;
+
+MIENTRAS::= prMientras CONDICION prHacer INSTRUCCIONES_CICLO prFinMientras;
+
+REPETIR::= prRepetir INSTRUCCIONES_CICLO prHasta CONDICION;
+
+RETORNO::= prRetornar VALOR;
+
+METODO::= prMetodo VARIABLE prConParametros LISTA_PARAMETROS prConValor VALOR prFinMetodo
+                |prMetodo VARIABLE INSTRUCCIONES prFinMetodo;
+
+LISTA_PARAMETROS::= VARIABLE TIPO LISTA_PARAMETROS|VARIABLE TIPO tcoma LISTA_PARAMETROS;
+
+TIPO::= prInt|prString;
+
+FUNCION::= prFuncion VARIABLE TIPO prConParametros LISTA_PARAMETROS INSTRUCCIONES prFinFuncion
+                |prFuncion VARIABLE TIPO INSTRUCCIONES prFinFuncion;
+
+EJECUTAR::= prEjecutar VARIABLE pare1 pare2 tpuntoycoma|prEjecutar VARIABLE pare1 LISTA_PARAMETROS pare2 tpuntoycoma;
+
+IMPRIMIR::= prImprimir tcadena;
+
+IMPRIMIRNl::= prImprimirNl tcadena;

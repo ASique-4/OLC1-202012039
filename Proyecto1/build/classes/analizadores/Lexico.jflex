@@ -122,6 +122,11 @@ comentarioVariasLineas = [/*]+[a-zA-Z0-9]+[*/]
                     System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
                     return new Symbol(Simbolos.prSegun, yycolumn, yyline, yytext());
                   }
+<YYINITIAL>"fin_segun" {
+                    //codigo en java
+                    System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
+                    return new Symbol(Simbolos.prFinSegun, yycolumn, yyline, yytext());
+                  }
 <YYINITIAL>"hacer" {
                     //codigo en java
                     System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
