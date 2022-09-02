@@ -1,0 +1,93 @@
+package analizadores;
+import java_cup.runtime.Symbol;
+
+
+parser code
+{:
+    public String consola="";
+    public Double resultado=0.0;
+
+    public void limpiar(){
+        consola="";
+    }
+
+    public Double operacion(String operacion, Double a, Double b){
+  
+        Double resultado=0.0;
+        switch (operacion) {
+            case "+":
+               resultado= a+b;
+                break;
+            case "-":
+               resultado= a-b;
+                break;
+            case "*":
+                resultado= a*b;
+                break;
+            case "/":
+                resultado= a/b;
+                break;
+            case "^":
+                resultado= Math.pow(a,b);
+                break;  
+            case "%":
+                resultado= a%b;
+                break;  
+        }
+        resultado= Math.round((resultado)*100.0)/100.0;
+        consola+= a+operacion+b+"="+String.valueOf(resultado) +"\n";
+        return resultado;
+    }
+    public Double trigonometrica(String nombre, String val){
+        Double a = Double.valueOf(val);
+        Double resultado=0.0;
+        switch (nombre) {
+            case "sen":                
+                resultado= Math.sin(a);
+                break;
+            case "cos":                
+                resultado= Math.cos(a);
+                break;
+            case "tan":                
+                resultado= Math.tan(a);
+                break;
+        }
+        resultado=Math.round((resultado)*100.0)/100.0; 
+        consola+= nombre+"("+a+")="+String.valueOf(resultado) +"\n";
+        return resultado;
+    }
+    
+    
+:}
+
+
+terminal String tnum;
+terminal trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, tsen,tcos,ttan,prInicio,prFin;
+
+non terminal String INICIO;
+non terminal Double E;
+
+
+precedence left tsum, trest;
+precedence left tdiv, tmul;
+precedence left tmod, tpot;
+
+start with INICIO;
+
+INICIO::= prInicio {:limpiar();:} E:padre {: resultado=padre; :} prFin
+;
+
+E::=  E:a tsum E:b  {: RESULT = operacion("+",a,b);    :}  
+    | E:a trest E:b {: RESULT = operacion("-",a,b);    :}                        
+    | E:a tdiv E:b  {: RESULT = operacion("/",a,b);    :}
+    | E:a tmul E:b  {: RESULT = operacion("*",a,b);    :}
+    | E:a tpot E:b  {: RESULT = operacion("potencia",a,b);    :}
+    | E:a tmod E:b  {: RESULT = operacion("mod",a,b);    :}
+    | tnum:a        {: RESULT = Double.parseDouble(a); :}
+
+    //funciones trigonometricas
+    | tsen pare1 tnum:a pare2 {: RESULT = trigonometrica("sen",a); :}
+    | tcos pare1 tnum:a pare2 {: RESULT = trigonometrica("cos",a); :}
+    | ttan pare1 tnum:a pare2 {: RESULT = trigonometrica("tan",a); :}
+
+;
