@@ -2,70 +2,23 @@ package analizadores;
 import java_cup.runtime.Symbol;
 
 
-parser code
-{:
-    public String consola="";
-    public Double resultado=0.0;
-
-    public void limpiar(){
-        consola="";
-    }
-
-    public Double operacion(String operacion, Double a, Double b){
-  
-        Double resultado=0.0;
-        switch (operacion) {
-            case "+":
-               resultado= a+b;
-                break;
-            case "-":
-               resultado= a-b;
-                break;
-            case "*":
-                resultado= a*b;
-                break;
-            case "/":
-                resultado= a/b;
-                break;
-            case "^":
-                resultado= Math.pow(a,b);
-                break;  
-            case "%":
-                resultado= a%b;
-                break;  
-        }
-        resultado= Math.round((resultado)*100.0)/100.0;
-        consola+= a+operacion+b+"="+String.valueOf(resultado) +"\n";
-        return resultado;
-    }
-    public Double trigonometrica(String nombre, String val){
-        Double a = Double.valueOf(val);
-        Double resultado=0.0;
-        switch (nombre) {
-            case "sen":                
-                resultado= Math.sin(a);
-                break;
-            case "cos":                
-                resultado= Math.cos(a);
-                break;
-            case "tan":                
-                resultado= Math.tan(a);
-                break;
-        }
-        resultado=Math.round((resultado)*100.0)/100.0; 
-        consola+= nombre+"("+a+")="+String.valueOf(resultado) +"\n";
-        return resultado;
-    }
-    
-    
-:}
-
-
 terminal String tnum;
-terminal trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, tsen,tcos,ttan,prInicio,prFin;
+terminal trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
+        tinterrogacioninicio,tinterrogacionfin,tcoma,tmayor, tcomentario, tcomentariovariaslineas,
+        tpuntoycoma,prIngresar,prComo,prConValor,prSi,prEntonces,prFinSi,prO_Si,prDeLoContrario,prSegun,prHacer,prPara,
+        prHasta,prFinPara,prCon,prIncremental,prMientras,prFinMientras,prRepetir,prHastaQue,prRetornar,prMetodo,
+        prFinMetodo,prConParametros,prFuncion,prFinFuncion,prEjecutar,prImprimir,prImprimirNl,tigual,tvariable,tcadena,prString,prInt;           
 
-non terminal String INICIO;
-non terminal Double E;
+
+non terminal INICIO;
+non terminal CONDICION;
+non terminal INSTRUCCIONES;
+non terminal INSTRUCCION;
+non terminal IF;
+non terminal VARIABLE;
+non terminal DECLARACION;
+non terminal COMENTARIO;
+non terminal E;
 
 
 precedence left tsum, trest;
@@ -74,20 +27,23 @@ precedence left tmod, tpot;
 
 start with INICIO;
 
-INICIO::= prInicio {:limpiar();:} E:padre {: resultado=padre; :} prFin
-;
+INICIO::= prInicio E prFin;
 
-E::=  E:a tsum E:b  {: RESULT = operacion("+",a,b);    :}  
-    | E:a trest E:b {: RESULT = operacion("-",a,b);    :}                        
-    | E:a tdiv E:b  {: RESULT = operacion("/",a,b);    :}
-    | E:a tmul E:b  {: RESULT = operacion("*",a,b);    :}
-    | E:a tpot E:b  {: RESULT = operacion("potencia",a,b);    :}
-    | E:a tmod E:b  {: RESULT = operacion("mod",a,b);    :}
-    | tnum:a        {: RESULT = Double.parseDouble(a); :}
+E::= DECLARACION E|IF E|prFin;
 
-    //funciones trigonometricas
-    | tsen pare1 tnum:a pare2 {: RESULT = trigonometrica("sen",a); :}
-    | tcos pare1 tnum:a pare2 {: RESULT = trigonometrica("cos",a); :}
-    | ttan pare1 tnum:a pare2 {: RESULT = trigonometrica("tan",a); :}
+DECLARACION::= prIngresar VARIABLE prComo prString prConValor tcadena|
+                prIngresar VARIABLE prComo prInt prConValor tnum;
 
-;
+IF::= prSi CONDICION prEntonces INSTRUCCIONES prFinSi;
+
+CONDICION::= VARIABLE tigual tigual VARIABLE|
+            VARIABLE tigual tigual tcadena|
+            VARIABLE tigual tigual tnum;
+
+VARIABLE::= tvariable;
+
+INSTRUCCIONES::= INSTRUCCIONES INSTRUCCION tpuntoycoma|
+                 INSTRUCCION tpuntoycoma;
+
+INSTRUCCION::= DECLARACION tigual VARIABLE tsum VARIABLE;
+

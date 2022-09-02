@@ -7,7 +7,13 @@ package proyecto1;
 import analizadores.Analizador_Lexico;
 import analizadores.Analizador_sintactico;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.StringReader;
+
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -42,9 +48,9 @@ public class Ventana extends javax.swing.JFrame {
         GolangView = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        MenuFile = new javax.swing.JMenu();
+        OpenFile = new javax.swing.JMenuItem();
+        SaveFile = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -99,15 +105,30 @@ public class Ventana extends javax.swing.JFrame {
 
         jMenuBar1.setForeground(new java.awt.Color(231, 246, 242));
 
-        jMenu1.setText("File");
+        MenuFile.setText("File");
+        MenuFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuFileActionPerformed(evt);
+            }
+        });
 
-        jMenuItem1.setText("Open File");
-        jMenu1.add(jMenuItem1);
+        OpenFile.setText("Open File");
+        OpenFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OpenFileActionPerformed(evt);
+            }
+        });
+        MenuFile.add(OpenFile);
 
-        jMenuItem2.setText("Save as...");
-        jMenu1.add(jMenuItem2);
+        SaveFile.setText("Save as...");
+        SaveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveFileActionPerformed(evt);
+            }
+        });
+        MenuFile.add(SaveFile);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(MenuFile);
 
         jMenu2.setText("Report");
 
@@ -182,11 +203,11 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             String dato= TextArea.getText();
+            System.out.println(dato);
             Analizador_Lexico lexico = new Analizador_Lexico(new BufferedReader(new StringReader(dato)));
             Analizador_sintactico sintactico = new Analizador_sintactico(lexico);
             sintactico.parse();
-            jLabel1.setText(sintactico.consola);
-            jLabel2.setText(String.valueOf(sintactico.resultado));
+
 
         } catch (Exception e) {
             System.out.println(e);
@@ -198,6 +219,45 @@ public class Ventana extends javax.swing.JFrame {
         TextArea.setText("");
         
     }//GEN-LAST:event_CleanActionPerformed
+
+    private void MenuFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuFileActionPerformed
+
+    private void OpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenFileActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showOpenDialog(this);
+        File file = fileChooser.getSelectedFile();
+        if (file != null) {
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String linea;
+                while ((linea = br.readLine()) != null) {
+                    TextArea.append(linea + "\n");
+                }
+                br.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }//GEN-LAST:event_OpenFileActionPerformed
+
+    private void SaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveFileActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showSaveDialog(this);
+        File file = fileChooser.getSelectedFile();
+        if (file != null) {
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                bw.write(TextArea.getText());
+                bw.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }//GEN-LAST:event_SaveFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,18 +297,18 @@ public class Ventana extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Clean;
     private javax.swing.JButton GolangView;
+    private javax.swing.JMenu MenuFile;
+    private javax.swing.JMenuItem OpenFile;
     private javax.swing.JButton PythonView;
     private javax.swing.JButton Run;
+    private javax.swing.JMenuItem SaveFile;
     private javax.swing.JTextArea TextArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

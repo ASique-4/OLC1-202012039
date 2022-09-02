@@ -8,22 +8,59 @@ package analizadores;
 /** CUP generated class containing symbol constants. */
 public class Simbolos {
   /* terminals */
-  public static final int tmul = 6;
-  public static final int trest = 3;
-  public static final int tnum = 2;
-  public static final int tsum = 4;
-  public static final int prFin = 15;
-  public static final int prInicio = 14;
-  public static final int ttan = 13;
-  public static final int pare2 = 10;
+  public static final int prCon = 33;
+  public static final int tpuntoycoma = 19;
+  public static final int prHasta = 31;
+  public static final int prFinMientras = 36;
+  public static final int prIngresar = 20;
+  public static final int tigual = 48;
+  public static final int prMetodo = 40;
+  public static final int prFinSi = 25;
+  public static final int tvariable = 49;
+  public static final int prConParametros = 42;
+  public static final int prFuncion = 43;
+  public static final int prRetornar = 39;
   public static final int tpot = 7;
+  public static final int prEjecutar = 45;
+  public static final int tcadena = 50;
+  public static final int prFinPara = 32;
+  public static final int tcomentariovariaslineas = 18;
+  public static final int prDeLoContrario = 27;
+  public static final int tmayor = 16;
+  public static final int prImprimir = 46;
+  public static final int prImprimirNl = 47;
+  public static final int tcoma = 15;
+  public static final int tinterrogacioninicio = 13;
+  public static final int prConValor = 22;
+  public static final int pare2 = 10;
+  public static final int prHastaQue = 38;
   public static final int pare1 = 9;
-  public static final int tmod = 8;
   public static final int EOF = 0;
-  public static final int tcos = 12;
-  public static final int error = 1;
-  public static final int tsen = 11;
+  public static final int prEntonces = 24;
+  public static final int tcomentario = 17;
+  public static final int prComo = 21;
   public static final int tdiv = 5;
+  public static final int prIncremental = 34;
+  public static final int error = 1;
+  public static final int tnum = 2;
+  public static final int prFinFuncion = 44;
+  public static final int prInt = 52;
+  public static final int prSi = 23;
+  public static final int prSegun = 28;
+  public static final int prHacer = 29;
+  public static final int trest = 3;
+  public static final int prFin = 12;
+  public static final int tmul = 6;
+  public static final int prMientras = 35;
+  public static final int tinterrogacionfin = 14;
+  public static final int tmod = 8;
+  public static final int prString = 51;
+  public static final int prInicio = 11;
+  public static final int prO_Si = 26;
+  public static final int prRepetir = 37;
+  public static final int prFinMetodo = 41;
+  public static final int tsum = 4;
+  public static final int prPara = 30;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -36,11 +73,48 @@ public class Simbolos {
   "tmod",
   "pare1",
   "pare2",
-  "tsen",
-  "tcos",
-  "ttan",
   "prInicio",
-  "prFin"
+  "prFin",
+  "tinterrogacioninicio",
+  "tinterrogacionfin",
+  "tcoma",
+  "tmayor",
+  "tcomentario",
+  "tcomentariovariaslineas",
+  "tpuntoycoma",
+  "prIngresar",
+  "prComo",
+  "prConValor",
+  "prSi",
+  "prEntonces",
+  "prFinSi",
+  "prO_Si",
+  "prDeLoContrario",
+  "prSegun",
+  "prHacer",
+  "prPara",
+  "prHasta",
+  "prFinPara",
+  "prCon",
+  "prIncremental",
+  "prMientras",
+  "prFinMientras",
+  "prRepetir",
+  "prHastaQue",
+  "prRetornar",
+  "prMetodo",
+  "prFinMetodo",
+  "prConParametros",
+  "prFuncion",
+  "prFinFuncion",
+  "prEjecutar",
+  "prImprimir",
+  "prImprimirNl",
+  "tigual",
+  "tvariable",
+  "tcadena",
+  "prString",
+  "prInt"
   };
 }
 
