@@ -76,7 +76,7 @@ DECLARACION::= prIngresar VARIABLE prComo palabra prConValor tcadena tpuntoycoma
 COMENTARIO::= tcomentario
                 |tcomentariovariaslineas;
 
-ASIGNACION::= VARIABLE FLECHA VALOR tpuntoycoma;
+ASIGNACION::= VARIABLE FLECHA tcadena tpuntoycoma;
 
 SELECCION_MULTIPLE::= prSegun SEGUN prFinSegun;
 
@@ -85,8 +85,8 @@ SEGUN::= tinterrogacioninicio VALOR tinterrogacionfin prEntonces INSTRUCCIONES S
 
 VALOR::= tvariable|tcadena;
 
-LISTA_NOMBRES::= VARIABLE LISTA_NOMBRES2;
-LISTA_NOMBRES2::= tcoma VARIABLE LISTA_NOMBRES2|;
+LISTA_NOMBRES::= VARIABLE LISTA_NOMBRES2|;
+LISTA_NOMBRES2::= tcoma VARIABLE LISTA_NOMBRES2|tcoma VARIABLE;
 
 IF::= prSi CONDICION prEntonces INSTRUCCIONES O_SI DE_LO_CONTRARIO prFinSi;
 
