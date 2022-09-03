@@ -213,16 +213,17 @@ palabra = [a-zA-Z]+
                     System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
                     return new Symbol(Simbolos.prEjecutar, yycolumn, yyline, yytext());
                   }
+<YYINITIAL>"imprimir_nl" {
+                    //codigo en java
+                    System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
+                    return new Symbol(Simbolos.prImprimirNl, yycolumn, yyline, yytext());
+                  }                    
 <YYINITIAL>"imprimir" {
                     //codigo en java
                     System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
                     return new Symbol(Simbolos.prImprimir, yycolumn, yyline, yytext());
                   }
-<YYINITIAL>"imprimir_nl" {
-                    //codigo en java
-                    System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
-                    return new Symbol(Simbolos.prImprimirNl, yycolumn, yyline, yytext());
-                  }                  
+                
 <YYINITIAL>"String" {
                     //codigo en java
                     System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
