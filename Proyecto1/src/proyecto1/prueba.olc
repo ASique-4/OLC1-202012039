@@ -7,7 +7,7 @@ ingresar _V1_, _V2_, _V3_ como Cadena con_valor 8;
 _v1_ -> "esta es la cadena numero 1";
 _v2_, _v3_ -> "estas cadenas deben ser diferentes";
 
-imprimir_n1 (_v3);
+imprimir_nl (_v3);
 
 si _v1_ es_igual _v2_ entonces
 		imprimir n1 "Al parecer no funciona la asignacion";
