@@ -2,7 +2,7 @@ inicio
 ////inicio de la traduccion
 
 ingresar _variable1_ como Numero con_valor 5;
-ingresar _V1_, _V2_, _V3_ como Cadena 8;
+ingresar _V1_, _V2_, _V3_ como Cadena con_valor 8;
 
 _v1_ -> "esta es la cadena numero 1";
 _v2_, _v3_ -> "estas cadenas deben ser diferentes";

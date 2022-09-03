@@ -18,7 +18,7 @@ import java_cup.runtime.*;
 
 num = [0-9]+
 variable = _[a-zA-Z0-9]+_
-cadena = ["][a-zA-Z0-9\s]+["]
+cadena = [\"][a-zA-Z0-9\s]+[\"]
 comentario = [//]+([\S]+\s)+
 comentarioVariasLineas = [/*]+[a-zA-Z0-9]+[*/]
 palabra = [a-zA-Z]+
@@ -27,6 +27,7 @@ palabra = [a-zA-Z]+
 
 
 <YYINITIAL>{
+    
   
     ";"           { System.out.println("Reconocio tpuntoycoma, lexema:"+yytext());
                     return new Symbol(Simbolos.tpuntoycoma, yycolumn, yyline, yytext());     }
@@ -231,7 +232,12 @@ palabra = [a-zA-Z]+
                     //codigo en java
                     System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
                     return new Symbol(Simbolos.prInt, yycolumn, yyline, yytext());
-                  }                  
+                  }     
+{cadena}          {
+                    //codigo en java
+                    System.out.println("Reconocio cadena, lexema:"+yytext());
+                    return new Symbol(Simbolos.tcadena, yycolumn, yyline, yytext());
+                  }                                 
 {variable}             {
                     //codigo en java
                     System.out.println("Reconocio variable, lexema:"+yytext());
@@ -242,11 +248,7 @@ palabra = [a-zA-Z]+
                     return new Symbol(Simbolos.tcomentario, yycolumn, yyline, yytext());    }
 {comentarioVariasLineas}  { System.out.println("Reconocio Token, lexema:"+yytext());
                 return new Symbol(Simbolos.tcomentariovariaslineas, yycolumn, yyline, yytext());    }   
-{cadena}          {
-                    //codigo en java
-                    System.out.println("Reconocio cadena, lexema:"+yytext());
-                    return new Symbol(Simbolos.tcadena, yycolumn, yyline, yytext());
-                  }                  
+                
 {palabra}     { System.out.println("Reconocio palabra, lexema:"+yytext());
                     return new Symbol(Simbolos.palabra, yycolumn, yyline, yytext());     }                
 {num}         { System.out.println("Reconocio tnum, lexema:"+yytext());
