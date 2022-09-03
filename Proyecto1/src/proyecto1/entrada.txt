@@ -1,1 +1,7 @@
-2+2
+inicio
+
+//Inicio de linea
+
+ingresar _variable1_ como Numero con_valor 5;
+
+fin

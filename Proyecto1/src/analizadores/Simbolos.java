@@ -10,6 +10,7 @@ public class Simbolos {
   /* terminals */
   public static final int prCon = 33;
   public static final int tpuntoycoma = 19;
+  public static final int palabra = 55;
   public static final int prHasta = 31;
   public static final int prFinMientras = 36;
   public static final int prIngresar = 20;
@@ -24,8 +25,8 @@ public class Simbolos {
   public static final int prEjecutar = 45;
   public static final int tcadena = 50;
   public static final int prFinPara = 32;
+  public static final int prDeLoContrario = 54;
   public static final int tcomentariovariaslineas = 18;
-  public static final int prDeLoContrario = 27;
   public static final int tmayor = 16;
   public static final int prImprimir = 46;
   public static final int prImprimirNl = 47;
@@ -55,8 +56,10 @@ public class Simbolos {
   public static final int tinterrogacionfin = 14;
   public static final int tmod = 8;
   public static final int prString = 51;
+  public static final int prFinSegun = 53;
   public static final int prInicio = 11;
   public static final int prO_Si = 26;
+  public static final int prDE_LO_CONTRARIO = 27;
   public static final int prRepetir = 37;
   public static final int prFinMetodo = 41;
   public static final int tsum = 4;
@@ -89,7 +92,7 @@ public class Simbolos {
   "prEntonces",
   "prFinSi",
   "prO_Si",
-  "prDeLoContrario",
+  "prDE_LO_CONTRARIO",
   "prSegun",
   "prHacer",
   "prPara",
@@ -114,7 +117,10 @@ public class Simbolos {
   "tvariable",
   "tcadena",
   "prString",
-  "prInt"
+  "prInt",
+  "prFinSegun",
+  "prDeLoContrario",
+  "palabra"
   };
 }
 
