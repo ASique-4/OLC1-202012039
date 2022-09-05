@@ -40,7 +40,7 @@ public class Ventana extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         TextArea = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        errorNumber = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Run = new javax.swing.JButton();
         Clean = new javax.swing.JButton();
@@ -48,7 +48,7 @@ public class Ventana extends javax.swing.JFrame {
         GolangView = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        MenuFile = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
         OpenFile = new javax.swing.JMenuItem();
         SaveFile = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -67,8 +67,8 @@ public class Ventana extends javax.swing.JFrame {
         TextArea.setRows(5);
         jScrollPane1.setViewportView(TextArea);
 
-        jLabel1.setForeground(new java.awt.Color(165, 201, 202));
-        jLabel1.setText("0");
+        errorNumber.setForeground(new java.awt.Color(165, 201, 202));
+        errorNumber.setText("0");
 
         jLabel2.setForeground(new java.awt.Color(165, 201, 202));
         jLabel2.setText("Errors");
@@ -105,12 +105,7 @@ public class Ventana extends javax.swing.JFrame {
 
         jMenuBar1.setForeground(new java.awt.Color(231, 246, 242));
 
-        MenuFile.setText("File");
-        MenuFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuFileActionPerformed(evt);
-            }
-        });
+        jMenu1.setText("File");
 
         OpenFile.setText("Open File");
         OpenFile.addActionListener(new java.awt.event.ActionListener() {
@@ -118,17 +113,12 @@ public class Ventana extends javax.swing.JFrame {
                 OpenFileActionPerformed(evt);
             }
         });
-        MenuFile.add(OpenFile);
+        jMenu1.add(OpenFile);
 
         SaveFile.setText("Save as...");
-        SaveFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveFileActionPerformed(evt);
-            }
-        });
-        MenuFile.add(SaveFile);
+        jMenu1.add(SaveFile);
 
-        jMenuBar1.add(MenuFile);
+        jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Report");
 
@@ -166,7 +156,7 @@ public class Ventana extends javax.swing.JFrame {
                         .addComponent(Run, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
+                            .addComponent(errorNumber)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -189,7 +179,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(errorNumber)
                     .addComponent(jLabel2)
                     .addComponent(PythonView, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(GolangView, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,7 +197,7 @@ public class Ventana extends javax.swing.JFrame {
             Analizador_Lexico lexico = new Analizador_Lexico(new BufferedReader(new StringReader(dato)));
             Analizador_sintactico sintactico = new Analizador_sintactico(lexico);
             sintactico.parse();
-
+            errorNumber.setText(Integer.toString(sintactico.getErroresSintacticos()));
 
         } catch (Exception e) {
             System.out.println(e);
@@ -259,6 +249,7 @@ public class Ventana extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_SaveFileActionPerformed
 
+
     /**
      * @param args the command line arguments
      */
@@ -297,15 +288,15 @@ public class Ventana extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Clean;
     private javax.swing.JButton GolangView;
-    private javax.swing.JMenu MenuFile;
     private javax.swing.JMenuItem OpenFile;
     private javax.swing.JButton PythonView;
     private javax.swing.JButton Run;
     private javax.swing.JMenuItem SaveFile;
     private javax.swing.JTextArea TextArea;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel errorNumber;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;

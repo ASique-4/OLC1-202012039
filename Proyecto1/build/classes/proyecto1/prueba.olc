@@ -7,10 +7,10 @@ ingresar _V1_, _V2_, _V3_ como Cadena con_valor 8;
 _v1_ -> "esta es la cadena numero 1";
 _v2_, _v3_ -> "estas cadenas deben ser diferentes";
 
-imprimir_nl (_v3);
+imprimir_nl "Hola";
 
-si _v1_ es_igual _v2_ entonces
-		imprimir n1 "Al parecer no funciona la asignacion";
+si _v1_ == _v2_ entonces
+		imprimir_nl "Al parecer no funciona la asignacion";
 		mientras not _variable1_ mayor_o_igual 5*5+8/2 hacer
 				imprimir _variable1_
 				_variable1_ -> _variable1_ + 1;

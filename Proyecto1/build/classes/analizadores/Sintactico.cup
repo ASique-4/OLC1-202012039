@@ -2,6 +2,33 @@ package analizadores;
 import java_cup.runtime.Symbol;
 
 
+parser code 
+{:
+    /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    int erroresSintacticos = 0;
+    public void syntax_error(Symbol s){ 
+        erroresSintacticos++;
+        //Imprimir error
+        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+    } 
+    //Método que devuelve el número de errores sintácticos
+    public int getErroresSintacticos(){
+        return erroresSintacticos;
+    }
+    /**
+     * Método al que se llama automáticamente ante algún error sintáctico 
+     * en el que ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
+        " no reconocido."); 
+    }  
+:} 
+
 terminal String tnum;
 terminal trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
         tinterrogacioninicio,tinterrogacionfin,tcoma,tmayor, tcomentario, tcomentariovariaslineas,
@@ -23,6 +50,7 @@ non terminal LISTA_NOMBRES2;
 non terminal VARIABLE;
 non terminal DECLARACION;
 non terminal COMENTARIO;
+non terminal COMENTARIO_VARIAS_LINEAS;
 non terminal E;
 non terminal ASIGNACION;
 non terminal DE_LO_CONTRARIO;
@@ -52,33 +80,40 @@ start with INICIO;
 INICIO::= prInicio E prFin;
 
 E::=    DECLARACION E
-        |IF E
-        |COMENTARIO E
-        |ASIGNACION E
-        |SELECCION_MULTIPLE E
-        |PARA E
-        |PARA_SALTO
-        |MIENTRAS E
-        |REPETIR E
-        |RETORNO E
-        |METODO E
-        |FUNCION E
-        |EJECUTAR E
-        |IMPRIMIR E
-        |IMPRIMIR_NL E
+        |IF {:System.out.println("Se realizo un if");:} E
+        |COMENTARIO {:System.out.println("Se realizo un comentar");:} E
+        |COMENTARIO_VARIAS_LINEAS {:System.out.println("Se realizo un comentarioVariasLineas");:} E
+        |ASIGNACION {:System.out.println("Se realizo un asignacion");:} E
+        |SELECCION_MULTIPLE {:System.out.println("Se realizo un seleccionMultiple");:} E
+        |PARA {:System.out.println("Se realizo un para");:} E
+        |PARA_SALTO {:System.out.println("Se realizo un paraSalto");:} E
+        |MIENTRAS {:System.out.println("Se realizo un mientras");:} E
+        |REPETIR {:System.out.println("Se realizo un repetir");:} E
+        |RETORNO {:System.out.println("Se realizo un retorno");:}E
+        |METODO {:System.out.println("Se realizo un metodo");:}E
+        |FUNCION {:System.out.println("Se realizo un funcion");:}E
+        |EJECUTAR {:System.out.println("Se realizo un ejecutar");:}E
+        |IMPRIMIR {:System.out.println("Se realizo un imprimir");:}E
+        |IMPRIMIR_NL {:System.out.println("Se realizo un IMPRIMIR_NL");:} E
+        |error E
         |;
-
+//Gramatica de un IF
+IF::= prSi CONDICION prEntonces INSTRUCCIONES prFinSi
+        |prSi CONDICION prEntonces INSTRUCCIONES O_SI prFinSi
+        |prSi CONDICION prEntonces INSTRUCCIONES DE_LO_CONTRARIO prFinSi
+        |prSi CONDICION prEntonces INSTRUCCIONES O_SI DE_LO_CONTRARIO prFinSi;
 DECLARACION::= prIngresar VARIABLE prComo palabra prConValor tcadena tpuntoycoma
                 |prIngresar VARIABLE prComo palabra prConValor tnum tpuntoycoma
                 |prIngresar LISTA_NOMBRES prComo palabra prConValor tnum tpuntoycoma
                 |prIngresar LISTA_NOMBRES prComo palabra prConValor tcadena tpuntoycoma;
-
-COMENTARIO::= tcomentario
-                |tcomentariovariaslineas;
-
+//Gramatica de un comentario
+COMENTARIO::= tcomentario;
+//Gramatica de un comentario de varias lineas
+COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas;                
+//Gramatica de una asignacion
 ASIGNACION::= VARIABLE FLECHA tcadena tpuntoycoma | LISTA_NOMBRES FLECHA tcadena tpuntoycoma
                 | VARIABLE FLECHA tnum tpuntoycoma | LISTA_NOMBRES FLECHA tnum tpuntoycoma;
-
+//Gramatica de seleccion multiple
 SELECCION_MULTIPLE::= prSegun SEGUN prFinSegun;
 
 SEGUN::= tinterrogacioninicio VALOR tinterrogacionfin prEntonces INSTRUCCIONES SEGUN
@@ -89,11 +124,14 @@ VALOR::= tvariable|tcadena;
 LISTA_NOMBRES::= VARIABLE LISTA_NOMBRES2|;
 LISTA_NOMBRES2::= tcoma VARIABLE LISTA_NOMBRES2|tcoma VARIABLE;
 
-IF::= prSi CONDICION prEntonces INSTRUCCIONES O_SI DE_LO_CONTRARIO prFinSi;
+IF::= prSi CONDICION prEntonces E prFinSi
+        |prSi CONDICION prEntonces E O_SI prFinSi
+        |prSi CONDICION prEntonces E DE_LO_CONTRARIO prFinSi
+        |prSi CONDICION prEntonces E O_SI DE_LO_CONTRARIO prFinSi;
 
-DE_LO_CONTRARIO::= prDE_LO_CONTRARIO INSTRUCCIONES DE_LO_CONTRARIO|;
+DE_LO_CONTRARIO::= prDE_LO_CONTRARIO E DE_LO_CONTRARIO|prDE_LO_CONTRARIO E;
 
-O_SI::= prO_Si CONDICION prEntonces INSTRUCCIONES O_SI|;
+O_SI::= prO_Si CONDICION prEntonces E O_SI|prO_Si CONDICION prEntonces E;
 
 CONDICION::= VARIABLE tigual tigual VARIABLE|
             VARIABLE tigual tigual tcadena|
@@ -132,6 +170,6 @@ FUNCION::= prFuncion VARIABLE tcadena prConParametros LISTA_PARAMETROS INSTRUCCI
 
 EJECUTAR::= prEjecutar VARIABLE pare1 pare2 tpuntoycoma|prEjecutar VARIABLE pare1 LISTA_PARAMETROS pare2 tpuntoycoma;
 
-IMPRIMIR::= prImprimir tcadena;
+IMPRIMIR::= prImprimir tcadena tpuntoycoma;
 
-IMPRIMIR_NL::= prImprimirNl tcadena;
+IMPRIMIR_NL::= prImprimirNl tcadena tpuntoycoma;

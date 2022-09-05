@@ -18,9 +18,9 @@ import java_cup.runtime.*;
 
 num = [0-9]+
 variable = _[a-zA-Z0-9]+_
-cadena = [\"][a-zA-Z0-9\s]+[\"]
-comentario = [//]+([\S]+\s)+
-comentarioVariasLineas = [/*]+[a-zA-Z0-9]+[*/]
+cadena = [\"](\s|\S)[^\"]*[\"]
+comentario = ([\/][\/])+(\s|\S)[^\n]*
+comentarioVariasLineas = [\/][\*]+(((\s|\S)[^\*]*)|([\n]*)|([\*]*[^\/]))([\*]+[\/])
 palabra = [a-zA-Z]+
 
 %%
@@ -176,11 +176,6 @@ palabra = [a-zA-Z]+
 <YYINITIAL>"hasta_que" {
                     //codigo en java
                     System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
-                    return new Symbol(Simbolos.prHastaQue, yycolumn, yyline, yytext());
-                  }
-<YYINITIAL>"retornar" {
-                    //codigo en java
-                    System.out.println("Reconocio palabra_reservada, lexema:"+yytext());
                     return new Symbol(Simbolos.prRetornar, yycolumn, yyline, yytext());
                   }
 <YYINITIAL>"metodo" {
@@ -257,7 +252,7 @@ palabra = [a-zA-Z]+
 [ \t\r\n\f]             { /* Espacios en blanco, se ignoran */	}
 
 .                     	{
-                            System.out.println("Error Lexico : "+yytext()+ "Linea"+yyline+" Columna "+yycolumn);
+                            System.out.println("Error Lexico : "+yytext()+ " Linea: "+yyline+" Columna: "+yycolumn);
                         }
 
 
