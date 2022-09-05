@@ -18,6 +18,13 @@ parser code
     public int getErroresSintacticos(){
         return erroresSintacticos;
     }
+
+    //Transformar IF a codigo Python
+        public void transformarIf(Symbol s){
+                System.out.println("if "+s.value+":");
+                
+        }
+    
     /**
      * Método al que se llama automáticamente ante algún error sintáctico 
      * en el que ya no es posible una recuperación de errores.
@@ -30,7 +37,7 @@ parser code
 :} 
 
 terminal String tnum;
-terminal trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
+terminal String trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
         tinterrogacioninicio,tinterrogacionfin,tcoma,tmayor, tcomentario, tcomentariovariaslineas,
         tpuntoycoma,prIngresar,prComo,prConValor,prSi,prEntonces,prFinSi,prO_Si,prDE_LO_CONTRARIO,prSegun,prHacer,prPara,
         prHasta,prFinPara,prCon,prIncremental,prMientras,prFinMientras,prRepetir,prHastaQue,prRetornar,prMetodo,
@@ -39,37 +46,37 @@ terminal trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
 
 
 non terminal INICIO;
-non terminal CONDICION;
-non terminal INSTRUCCIONES;
-non terminal INSTRUCCIONES_CICLO;
-non terminal INSTRUCCION;
-non terminal IF;
-non terminal VALOR;
-non terminal LISTA_NOMBRES;
-non terminal LISTA_NOMBRES2;
-non terminal VARIABLE;
-non terminal DECLARACION;
-non terminal COMENTARIO;
-non terminal COMENTARIO_VARIAS_LINEAS;
-non terminal E;
-non terminal ASIGNACION;
-non terminal DE_LO_CONTRARIO;
-non terminal EXPRESION;
-non terminal O_SI;
-non terminal SELECCION_MULTIPLE;
-non terminal SEGUN;
-non terminal FLECHA;
-non terminal PARA;
-non terminal PARA_SALTO;
-non terminal MIENTRAS;
-non terminal REPETIR;
-non terminal RETORNO;
-non terminal METODO;
-non terminal LISTA_PARAMETROS;
-non terminal FUNCION;
-non terminal EJECUTAR;
-non terminal IMPRIMIR;
-non terminal IMPRIMIR_NL;
+non terminal String CONDICION;
+non terminal String INSTRUCCIONES;
+non terminal String INSTRUCCIONES_CICLO;
+non terminal String INSTRUCCION;
+non terminal String IF;
+non terminal String VALOR;
+non terminal String LISTA_NOMBRES;
+non terminal String LISTA_NOMBRES2;
+non terminal String VARIABLE;
+non terminal String DECLARACION;
+non terminal String COMENTARIO;
+non terminal String COMENTARIO_VARIAS_LINEAS;
+non terminal String E;
+non terminal String ASIGNACION;
+non terminal String DE_LO_CONTRARIO;
+non terminal String EXPRESION;
+non terminal String O_SI;
+non terminal String SELECCION_MULTIPLE;
+non terminal String SEGUN;
+non terminal String FLECHA;
+non terminal String PARA;
+non terminal String PARA_SALTO;
+non terminal String MIENTRAS;
+non terminal String REPETIR;
+non terminal String RETORNO;
+non terminal String METODO;
+non terminal String LISTA_PARAMETROS;
+non terminal String FUNCION;
+non terminal String EJECUTAR;
+non terminal String IMPRIMIR;
+non terminal String IMPRIMIR_NL;
 
 precedence left tsum, trest;
 precedence left tdiv, tmul;
@@ -97,11 +104,8 @@ E::=    DECLARACION E
         |IMPRIMIR_NL {:System.out.println("Se realizo un IMPRIMIR_NL");:} E
         |error E
         |;
-//Gramatica de un IF
-IF::= prSi CONDICION prEntonces INSTRUCCIONES prFinSi
-        |prSi CONDICION prEntonces INSTRUCCIONES O_SI prFinSi
-        |prSi CONDICION prEntonces INSTRUCCIONES DE_LO_CONTRARIO prFinSi
-        |prSi CONDICION prEntonces INSTRUCCIONES O_SI DE_LO_CONTRARIO prFinSi;
+
+
 DECLARACION::= prIngresar VARIABLE prComo palabra prConValor tcadena tpuntoycoma
                 |prIngresar VARIABLE prComo palabra prConValor tnum tpuntoycoma
                 |prIngresar LISTA_NOMBRES prComo palabra prConValor tnum tpuntoycoma
@@ -124,7 +128,7 @@ VALOR::= tvariable|tcadena;
 LISTA_NOMBRES::= VARIABLE LISTA_NOMBRES2|;
 LISTA_NOMBRES2::= tcoma VARIABLE LISTA_NOMBRES2|tcoma VARIABLE;
 
-IF::= prSi CONDICION prEntonces E prFinSi
+IF::= prSi CONDICION prEntonces E prFinSi 
         |prSi CONDICION prEntonces E O_SI prFinSi
         |prSi CONDICION prEntonces E DE_LO_CONTRARIO prFinSi
         |prSi CONDICION prEntonces E O_SI DE_LO_CONTRARIO prFinSi;
@@ -133,9 +137,9 @@ DE_LO_CONTRARIO::= prDE_LO_CONTRARIO E DE_LO_CONTRARIO|prDE_LO_CONTRARIO E;
 
 O_SI::= prO_Si CONDICION prEntonces E O_SI|prO_Si CONDICION prEntonces E;
 
-CONDICION::= VARIABLE tigual tigual VARIABLE|
-            VARIABLE tigual tigual tcadena|
-            VARIABLE tigual tigual tnum;
+CONDICION::= tvariable:a tigual tigual tvariable:b {:System.out.println(a + "==" + b);:}|
+            tvariable:a tigual tigual tcadena:b {:System.out.println(a + "==" + b);:}|
+            tvariable:a tigual tigual tnum:b {:System.out.println(a + "==" + b);:};
 
 VARIABLE::= tvariable;
 

@@ -8,7 +8,7 @@ _v1_ -> "esta es la cadena numero 1";
 _v2_, _v3_ -> "estas cadenas deben ser diferentes";
 
 imprimir_nl "Hola";
-
+inicio
 si _v1_ == _v2_ entonces
 		imprimir_nl "Al parecer no funciona la asignacion";
 		mientras not _variable1_ mayor_o_igual 5*5+8/2 hacer
@@ -16,7 +16,7 @@ si _v1_ == _v2_ entonces
 				_variable1_ -> _variable1_ + 1;
 		fin _mientras
 fin_si
-
+fin
 
 ingresar _varB_ como Boolean con_valor falso; //tomar como "falso" o "verdadero" los valores booleanos
 
