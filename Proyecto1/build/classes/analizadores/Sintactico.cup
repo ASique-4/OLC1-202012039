@@ -7,6 +7,7 @@ parser code
     /**
      * Método al que se llama automáticamente ante algún error sintactico.
      **/ 
+    String condicion = "";
     int erroresSintacticos = 0;
     public void syntax_error(Symbol s){ 
         erroresSintacticos++;
@@ -19,12 +20,10 @@ parser code
         return erroresSintacticos;
     }
 
-    //Transformar IF a codigo Python
-        public void transformarIf(Symbol s){
-                System.out.println("if "+s.value+":");
-                
-        }
-    
+    public void IF_(String a){
+        System.out.println(a);
+    }
+
     /**
      * Método al que se llama automáticamente ante algún error sintáctico 
      * en el que ya no es posible una recuperación de errores.
@@ -128,7 +127,7 @@ VALOR::= tvariable|tcadena;
 LISTA_NOMBRES::= VARIABLE LISTA_NOMBRES2|;
 LISTA_NOMBRES2::= tcoma VARIABLE LISTA_NOMBRES2|tcoma VARIABLE;
 
-IF::= prSi CONDICION prEntonces E prFinSi 
+IF::= prSi CONDICION prEntonces E prFinSi {:IF_(condicion);:}
         |prSi CONDICION prEntonces E O_SI prFinSi
         |prSi CONDICION prEntonces E DE_LO_CONTRARIO prFinSi
         |prSi CONDICION prEntonces E O_SI DE_LO_CONTRARIO prFinSi;
@@ -137,9 +136,9 @@ DE_LO_CONTRARIO::= prDE_LO_CONTRARIO E DE_LO_CONTRARIO|prDE_LO_CONTRARIO E;
 
 O_SI::= prO_Si CONDICION prEntonces E O_SI|prO_Si CONDICION prEntonces E;
 
-CONDICION::= tvariable:a tigual tigual tvariable:b {:System.out.println(a + "==" + b);:}|
-            tvariable:a tigual tigual tcadena:b {:System.out.println(a + "==" + b);:}|
-            tvariable:a tigual tigual tnum:b {:System.out.println(a + "==" + b);:};
+CONDICION::= tvariable:a tigual:b tigual:c tvariable:d {:condicion = a + b +c +d ;:} |
+            tvariable:a tigual tigual tcadena:b {:String condicion = a + b; System.out.println(condicion);:} |
+            tvariable:a tigual tigual tnum:b {:String condicion = a + b; System.out.println(condicion);:} ;
 
 VARIABLE::= tvariable;
 

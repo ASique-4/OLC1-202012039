@@ -94,6 +94,11 @@ public class Ventana extends javax.swing.JFrame {
         PythonView.setBackground(new java.awt.Color(57, 62, 70));
         PythonView.setForeground(new java.awt.Color(0, 173, 181));
         PythonView.setText("View code Python");
+        PythonView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PythonViewActionPerformed(evt);
+            }
+        });
 
         GolangView.setBackground(new java.awt.Color(57, 62, 70));
         GolangView.setForeground(new java.awt.Color(0, 173, 181));
@@ -116,6 +121,11 @@ public class Ventana extends javax.swing.JFrame {
         jMenu1.add(OpenFile);
 
         SaveFile.setText("Save as...");
+        SaveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveFileActionPerformed(evt);
+            }
+        });
         jMenu1.add(SaveFile);
 
         jMenuBar1.add(jMenu1);
@@ -197,7 +207,7 @@ public class Ventana extends javax.swing.JFrame {
             Analizador_Lexico lexico = new Analizador_Lexico(new BufferedReader(new StringReader(dato)));
             Analizador_sintactico sintactico = new Analizador_sintactico(lexico);
             sintactico.parse();
-            errorNumber.setText(Integer.toString(sintactico.getErroresSintacticos()));
+            errorNumber.setText(Integer.toString(sintactico.erroresSintacticos));
 
         } catch (Exception e) {
             System.out.println(e);
@@ -248,6 +258,21 @@ public class Ventana extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_SaveFileActionPerformed
+
+    private void PythonViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PythonViewActionPerformed
+        // TODO add your handling code here:
+        try {
+            String dato= TextArea.getText();
+            System.out.println(dato);
+            Analizador_Lexico lexico = new Analizador_Lexico(new BufferedReader(new StringReader(dato)));
+            Analizador_sintactico sintactico = new Analizador_sintactico(lexico);
+            sintactico.parse();
+            errorNumber.setText(Integer.toString(sintactico.erroresSintacticos));
+            TextArea.setText(sintactico.python);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_PythonViewActionPerformed
 
 
     /**

@@ -5,3 +5,91 @@ inicio
 ingresar _variable1_ como Numero con_valor 5;
 
 fin
+
+//If en python
+    public void Python_IF(String condicion,String instruccion){
+        String tmpIF = "if ";
+        tmpIF += "(" + condicion + "):\n";
+        tmpIF += "\t" + instruccion;
+        python += tmpIF;
+    }
+    //If con else en python
+    public void Python_IF_ELSE(String condicion,String instruccion){
+        String tmpIF = "if ";
+        tmpIF += "(" + condicion + "):\n";
+        tmpIF += "\t" + instruccion;       
+        python += tmpIF;
+    }
+    //Else en python
+    public void Python_ELSE(String instruccion){
+        String tmpELSE = "else:\n";
+        tmpELSE += "\t" + instruccion;
+        python += tmpELSE;
+    }
+    //Elif en python
+    public void Python_ELIF(String condicion,String instruccion){
+        String tmpELIF = "elif ";
+        tmpELIF += "(" + condicion + "):\n";
+        tmpELIF += "\t" + instruccion;
+        python += tmpELIF;
+    }
+    //Global en python
+    public void Python_GLOBAL(){
+        String tmpGLOBAL = "def main():\n\t";
+        python += tmpGLOBAL;
+    }
+    //Comentario en python
+    public void Python_COMENTARIO(String comentario){
+        String tmpCOMENTARIO = "#";
+        tmpCOMENTARIO += comentario + "\n";
+        python += tmpCOMENTARIO;
+    }
+    //Comentario de varias lineas en python
+    public void Python_COMENTARIO_MULTIPLE(String comentario){
+        String tmpCOMENTARIO = "'''";
+        tmpCOMENTARIO += comentario + "'''";
+        python += tmpCOMENTARIO;
+    }
+    //Declaracion en python
+    public void Python_DECLARACION(String a,String b){
+        String tmpDECLARACION = "";
+        tmpDECLARACION += a + " = " + b + "\n";
+        python += tmpDECLARACION;
+    }
+    //Switch en python
+    public void Python_SWITCH(String condicion){
+        String tmpSWITCH = "switch ";
+        tmpSWITCH += "(" + condicion + "):\n";
+        python += tmpSWITCH;
+    }
+    //Case en python
+    public void Python_CASE(String condicion,String instruccion){
+        String tmpCASE = "case ";
+        tmpCASE += "(" + condicion + "):\n";
+        tmpCASE += "\t" + instruccion;
+        python += tmpCASE;
+    }
+    //For en python
+    public void Python_FOR(String condicion){
+        String tmpFOR = "for ";
+        tmpFOR += "(" + condicion + "):\n";
+        python += tmpFOR;
+    }
+    //For range en python
+    public void Python_FOR_RANGE(String condicion){
+        String tmpFOR = "for ";
+        tmpFOR += "(" + condicion + "):\n";
+        python += tmpFOR;
+    }
+    //Imprimir en python
+    public void Python_IMPRIMIR(String a){
+        String tmpIMPRIMIR = "print ";
+        tmpIMPRIMIR += "(" + a + ")\n";
+        python += tmpIMPRIMIR;
+    }
+    //Imprimir varias lineas en python
+    public void Python_IMPRIMIR_CON_SALTO(String a){
+        String tmpIMPRIMIR = "println";
+        tmpIMPRIMIR += "(" + a + ")\n";
+        python += tmpIMPRIMIR;
+    }
