@@ -27,6 +27,8 @@ public class Ventana extends javax.swing.JFrame {
     public Ventana() {
         initComponents();
         this.getContentPane().setBackground(new java.awt.Color(34, 40, 49));
+        //Centrar
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -60,20 +62,25 @@ public class Ventana extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(34, 40, 49));
+        setFont(new java.awt.Font("Fira Code Medium", 1, 18)); // NOI18N
 
         TextArea.setBackground(new java.awt.Color(238, 238, 238));
         TextArea.setColumns(20);
+        TextArea.setFont(new java.awt.Font("Fira Code SemiBold", 1, 18)); // NOI18N
         TextArea.setForeground(new java.awt.Color(57, 62, 70));
         TextArea.setRows(5);
         jScrollPane1.setViewportView(TextArea);
 
+        errorNumber.setFont(new java.awt.Font("Fira Code Medium", 0, 18)); // NOI18N
         errorNumber.setForeground(new java.awt.Color(165, 201, 202));
         errorNumber.setText("0");
 
+        jLabel2.setFont(new java.awt.Font("Fira Code Medium", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(165, 201, 202));
         jLabel2.setText("Errors");
 
         Run.setBackground(new java.awt.Color(0, 204, 51));
+        Run.setFont(new java.awt.Font("Fira Code Medium", 0, 18)); // NOI18N
         Run.setForeground(new java.awt.Color(44, 51, 51));
         Run.setText("Run");
         Run.addActionListener(new java.awt.event.ActionListener() {
@@ -83,6 +90,7 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         Clean.setBackground(new java.awt.Color(57, 62, 70));
+        Clean.setFont(new java.awt.Font("Fira Code Medium", 0, 18)); // NOI18N
         Clean.setForeground(new java.awt.Color(0, 173, 181));
         Clean.setText("Clean");
         Clean.addActionListener(new java.awt.event.ActionListener() {
@@ -92,6 +100,7 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         PythonView.setBackground(new java.awt.Color(57, 62, 70));
+        PythonView.setFont(new java.awt.Font("Fira Code Medium", 0, 18)); // NOI18N
         PythonView.setForeground(new java.awt.Color(0, 173, 181));
         PythonView.setText("View code Python");
         PythonView.addActionListener(new java.awt.event.ActionListener() {
@@ -101,17 +110,20 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         GolangView.setBackground(new java.awt.Color(57, 62, 70));
+        GolangView.setFont(new java.awt.Font("Fira Code Medium", 0, 18)); // NOI18N
         GolangView.setForeground(new java.awt.Color(0, 173, 181));
         GolangView.setText("View code Golang");
 
-        jLabel3.setFont(new java.awt.Font("Roboto", 2, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Fira Code Medium", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(165, 201, 202));
         jLabel3.setText("OLC1_2S_2022_202012039");
 
         jMenuBar1.setForeground(new java.awt.Color(231, 246, 242));
 
         jMenu1.setText("File");
+        jMenu1.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
 
+        OpenFile.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
         OpenFile.setText("Open File");
         OpenFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +132,7 @@ public class Ventana extends javax.swing.JFrame {
         });
         jMenu1.add(OpenFile);
 
+        SaveFile.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
         SaveFile.setText("Save as...");
         SaveFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,20 +144,26 @@ public class Ventana extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Report");
+        jMenu2.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
 
+        jMenuItem5.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
         jMenuItem5.setText("Flowchart");
         jMenu2.add(jMenuItem5);
 
+        jMenuItem6.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
         jMenuItem6.setText("Errors");
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("View");
+        jMenu3.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
 
+        jMenuItem3.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
         jMenuItem3.setText("User Manual");
         jMenu3.add(jMenuItem3);
 
+        jMenuItem4.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
         jMenuItem4.setText("Technical Manual");
         jMenu3.add(jMenuItem4);
 
@@ -159,7 +178,6 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Clean, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -170,10 +188,11 @@ public class Ventana extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(GolangView, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(GolangView)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(PythonView, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(PythonView))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -193,7 +212,7 @@ public class Ventana extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(PythonView, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(GolangView, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();

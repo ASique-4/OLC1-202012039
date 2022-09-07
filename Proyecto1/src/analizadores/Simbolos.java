@@ -14,6 +14,8 @@ public class Simbolos {
   public static final int prHasta = 31;
   public static final int prFinMientras = 36;
   public static final int prIngresar = 20;
+  public static final int cor2 = 70;
+  public static final int cor1 = 69;
   public static final int tigual = 48;
   public static final int prMenorOIgual = 67;
   public static final int prEsDiferente = 62;
@@ -146,7 +148,9 @@ public class Simbolos {
   "prMenor",
   "prMayorOIgual",
   "prMenorOIgual",
-  "caracter"
+  "caracter",
+  "cor1",
+  "cor2"
   };
 }
 

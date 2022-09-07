@@ -16,7 +16,7 @@ import java_cup.runtime.*;
 %unicode
 
 
-num = [\+|\-]*[0-9]+
+num = [0-9]+
 variable = _[a-zA-Z0-9]+_
 cadena = [\"|\'](\s|\S)[^\"\']*[\"|\']
 comentario = ([\/][\/])+(\s|\S)[^\n]*
@@ -35,33 +35,35 @@ float = [\+|\-]*\d+[\.]\d+
                     return new Symbol(Simbolos.tpuntoycoma, yycolumn, yyline, yytext());     }
 
     
-    "-"           { System.out.println("Reconocio Token, lexema:"+yytext());
+    "-"           { System.out.println("Reconocio trest, lexema:"+yytext());
                     return new Symbol(Simbolos.trest, yycolumn, yyline, yytext());    }
-    "¿"           { System.out.println("Reconocio Token, lexema:"+yytext());
+    "¿"           { System.out.println("Reconocio tinterrogacioninicio, lexema:"+yytext());
                     return new Symbol(Simbolos.tinterrogacioninicio, yycolumn, yyline, yytext());    }
-    "?"           { System.out.println("Reconocio Token, lexema:"+yytext());
+    "?"           { System.out.println("Reconocio tinterrogacionfin, lexema:"+yytext());
                     return new Symbol(Simbolos.tinterrogacionfin, yycolumn, yyline, yytext());    }
-    ">"           { System.out.println("Reconocio Token, lexema:"+yytext());
+    ">"           { System.out.println("Reconocio tmayor, lexema:"+yytext());
                     return new Symbol(Simbolos.tmayor, yycolumn, yyline, yytext());    }
-    ","          { System.out.println("Reconocio Token, lexema:"+yytext());
+    ","          { System.out.println("Reconocio tcoma, lexema:"+yytext());
                     return new Symbol(Simbolos.tcoma, yycolumn, yyline, yytext());    }
     
-    "+"           { System.out.println("Reconocio Token, lexema:"+yytext());
+    "+"           { System.out.println("Reconocio tsum, lexema:"+yytext());
                     return new Symbol(Simbolos.tsum, yycolumn, yyline, yytext());     }
-    "/"           { System.out.println("Reconocio Token, lexema:"+yytext());
+    "/"           { System.out.println("Reconocio tdiv, lexema:"+yytext());
                     return new Symbol(Simbolos.tdiv, yycolumn, yyline, yytext());     }
-    "*"           { System.out.println("Reconocio Token, lexema:"+yytext());
+    "*"           { System.out.println("Reconocio tmul, lexema:"+yytext());
                     return new Symbol(Simbolos.tmul, yycolumn, yyline, yytext());     }
-    "potencia"    { System.out.println("Reconocio Token, lexema:"+yytext());
+    "potencia"    { System.out.println("Reconocio tpot, lexema:"+yytext());
                     return new Symbol(Simbolos.tpot, yycolumn, yyline, yytext());     }
-    "mod"         { System.out.println("Reconocio Token, lexema:"+yytext());
+    "mod"         { System.out.println("Reconocio tmod, lexema:"+yytext());
                     return new Symbol(Simbolos.tmod, yycolumn, yyline, yytext());     }
-    "("           { System.out.println("Reconocio Token, lexema:"+yytext());
+    "("           { System.out.println("Reconocio pare1, lexema:"+yytext());
                     return new Symbol(Simbolos.pare1, yycolumn, yyline, yytext());    }
-    ")"           { System.out.println("Reconocio Token, lexema:"+yytext());
+    ")"           { System.out.println("Reconocio pare2, lexema:"+yytext());
                     return new Symbol(Simbolos.pare2, yycolumn, yyline, yytext());    }
-   
-    
+   "["            { System.out.println("Reconocio Token, lexema:"+yytext());
+                    return new Symbol(Simbolos.cor1, yycolumn, yyline, yytext());    }
+    "]"           { System.out.println("Reconocio Token, lexema:"+yytext());
+                    return new Symbol(Simbolos.cor2, yycolumn, yyline, yytext());    }
     "="           { System.out.println("Reconocio Token, lexema:"+yytext());
                     return new Symbol(Simbolos.tigual, yycolumn, yyline, yytext());     }
 

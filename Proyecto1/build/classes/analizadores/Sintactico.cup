@@ -1,5 +1,6 @@
 package analizadores;
 import java_cup.runtime.Symbol;
+import java.util.ArrayList;
 
 
 parser code 
@@ -7,23 +8,29 @@ parser code
     /**
      * Método al que se llama automáticamente ante algún error sintactico.
      **/ 
+    
+    public String python = "";
+    public String golang = "";
+    public int erroresSintacticos = 0;
     String condicion = "";
-    int erroresSintacticos = 0;
+    String instruccion = "";
+    String tmpInstruccion = "";
+    String valor = "";
+    String tmpPython = "";
+    String tmpImprimir = "";
+    ArrayList<String> tmpListaNombres = new ArrayList<String>();
+    ArrayList<String> tmpOperacion = new ArrayList<String>();
+    String tmpOperacion2 = "";
+    String tmpOperdor = "";
+    String tmpOperdor2 = "";
     public void syntax_error(Symbol s){ 
         erroresSintacticos++;
         //Imprimir error
         System.out.println("Error Sintáctico en la Línea " + (s.left) +
         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
     } 
-    //Método que devuelve el número de errores sintácticos
-    public int getErroresSintacticos(){
-        return erroresSintacticos;
-    }
-
-    public void IF_(String a){
-        System.out.println(a);
-    }
-
+    
+    
     /**
      * Método al que se llama automáticamente ante algún error sintáctico 
      * en el que ya no es posible una recuperación de errores.
@@ -41,7 +48,8 @@ terminal String trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
         tpuntoycoma,prIngresar,prComo,prConValor,prSi,prEntonces,prFinSi,prO_Si,prDE_LO_CONTRARIO,prSegun,prHacer,prPara,
         prHasta,prFinPara,prCon,prIncremental,prMientras,prFinMientras,prRepetir,prHastaQue,prRetornar,prMetodo,
         prFinMetodo,prConParametros,prFuncion,prFinFuncion,prEjecutar,prImprimir,prImprimirNl,tigual,tvariable,tcadena,
-        prString,prInt,prFinSegun,prDeLoContrario,palabra;           
+        prFinSegun,prDeLoContrario,palabra, prBoolean,prBooleana,prCaracter,prNumero,prCadena,prVerdadero,prFalso,
+        prEsIgual,prEsDiferente,prMayor,prFloat,prMenor,prMayorOIgual,prMenorOIgual,caracter,cor1,cor2;           
 
 
 non terminal INICIO;
@@ -76,6 +84,10 @@ non terminal String FUNCION;
 non terminal String EJECUTAR;
 non terminal String IMPRIMIR;
 non terminal String IMPRIMIR_NL;
+non terminal String TIPO;
+non terminal String OPERACION;
+non terminal String OPERACIONES;
+non terminal String OPERADORES;
 
 precedence left tsum, trest;
 precedence left tdiv, tmul;
@@ -86,7 +98,7 @@ start with INICIO;
 INICIO::= prInicio E prFin;
 
 E::=    DECLARACION E
-        |IF {:System.out.println("Se realizo un if");:} E
+        | {:tmpPython += "if ";:} IF {:System.out.println("Se realizo un if");:} E
         |COMENTARIO {:System.out.println("Se realizo un comentar");:} E
         |COMENTARIO_VARIAS_LINEAS {:System.out.println("Se realizo un comentarioVariasLineas");:} E
         |ASIGNACION {:System.out.println("Se realizo un asignacion");:} E
@@ -99,35 +111,193 @@ E::=    DECLARACION E
         |METODO {:System.out.println("Se realizo un metodo");:}E
         |FUNCION {:System.out.println("Se realizo un funcion");:}E
         |EJECUTAR {:System.out.println("Se realizo un ejecutar");:}E
-        |IMPRIMIR {:System.out.println("Se realizo un imprimir");:}E
-        |IMPRIMIR_NL {:System.out.println("Se realizo un IMPRIMIR_NL");:} E
-        |error E
+        |IMPRIMIR E 
+        |IMPRIMIR_NL E {:tmpInstruccion += tmpImprimir; tmpImprimir = "";:}
+        |OPERACION {:System.out.println("Se realizo una operacion");:} E
+        |error {:tmpPython = "";:} E
         |;
 
+OPERACIONES::= OPERACION OPERACIONES
+                | OPERACION;
 
-DECLARACION::= prIngresar VARIABLE prComo palabra prConValor tcadena tpuntoycoma
-                |prIngresar VARIABLE prComo palabra prConValor tnum tpuntoycoma
-                |prIngresar LISTA_NOMBRES prComo palabra prConValor tnum tpuntoycoma
-                |prIngresar LISTA_NOMBRES prComo palabra prConValor tcadena tpuntoycoma;
+OPERACION::= tnum:a OPERADORES tnum:b {:tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";:}
+                |tvariable:a OPERADORES tvariable:b {:tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";:}
+                |tnum:a OPERADORES tvariable:b {:tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";:}
+                |tvariable:a OPERADORES tnum:b {:tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";:}
+
+                |tvariable:a tpot cor1 tvariable:b cor2 {:tmpOperacion.add(a + "**" + b);:}
+                |tnum:a tpot cor1 tvariable:b cor2 {:tmpOperacion.add(a + "**" + b); :} 
+                |tvariable:a tpot cor1 tnum:b cor2 {:tmpOperacion.add(a + "**" + b);:}
+                |tnum:a tpot cor1 tnum:b cor2 {:tmpOperacion.add(a + "**" + b);:}
+                
+                |tnum:a OPERADORES pare1 OPERACIONES pare2 {:tmpOperacion2 += "(" + a + tmpOperdor2 + tmpOperacion + ")"; tmpOperdor2 = ""; ArrayList<String> tmpOperacion = new ArrayList<String>();:}
+                |tvariable:a OPERADORES pare1 OPERACIONES pare2 {:tmpOperacion2 += "(" + a + tmpOperdor2 + tmpOperacion + ")"; tmpOperdor2 = ""; ArrayList<String> tmpOperacion = new ArrayList<String>();:};
+
+OPERADORES::= tsum {:tmpOperdor = "+"; tmpOperdor2 = "+";:}
+            | trest {:tmpOperdor = "-"; tmpOperdor2 = "-";:}
+            | tdiv {:tmpOperdor = "/"; tmpOperdor2 = "/";:}
+            | tmul {:tmpOperdor = "*"; tmpOperdor2 = "*";:}
+            | tmod {:tmpOperdor = "%"; tmpOperdor2 = "%";:};
+
+TIPO::=prBoolean
+        |prBooleana
+        |prCaracter
+        |prNumero
+        |prCadena;
+
+DECLARACION::= prIngresar tvariable:a prComo TIPO prConValor tcadena:b tpuntoycoma {:python += a + " = " + b + "\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor tnum:b tpuntoycoma {:python += a + " = " + b + "\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor trest tnum:b tpuntoycoma {:python += a + " = -" + b + "\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor tsum tnum:b tpuntoycoma {:python += a + " = +" + b + "\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor prFalso:b tpuntoycoma {:python += a + " = False\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor prVerdadero:b tpuntoycoma {:python += a + " = True\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor tvariable:b tpuntoycoma {:python += a + " = " + b + "\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor prFloat:b tpuntoycoma {:python += a + " = " + b + "\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor trest prFloat:b tpuntoycoma {:python += a + " = -" + b + "\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor tsum prFloat:b tpuntoycoma {:python += a + " = +" + b + "\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor caracter:b tpuntoycoma {:python += a + " = " + b + "\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor OPERACION tpuntoycoma {:python += a + " = " + tmpOperacion + tmpOperacion2 + "\n"; ArrayList<String> tmpOperacion = new ArrayList<String>(); tmpOperacion2 = "";:}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tnum:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor trest tnum:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = -" + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tsum tnum:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = +" + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tvariable:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tcadena:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor caracter:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor prFloat:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor prVerdadero:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = True;\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor prFalso:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = False;\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor trest prFloat:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = -" + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tsum prFloat:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = +" + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor OPERACION tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + tmpOperacion + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :};
 //Gramatica de un comentario
-COMENTARIO::= tcomentario;
+COMENTARIO::= tcomentario:c {:python +=c.replace("//","#")+"\n";:} ;
 //Gramatica de un comentario de varias lineas
-COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas;                
+COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas:c {:python += c.replace("/*","'''").replace("*/","'''") + "\n";:};                
 //Gramatica de una asignacion
-ASIGNACION::= VARIABLE FLECHA tcadena tpuntoycoma | LISTA_NOMBRES FLECHA tcadena tpuntoycoma
-                | VARIABLE FLECHA tnum tpuntoycoma | LISTA_NOMBRES FLECHA tnum tpuntoycoma;
+ASIGNACION::= tvariable:a FLECHA tcadena:b tpuntoycoma {:python += a+" = "+b+";\n";:}
+                | tvariable:a FLECHA tnum:b tpuntoycoma {:python += a + " = " + b + ";\n";:}
+                | tvariable:a FLECHA tvariable:b tpuntoycoma {:python += a+" = "+b+";\n";:} 
+                | tvariable:a FLECHA prFloat:b tpuntoycoma {:python += a+" = "+b+";\n";:} 
+                | tvariable:a FLECHA prVerdadero:b tpuntoycoma {:python += a+" = True;\n";:}
+                | tvariable:a FLECHA prFalso:b tpuntoycoma {:python += a+" = False;\n";:}
+                | tvariable:a FLECHA caracter:b tpuntoycoma {:python += a+" = "+b+";\n";:}
+                | LISTA_NOMBRES FLECHA tcadena:a tpuntoycoma 
+
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                | LISTA_NOMBRES FLECHA tnum:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                | LISTA_NOMBRES FLECHA tvariable:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                | LISTA_NOMBRES FLECHA prFloat:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                | LISTA_NOMBRES FLECHA prVerdadero:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = True;\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                | LISTA_NOMBRES FLECHA prFalso:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = False;\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :}
+                | LISTA_NOMBRES FLECHA caracter:a tpuntoycoma 
+                {:for(String i: tmpListaNombres){
+                         python += i + " = " + a + ";\n";
+                }; 
+                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                :};
 //Gramatica de seleccion multiple
 SELECCION_MULTIPLE::= prSegun SEGUN prFinSegun;
 
 SEGUN::= tinterrogacioninicio VALOR tinterrogacionfin prEntonces INSTRUCCIONES SEGUN
         |tinterrogacioninicio VALOR tinterrogacionfin prEntonces INSTRUCCIONES;
 
-VALOR::= tvariable|tcadena;
+VALOR::= tvariable:a {:valor = a;:} |tcadena:b {:valor = b;:};
 
-LISTA_NOMBRES::= VARIABLE LISTA_NOMBRES2|;
-LISTA_NOMBRES2::= tcoma VARIABLE LISTA_NOMBRES2|tcoma VARIABLE;
+LISTA_NOMBRES::= tvariable:a {:tmpListaNombres.add(a);:} LISTA_NOMBRES2
+                |;
+LISTA_NOMBRES2::= tcoma tvariable:a {:tmpListaNombres.add(a);:} LISTA_NOMBRES2
+                |tcoma tvariable:a {:tmpListaNombres.add(a);:};
 
-IF::= prSi CONDICION prEntonces E prFinSi {:IF_(condicion);:}
+IF::= prSi  CONDICION prEntonces  E {:tmpPython += tmpInstruccion;:} prFinSi {:python += tmpPython + "\n"; tmpPython = "";:}
         |prSi CONDICION prEntonces E O_SI prFinSi
         |prSi CONDICION prEntonces E DE_LO_CONTRARIO prFinSi
         |prSi CONDICION prEntonces E O_SI DE_LO_CONTRARIO prFinSi;
@@ -136,9 +306,9 @@ DE_LO_CONTRARIO::= prDE_LO_CONTRARIO E DE_LO_CONTRARIO|prDE_LO_CONTRARIO E;
 
 O_SI::= prO_Si CONDICION prEntonces E O_SI|prO_Si CONDICION prEntonces E;
 
-CONDICION::= tvariable:a tigual:b tigual:c tvariable:d {:condicion = a + b +c +d ;:} |
-            tvariable:a tigual tigual tcadena:b {:String condicion = a + b; System.out.println(condicion);:} |
-            tvariable:a tigual tigual tnum:b {:String condicion = a + b; System.out.println(condicion);:} ;
+CONDICION::= tvariable:a tigual:b tigual:c tvariable:d {:condicion = a + b +c +d ; tmpPython += condicion + ":\n\t";:} |
+            tvariable:a tigual:b tigual:c tcadena:d {:condicion = a + b +c +d ;:} |
+            tvariable:a tigual:b tigual:c tnum:d {:condicion = a + b +c +d ;:} ;
 
 VARIABLE::= tvariable;
 
@@ -173,6 +343,6 @@ FUNCION::= prFuncion VARIABLE tcadena prConParametros LISTA_PARAMETROS INSTRUCCI
 
 EJECUTAR::= prEjecutar VARIABLE pare1 pare2 tpuntoycoma|prEjecutar VARIABLE pare1 LISTA_PARAMETROS pare2 tpuntoycoma;
 
-IMPRIMIR::= prImprimir tcadena tpuntoycoma;
+IMPRIMIR::= prImprimir VALOR tpuntoycoma;
 
-IMPRIMIR_NL::= prImprimirNl tcadena tpuntoycoma;
+IMPRIMIR_NL::= prImprimirNl VALOR tpuntoycoma {:tmpImprimir = "println(" + valor + ")";:};
