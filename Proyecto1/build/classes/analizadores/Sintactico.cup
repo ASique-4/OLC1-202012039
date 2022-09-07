@@ -8,7 +8,7 @@ parser code
     /**
      * Método al que se llama automáticamente ante algún error sintactico.
      **/ 
-    
+    boolean cambiar = true;
     public String python = "";
     public String golang = "";
     public int erroresSintacticos = 0;
@@ -30,7 +30,12 @@ parser code
         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
     } 
     
-    
+    public void agregarTmpListaNombres(String a){
+        for(String i: tmpListaNombres){
+                python += i + " = " + a + ";\n";
+        }; 
+        tmpListaNombres = new ArrayList<String>();
+    }
     /**
      * Método al que se llama automáticamente ante algún error sintáctico 
      * en el que ya no es posible una recuperación de errores.
@@ -130,14 +135,14 @@ OPERACION::= tnum:a OPERADORES tnum:b {:tmpOperacion.add(a + tmpOperdor + b); tm
                 |tvariable:a tpot cor1 tnum:b cor2 {:tmpOperacion.add(a + "**" + b);:}
                 |tnum:a tpot cor1 tnum:b cor2 {:tmpOperacion.add(a + "**" + b);:}
                 
-                |tnum:a OPERADORES pare1 OPERACIONES pare2 {:tmpOperacion2 += "(" + a + tmpOperdor2 + tmpOperacion + ")"; tmpOperdor2 = ""; ArrayList<String> tmpOperacion = new ArrayList<String>();:}
-                |tvariable:a OPERADORES pare1 OPERACIONES pare2 {:tmpOperacion2 += "(" + a + tmpOperdor2 + tmpOperacion + ")"; tmpOperdor2 = ""; ArrayList<String> tmpOperacion = new ArrayList<String>();:};
+                |tnum:a OPERADORES pare1 OPERACIONES pare2 {:tmpOperacion.add( a + tmpOperdor2 + "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")"); cambiar = true; :}
+                |tvariable:a OPERADORES pare1 OPERACIONES pare2 {:tmpOperacion.add( a + tmpOperdor2 + "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")"); cambiar = true; :};
 
-OPERADORES::= tsum {:tmpOperdor = "+"; tmpOperdor2 = "+";:}
-            | trest {:tmpOperdor = "-"; tmpOperdor2 = "-";:}
-            | tdiv {:tmpOperdor = "/"; tmpOperdor2 = "/";:}
-            | tmul {:tmpOperdor = "*"; tmpOperdor2 = "*";:}
-            | tmod {:tmpOperdor = "%"; tmpOperdor2 = "%";:};
+OPERADORES::= tsum {:tmpOperdor = "+"; if(cambiar == true){tmpOperdor2 = "+";cambiar = false;}:}
+            | trest {:tmpOperdor = "-"; if(cambiar == true){tmpOperdor2 = "-";cambiar = false;}:}
+            | tdiv {:tmpOperdor = "/"; if(cambiar == true){tmpOperdor2 = "/";cambiar = false;}:}
+            | tmul {:tmpOperdor = "*"; if(cambiar == true){tmpOperdor2 = "*";cambiar = false;}:}
+            | tmod {:tmpOperdor = "%"; if(cambiar == true){tmpOperdor2 = "%";cambiar = false;}:};
 
 TIPO::=prBoolean
         |prBooleana
@@ -156,78 +161,59 @@ DECLARACION::= prIngresar tvariable:a prComo TIPO prConValor tcadena:b tpuntoyco
                 |prIngresar tvariable:a prComo TIPO prConValor trest prFloat:b tpuntoycoma {:python += a + " = -" + b + "\n";:}
                 |prIngresar tvariable:a prComo TIPO prConValor tsum prFloat:b tpuntoycoma {:python += a + " = +" + b + "\n";:}
                 |prIngresar tvariable:a prComo TIPO prConValor caracter:b tpuntoycoma {:python += a + " = " + b + "\n";:}
-                |prIngresar tvariable:a prComo TIPO prConValor OPERACION tpuntoycoma {:python += a + " = " + tmpOperacion + tmpOperacion2 + "\n"; ArrayList<String> tmpOperacion = new ArrayList<String>(); tmpOperacion2 = "";:}
-                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tnum:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                |prIngresar tvariable:a prComo TIPO prConValor OPERACION tpuntoycoma 
+                {:
+                        python += a + " = " + tmpOperacion.get(tmpOperacion.size() - 1) + "\n";
+                        tmpOperacion = new ArrayList<String>();
+                        tmpListaNombres = new ArrayList<String>();
+                        cambiar = true; 
+                        tmpOperdor2 = "";
                 :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tnum:a tpuntoycoma {:agregarTmpListaNombres(a);:}
                 |prIngresar LISTA_NOMBRES prComo TIPO prConValor trest tnum:a tpuntoycoma 
                 {:for(String i: tmpListaNombres){
                          python += i + " = -" + a + ";\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 :}
                 |prIngresar LISTA_NOMBRES prComo TIPO prConValor tsum tnum:a tpuntoycoma 
                 {:for(String i: tmpListaNombres){
                          python += i + " = +" + a + ";\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 :}
-                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tvariable:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                :}
-                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tcadena:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                :}
-                |prIngresar LISTA_NOMBRES prComo TIPO prConValor caracter:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                :}
-                |prIngresar LISTA_NOMBRES prComo TIPO prConValor prFloat:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                :}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tvariable:a tpuntoycoma {:agregarTmpListaNombres(a);:}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor tcadena:a tpuntoycoma {:agregarTmpListaNombres(a);:}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor caracter:a tpuntoycoma {:agregarTmpListaNombres(a);:}
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor prFloat:a tpuntoycoma {:agregarTmpListaNombres(a);:}
                 |prIngresar LISTA_NOMBRES prComo TIPO prConValor prVerdadero:a tpuntoycoma 
                 {:for(String i: tmpListaNombres){
                          python += i + " = True;\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 :}
                 |prIngresar LISTA_NOMBRES prComo TIPO prConValor prFalso:a tpuntoycoma 
                 {:for(String i: tmpListaNombres){
                          python += i + " = False;\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 :}
                 |prIngresar LISTA_NOMBRES prComo TIPO prConValor trest prFloat:a tpuntoycoma 
                 {:for(String i: tmpListaNombres){
                          python += i + " = -" + a + ";\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 :}
                 |prIngresar LISTA_NOMBRES prComo TIPO prConValor tsum prFloat:a tpuntoycoma 
                 {:for(String i: tmpListaNombres){
                          python += i + " = +" + a + ";\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 :}
                 |prIngresar LISTA_NOMBRES prComo TIPO prConValor OPERACION tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + tmpOperacion + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                {:agregarTmpListaNombres(tmpOperacion.get(tmpOperacion.size() - 1));
+                        tmpOperacion = new ArrayList<String>();
+                        tmpListaNombres = new ArrayList<String>(); 
                 :};
 //Gramatica de un comentario
 COMENTARIO::= tcomentario:c {:python +=c.replace("//","#")+"\n";:} ;
@@ -241,49 +227,23 @@ ASIGNACION::= tvariable:a FLECHA tcadena:b tpuntoycoma {:python += a+" = "+b+";\
                 | tvariable:a FLECHA prVerdadero:b tpuntoycoma {:python += a+" = True;\n";:}
                 | tvariable:a FLECHA prFalso:b tpuntoycoma {:python += a+" = False;\n";:}
                 | tvariable:a FLECHA caracter:b tpuntoycoma {:python += a+" = "+b+";\n";:}
-                | LISTA_NOMBRES FLECHA tcadena:a tpuntoycoma 
-
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                :}
-                | LISTA_NOMBRES FLECHA tnum:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                :}
-                | LISTA_NOMBRES FLECHA tvariable:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                :}
-                | LISTA_NOMBRES FLECHA prFloat:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                :}
+                | LISTA_NOMBRES FLECHA tcadena:a tpuntoycoma {:agregarTmpListaNombres(a);:}
+                | LISTA_NOMBRES FLECHA tnum:a tpuntoycoma {:agregarTmpListaNombres(a);:}
+                | LISTA_NOMBRES FLECHA tvariable:a tpuntoycoma {:agregarTmpListaNombres(a);:}
+                | LISTA_NOMBRES FLECHA prFloat:a tpuntoycoma {:agregarTmpListaNombres(a);:}
                 | LISTA_NOMBRES FLECHA prVerdadero:a tpuntoycoma 
                 {:for(String i: tmpListaNombres){
                          python += i + " = True;\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 :}
                 | LISTA_NOMBRES FLECHA prFalso:a tpuntoycoma 
                 {:for(String i: tmpListaNombres){
                          python += i + " = False;\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 :}
-                | LISTA_NOMBRES FLECHA caracter:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                :};
+                | LISTA_NOMBRES FLECHA caracter:a tpuntoycoma {:agregarTmpListaNombres(a);:};
 //Gramatica de seleccion multiple
 SELECCION_MULTIPLE::= prSegun SEGUN prFinSegun;
 

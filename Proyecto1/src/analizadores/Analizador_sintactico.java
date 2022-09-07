@@ -847,7 +847,7 @@ public class Analizador_sintactico extends java_cup.runtime.lr_parser {
     /**
      * Método al que se llama automáticamente ante algún error sintactico.
      **/ 
-    
+    boolean cambiar = true;
     public String python = "";
     public String golang = "";
     public int erroresSintacticos = 0;
@@ -859,6 +859,7 @@ public class Analizador_sintactico extends java_cup.runtime.lr_parser {
     String tmpImprimir = "";
     ArrayList<String> tmpListaNombres = new ArrayList<String>();
     ArrayList<String> tmpOperacion = new ArrayList<String>();
+    ArrayList<String> tmpOperadorLista = new ArrayList<String>();
     String tmpOperacion2 = "";
     String tmpOperdor = "";
     String tmpOperdor2 = "";
@@ -869,7 +870,12 @@ public class Analizador_sintactico extends java_cup.runtime.lr_parser {
         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
     } 
     
-    
+    public void agregarTmpListaNombres(String a){
+        for(String i: tmpListaNombres){
+                python += i + " = " + a + ";\n";
+        }; 
+        tmpListaNombres = new ArrayList<String>();
+    }
     /**
      * Método al que se llama automáticamente ante algún error sintáctico 
      * en el que ya no es posible una recuperación de errores.
@@ -1301,7 +1307,7 @@ tmpPython = "";
 		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		String b = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";
+		tmpOperacion.add(a + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + b); tmpOperadorLista.remove(tmpOperadorLista.get(tmpOperadorLista.size() - 1));
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERACION",33, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1316,7 +1322,7 @@ tmpPython = "";
 		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		String b = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";
+		tmpOperacion.add(a + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + b); tmpOperadorLista.remove(tmpOperadorLista.get(tmpOperadorLista.size() - 1));
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERACION",33, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1331,7 +1337,7 @@ tmpPython = "";
 		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		String b = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";
+		tmpOperacion.add(a + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + b);tmpOperadorLista.remove(tmpOperadorLista.get(tmpOperadorLista.size() - 1)); 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERACION",33, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1346,7 +1352,7 @@ tmpPython = "";
 		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		String b = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";
+		tmpOperacion.add(a + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + b);tmpOperadorLista.remove(tmpOperadorLista.get(tmpOperadorLista.size() - 1));
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERACION",33, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1418,7 +1424,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)).value;
-		tmpOperacion2 += "(" + a + tmpOperdor2 + tmpOperacion + ")"; tmpOperdor2 = ""; ArrayList<String> tmpOperacion = new ArrayList<String>();
+		tmpOperacion.add( a + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")"); tmpOperadorLista.remove(tmpOperadorLista.get(tmpOperadorLista.size() - 1));
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERACION",33, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1430,7 +1436,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)).value;
-		tmpOperacion2 += "(" + a + tmpOperdor2 + tmpOperacion + ")"; tmpOperdor2 = ""; ArrayList<String> tmpOperacion = new ArrayList<String>();
+		tmpOperacion.add( a + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")");  tmpOperadorLista.remove(tmpOperadorLista.get(tmpOperadorLista.size() - 1));
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERACION",33, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1439,7 +1445,7 @@ tmpPython = "";
           case 49: // OPERADORES ::= tsum 
             {
               String RESULT =null;
-		tmpOperdor = "+"; tmpOperdor2 = "+";
+		 tmpOperadorLista.add("+");
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERADORES",35, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1448,7 +1454,7 @@ tmpPython = "";
           case 50: // OPERADORES ::= trest 
             {
               String RESULT =null;
-		tmpOperdor = "-"; tmpOperdor2 = "-";
+		 tmpOperadorLista.add("-");
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERADORES",35, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1457,7 +1463,7 @@ tmpPython = "";
           case 51: // OPERADORES ::= tdiv 
             {
               String RESULT =null;
-		tmpOperdor = "/"; tmpOperdor2 = "/";
+		 tmpOperadorLista.add("/");
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERADORES",35, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1466,7 +1472,7 @@ tmpPython = "";
           case 52: // OPERADORES ::= tmul 
             {
               String RESULT =null;
-		tmpOperdor = "*"; tmpOperdor2 = "*";
+		tmpOperadorLista.add("*");
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERADORES",35, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1475,7 +1481,7 @@ tmpPython = "";
           case 53: // OPERADORES ::= tmod 
             {
               String RESULT =null;
-		tmpOperdor = "%"; tmpOperdor2 = "%";
+		tmpOperadorLista.add("%");
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("OPERADORES",35, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1697,7 +1703,13 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-5)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-5)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-5)).value;
-		python += a + " = " + tmpOperacion + tmpOperacion2 + "\n"; ArrayList<String> tmpOperacion = new ArrayList<String>(); tmpOperacion2 = "";
+		
+                        python += a + " = " + tmpOperacion.get(tmpOperacion.size() - 1) + "\n";
+                        tmpOperacion = new ArrayList<String>();
+                        tmpListaNombres = new ArrayList<String>();
+                        cambiar = true; 
+                        tmpOperdor2 = "";
+                
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1709,11 +1721,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                
+		agregarTmpListaNombres(a);
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1728,7 +1736,7 @@ tmpPython = "";
 		for(String i: tmpListaNombres){
                          python += i + " = -" + a + ";\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-7)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -1744,7 +1752,7 @@ tmpPython = "";
 		for(String i: tmpListaNombres){
                          python += i + " = +" + a + ";\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-7)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -1757,11 +1765,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                
+		agregarTmpListaNombres(a);
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1773,11 +1777,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                
+		agregarTmpListaNombres(a);
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1789,11 +1789,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                
+		agregarTmpListaNombres(a);
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1805,11 +1801,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                
+		agregarTmpListaNombres(a);
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1824,7 +1816,7 @@ tmpPython = "";
 		for(String i: tmpListaNombres){
                          python += i + " = True;\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -1840,7 +1832,7 @@ tmpPython = "";
 		for(String i: tmpListaNombres){
                          python += i + " = False;\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -1856,7 +1848,7 @@ tmpPython = "";
 		for(String i: tmpListaNombres){
                          python += i + " = -" + a + ";\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-7)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -1872,7 +1864,7 @@ tmpPython = "";
 		for(String i: tmpListaNombres){
                          python += i + " = +" + a + ";\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-7)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -1882,10 +1874,9 @@ tmpPython = "";
           case 82: // DECLARACION ::= prIngresar LISTA_NOMBRES prComo TIPO prConValor OPERACION tpuntoycoma 
             {
               String RESULT =null;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + tmpOperacion + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+		agregarTmpListaNombres(tmpOperacion.get(tmpOperacion.size() - 1));
+                        tmpOperacion = new ArrayList<String>();
+                        tmpListaNombres = new ArrayList<String>(); 
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DECLARACION",10, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2027,11 +2018,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                
+		agregarTmpListaNombres(a);
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("ASIGNACION",14, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -2043,11 +2030,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                
+		agregarTmpListaNombres(a);
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("ASIGNACION",14, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -2059,11 +2042,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                
+		agregarTmpListaNombres(a);
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("ASIGNACION",14, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -2075,11 +2054,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                
+		agregarTmpListaNombres(a);
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("ASIGNACION",14, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -2094,7 +2069,7 @@ tmpPython = "";
 		for(String i: tmpListaNombres){
                          python += i + " = True;\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("ASIGNACION",14, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2110,7 +2085,7 @@ tmpPython = "";
 		for(String i: tmpListaNombres){
                          python += i + " = False;\n";
                 }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
+                        tmpListaNombres = new ArrayList<String>(); 
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("ASIGNACION",14, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2123,11 +2098,7 @@ tmpPython = "";
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
-		for(String i: tmpListaNombres){
-                         python += i + " = " + a + ";\n";
-                }; 
-                        ArrayList<String> tmpListaNombres = new ArrayList<String>(); 
-                
+		agregarTmpListaNombres(a);
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("ASIGNACION",14, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
