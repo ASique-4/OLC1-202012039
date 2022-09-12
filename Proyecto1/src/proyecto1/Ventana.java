@@ -18,6 +18,13 @@ import javax.swing.JFileChooser;
 /**
  *
  * @author angel
+ * inicio
+ingresar _operaciones1Basica_      como numero con_valor 1+((8-7)/(2-9)); 
+fin
+
+inicio
+ingresar _operaciones1Basica_      como numero con_valor (5*4)+(((2-9)-(2*7))/(2-9)); 
+fin
  */
 public class Ventana extends javax.swing.JFrame {
 

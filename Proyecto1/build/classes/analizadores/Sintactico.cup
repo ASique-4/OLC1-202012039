@@ -5,10 +5,8 @@ import java.util.ArrayList;
 
 parser code 
 {:
-    /**
-     * Método al que se llama automáticamente ante algún error sintactico.
-     **/ 
     boolean cambiar = true;
+    int cont = 0;
     public String python = "";
     public String golang = "";
     public int erroresSintacticos = 0;
@@ -20,9 +18,7 @@ parser code
     String tmpImprimir = "";
     ArrayList<String> tmpListaNombres = new ArrayList<String>();
     ArrayList<String> tmpOperacion = new ArrayList<String>();
-    String tmpOperacion2 = "";
-    String tmpOperdor = "";
-    String tmpOperdor2 = "";
+    ArrayList<String> tmpOperadorLista = new ArrayList<String>();
     public void syntax_error(Symbol s){ 
         erroresSintacticos++;
         //Imprimir error
@@ -31,10 +27,25 @@ parser code
     } 
     
     public void agregarTmpListaNombres(String a){
+
+
         for(String i: tmpListaNombres){
                 python += i + " = " + a + ";\n";
         }; 
+        
+        
         tmpListaNombres = new ArrayList<String>();
+    }
+
+    public void agregarTmpOperacionLista(String a){
+        tmpOperacion.add( "(" + a + ")" + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + 
+        "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")"); 
+        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);
+    }
+
+    public void agregarTmpOperacion(String a, String b){
+        tmpOperacion.add(a + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + b); 
+        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);
     }
     /**
      * Método al que se llama automáticamente ante algún error sintáctico 
@@ -122,27 +133,29 @@ E::=    DECLARACION E
         |error {:tmpPython = "";:} E
         |;
 
-OPERACIONES::= OPERACION OPERACIONES
+OPERACIONES::= OPERACION OPERACIONES 
                 | OPERACION;
 
-OPERACION::= tnum:a OPERADORES tnum:b {:tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";:}
-                |tvariable:a OPERADORES tvariable:b {:tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";:}
-                |tnum:a OPERADORES tvariable:b {:tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";:}
-                |tvariable:a OPERADORES tnum:b {:tmpOperacion.add(a + tmpOperdor + b); tmpOperdor = "";:}
+OPERACION::=    tnum:a OPERADORES  {:
+                        tmpOperacion.add(a+ tmpOperadorLista.get(tmpOperadorLista.size() - 1));
+                        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);:}
+                |tvariable:a OPERADORES  {:
+                        tmpOperacion.add(a+ tmpOperadorLista.get(tmpOperadorLista.size() - 1));
+                        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);:}
+                |OPERADORES tnum:a  {:
+                        tmpOperacion.add(tmpOperadorLista.get(tmpOperadorLista.size() - 1) + a);
+                        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);:}
+                |OPERADORES tvariable:a  {:
+                        tmpOperacion.add(tmpOperadorLista.get(tmpOperadorLista.size() - 1) + a);
+                        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);:};
 
-                |tvariable:a tpot cor1 tvariable:b cor2 {:tmpOperacion.add(a + "**" + b);:}
-                |tnum:a tpot cor1 tvariable:b cor2 {:tmpOperacion.add(a + "**" + b); :} 
-                |tvariable:a tpot cor1 tnum:b cor2 {:tmpOperacion.add(a + "**" + b);:}
-                |tnum:a tpot cor1 tnum:b cor2 {:tmpOperacion.add(a + "**" + b);:}
-                
-                |tnum:a OPERADORES pare1 OPERACIONES pare2 {:tmpOperacion.add( a + tmpOperdor2 + "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")"); cambiar = true; :}
-                |tvariable:a OPERADORES pare1 OPERACIONES pare2 {:tmpOperacion.add( a + tmpOperdor2 + "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")"); cambiar = true; :};
-
-OPERADORES::= tsum {:tmpOperdor = "+"; if(cambiar == true){tmpOperdor2 = "+";cambiar = false;}:}
-            | trest {:tmpOperdor = "-"; if(cambiar == true){tmpOperdor2 = "-";cambiar = false;}:}
-            | tdiv {:tmpOperdor = "/"; if(cambiar == true){tmpOperdor2 = "/";cambiar = false;}:}
-            | tmul {:tmpOperdor = "*"; if(cambiar == true){tmpOperdor2 = "*";cambiar = false;}:}
-            | tmod {:tmpOperdor = "%"; if(cambiar == true){tmpOperdor2 = "%";cambiar = false;}:};
+OPERADORES::= tsum {: tmpOperadorLista.add("+");:}
+            | trest {: tmpOperadorLista.add("-");:}
+            | tdiv {: tmpOperadorLista.add("/");:}
+            | tmul {:tmpOperadorLista.add("*");:}
+            | tmod {:tmpOperadorLista.add("%");:}
+            | pare1 {:tmpOperadorLista.add("(");:}
+            | pare2 {:tmpOperadorLista.add(")");:};
 
 TIPO::=prBoolean
         |prBooleana
@@ -163,11 +176,14 @@ DECLARACION::= prIngresar tvariable:a prComo TIPO prConValor tcadena:b tpuntoyco
                 |prIngresar tvariable:a prComo TIPO prConValor caracter:b tpuntoycoma {:python += a + " = " + b + "\n";:}
                 |prIngresar tvariable:a prComo TIPO prConValor OPERACION tpuntoycoma 
                 {:
-                        python += a + " = " + tmpOperacion.get(tmpOperacion.size() - 1) + "\n";
+                        
+                        for (int i = 0; i < tmpOperacion.size(); i++) {
+                            python += tmpOperacion.get(i);
+                        }
+                        
                         tmpOperacion = new ArrayList<String>();
                         tmpListaNombres = new ArrayList<String>();
                         cambiar = true; 
-                        tmpOperdor2 = "";
                 :}
                 |prIngresar LISTA_NOMBRES prComo TIPO prConValor tnum:a tpuntoycoma {:agregarTmpListaNombres(a);:}
                 |prIngresar LISTA_NOMBRES prComo TIPO prConValor trest tnum:a tpuntoycoma 
@@ -220,13 +236,13 @@ COMENTARIO::= tcomentario:c {:python +=c.replace("//","#")+"\n";:} ;
 //Gramatica de un comentario de varias lineas
 COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas:c {:python += c.replace("/*","'''").replace("*/","'''") + "\n";:};                
 //Gramatica de una asignacion
-ASIGNACION::= tvariable:a FLECHA tcadena:b tpuntoycoma {:python += a+" = "+b+";\n";:}
+ASIGNACION::= tvariable:a FLECHA tcadena:b tpuntoycoma {:python += a + " = " + b + ";\n";:}
                 | tvariable:a FLECHA tnum:b tpuntoycoma {:python += a + " = " + b + ";\n";:}
-                | tvariable:a FLECHA tvariable:b tpuntoycoma {:python += a+" = "+b+";\n";:} 
-                | tvariable:a FLECHA prFloat:b tpuntoycoma {:python += a+" = "+b+";\n";:} 
+                | tvariable:a FLECHA tvariable:b tpuntoycoma {:python += a + " = " + b + ";\n";:} 
+                | tvariable:a FLECHA prFloat:b tpuntoycoma {:python += a + " = " + b + ";\n";:} 
                 | tvariable:a FLECHA prVerdadero:b tpuntoycoma {:python += a+" = True;\n";:}
                 | tvariable:a FLECHA prFalso:b tpuntoycoma {:python += a+" = False;\n";:}
-                | tvariable:a FLECHA caracter:b tpuntoycoma {:python += a+" = "+b+";\n";:}
+                | tvariable:a FLECHA caracter:b tpuntoycoma {:python += a + " = " + b + ";\n";:}
                 | LISTA_NOMBRES FLECHA tcadena:a tpuntoycoma {:agregarTmpListaNombres(a);:}
                 | LISTA_NOMBRES FLECHA tnum:a tpuntoycoma {:agregarTmpListaNombres(a);:}
                 | LISTA_NOMBRES FLECHA tvariable:a tpuntoycoma {:agregarTmpListaNombres(a);:}

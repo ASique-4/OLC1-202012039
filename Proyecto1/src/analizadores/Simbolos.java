@@ -14,14 +14,14 @@ public class Simbolos {
   public static final int prHasta = 31;
   public static final int prFinMientras = 36;
   public static final int prIngresar = 20;
-  public static final int cor2 = 70;
-  public static final int cor1 = 69;
+  public static final int cor2 = 69;
+  public static final int cor1 = 68;
   public static final int tigual = 48;
-  public static final int prMenorOIgual = 67;
-  public static final int prEsDiferente = 62;
+  public static final int prMenorOIgual = 66;
+  public static final int prEsDiferente = 61;
   public static final int prMetodo = 40;
   public static final int prFinSi = 25;
-  public static final int prEsIgual = 61;
+  public static final int prEsIgual = 60;
   public static final int tvariable = 49;
   public static final int prConParametros = 42;
   public static final int prFuncion = 43;
@@ -30,15 +30,14 @@ public class Simbolos {
   public static final int prEjecutar = 45;
   public static final int tcadena = 50;
   public static final int prFinPara = 32;
-  public static final int prBooleana = 55;
-  public static final int caracter = 68;
-  public static final int prMenor = 65;
+  public static final int caracter = 67;
+  public static final int prMenor = 64;
   public static final int prDeLoContrario = 52;
   public static final int tcomentariovariaslineas = 18;
-  public static final int prMayor = 63;
+  public static final int prMayor = 62;
   public static final int tmayor = 16;
   public static final int prImprimir = 46;
-  public static final int prVerdadero = 59;
+  public static final int prVerdadero = 58;
   public static final int prImprimirNl = 47;
   public static final int tcoma = 15;
   public static final int tinterrogacioninicio = 13;
@@ -47,24 +46,24 @@ public class Simbolos {
   public static final int prHastaQue = 38;
   public static final int pare1 = 9;
   public static final int EOF = 0;
-  public static final int prCadena = 58;
+  public static final int prCadena = 57;
   public static final int prEntonces = 24;
   public static final int tcomentario = 17;
   public static final int prComo = 21;
   public static final int tdiv = 5;
   public static final int prIncremental = 34;
   public static final int error = 1;
-  public static final int prFloat = 64;
+  public static final int prFloat = 63;
   public static final int prBoolean = 54;
   public static final int tnum = 2;
-  public static final int prFalso = 60;
+  public static final int prFalso = 59;
   public static final int prFinFuncion = 44;
   public static final int prSi = 23;
   public static final int prSegun = 28;
   public static final int prHacer = 29;
   public static final int trest = 3;
   public static final int prFin = 12;
-  public static final int prCaracter = 56;
+  public static final int prCaracter = 55;
   public static final int tmul = 6;
   public static final int prMientras = 35;
   public static final int tinterrogacionfin = 14;
@@ -74,9 +73,9 @@ public class Simbolos {
   public static final int prO_Si = 26;
   public static final int prDE_LO_CONTRARIO = 27;
   public static final int prRepetir = 37;
-  public static final int prMayorOIgual = 66;
+  public static final int prMayorOIgual = 65;
   public static final int prFinMetodo = 41;
-  public static final int prNumero = 57;
+  public static final int prNumero = 56;
   public static final int tsum = 4;
   public static final int prPara = 30;
   public static final String[] terminalNames = new String[] {
@@ -135,7 +134,6 @@ public class Simbolos {
   "prDeLoContrario",
   "palabra",
   "prBoolean",
-  "prBooleana",
   "prCaracter",
   "prNumero",
   "prCadena",
