@@ -223,11 +223,6 @@ float = [\+|\-]*\d+[\.]\d+
                     return new Symbol(Simbolos.prImprimir, yycolumn, yyline, yytext());
                   }
                 
-<YYINITIAL>"booleana" {
-                    //codigo en java
-                    System.out.println("Reconocio palabra_reservada booleana, lexema:"+yytext());
-                    return new Symbol(Simbolos.prBooleana, yycolumn, yyline, yytext());
-                  }
 <YYINITIAL>"boolean" {
                     //codigo en java
                     System.out.println("Reconocio palabra_reservada boolean, lexema:"+yytext());

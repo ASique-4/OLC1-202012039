@@ -6,6 +6,7 @@ import java.util.ArrayList;
 parser code 
 {:
     boolean cambiar = true;
+    int countTab = 1;
     int cont = 0;
     public String python = "";
     public String golang = "";
@@ -16,6 +17,9 @@ parser code
     String valor = "";
     String tmpPython = "";
     String tmpImprimir = "";
+    String tmpImprimirnl = "";
+    ArrayList<String> variables = new ArrayList<String>();
+    ArrayList<String> condiciones = new ArrayList<String>();
     ArrayList<String> tmpListaNombres = new ArrayList<String>();
     ArrayList<String> tmpOperacion = new ArrayList<String>();
     ArrayList<String> tmpOperadorLista = new ArrayList<String>();
@@ -25,7 +29,28 @@ parser code
         System.out.println("Error Sintáctico en la Línea " + (s.left) +
         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
     } 
-    
+    //Repet tab
+        public String tab(int n){
+                String tab = "";
+                for(int i = 0; i < n; i++){
+                tab += "\t";
+                }
+                return tab;
+        }
+    //ASCII to char
+        public String asciiToChar(String ascii){
+                ascii = ascii.replace("{", "");
+                ascii = ascii.replace("}", "");
+                ascii = ascii.replace("$", "");
+                ascii = ascii.replace("'", "");
+                System.out.println(ascii);
+                String[] asciiArray = ascii.split(",");
+                String charValue = "";
+                for(int i = 0; i < asciiArray.length; i++){
+                charValue += (char)Integer.parseInt(asciiArray[i]);
+                }
+                return "'" + charValue + "'";
+        }
     public void agregarTmpListaNombres(String a){
 
 
@@ -53,7 +78,7 @@ parser code
         tmpOperacion.remove(tmpOperacion.size() - 2);
     }
 
-    public void agregarTmpOperacionLista3(){
+    public void agregarTmpOperacionLista3(String a){
         tmpOperacion.add( "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")" +
          tmpOperadorLista.get(tmpOperadorLista.size() - 1) + "(" + a + ")" 
         ); 
@@ -84,7 +109,7 @@ terminal String trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
         prHasta,prFinPara,prCon,prIncremental,prMientras,prFinMientras,prRepetir,prHastaQue,prRetornar,prMetodo,
         prFinMetodo,prConParametros,prFuncion,prFinFuncion,prEjecutar,prImprimir,prImprimirNl,tigual,tvariable,tcadena,
         prFinSegun,prDeLoContrario,palabra, prBoolean,prCaracter,prNumero,prCadena,prVerdadero,prFalso,
-        prEsIgual,prEsDiferente,prMayor,prFloat,prMenor,prMayorOIgual,prMenorOIgual,caracter,cor1,cor2;           
+        prEsIgual,prEsDiferente,prMayor,prFloat,prMenor,prMayorOIgual,prMenorOIgual,caracter,cor1,cor2,ascii;           
 
 
 non terminal INICIO;
@@ -122,18 +147,23 @@ non terminal String IMPRIMIR_NL;
 non terminal String TIPO;
 non terminal String OPERACION;
 non terminal String OPERACIONES;
+non terminal String OPERACIONES2;
 non terminal String OPERADORES;
+non terminal String OPERANDOS;
+non terminal String VARIABLES;
 
+precedence left OPERANDOS;
 precedence left tsum, trest;
 precedence left tdiv, tmul;
 precedence left tmod, tpot;
+
 
 start with INICIO;
 
 INICIO::= prInicio E prFin;
 
 E::=    DECLARACION E
-        | {:tmpPython += "if ";:} IF {:System.out.println("Se realizo un if");:} E
+        |IF {:System.out.println("Se realizo un if");:} E
         |COMENTARIO {:System.out.println("Se realizo un comentar");:} E
         |COMENTARIO_VARIAS_LINEAS {:System.out.println("Se realizo un comentarioVariasLineas");:} E
         |ASIGNACION {:System.out.println("Se realizo un asignacion");:} E
@@ -146,35 +176,47 @@ E::=    DECLARACION E
         |METODO {:System.out.println("Se realizo un metodo");:}E
         |FUNCION {:System.out.println("Se realizo un funcion");:}E
         |EJECUTAR {:System.out.println("Se realizo un ejecutar");:}E
-        |IMPRIMIR E 
-        |IMPRIMIR_NL E {:tmpInstruccion += tmpImprimir; tmpImprimir = "";:}
+        |IMPRIMIR E {:tmpInstruccion += tab(countTab) + tmpImprimir + "\n"; countTab += 1;:}
+        |IMPRIMIR_NL E {:tmpInstruccion += tab(countTab) + tmpImprimirnl + "\n"; countTab += 1;:}
         |OPERACION {:System.out.println("Se realizo una operacion");:} E
         |error {:tmpPython = "";:} E
         |;
 
-OPERACIONES::= OPERACION OPERACIONES 
+OPERACIONES::= OPERACIONES2 OPERACIONES
+                | OPERACIONES2
+                | OPERACION OPERACIONES
                 | OPERACION;
 
-OPERACION::=    tnum:a OPERADORES tnum:b {:agregarTmpOperacion(a,b);:}
-                |tvariable:a OPERADORES tvariable:b {:agregarTmpOperacion(a,b);:}
-                |tnum:a OPERADORES tvariable:b {:agregarTmpOperacion(a,b); :}
-                |tvariable:a OPERADORES tnum:b {:agregarTmpOperacion(a,b);:}
 
-                |tnum:a OPERADORES tnum:b OPERADORES OPERACION{:agregarTmpOperacion(a,b);agregarTmpOperacionLista(tmpOperacion.get(tmpOperacion.size() - 2));:}
-                |tvariable:a OPERADORES tvariable:b OPERADORES OPERACION{:agregarTmpOperacion(a,b);agregarTmpOperacionLista(tmpOperacion.get(tmpOperacion.size() - 2));:}
-                |tnum:a OPERADORES tvariable:b OPERADORES OPERACION{:agregarTmpOperacion(a,b);agregarTmpOperacionLista(tmpOperacion.get(tmpOperacion.size() - 2));:}
-                |tvariable:a OPERADORES tnum:b OPERADORES OPERACION{:agregarTmpOperacion(a,b);agregarTmpOperacionLista(tmpOperacion.get(tmpOperacion.size() - 2));:}
+OPERANDOS::= tnum:a {:variables.add(a);:}
+                | tvariable:a {:variables.add(a);:};
 
-                |tvariable:a tpot cor1 tvariable:b cor2 {:tmpOperacion.add(a + "**" + b);:}
-                |tnum:a tpot cor1 tvariable:b cor2 {:tmpOperacion.add(a + "**" + b); :} 
-                |tvariable:a tpot cor1 tnum:b cor2 {:tmpOperacion.add(a + "**" + b);:}
-                |tnum:a tpot cor1 tnum:b cor2 {:tmpOperacion.add(a + "**" + b);:}
+OPERACION::=    OPERANDOS OPERADORES OPERANDOS {:agregarTmpOperacion(variables.get(variables.size() - 2),variables.get(variables.size() - 1));
+                        variables.remove(variables.size() - 1);
+                        variables.remove(variables.size() - 1);:}
+
+                |OPERANDOS OPERADORES OPERANDOS OPERADORES OPERACION{:agregarTmpOperacion(variables.get(variables.size() - 2),variables.get(variables.size() - 1));
+                        variables.remove(variables.size() - 1);
+                        variables.remove(variables.size() - 1);:}
+
+                |OPERANDOS tpot cor1 OPERANDOS cor2 {:tmpOperacion.add(variables.get(variables.size() - 2) + "**" +variables.get(variables.size() - 1));
+                        variables.remove(variables.size() - 1);
+                        variables.remove(variables.size() - 1);:}
                 
-                |tnum:a OPERADORES pare1 OPERACIONES pare2 {:agregarTmpOperacionLista(a);:}
-                |tvariable:a OPERADORES pare1 OPERACIONES pare2 {:agregarTmpOperacionLista(a);:}
-                |pare1 OPERACIONES pare2 OPERADORES tnum:a {:agregarTmpOperacionLista3();:}
-                |pare1 OPERACIONES pare2 OPERADORES tvariable:a {:agregarTmpOperacionLista3();:}
-                |pare1 OPERACIONES pare2 OPERADORES pare1 OPERACIONES pare2 {:agregarTmpOperacionLista2();:};
+                |OPERANDOS OPERADORES pare1 OPERACIONES pare2 {:agregarTmpOperacionLista(variables.get(variables.size() - 1));
+                        variables.remove(variables.size() - 1);:}
+                |pare1 OPERACIONES pare2 OPERADORES OPERANDOS {:agregarTmpOperacionLista3(variables.get(variables.size() - 1));
+                        variables.remove(variables.size() - 1);:}
+                |pare1 OPERACIONES pare2 OPERADORES pare1 OPERACIONES pare2 {:agregarTmpOperacionLista2();:}
+                
+                |pare1 OPERACIONES pare2 OPERADORES pare1 OPERACIONES pare2 OPERACIONES2{:agregarTmpOperacionLista2();:}
+                ;
+
+OPERACIONES2::= OPERADORES OPERACION OPERACIONES2
+                | OPERADORES OPERANDOS{:
+                        agregarTmpOperacionLista3(variables.get(variables.size() - 1));
+                        variables.remove(variables.size() - 1);:}
+                ;
 
 OPERADORES::= tsum {: tmpOperadorLista.add("+");:}
             | trest {: tmpOperadorLista.add("-");:}
@@ -198,6 +240,7 @@ DECLARACION::= prIngresar tvariable:a prComo TIPO prConValor tcadena:b tpuntoyco
                 |prIngresar tvariable:a prComo TIPO prConValor trest prFloat:b tpuntoycoma {:python += a + " = -" + b + "\n";:}
                 |prIngresar tvariable:a prComo TIPO prConValor tsum prFloat:b tpuntoycoma {:python += a + " = +" + b + "\n";:}
                 |prIngresar tvariable:a prComo TIPO prConValor caracter:b tpuntoycoma {:python += a + " = " + b + "\n";:}
+                |prIngresar tvariable:a prComo TIPO prConValor ascii:b tpuntoycoma {:python += a + " = " + asciiToChar(b) + "\n";:}
                 |prIngresar tvariable:a prComo TIPO prConValor OPERACION tpuntoycoma 
                 {:
                         
@@ -295,7 +338,13 @@ LISTA_NOMBRES::= tvariable:a {:tmpListaNombres.add(a);:} LISTA_NOMBRES2
 LISTA_NOMBRES2::= tcoma tvariable:a {:tmpListaNombres.add(a);:} LISTA_NOMBRES2
                 |tcoma tvariable:a {:tmpListaNombres.add(a);:};
 
-IF::= prSi  CONDICION prEntonces  E {:tmpPython += tmpInstruccion;:} prFinSi {:python += tmpPython + "\n"; tmpPython = "";:}
+IF::= prSi CONDICION prEntonces E prFinSi {:
+                tmpPython += "if " + condicion + ":\n";
+                tmpPython += tmpInstruccion + "\n"; 
+                python += tmpPython + "\n"; 
+                tmpPython = "";
+                countTab = 1;
+                instruccion = "";:}
         |prSi CONDICION prEntonces E O_SI prFinSi
         |prSi CONDICION prEntonces E DE_LO_CONTRARIO prFinSi
         |prSi CONDICION prEntonces E O_SI DE_LO_CONTRARIO prFinSi;
@@ -304,11 +353,45 @@ DE_LO_CONTRARIO::= prDE_LO_CONTRARIO E DE_LO_CONTRARIO|prDE_LO_CONTRARIO E;
 
 O_SI::= prO_Si CONDICION prEntonces E O_SI|prO_Si CONDICION prEntonces E;
 
-CONDICION::= tvariable:a tigual:b tigual:c tvariable:d {:condicion = a + b +c +d ; tmpPython += condicion + ":\n\t";:} |
-            tvariable:a tigual:b tigual:c tcadena:d {:condicion = a + b +c +d ;:} |
-            tvariable:a tigual:b tigual:c tnum:d {:condicion = a + b +c +d ;:} ;
+CONDICION::= VARIABLES prEsIgual VARIABLES {:
+                condicion = variables.get(variables.size() - 2) + " == " + variables.get(variables.size() - 1); 
+                variables.remove(variables.size() - 1);
+                variables.remove(variables.size() - 1);:} 
+            |VARIABLES prMayor VARIABLES {:
+                condicion = variables.get(variables.size() - 2) + " > " + variables.get(variables.size() - 1); 
+                variables.remove(variables.size() - 1);
+                variables.remove(variables.size() - 1);:}
+            |VARIABLES prMayorOIgual VARIABLES {:
+                condicion = variables.get(variables.size() - 2) + " >= " + variables.get(variables.size() - 1); 
+                variables.remove(variables.size() - 1);
+                variables.remove(variables.size() - 1);:}
+            |VARIABLES prMenor VARIABLES {:
+                condicion = variables.get(variables.size() - 2) + " < " + variables.get(variables.size() - 1); 
+                variables.remove(variables.size() - 1);
+                variables.remove(variables.size() - 1);:}
+            |VARIABLES prMenorOIgual VARIABLES {:
+                condicion = variables.get(variables.size() - 2) + " <= " + variables.get(variables.size() - 1); 
+                variables.remove(variables.size() - 1);
+                variables.remove(variables.size() - 1);:}
+            |VARIABLES prEsDiferente VARIABLES {:
+                condicion = variables.get(variables.size() - 2) + " != " + variables.get(variables.size() - 1); 
+                variables.remove(variables.size() - 1);
+                variables.remove(variables.size() - 1);:}
+            |tvariable:a {:
+                condicion = a; 
+                variables.remove(variables.size() - 1);
+                variables.remove(variables.size() - 1);:};
 
 VARIABLE::= tvariable;
+
+VARIABLES::= tvariable:a {:variables.add(a);:}
+            |tnum:a {:variables.add(a);:}
+            |tcadena:a {:variables.add(a);:}
+            |prFloat:a {:variables.add(a);:}
+            |prVerdadero:a {:variables.add(a);:}
+            |prFalso:a {:variables.add(a);:}
+            |caracter:a {:variables.add(a);:}
+            |ascii:a {:variables.add(asciiToChar(a));:};
 
 INSTRUCCIONES::=  INSTRUCCION tpuntoycoma INSTRUCCIONES
                  |INSTRUCCION tpuntoycoma;
@@ -341,6 +424,20 @@ FUNCION::= prFuncion VARIABLE tcadena prConParametros LISTA_PARAMETROS INSTRUCCI
 
 EJECUTAR::= prEjecutar VARIABLE pare1 pare2 tpuntoycoma|prEjecutar VARIABLE pare1 LISTA_PARAMETROS pare2 tpuntoycoma;
 
-IMPRIMIR::= prImprimir VALOR tpuntoycoma;
+IMPRIMIR::= prImprimir VARIABLES tpuntoycoma{:
+                tmpImprimir = "print(" + variables.get(variables.size() - 1) + ")";
+                variables.remove(variables.size() - 1);
+                python += tmpImprimir + "\n";:}
+            |prImprimir pare1 VARIABLES pare2 tpuntoycoma{:
+                tmpImprimir = "print(" + variables.get(variables.size() - 1) + ")";
+                variables.remove(variables.size() - 1);
+                python += tmpImprimir + "\n";:};
 
-IMPRIMIR_NL::= prImprimirNl VALOR tpuntoycoma {:tmpImprimir = "println(" + valor + ")";:};
+IMPRIMIR_NL::= prImprimirNl VARIABLES tpuntoycoma {:
+                tmpImprimirnl = "println(" + variables.get(variables.size() - 1) + ")";
+                variables.remove(variables.size() - 1);
+                python += tmpImprimirnl + "\n";:}
+                |prImprimirNl pare1 VARIABLES pare2 tpuntoycoma {:
+                tmpImprimirnl = "println(" + variables.get(variables.size() - 1) + ")";
+                variables.remove(variables.size() - 1);
+                python += tmpImprimirnl + "\n";:};

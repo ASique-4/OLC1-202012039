@@ -23,6 +23,20 @@ ingresar _operaciones1Basica_      como numero con_valor 1+((8-7)/(2-9));
 fin
 
 inicio
+ingresar _operaciones1Basica_      como numero con_valor ((8-7)/(2-9))+2; 
+fin
+
+inicio
+ingresar _operaciones1Basica_      como numero con_valor (5*4)+(((2-9)-(2*7))/(2-9))-8; 
+fin
+
+inicio
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "no tiene que imprimir este mensaje";
+fin_si
+fin
+
+inicio
 ingresar _operaciones1Basica_      como numero con_valor (5*4)+(((2-9)-(2*7))/(2-9)); 
 fin
  */
@@ -73,7 +87,7 @@ public class Ventana extends javax.swing.JFrame {
 
         TextArea.setBackground(new java.awt.Color(238, 238, 238));
         TextArea.setColumns(20);
-        TextArea.setFont(new java.awt.Font("Fira Code SemiBold", 1, 18)); // NOI18N
+        TextArea.setFont(new java.awt.Font("Fira Code SemiBold", 0, 18)); // NOI18N
         TextArea.setForeground(new java.awt.Color(57, 62, 70));
         TextArea.setRows(5);
         jScrollPane1.setViewportView(TextArea);

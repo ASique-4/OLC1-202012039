@@ -18,12 +18,13 @@ import java_cup.runtime.*;
 
 num = [0-9]+
 variable = _[a-zA-Z0-9]+_
-cadena = [\"|\'](\s|\S)[^\"\']*[\"|\']
+cadena = [\'](\s|\S)[^\']*[\']|[\"](\s|\S)[^\"]*[\"]
 comentario = ([\/][\/])+(\s|\S)[^\n]*
 comentarioVariasLineas = [\/][\*]+(((\s|\S)[^\*]*)|([\n]*)|([\*]*[^\/]))([\*]+[\/])
 palabra = [a-zA-Z]+
-caracter = [\"|\'][\s|\S][\"|\']
+caracter = [\'][\s|\S][\']|[\"][\s|\S][\"]
 float = [\+|\-]*\d+[\.]\d+
+ascii = [\']\$\{[\d]+}[\']|[\"]\$\{[\d]+}[\"]
 
 %%
 
@@ -289,7 +290,13 @@ float = [\+|\-]*\d+[\.]\d+
                     //codigo en java
                     System.out.println("Reconocio palabra_reservada menor_o_igual, lexema:"+yytext());
                     return new Symbol(Simbolos.prMenorOIgual, yycolumn, yyline, yytext());
-                  }                                                                        
+                  }
+
+{ascii}           {
+                    //codigo en java
+                    System.out.println("Reconocio ascii, lexema:"+yytext());
+                    return new Symbol(Simbolos.ascii, yycolumn, yyline, yytext());
+                  }                                          
 
 {float}           {
                     //Codigo en java

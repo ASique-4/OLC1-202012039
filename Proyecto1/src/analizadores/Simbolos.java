@@ -69,6 +69,7 @@ public class Simbolos {
   public static final int tinterrogacionfin = 14;
   public static final int tmod = 8;
   public static final int prFinSegun = 51;
+  public static final int ascii = 70;
   public static final int prInicio = 11;
   public static final int prO_Si = 26;
   public static final int prDE_LO_CONTRARIO = 27;
@@ -148,7 +149,8 @@ public class Simbolos {
   "prMenorOIgual",
   "caracter",
   "cor1",
-  "cor2"
+  "cor2",
+  "ascii"
   };
 }
 

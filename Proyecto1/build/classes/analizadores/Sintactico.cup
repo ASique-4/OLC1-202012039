@@ -41,6 +41,25 @@ parser code
         tmpOperacion.add( "(" + a + ")" + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + 
         "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")"); 
         tmpOperadorLista.remove(tmpOperadorLista.size() - 1);
+        tmpOperacion.remove(tmpOperacion.size() - 2);
+
+    }
+
+    public void agregarTmpOperacionLista2(){
+        tmpOperacion.add( "(" + tmpOperacion.get(tmpOperacion.size() - 2) + ")" + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + 
+        "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")"); 
+        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);
+        tmpOperacion.remove(tmpOperacion.size() - 2);
+        tmpOperacion.remove(tmpOperacion.size() - 2);
+    }
+
+    public void agregarTmpOperacionLista3(String a){
+        tmpOperacion.add( "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")" +
+         tmpOperadorLista.get(tmpOperadorLista.size() - 1) + "(" + a + ")" 
+        ); 
+        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);
+        tmpOperacion.remove(tmpOperacion.size() - 2);
+
     }
 
     public void agregarTmpOperacion(String a, String b){
@@ -64,7 +83,7 @@ terminal String trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
         tpuntoycoma,prIngresar,prComo,prConValor,prSi,prEntonces,prFinSi,prO_Si,prDE_LO_CONTRARIO,prSegun,prHacer,prPara,
         prHasta,prFinPara,prCon,prIncremental,prMientras,prFinMientras,prRepetir,prHastaQue,prRetornar,prMetodo,
         prFinMetodo,prConParametros,prFuncion,prFinFuncion,prEjecutar,prImprimir,prImprimirNl,tigual,tvariable,tcadena,
-        prFinSegun,prDeLoContrario,palabra, prBoolean,prBooleana,prCaracter,prNumero,prCadena,prVerdadero,prFalso,
+        prFinSegun,prDeLoContrario,palabra, prBoolean,prCaracter,prNumero,prCadena,prVerdadero,prFalso,
         prEsIgual,prEsDiferente,prMayor,prFloat,prMenor,prMayorOIgual,prMenorOIgual,caracter,cor1,cor2;           
 
 
@@ -136,29 +155,36 @@ E::=    DECLARACION E
 OPERACIONES::= OPERACION OPERACIONES 
                 | OPERACION;
 
-OPERACION::=    tnum:a OPERADORES  {:
-                        tmpOperacion.add(a+ tmpOperadorLista.get(tmpOperadorLista.size() - 1));
-                        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);:}
-                |tvariable:a OPERADORES  {:
-                        tmpOperacion.add(a+ tmpOperadorLista.get(tmpOperadorLista.size() - 1));
-                        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);:}
-                |OPERADORES tnum:a  {:
-                        tmpOperacion.add(tmpOperadorLista.get(tmpOperadorLista.size() - 1) + a);
-                        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);:}
-                |OPERADORES tvariable:a  {:
-                        tmpOperacion.add(tmpOperadorLista.get(tmpOperadorLista.size() - 1) + a);
-                        tmpOperadorLista.remove(tmpOperadorLista.size() - 1);:};
+OPERACION::=    tnum:a OPERADORES tnum:b {:agregarTmpOperacion(a,b);:}
+                |tvariable:a OPERADORES tvariable:b {:agregarTmpOperacion(a,b);:}
+                |tnum:a OPERADORES tvariable:b {:agregarTmpOperacion(a,b); :}
+                |tvariable:a OPERADORES tnum:b {:agregarTmpOperacion(a,b);:}
+
+                |tnum:a OPERADORES tnum:b OPERADORES OPERACION{:agregarTmpOperacion(a,b);agregarTmpOperacionLista(tmpOperacion.get(tmpOperacion.size() - 2));:}
+                |tvariable:a OPERADORES tvariable:b OPERADORES OPERACION{:agregarTmpOperacion(a,b);agregarTmpOperacionLista(tmpOperacion.get(tmpOperacion.size() - 2));:}
+                |tnum:a OPERADORES tvariable:b OPERADORES OPERACION{:agregarTmpOperacion(a,b);agregarTmpOperacionLista(tmpOperacion.get(tmpOperacion.size() - 2));:}
+                |tvariable:a OPERADORES tnum:b OPERADORES OPERACION{:agregarTmpOperacion(a,b);agregarTmpOperacionLista(tmpOperacion.get(tmpOperacion.size() - 2));:}
+
+                |tvariable:a tpot cor1 tvariable:b cor2 {:tmpOperacion.add(a + "**" + b);:}
+                |tnum:a tpot cor1 tvariable:b cor2 {:tmpOperacion.add(a + "**" + b); :} 
+                |tvariable:a tpot cor1 tnum:b cor2 {:tmpOperacion.add(a + "**" + b);:}
+                |tnum:a tpot cor1 tnum:b cor2 {:tmpOperacion.add(a + "**" + b);:}
+                
+                |tnum:a OPERADORES pare1 OPERACIONES pare2 {:agregarTmpOperacionLista(a);:}
+                |tvariable:a OPERADORES pare1 OPERACIONES pare2 {:agregarTmpOperacionLista(a);:}
+                |pare1 OPERACIONES pare2 OPERADORES tnum:a {:agregarTmpOperacionLista3(a);:}
+                |pare1 OPERACIONES pare2 OPERADORES tvariable:a {:agregarTmpOperacionLista3(a);:}
+                |pare1 OPERACIONES pare2 OPERADORES pare1 OPERACIONES pare2 {:agregarTmpOperacionLista2();:}
+                
+                |OPERACIONES OPERADORES OPERACIONES {:agregarTmpOperacionLista2();:};
 
 OPERADORES::= tsum {: tmpOperadorLista.add("+");:}
             | trest {: tmpOperadorLista.add("-");:}
             | tdiv {: tmpOperadorLista.add("/");:}
             | tmul {:tmpOperadorLista.add("*");:}
-            | tmod {:tmpOperadorLista.add("%");:}
-            | pare1 {:tmpOperadorLista.add("(");:}
-            | pare2 {:tmpOperadorLista.add(")");:};
+            | tmod {:tmpOperadorLista.add("%");:};
 
 TIPO::=prBoolean
-        |prBooleana
         |prCaracter
         |prNumero
         |prCadena;
@@ -177,9 +203,7 @@ DECLARACION::= prIngresar tvariable:a prComo TIPO prConValor tcadena:b tpuntoyco
                 |prIngresar tvariable:a prComo TIPO prConValor OPERACION tpuntoycoma 
                 {:
                         
-                        for (int i = 0; i < tmpOperacion.size(); i++) {
-                            python += tmpOperacion.get(i);
-                        }
+                        python += a + " = " + tmpOperacion.get(tmpOperacion.size() - 1) + "\n";
                         
                         tmpOperacion = new ArrayList<String>();
                         tmpListaNombres = new ArrayList<String>();
