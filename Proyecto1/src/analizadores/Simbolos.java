@@ -64,6 +64,7 @@ public class Simbolos {
   public static final int trest = 3;
   public static final int prFin = 12;
   public static final int prCaracter = 54;
+  public static final int prNot = 70;
   public static final int tmul = 6;
   public static final int prMientras = 35;
   public static final int tinterrogacionfin = 14;
@@ -148,7 +149,8 @@ public class Simbolos {
   "caracter",
   "cor1",
   "cor2",
-  "ascii"
+  "ascii",
+  "prNot"
   };
 }
 

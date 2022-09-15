@@ -292,6 +292,12 @@ ascii = [\']\$\{[\d]+}[\']|[\"]\$\{[\d]+}[\"]
                     return new Symbol(Simbolos.prMenorOIgual, yycolumn, yyline, yytext());
                   }
 
+<YYINITIAL>"not"  {
+                    //codigo en java
+                    System.out.println("Reconocio palabra_reservada not, lexema:"+yytext());
+                    return new Symbol(Simbolos.prNot, yycolumn, yyline, yytext());
+                  }                  
+
 {ascii}           {
                     //codigo en java
                     System.out.println("Reconocio ascii, lexema:"+yytext());

@@ -23,6 +23,63 @@ ingresar _operaciones1Basica_      como numero con_valor 1+((8-7)/(2-9));
 fin
 
 inicio
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "no tiene que imprimir este mensaje";
+de_lo_contrario
+	imprimir "de lo contrario";
+fin_si
+fin
+
+inicio
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "no tiene que imprimir este mensaje";
+o_si _v1_ mayor _v2_ entonces
+	imprimir_nl "mayor";
+de_lo_contrario
+	si _v1_ es_igual _v2_ entonces
+		imprimir_nl "no tiene que imprimir este mensaje";
+	de_lo_contrario
+		imprimir "de lo contrario";
+	fin_si
+fin_si
+fin
+
+inicio
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "no tiene que imprimir este mensaje";
+o_si _v1_ mayor _v2_ entonces
+	imprimir_nl "mayor";
+de_lo_contrario
+	imprimir "de lo contrario";
+fin_si
+fin
+
+inicio
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "no tiene que imprimir este mensaje1";
+		o_si _v1_ es_igual 13 entonces
+		    imprimir_nl "mensaje de prueba2";
+		o_si _v1_ es_igual 14 entonces
+		    imprimir_nl "mensaje de prueba3";
+	de_lo_contrario
+	    imprimir_nl "este print es un ejemplo4";
+fin_si
+fin
+
+inicio
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "no tiene que imprimir este mensaje";
+
+fin_si
+fin
+
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "no tiene que imprimir este mensaje";
+	de_lo_contrario
+	    imprimir "este print es un ejemplo";
+fin_si
+
+inicio
 ingresar _operaciones1Basica_      como numero con_valor ((8-7)/(2-9))+2; 
 fin
 
