@@ -779,7 +779,25 @@ CONDICION::= VARIABLES prEsIgual VARIABLES {:
                         variables.remove(variables.size() - 1);
                         tmpOperacion.remove(tmpOperacion.size() - 1);
                 }
-                :};
+                :}
+                |tvariable:a {:
+                if(condiciones.get(condiciones.size() - 1).equals("if")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a); 
+                        condiciones.add("if2");
+                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
+                        tmpPythonArray.add("elif");
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a); 
+                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a); 
+                        condiciones.add("mientras2");
+
+                }else{
+                        condiciones.add(a); 
+                }
+                :} ;
 
 VARIABLE::= tvariable;
 
