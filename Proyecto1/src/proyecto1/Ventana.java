@@ -45,6 +45,12 @@ fin_si
 fin
 
 inicio
+mientras not (_variable1_ mayor_o_igual 5*5+8/2) hacer
+		imprimir _variable1_;
+	fin_mientras
+fin
+
+inicio
 si _v1_ es_igual _v2_ entonces
 	imprimir_nl "no tiene que imprimir este mensaje";
 o_si _v1_ mayor _v2_ entonces
