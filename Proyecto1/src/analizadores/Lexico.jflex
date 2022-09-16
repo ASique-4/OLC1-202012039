@@ -18,7 +18,7 @@ import java_cup.runtime.*;
 
 num = [0-9]+
 variable = _[a-zA-Z0-9]+_
-cadena = [\'](\s|\S)[^\']*[\']|[\"](\s|\S)[^\"]*[\"]
+cadena = [\'][^\'\n]*[\']|[\"][^\"\n]*[\"]
 comentario = ([\/][\/])+(\s|\S)[^\n]*
 comentarioVariasLineas = [\/][\*]+(((\s|\S)[^\*]*)|([\n]*)|([\*]*[^\/]))([\*]+[\/])
 palabra = [a-zA-Z]+

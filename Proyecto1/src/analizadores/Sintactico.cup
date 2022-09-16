@@ -5,36 +5,36 @@ import java.util.ArrayList;
 
 parser code 
 {:
-    boolean cambiar = true;
-    int countTab = 1;
-    int tmpCountTab = 0;
-    int cont = 0;
-    public String python = "";
-    public String golang = "";
-    public int erroresSintacticos = 0;
-    String condicion = "";
-    String instruccion = "";
-    String tmpInstruccion = "";
-    String valor = "";
-    String tmpPython = "";
-    String tmpImprimir = "";
-    String tmpImprimirnl = "";
-    Boolean osiBool = false;
-    ArrayList<String> variables = new ArrayList<String>();
-    ArrayList<String> condiciones = new ArrayList<String>();
-    ArrayList<String> tmpListaNombres = new ArrayList<String>();
-    ArrayList<String> tmpOperacion = new ArrayList<String>();
-    ArrayList<String> tmpOperadorLista = new ArrayList<String>();
-    ArrayList<String> pythonArray = new ArrayList<String>();
-    ArrayList<String> tmpPythonArray = new ArrayList<String>();
-    ArrayList<String> tmpPython2 = new ArrayList<String>();
-    public void syntax_error(Symbol s){ 
+        boolean cambiar = true;
+        int countTab = 0;
+        int tmpCountTab = 0;
+        int cont = 0;
+        public String python = "";
+        public String golang = "";
+        public int erroresSintacticos = 0;
+        String condicion = "";
+        String instruccion = "";
+        String tmpInstruccion = "";
+        String valor = "";
+        String tmpPython = "";
+        String tmpImprimir = "";
+        String tmpImprimirnl = "";
+        Boolean osiBool = false;
+        ArrayList<String> variables = new ArrayList<String>();
+        ArrayList<String> condiciones = new ArrayList<String>();
+        ArrayList<String> tmpListaNombres = new ArrayList<String>();
+        ArrayList<String> tmpOperacion = new ArrayList<String>();
+        ArrayList<String> tmpOperadorLista = new ArrayList<String>();
+        ArrayList<String> pythonArray = new ArrayList<String>();
+        ArrayList<String> tmpPythonArray = new ArrayList<String>();
+        ArrayList<String> tmpPython2 = new ArrayList<String>();
+        public void syntax_error(Symbol s){ 
         erroresSintacticos++;
         //Imprimir error
         System.out.println("Error Sintáctico en la Línea " + (s.left) +
         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
-    } 
-    //Repet tab
+        } 
+        //Repet tab
         public String tab(int n){
                 String tab = "";
                 for(int i = 0; i < n; i++){
@@ -42,70 +42,69 @@ parser code
                 }
                 return tab;
         }
-    //ASCII to char
+        //ASCII to char
         public String asciiToChar(String ascii){
                 ascii = ascii.replace("{", "");
                 ascii = ascii.replace("}", "");
                 ascii = ascii.replace("$", "");
                 ascii = ascii.replace("'", "");
-                System.out.println(ascii);
                 String[] asciiArray = ascii.split(",");
                 String charValue = "";
                 for(int i = 0; i < asciiArray.length; i++){
-                charValue += (char)Integer.parseInt(asciiArray[i]);
+                        charValue += (char)Integer.parseInt(asciiArray[i]);
                 }
-                return "'" + charValue + "'";
+                return "\"" + charValue + "\"";
         }
-    public void agregarTmpListaNombres(String a){
+        public void agregarTmpListaNombres(String a){
 
 
         for(String i: tmpListaNombres){
-                python += i + " = " + a + ";\n";
+                python += i + " = " + a + "\n";
                 pythonArray.add(i + " = " + a + ";\n");
         }; 
-        
-        
-        tmpListaNombres = new ArrayList<String>();
-    }
 
-    public void agregarTmpOperacionLista(String a){
+
+        tmpListaNombres = new ArrayList<String>();
+        }
+
+        public void agregarTmpOperacionLista(String a){
         tmpOperacion.add( "(" + a + ")" + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + 
         "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")"); 
         tmpOperadorLista.remove(tmpOperadorLista.size() - 1);
         tmpOperacion.remove(tmpOperacion.size() - 2);
 
-    }
+        }
 
-    public void agregarTmpOperacionLista2(){
+        public void agregarTmpOperacionLista2(){
         tmpOperacion.add( "(" + tmpOperacion.get(tmpOperacion.size() - 2) + ")" + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + 
         "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")"); 
         tmpOperadorLista.remove(tmpOperadorLista.size() - 1);
         tmpOperacion.remove(tmpOperacion.size() - 2);
         tmpOperacion.remove(tmpOperacion.size() - 2);
-    }
+        }
 
-    public void agregarTmpOperacionLista3(String a){
+        public void agregarTmpOperacionLista3(String a){
         tmpOperacion.add( "(" + tmpOperacion.get(tmpOperacion.size() - 1) + ")" +
-         tmpOperadorLista.get(tmpOperadorLista.size() - 1) + "(" + a + ")" 
+                tmpOperadorLista.get(tmpOperadorLista.size() - 1) + "(" + a + ")" 
         ); 
         tmpOperadorLista.remove(tmpOperadorLista.size() - 1);
         tmpOperacion.remove(tmpOperacion.size() - 2);
 
-    }
+        }
 
-    public void agregarTmpOperacion(String a, String b){
+        public void agregarTmpOperacion(String a, String b){
         tmpOperacion.add(a + tmpOperadorLista.get(tmpOperadorLista.size() - 1) + b); 
         tmpOperadorLista.remove(tmpOperadorLista.size() - 1);
-    }
-    /**
-     * Método al que se llama automáticamente ante algún error sintáctico 
-     * en el que ya no es posible una recuperación de errores.
-     **/ 
-    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        }
+        /**
+        * Método al que se llama automáticamente ante algún error sintáctico 
+        * en el que ya no es posible una recuperación de errores.
+        **/ 
+        public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
         System.out.println("Error síntactico irrecuperable en la Línea " + 
         (s.left)+ " Columna "+s.right+". Componente " + s.value + 
         " no reconocido."); 
-    }  
+        }  
 :} 
 
 terminal String tnum;
@@ -153,9 +152,6 @@ non terminal String IMPRIMIR_NL;
 non terminal String TIPO;
 non terminal String OPERACION;
 non terminal String OPERACIONES;
-non terminal String OPERACIONES2;
-non terminal String OPERADORES;
-non terminal String OPERANDOS;
 non terminal String VARIABLES;
 
 precedence left tsum, trest;
@@ -168,7 +164,7 @@ start with INICIO;
 INICIO::= prInicio E prFin;
 
 E::=    DECLARACION E
-        |{: tmpCountTab += 1; condiciones.add("if");:}  IF {:System.out.println("Se realizo un if");:} E
+        |{: condiciones.add("if");:}  IF {:System.out.println("Se realizo un if");:} E
         |COMENTARIO {:System.out.println("Se realizo un comentar");:} E
         |COMENTARIO_VARIAS_LINEAS {:System.out.println("Se realizo un comentarioVariasLineas");:} E
         |ASIGNACION {:System.out.println("Se realizo un asignacion");:} E
@@ -187,99 +183,67 @@ E::=    DECLARACION E
         |error {:tmpPython = "";:} E
         |;
 
-OPERACIONES::= OPERACIONES2 OPERACIONES
-                | OPERACIONES2
-                | OPERACION OPERACIONES
-                | OPERACION;
+EXPRESION::= EXPRESION OPERACIONES:a {:RESULT = a;:}
+                |OPERACIONES:a {:RESULT = a;:};
 
+OPERACIONES::= OPERACION:e {:System.out.println("=" + e + ";"); RESULT = e;:};
 
-OPERANDOS::= tnum:a {:variables.add(a);:}
-                | tvariable:a {:variables.add(a);:};
-
-OPERACION::=    OPERANDOS OPERADORES OPERANDOS {:agregarTmpOperacion(variables.get(variables.size() - 2),variables.get(variables.size() - 1));
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);:}
-
-                |OPERANDOS OPERADORES OPERANDOS OPERADORES OPERACION{:agregarTmpOperacion(variables.get(variables.size() - 2),variables.get(variables.size() - 1));
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);:}
-
-                |OPERANDOS tpot cor1 OPERANDOS cor2 {:tmpOperacion.add(variables.get(variables.size() - 2) + "**" +variables.get(variables.size() - 1));
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);:}
+OPERACION::= tnum:n {:RESULT = n;:}
+                | OPERACION:i tsum OPERACION:r {:RESULT = i + "+" + r;:}
+                | OPERACION:i trest OPERACION:r {:RESULT = i + "-" + r;:}
+                | OPERACION:i tmul OPERACION:r {:RESULT = i + "*" + r;:}
+                | OPERACION:i tdiv OPERACION:r {:RESULT = i + "/" + r;:}
+                | OPERACION:i tmod OPERACION:r {:RESULT = i + "+" + r;:}
+                | OPERACION:i tpot OPERACION:r {:RESULT = i + "**" + r;:}
+                | pare1 OPERACION:e pare2 {:RESULT = "(" + e + ")";:}
+                | cor1 OPERACION:e cor2 {:RESULT = "(" + e + ")";:}
                 
-                |OPERANDOS OPERADORES pare1 OPERACIONES pare2 {:agregarTmpOperacionLista(variables.get(variables.size() - 1));
-                        variables.remove(variables.size() - 1);:}
-                |pare1 OPERACIONES pare2 OPERADORES OPERANDOS {:agregarTmpOperacionLista3(variables.get(variables.size() - 1));
-                        variables.remove(variables.size() - 1);:}
-                |pare1 OPERACIONES pare2 OPERADORES pare1 OPERACIONES pare2 {:agregarTmpOperacionLista2();:}
-                
-                |pare1 OPERACIONES pare2 OPERADORES pare1 OPERACIONES pare2 OPERACIONES2{:agregarTmpOperacionLista2();:}
-                ;
-
-OPERACIONES2::= OPERADORES OPERACION OPERACIONES2
-                | OPERADORES OPERANDOS{:
-                        agregarTmpOperacionLista3(variables.get(variables.size() - 1));
-                        variables.remove(variables.size() - 1);:}
-                ;
-
-OPERADORES::= tsum {: tmpOperadorLista.add("+");:}
-            | trest {: tmpOperadorLista.add("-");:}
-            | tdiv {: tmpOperadorLista.add("/");:}
-            | tmul {:tmpOperadorLista.add("*");:}
-            | tmod {:tmpOperadorLista.add("%");:};
+                | tvariable:n {:RESULT = n;:}
+                | tvariable:i tsum tvariable:r {:RESULT = i + "+" + r;:}
+                | tvariable:i trest tvariable:r {:RESULT = i + "-" + r;:}
+                | tvariable:i tmul tvariable:r {:RESULT = i + "*" + r;:}
+                | tvariable:i tdiv tvariable:r {:RESULT = i + "/" + r;:}
+                | tvariable:i tmod tvariable:r {:RESULT = i + "+" + r;:}
+                | tvariable:i tpot tvariable:r {:RESULT = i + "**" + r;:};
 
 TIPO::=prBoolean
         |prCaracter
         |prNumero
         |prCadena;
 
-DECLARACION::= prIngresar tvariable:a prComo TIPO prConValor VARIABLES tpuntoycoma {:
-                python += a + " = " + variables.get(variables.size() - 1) + "\n"; 
-                pythonArray.add(a + " = " + variables.get(variables.size() - 1) + "\n");
-                :}
-                |prIngresar tvariable:a prComo TIPO prConValor OPERACION tpuntoycoma 
-                {:
-                        
-                        python += a + " = " + tmpOperacion.get(tmpOperacion.size() - 1) + "\n";
-                        
-                        tmpOperacion = new ArrayList<String>();
-                        tmpListaNombres = new ArrayList<String>();
-                        cambiar = true; 
+DECLARACION::= prIngresar tvariable:a prComo TIPO prConValor VARIABLES:b tpuntoycoma {:
+                python += a + " = " + b + "\n"; 
+                pythonArray.add(a + " = " + b + "\n");
                 :}
                 
-                |prIngresar LISTA_NOMBRES prComo TIPO prConValor VARIABLES tpuntoycoma {:agregarTmpListaNombres(variables.get(variables.size() - 1));variables.remove(variables.size() - 1);:}
-
-                |prIngresar LISTA_NOMBRES prComo TIPO prConValor OPERACION tpuntoycoma 
-                {:agregarTmpListaNombres(tmpOperacion.get(tmpOperacion.size() - 1));
-                        tmpOperacion = new ArrayList<String>();
-                        tmpListaNombres = new ArrayList<String>(); 
+                |prIngresar LISTA_NOMBRES prComo TIPO prConValor VARIABLES:b tpuntoycoma {:
+                agregarTmpListaNombres(b);
                 :};
 //Gramatica de un comentario
 COMENTARIO::= tcomentario:c {:python +=c.replace("//","#")+"\n";:} ;
 //Gramatica de un comentario de varias lineas
 COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas:c {:python += c.replace("/*","'''").replace("*/","'''") + "\n";:};                
 //Gramatica de una asignacion
-ASIGNACION::= tvariable:a FLECHA tcadena:b tpuntoycoma {:python += a + " = " + b + ";\n";:}
-                | tvariable:a FLECHA tnum:b tpuntoycoma {:python += a + " = " + b + ";\n";:}
-                | tvariable:a FLECHA tvariable:b tpuntoycoma {:python += a + " = " + b + ";\n";:} 
-                | tvariable:a FLECHA prFloat:b tpuntoycoma {:python += a + " = " + b + ";\n";:} 
-                | tvariable:a FLECHA prVerdadero:b tpuntoycoma {:python += a+" = True;\n";:}
-                | tvariable:a FLECHA prFalso:b tpuntoycoma {:python += a+" = False;\n";:}
-                | tvariable:a FLECHA caracter:b tpuntoycoma {:python += a + " = " + b + ";\n";:}
+ASIGNACION::= tvariable:a FLECHA tcadena:b tpuntoycoma {:python += a + " = " + b + "\n";:}
+                | tvariable:a FLECHA tnum:b tpuntoycoma {:python += a + " = " + b + "\n";:}
+                | tvariable:a FLECHA tvariable:b tpuntoycoma {:python += a + " = " + b + "\n";:} 
+                | tvariable:a FLECHA prFloat:b tpuntoycoma {:python += a + " = " + b + "\n";:} 
+                | tvariable:a FLECHA prVerdadero:b tpuntoycoma {:python += a+" = True\n";:}
+                | tvariable:a FLECHA prFalso:b tpuntoycoma {:python += a+" = False\n";:}
+                | tvariable:a FLECHA caracter:b tpuntoycoma {:python += a + " = " + b + "\n";:}
                 | LISTA_NOMBRES FLECHA tcadena:a tpuntoycoma {:agregarTmpListaNombres(a);:}
                 | LISTA_NOMBRES FLECHA tnum:a tpuntoycoma {:agregarTmpListaNombres(a);:}
                 | LISTA_NOMBRES FLECHA tvariable:a tpuntoycoma {:agregarTmpListaNombres(a);:}
                 | LISTA_NOMBRES FLECHA prFloat:a tpuntoycoma {:agregarTmpListaNombres(a);:}
                 | LISTA_NOMBRES FLECHA prVerdadero:a tpuntoycoma 
                 {:for(String i: tmpListaNombres){
-                         python += i + " = True;\n";
+                         python += i + " = True\n";
                 }; 
                         tmpListaNombres = new ArrayList<String>(); 
                 :}
                 | LISTA_NOMBRES FLECHA prFalso:a tpuntoycoma 
                 {:for(String i: tmpListaNombres){
-                         python += i + " = False;\n";
+                         python += i + " = False\n";
                 }; 
                         tmpListaNombres = new ArrayList<String>(); 
                 :}
@@ -298,20 +262,15 @@ LISTA_NOMBRES2::= tcoma tvariable:a {:tmpListaNombres.add(a);:} LISTA_NOMBRES2
                 |tcoma tvariable:a {:tmpListaNombres.add(a);:};
 
 IF::= prSi CONDICION prEntonces E prFinSi {:
-                if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        condiciones.remove(condiciones.size() - 1);
-                }
-                tmpPython += "if " + condiciones.get(condiciones.size() - 1) + ":\n";
-                condiciones.remove(condiciones.size() - 1);
                 //Iterate tmpPythonArray from the last element to the first
                 for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
                         if(tmpPythonArray.get(i) != ""){
                                 if( tmpPythonArray.get(i).contains("if") || tmpPythonArray.get(i).contains("elif") || tmpPythonArray.get(i).contains("else") ){
-                                        tmpPython += tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab - 1) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }else{
-                                        tmpPython += "\t" + tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }
@@ -319,21 +278,19 @@ IF::= prSi CONDICION prEntonces E prFinSi {:
                 }
                 python += tmpPython + "\n"; 
                 tmpPython = "";
-                countTab -= tmpCountTab;
-                tmpCountTab = 0;
+                countTab -= 1;
                 instruccion = "";:}
         |prSi CONDICION prEntonces E O_SI prFinSi{:
-                python += "if " + condiciones.get(condiciones.size() - 1)+ ":\n";
-                condiciones.remove(condiciones.size() - 1);
+
                 //Iterate tmpPythonArray from the last element to the first
                 for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
                         if(tmpPythonArray.get(i) != ""){
                                if( tmpPythonArray.get(i).contains("if") || tmpPythonArray.get(i).contains("elif") || tmpPythonArray.get(i).contains("else") ){
-                                        tmpPython += tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab - 1) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }else{
-                                        tmpPython += "\t" + tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }
@@ -346,24 +303,20 @@ IF::= prSi CONDICION prEntonces E prFinSi {:
                 tmpPython2 = new ArrayList<String>();
                 python += tmpPython + "\n"; 
                 tmpPython = "";
-                countTab -= tmpCountTab;
+                countTab -= 1;
                 tmpCountTab = 0;
                 instruccion = "";:}
         |prSi CONDICION prEntonces E DE_LO_CONTRARIO prFinSi{:
-                if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        condiciones.remove(condiciones.size() - 1);
-                }
-                python += "if " + condiciones.get(condiciones.size() - 1)+ ":\n";
-                condiciones.remove(condiciones.size() - 1);
+
                 //Iterate tmpPythonArray from the last element to the first
                 for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
                         if(tmpPythonArray.get(i) != ""){
                                if( tmpPythonArray.get(i).contains("if") || tmpPythonArray.get(i).contains("elif") || tmpPythonArray.get(i).contains("else") ){
-                                        tmpPython += tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab - 1) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }else{
-                                        tmpPython += "\t" + tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }
@@ -376,24 +329,20 @@ IF::= prSi CONDICION prEntonces E prFinSi {:
                 tmpPython2 = new ArrayList<String>();
                 python += tmpPython + "\n"; 
                 tmpPython = "";
-                countTab -= tmpCountTab;
+                countTab -= 1;
                 tmpCountTab = 0;
                 instruccion = "";:}
         |prSi CONDICION prEntonces E O_SI DE_LO_CONTRARIO prFinSi{:
-                if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        condiciones.remove(condiciones.size() - 1);
-                }
-                python += "if " + condiciones.get(condiciones.size() - 1)+ ":\n";
-                condiciones.remove(condiciones.size() - 1);
+ 
                 //Iterate tmpPythonArray from the last to the first element
                 for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
                         if(tmpPythonArray.get(i) != ""){
                                 if( tmpPythonArray.get(i).contains("if") || tmpPythonArray.get(i).contains("elif") || tmpPythonArray.get(i).contains("else") ){
-                                        tmpPython += tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab - 1) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }else{
-                                        tmpPython += "\t" + tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }
@@ -407,9 +356,9 @@ IF::= prSi CONDICION prEntonces E prFinSi {:
                 for(int i = tmpPython2.size() - 2; i >= 0; i--){
                         if(tmpPython2.get(i) != ""){
                                 if( tmpPython2.get(i).contains("if") || tmpPython2.get(i).contains("elif") || tmpPython2.get(i).contains("else") ){
-                                        tmpPython += tmpPython2.get(i) + "\n";
+                                        tmpPython += tab(countTab - 1) + tmpPython2.get(i) + "\n";
                                 }else{
-                                        tmpPython += "\t" + tmpPython2.get(i) + "\n";
+                                        tmpPython += tab(countTab) + tmpPython2.get(i) + "\n";
                                 }
                         }
                 }
@@ -419,7 +368,7 @@ IF::= prSi CONDICION prEntonces E prFinSi {:
                 tmpPython = "";
                 python += tmpPython + "\n"; 
                 tmpPython = "";
-                countTab -= tmpCountTab;
+                countTab -= 1;
                 tmpCountTab = 0;
                 instruccion = "";:};
 
@@ -428,17 +377,16 @@ DE_LO_CONTRARIO::= prDeLoContrario E{:
                 //Iterate tmpPythonArray from the last element to the first and end when found elif
                 for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
                         if(tmpPythonArray.get(i) != "" && !tmpPythonArray.get(i).equals("elif")){
-                                tmpstr += "\t" + tmpPythonArray.get(i) + "\n";
+                                tmpstr += tab(countTab) + tmpPythonArray.get(i) + "\n";
                                 tmpPythonArray.remove(i);
                                 i--;
                         }
-                        if(tmpPythonArray.get(i).equals("elif")){
+                        if( i >= 0 && tmpPythonArray.get(i).equals("elif")){
                                 tmpPythonArray.remove(i);
                                 break;
                         }
                 }
                 tmpPython2.add(tmpstr);
-                countTab -= tmpCountTab;
                 tmpCountTab = 0;
                 instruccion = "";:};
 
@@ -448,7 +396,7 @@ O_SI::=  prO_Si CONDICION prEntonces E O_SI{:
                 //Iterate tmpPythonArray from the last element to the first and end when found elif
                 for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
                         if(tmpPythonArray.get(i) != "" && !tmpPythonArray.get(i).equals("elif")){
-                                tmpstr += "\t" + tmpPythonArray.get(i) + "\n";
+                                tmpstr += tab(countTab) + tmpPythonArray.get(i) + "\n";
                                 tmpPythonArray.remove(i);
                                 i--;
                         }
@@ -458,7 +406,6 @@ O_SI::=  prO_Si CONDICION prEntonces E O_SI{:
                         }
                 }
                 tmpPython2.add(tmpstr);
-                countTab -= tmpCountTab;
                 tmpCountTab = 0;
                 instruccion = "";:}
         |prO_Si  CONDICION prEntonces E{:
@@ -467,7 +414,7 @@ O_SI::=  prO_Si CONDICION prEntonces E O_SI{:
                 //Iterate tmpPythonArray from the last element to the first and end when found elif
                 for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
                         if(tmpPythonArray.get(i) != "" && !tmpPythonArray.get(i).equals("elif")){
-                                tmpstr += "\t" + tmpPythonArray.get(i) + "\n";
+                                tmpstr += tab(countTab) + tmpPythonArray.get(i) + "\n";
                                 tmpPythonArray.remove(i);
                                 i--;
                         }
@@ -477,337 +424,162 @@ O_SI::=  prO_Si CONDICION prEntonces E O_SI{:
                         }
                 }
                 tmpPython2.add(tmpstr);
-                countTab -= tmpCountTab;
                 tmpCountTab = 0;
                 instruccion = "";:};
 
-CONDICION::= VARIABLES prEsIgual VARIABLES {:
+CONDICION::= VARIABLES:a prEsIgual VARIABLES:b {:
                 if(condiciones.get(condiciones.size() - 1).equals("if")){
                         condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " == " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
+                        condiciones.add(a + "==" + b); 
+                        
+                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
                         condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " == " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " == " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 2) + " == " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }
-                :} 
-            |VARIABLES prMayor VARIABLES {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " > " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " > " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " > " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 2) + " > " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }
-                :} 
-            |VARIABLES prMayorOIgual VARIABLES {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " >= " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " >= " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " >= " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 2) + " >= " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }
-                :} 
-            |VARIABLES prMenor VARIABLES {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " < " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " < " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " < " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 2) + " < " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }
-                :} 
-            |VARIABLES prMenorOIgual VARIABLES {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " <= " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " <= " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " <= " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 2) + " <= " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }
-                :} 
-            |VARIABLES prEsDiferente VARIABLES {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " != " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " != " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 2) + " != " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 2) + " != " + variables.get(variables.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        variables.remove(variables.size() - 1);
-                }
-                :}
+                        countTab += 1;
 
+                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
+                        tmpPythonArray.add("elif");
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "==" + b); 
+                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "==" + b); 
+                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        countTab += 1;
+                }else{
+                        condiciones.add(a + "==" + b); 
+                }
+                :} 
+            |VARIABLES:a prMayor VARIABLES:b {:
+                if(condiciones.get(condiciones.size() - 1).equals("if")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + ">" + b); 
+                        
+                        
+                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add("if2");
+                        countTab += 1;
+                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
+                        tmpPythonArray.add("elif");
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + ">" + b);
+                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + ">" + b);
+                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        countTab += 1;
+                }else{
+                        condiciones.add(a + ">" + b);
+                }
+                :} 
+            |VARIABLES:a prMayorOIgual VARIABLES:b {:
+                if(condiciones.get(condiciones.size() - 1).equals("if")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + ">=" + b);
+                        
+                        
+                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add("if2");
+                        countTab += 1;
+                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
+                        tmpPythonArray.add("elif");
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + ">=" + b);
+                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + ">=" + b);
+                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        countTab += 1;
+                }else{
+                        condiciones.add(a + ">=" + b);
+                }
+                :} 
+            |VARIABLES:a prMenor VARIABLES:b {:
+                if(condiciones.get(condiciones.size() - 1).equals("if")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "<" + b); 
+                        
+                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add("if2");
+                        countTab += 1;
+                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
+                        tmpPythonArray.add("elif");
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "<" + b); 
+                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "<" + b); 
+                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        countTab += 1;
+                }else{
+                        condiciones.add(a + "<" + b); 
+                }
+                :} 
+            |VARIABLES:a prMenorOIgual VARIABLES:b {:
+                if(condiciones.get(condiciones.size() - 1).equals("if")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "<=" + b);
+                        
+                        
+                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add("if2");
+                        countTab += 1;
+                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
+                        tmpPythonArray.add("elif");
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "<=" + b);
+                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "<=" + b);
+                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        countTab += 1;
+                }else{
+                        condiciones.add(a + "<=" + b);
+                }
+                :} 
+            |VARIABLES:a prEsDiferente VARIABLES:b {:
+                if(condiciones.get(condiciones.size() - 1).equals("if")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "!=" + b);
+                        
+                        
+                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add("if2");
+                        countTab += 1;
+                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
+                        tmpPythonArray.add("elif");
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "!=" + b);
+                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
+                        condiciones.remove(condiciones.size() - 1);
+                        condiciones.add(a + "!=" + b); 
+                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
+                        condiciones.remove(condiciones.size() - 1);
+                        countTab += 1;
+                }else{
+                        condiciones.add(a + "!=" + b); 
 
-
-            |VARIABLES prEsIgual OPERACION {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " == " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " == " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " == " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 1) + " == " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
                 }
-                :} 
-            |VARIABLES prMayor OPERACION {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " > " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " > " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " > " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 1) + " > " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                }
-                :} 
-            |VARIABLES prMayorOIgual OPERACION {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " >= " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " >= " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " >= " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 1) + " >= " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                }
-                :} 
-            |VARIABLES prMenor OPERACION {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " < " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " < " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " < " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 1) + " < " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                }
-                :} 
-            |VARIABLES prMenorOIgual OPERACION {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " <= " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " <= " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " <= " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 1) + " <= " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                }
-                :} 
-            |VARIABLES prEsDiferente OPERACION {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " != " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " != " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(variables.get(variables.size() - 1) + " != " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                        condiciones.add("mientras2");
-                }else{
-                        condiciones.add(variables.get(variables.size() - 1) + " != " + tmpOperacion.get(tmpOperacion.size() - 1)); 
-                        variables.remove(variables.size() - 1);
-                        tmpOperacion.remove(tmpOperacion.size() - 1);
-                }
-                :}
-                |tvariable:a {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a); 
-                        condiciones.add("if2");
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a); 
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a); 
-                        condiciones.add("mientras2");
-
-                }else{
-                        condiciones.add(a); 
-                }
-                :} ;
+                :};
 
 VARIABLE::= tvariable;
 
-VARIABLES::= tcadena:a {:variables.add(a);:}
-            |prFloat:a {:variables.add(a);:}
-            |prVerdadero:a {:variables.add("True");:}
-            |prFalso:a {:variables.add("False");:}
-            |caracter:a {:variables.add(a);:}
-            |ascii:a {:variables.add(asciiToChar(a));:}
-            |OPERANDOS;
+VARIABLES::= tcadena:a {:RESULT = a;:}
+            |prFloat:a {:RESULT = a;:}
+            |prVerdadero {:RESULT = "True";:}
+            |prFalso {:RESULT = "False";:}
+            |caracter:a {:RESULT = a;:}
+            |ascii:a {:RESULT = (asciiToChar(a));:};
 
 INSTRUCCIONES::=  INSTRUCCION tpuntoycoma INSTRUCCIONES
                  |INSTRUCCION tpuntoycoma;
@@ -824,12 +596,6 @@ FLECHA::= trest tmayor;
 PARA_SALTO::= prPara VARIABLE FLECHA tnum prHasta tnum prCon prIncremental tnum prHacer INSTRUCCIONES_CICLO prFinPara;
 
 MIENTRAS::= prMientras CONDICION prHacer E prFinMientras{:
-
-                if(condiciones.get(condiciones.size() - 1).equals("mientras2")){
-                        condiciones.remove(condiciones.size() - 1);
-                }
-                tmpPython += "while " + condiciones.get(condiciones.size() - 1) + ":\n";
-                condiciones.remove(condiciones.size() - 1);
                 //Iterate tmpPythonArray from the last element to the first
                 for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
                         if(tmpPythonArray.get(i) != ""){
@@ -838,7 +604,7 @@ MIENTRAS::= prMientras CONDICION prHacer E prFinMientras{:
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }else{
-                                        tmpPython += "\t" + tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }
@@ -847,16 +613,12 @@ MIENTRAS::= prMientras CONDICION prHacer E prFinMientras{:
                 
                 python += tmpPython + "\n"; 
                 tmpPython = "";
-                countTab -= tmpCountTab;
+                countTab -= 1;
                 tmpCountTab = 0;
                 instruccion = "";:}
                 |prMientras prNot CONDICION prHacer E prFinMientras{:
 
-                if(condiciones.get(condiciones.size() - 1).equals("mientras2")){
-                        condiciones.remove(condiciones.size() - 1);
-                }
-                tmpPython += "while " + condiciones.get(condiciones.size() - 1) + ":\n";
-                condiciones.remove(condiciones.size() - 1);
+
                 //Iterate tmpPythonArray from the last element to the first
                 for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
                         if(tmpPythonArray.get(i) != ""){
@@ -865,7 +627,7 @@ MIENTRAS::= prMientras CONDICION prHacer E prFinMientras{:
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }else{
-                                        tmpPython += "\t" + tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }
@@ -874,17 +636,12 @@ MIENTRAS::= prMientras CONDICION prHacer E prFinMientras{:
                 
                 python += tmpPython + "\n"; 
                 tmpPython = "";
-                countTab -= tmpCountTab;
+                countTab -= 1;
                 tmpCountTab = 0;
                 instruccion = "";:}
-                |prMientras pare1 CONDICION pare2 prHacer E prFinMientras
-                |prMientras prNot pare1 CONDICION pare2 prHacer E prFinMientras{:
+                |prMientras pare1 CONDICION pare2 prHacer E prFinMientras{:
 
-                if(condiciones.get(condiciones.size() - 1).equals("mientras2")){
-                        condiciones.remove(condiciones.size() - 1);
-                }
-                tmpPython += "while " + condiciones.get(condiciones.size() - 1) + ":\n";
-                condiciones.remove(condiciones.size() - 1);
+
                 //Iterate tmpPythonArray from the last element to the first
                 for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
                         if(tmpPythonArray.get(i) != ""){
@@ -893,7 +650,7 @@ MIENTRAS::= prMientras CONDICION prHacer E prFinMientras{:
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }else{
-                                        tmpPython += "\t" + tmpPythonArray.get(i) + "\n";
+                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
                                         tmpPythonArray.remove(i);
                                         i--;
                                 }
@@ -901,7 +658,29 @@ MIENTRAS::= prMientras CONDICION prHacer E prFinMientras{:
                 }
                 python += tmpPython + "\n"; 
                 tmpPython = "";
-                countTab -= tmpCountTab;
+                countTab -= 1;
+                tmpCountTab = 0;
+                instruccion = "";:}
+                |prMientras prNot pare1 CONDICION pare2 prHacer E prFinMientras{:
+
+
+                //Iterate tmpPythonArray from the last element to the first
+                for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
+                        if(tmpPythonArray.get(i) != ""){
+                                if( tmpPythonArray.get(i).contains("mientras")){
+                                        tmpPython += tmpPythonArray.get(i) + "\n";
+                                        tmpPythonArray.remove(i);
+                                        i--;
+                                }else{
+                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
+                                        tmpPythonArray.remove(i);
+                                        i--;
+                                }
+                        }
+                }
+                python += tmpPython + "\n"; 
+                tmpPython = "";
+                countTab -= 1;
                 tmpCountTab = 0;
                 instruccion = "";:};
 
@@ -928,8 +707,9 @@ IMPRIMIR::= prImprimir VARIABLES tpuntoycoma{:
                 variables.remove(variables.size() - 1);:};
 
 IMPRIMIR_NL::= prImprimirNl VARIABLES tpuntoycoma {:
-                tmpImprimirnl = "println(" + variables.get(variables.size() - 1) + ")";
+
+                tmpImprimirnl = "print(" + variables.get(variables.size() - 1) + " + '\\n' )";
                 variables.remove(variables.size() - 1);:}
                 |prImprimirNl pare1 VARIABLES pare2 tpuntoycoma {:
-                tmpImprimirnl = "println(" + variables.get(variables.size() - 1) + ")";
+                tmpImprimirnl = "print(" + variables.get(variables.size() - 1) + " + '\\n' )";
                 variables.remove(variables.size() - 1);:};

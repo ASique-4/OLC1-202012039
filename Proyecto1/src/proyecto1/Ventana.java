@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.StringReader;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -41,6 +42,16 @@ de_lo_contrario
 	de_lo_contrario
 		imprimir "de lo contrario";
 	fin_si
+fin_si
+fin
+
+inicio
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "no tiene que imprimir este mensaje";
+de_lo_contrario
+	mientras not (_variable1_ mayor_o_igual 5*5+8/2) hacer
+		imprimir _variable1_;
+	fin_mientras
 fin_si
 fin
 
@@ -329,7 +340,15 @@ public class Ventana extends javax.swing.JFrame {
 
     private void OpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenFileActionPerformed
         // TODO add your handling code here:
+        //Open only .olc files
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("OLC Files", "olc");
+
+        //Clean TextArea
+        TextArea.setText("");
+
+        //Open File
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(filter);
         fileChooser.showOpenDialog(this);
         File file = fileChooser.getSelectedFile();
         if (file != null) {
@@ -344,6 +363,7 @@ public class Ventana extends javax.swing.JFrame {
                 System.out.println(e);
             }
         }
+        
     }//GEN-LAST:event_OpenFileActionPerformed
 
     private void SaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveFileActionPerformed
