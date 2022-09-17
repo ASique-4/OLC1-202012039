@@ -46,15 +46,15 @@ ingresar _operaciones1Avanzadas4_  Como numeRo con_valor (30 potencia [10-8+9-4*
 ingresar _operaciones1Avanzadas5_  coMo nUmero con_valor (30 potencia [10-8+9-4*2-1]) + (2) ;  
 ingresar _operaciones1Avanzadas6_  Como numeRo con_valor (5*8) mod (1+5+6);   //4 es el resultado
 
-ingresar _operacionRela1_ como BooleaNa con_valor 5+5 mayor 5;
-ingresar _operacionRela3_ como booleana con_valor _operaciones1Basica_ mayor 8;
-ingresar _operacionRela3_ como BooLeana con_valor (_operaciones1Basica_+6) Mayor_o_igual 8;
-ingresar _operacionRela3_ como booleana con_valor (_operaciones1Basica_+6) menor_o_igual 8;
-ingresar _operacionRela4_ como booleAna con_valor _operaciones1Basica_ es_iGual 8;
-ingresar _operacionRela5_ como booleana con_valor _operaciones1Basica_ es_igual _operaciones1Basica_;
-ingresar _operacionRela6_ como BooleanA con_valor _operaciones1Basica_ es_iguAl _operaciones1Basica_+1;
-ingresar _operacionRela7_ como boolEana con_valor _operaciones1Basica_ es_igual (_operaciones1Basica_)*(8+5);
-ingresar _operacionRela5_ como bOoleAna con_valor _operaciones1Basica_ es_difeErente _operaciones1Basica_;
+ingresar _operacionRela1_ como BooleaN con_valor 5+5 mayor 5;
+ingresar _operacionRela3_ como boolean con_valor _operaciones1Basica_ mayor 8;
+ingresar _operacionRela3_ como BooLean con_valor (_operaciones1Basica_+6) Mayor_o_igual 8;
+ingresar _operacionRela3_ como boolean con_valor (_operaciones1Basica_+6) menor_o_igual 8;
+ingresar _operacionRela4_ como booleAn con_valor _operaciones1Basica_ es_iGual 8;
+ingresar _operacionRela5_ como boolean con_valor _operaciones1Basica_ es_igual _operaciones1Basica_;
+ingresar _operacionRela6_ como Boolean con_valor _operaciones1Basica_ es_iguAl _operaciones1Basica_+1;
+ingresar _operacionRela7_ como boolEan con_valor _operaciones1Basica_ es_igual (_operaciones1Basica_)*(8+5);
+ingresar _operacionRela5_ como bOoleAn con_valor _operaciones1Basica_ es_difeErente _operaciones1Basica_;
 
 ingresar_operLogica_ como boolean c
 
@@ -142,7 +142,7 @@ metodo _metodo_1_
 	imprimit_nl " Esta es la potencia Funcion";
 fin_metodo
 
-ejecutar _metodo_1_();
+ejecutar _metodo_();
 
 
 fin

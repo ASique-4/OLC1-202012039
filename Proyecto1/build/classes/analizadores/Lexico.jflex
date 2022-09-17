@@ -1,5 +1,7 @@
 package analizadores;
 import java_cup.runtime.*;
+import proyecto1.Errors;
+import java.util.ArrayList;
 
 
 %%
@@ -15,15 +17,19 @@ import java_cup.runtime.*;
 %line
 %unicode
 
+%{
+  public ArrayList<Errors> errorsLex = new ArrayList<Errors>();
+%}
 
 num = [0-9]+
 variable = _[a-zA-Z0-9]+_
-cadena = [\"|\'](\s|\S)[^\"\']*[\"|\']
+cadena = [\'][^\'\n]*[\']|[\"][^\"\n]*[\"]
 comentario = ([\/][\/])+(\s|\S)[^\n]*
 comentarioVariasLineas = [\/][\*]+(((\s|\S)[^\*]*)|([\n]*)|([\*]*[^\/]))([\*]+[\/])
 palabra = [a-zA-Z]+
-caracter = [\"|\'][\s|\S][\"|\']
-float = [\+|\-]*\d+[\.]\d+
+caracter = [\'][\s|\S][\']|[\"][\s|\S][\"]
+float = \d+[\.]\d+
+ascii = [\']\$\{[\d]+}[\']|[\"]\$\{[\d]+}[\"]
 
 %%
 
@@ -289,7 +295,19 @@ float = [\+|\-]*\d+[\.]\d+
                     //codigo en java
                     System.out.println("Reconocio palabra_reservada menor_o_igual, lexema:"+yytext());
                     return new Symbol(Simbolos.prMenorOIgual, yycolumn, yyline, yytext());
-                  }                                                                        
+                  }
+
+<YYINITIAL>"not"  {
+                    //codigo en java
+                    System.out.println("Reconocio palabra_reservada not, lexema:"+yytext());
+                    return new Symbol(Simbolos.prNot, yycolumn, yyline, yytext());
+                  }                  
+
+{ascii}           {
+                    //codigo en java
+                    System.out.println("Reconocio ascii, lexema:"+yytext());
+                    return new Symbol(Simbolos.ascii, yycolumn, yyline, yytext());
+                  }                                          
 
 {float}           {
                     //Codigo en java
@@ -326,6 +344,9 @@ float = [\+|\-]*\d+[\.]\d+
 
 .                     	{
                             System.out.println("Error Lexico : "+yytext()+ " Linea: "+yyline+" Columna: "+yycolumn);
+                            Errors tmp = new Errors("Lexico", yyline , yycolumn,"Componente " + yytext() + " no reconocido.");
+        
+                            errorsLex.add(tmp);
                         }
 
 

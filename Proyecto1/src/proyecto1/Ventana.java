@@ -4,6 +4,8 @@
  */
 package proyecto1;
 
+import proyecto1.*;
+
 import analizadores.Analizador_Lexico;
 import analizadores.Analizador_sintactico;
 import java.io.BufferedReader;
@@ -11,9 +13,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -21,6 +26,20 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author angel
  * inicio
 ingresar _operaciones1Basica_      como numero con_valor 1+((8-7)/(2-9)); 
+fin
+
+
+inicio
+
+ingresar _operaciones1Basica2_      como numero con_valor _operaciones1Basica_+_operaciones1Basica_; 
+ingresar _operaciones1Intermedia_  Como nUmero con_valor 15+(9*8)+200/8*3+9;
+ingresar _operaciones1Avanzadas2_  coMo numero con_valor 30 potencia [22.2-2.2] + (2);   
+fin
+
+inicio
+para _i_->0 hasta _exponente_1 hacer
+		_acumulado_ -> _acumulado_ + _acumulado_;
+	fin_para
 fin
 
 inicio
@@ -86,15 +105,28 @@ fin
 inicio
 si _v1_ es_igual _v2_ entonces
 	imprimir_nl "no tiene que imprimir este mensaje";
-
+    imprimir_nl "no tiene que imprimir este mensaje2";
 fin_si
 fin
 
+inicio
+segun _varaux_ hacer
+		¿0? entonces
+			imprimir_nl "el valor es mayor a 0 y menos a 2";
+		¿2? entonces
+			imprimir_nl "el valor es mayor a 2";
+	fin_segun
+fin
+
+inicio
 si _v1_ es_igual _v2_ entonces
 	imprimir_nl "no tiene que imprimir este mensaje";
 	de_lo_contrario
 	    imprimir "este print es un ejemplo";
+        imprimir_nl "no tiene que imprimir este mensaje";
+    imprimir_nl "no tiene que imprimir este mensaje2";
 fin_si
+fin
 
 inicio
 ingresar _operaciones1Basica_      como numero con_valor ((8-7)/(2-9))+2; 
@@ -107,6 +139,8 @@ fin
 inicio
 si _v1_ es_igual _v2_ entonces
 	imprimir_nl "no tiene que imprimir este mensaje";
+    imprimir_nl "no tiene que imprimir este mensaje2";
+    imprimir_nl "no tiene que imprimir este mensaje3";
 fin_si
 fin
 
@@ -126,6 +160,42 @@ public class Ventana extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
+    //Create AST
+    public String recorrido(Nodo raiz){
+        String ast = "";
+        for(Nodo hijos : raiz.Hijos){
+            if(!(hijos.Etiqueta.equals("vacio"))){
+                ast += "\"" + raiz.idNodo + "." + raiz.Etiqueta + ": " + raiz.Valor + "\"->\"" + hijos.idNodo + "." + hijos.Etiqueta + " == " + hijos.Valor + "\"\n";
+                ast += recorrido(hijos);
+            } else {
+                System.out.println(raiz.Etiqueta);
+            }
+        }
+        return ast;
+    }
+
+    public void crearAST(String cadena){
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter("AST.dot");
+            pw = new PrintWriter(fichero);
+            pw.println("digraph G {");
+            pw.println("node [shape=box, style=filled, color=seashell2];");
+            pw.println(cadena);
+            pw.println("\n}");
+            fichero.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Runtime rt = Runtime.getRuntime();
+            rt.exec("dot -Tpng AST.dot -o AST.png");
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -150,7 +220,7 @@ public class Ventana extends javax.swing.JFrame {
         SaveFile = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        ErrorsOption = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -245,9 +315,14 @@ public class Ventana extends javax.swing.JFrame {
         jMenuItem5.setText("Flowchart");
         jMenu2.add(jMenuItem5);
 
-        jMenuItem6.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
-        jMenuItem6.setText("Errors");
-        jMenu2.add(jMenuItem6);
+        ErrorsOption.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
+        ErrorsOption.setText("Errors");
+        ErrorsOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ErrorsOptionActionPerformed(evt);
+            }
+        });
+        jMenu2.add(ErrorsOption);
 
         jMenuBar1.add(jMenu2);
 
@@ -323,6 +398,9 @@ public class Ventana extends javax.swing.JFrame {
             sintactico.parse();
             errorNumber.setText(Integer.toString(sintactico.erroresSintacticos));
 
+            Nodo raiz = sintactico.padre;
+
+            crearAST(recorrido(raiz));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -392,10 +470,61 @@ public class Ventana extends javax.swing.JFrame {
             sintactico.parse();
             errorNumber.setText(Integer.toString(sintactico.erroresSintacticos));
             TextArea.setText(sintactico.python);
+            //Generate HTML table of errorsSint
+            String htmlstyle = "<!DOCTYPE html>"+
+            "<html>"+
+            
+                "<head>" +
+                "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">" +
+                "<title>Errores</title>"+
+                "</head>"+
+                "<style>"+
+                "table, th{background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"+
+                "border-collapse: collapse;"+
+                "background-color: #D7C0AE;"+
+                "}"+
+                "th:nth-child(even),td:nth-child(even) {"+
+                "background-color: #EEE3CB;"+
+                "}"+
+                "</style>"+
+                "<body bgcolor=\"B7C4CF\">"+
+                    "<center>";
+                        
+            String html =  htmlstyle + "<table border=1><tr><th>Linea</th><th>Columna</th><th>Descripcion</th><th>Columna</th></tr>";
+            for (int i = 0; i < sintactico.errorsSint.size(); i++) {
+                html += "<tr><td><center>" + sintactico.errorsSint.get(i).getLine() + "</center></td><td><center>" + 
+                sintactico.errorsSint.get(i).getColumn() + "</center></td><td><center>" + sintactico.errorsSint.get(i).getDescription() + 
+                "</center></td><td><center>" + sintactico.errorsSint.get(i).getError()  + "</center></td></tr>";
+            }
+            //Generate HTML table of errorsLex
+            for (int i = 0; i < lexico.errorsLex.size(); i++) {
+                html += "<tr><td><center>" + lexico.errorsLex.get(i).getLine() + "</center></td><td><center>" + 
+                lexico.errorsLex.get(i).getColumn() + "</center></td><td><center>" + lexico.errorsLex.get(i).getDescription() + 
+                "</center></td><td><center>" + lexico.errorsLex.get(i).getError()  + "</center></td></tr>";
+            }
+            html += "</table></center></body></html>";
+            //Save on a file named "errores.html"
+            File file = new File("errores.html");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(html);
+            bw.close();
+
         } catch (Exception e) {
             System.out.println(e);
         }
     }//GEN-LAST:event_PythonViewActionPerformed
+
+    private void ErrorsOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ErrorsOptionActionPerformed
+        // TODO add your handling code here:
+        //Open HTML file
+        try {
+            File path = new File("errores.html");
+            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + path);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }//GEN-LAST:event_ErrorsOptionActionPerformed
 
 
     /**
@@ -435,6 +564,7 @@ public class Ventana extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Clean;
+    private javax.swing.JMenuItem ErrorsOption;
     private javax.swing.JButton GolangView;
     private javax.swing.JMenuItem OpenFile;
     private javax.swing.JButton PythonView;
@@ -451,7 +581,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

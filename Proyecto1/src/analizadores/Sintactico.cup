@@ -1,10 +1,13 @@
 package analizadores;
 import java_cup.runtime.Symbol;
 import java.util.ArrayList;
+import proyecto1.Errors;
+import proyecto1.Nodo;
 
 
 parser code 
 {:
+        public static Nodo padre;
         boolean cambiar = true;
         int countTab = 0;
         int tmpCountTab = 0;
@@ -21,6 +24,7 @@ parser code
         String tmpImprimirnl = "";
         Boolean osiBool = false;
         ArrayList<String> variables = new ArrayList<String>();
+        public ArrayList<Errors> errorsSint = new ArrayList<Errors>();
         ArrayList<String> condiciones = new ArrayList<String>();
         ArrayList<String> tmpListaNombres = new ArrayList<String>();
         ArrayList<String> tmpOperacion = new ArrayList<String>();
@@ -29,10 +33,17 @@ parser code
         ArrayList<String> tmpPythonArray = new ArrayList<String>();
         ArrayList<String> tmpPython2 = new ArrayList<String>();
         public void syntax_error(Symbol s){ 
-        erroresSintacticos++;
-        //Imprimir error
-        System.out.println("Error Sintáctico en la Línea " + (s.left) +
-        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+                if(s.value != null){
+                        erroresSintacticos++;
+                        //Imprimir error
+                        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+                        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+
+                        Errors tmp = new Errors("Sitactico", s.left , s.right,"No se esperaba este componente: " +s.value);
+                        
+                        errorsSint.add(tmp);
+                }
+        
         } 
         //Repet tab
         public String tab(int n){
@@ -56,13 +67,12 @@ parser code
                 return "\"" + charValue + "\"";
         }
         public void agregarTmpListaNombres(String a){
-
+    
 
         for(String i: tmpListaNombres){
                 python += i + " = " + a + "\n";
                 pythonArray.add(i + " = " + a + ";\n");
         }; 
-
 
         tmpListaNombres = new ArrayList<String>();
         }
@@ -101,9 +111,14 @@ parser code
         * en el que ya no es posible una recuperación de errores.
         **/ 
         public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
-        System.out.println("Error síntactico irrecuperable en la Línea " + 
-        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
-        " no reconocido."); 
+                if(s.value != null){
+                        System.out.println("Error síntactico irrecuperable en la Línea " + 
+                        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
+                        " no reconocido."); 
+                        Errors tmp = new Errors("Sitactico", s.left , s.right,"Componente " + s.value + " no reconocido.");
+                        
+                        errorsSint.add(tmp);
+                }
         }  
 :} 
 
@@ -118,482 +133,1152 @@ terminal String trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
 
 
 non terminal INICIO;
-non terminal String CONDICION;
-non terminal String INSTRUCCIONES;
-non terminal String INSTRUCCIONES_CICLO;
-non terminal String INSTRUCCION;
-non terminal String IF;
-non terminal String VALOR;
-non terminal String LISTA_NOMBRES;
-non terminal String LISTA_NOMBRES2;
-non terminal String VARIABLE;
-non terminal String DECLARACION;
-non terminal String COMENTARIO;
-non terminal String COMENTARIO_VARIAS_LINEAS;
-non terminal String E;
-non terminal String ASIGNACION;
-non terminal String DE_LO_CONTRARIO;
-non terminal String EXPRESION;
-non terminal String O_SI;
-non terminal String SELECCION_MULTIPLE;
-non terminal String SEGUN;
-non terminal String FLECHA;
-non terminal String PARA;
-non terminal String PARA_SALTO;
-non terminal String MIENTRAS;
-non terminal String REPETIR;
-non terminal String RETORNO;
-non terminal String METODO;
-non terminal String LISTA_PARAMETROS;
-non terminal String FUNCION;
-non terminal String EJECUTAR;
-non terminal String IMPRIMIR;
-non terminal String IMPRIMIR_NL;
-non terminal String TIPO;
-non terminal String OPERACION;
-non terminal String OPERACIONES;
-non terminal String VARIABLES;
+non terminal CONDICION;
+non terminal INSTRUCCIONES;
+non terminal INSTRUCCIONES_CICLO;
+non terminal INSTRUCCION;
+non terminal IF;
+non terminal VALOR;
+non terminal LISTA_NOMBRES;
+non terminal LISTA_NOMBRES2;
+non terminal VARIABLE;
+non terminal DECLARACION;
+non terminal COMENTARIO;
+non terminal COMENTARIO_VARIAS_LINEAS;
+non terminal E;
+non terminal ASIGNACION;
+non terminal DE_LO_CONTRARIO;
+non terminal EXPRESION;
+non terminal O_SI;
+non terminal SELECCION_MULTIPLE;
+non terminal SEGUN;
+non terminal LISTA_SEGUN;
+non terminal FLECHA;
+non terminal PARA;
+non terminal PARA_SALTO;
+non terminal MIENTRAS;
+non terminal REPETIR;
+non terminal RETORNO;
+non terminal METODO;
+non terminal LISTA_PARAMETROS;
+non terminal FUNCION;
+non terminal EJECUTAR;
+non terminal IMPRIMIR;
+non terminal IMPRIMIR_NL;
+non terminal TIPO;
+non terminal OPERACION;
+non terminal OPERACIONES;
+non terminal VARIABLES;
 
 precedence left tsum, trest;
 precedence left tdiv, tmul;
 precedence left tmod, tpot;
-
+precedence left pare1;
+precedence left pare2;
+precedence left cor1;
+precedence left cor2;
+precedence left tnum,prFloat,tvariable;
 
 start with INICIO;
 
-INICIO::= prInicio E prFin;
+INICIO::= prInicio INSTRUCCIONES:n1 prFin{: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("INICIO");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) n1);
+            parser.padre = (Nodo) nd;
+            RESULT = nd;     :};
 
-E::=    DECLARACION E
-        |{: condiciones.add("if");:}  IF {:System.out.println("Se realizo un if");:} E
-        |COMENTARIO {:System.out.println("Se realizo un comentar");:} E
-        |COMENTARIO_VARIAS_LINEAS {:System.out.println("Se realizo un comentarioVariasLineas");:} E
-        |ASIGNACION {:System.out.println("Se realizo un asignacion");:} E
-        |SELECCION_MULTIPLE {:System.out.println("Se realizo un seleccionMultiple");:} E
-        |PARA {:System.out.println("Se realizo un para");:} E
-        |PARA_SALTO {:System.out.println("Se realizo un paraSalto");:} E
-        |{:condiciones.add("mientras");:}MIENTRAS {:System.out.println("Se realizo un mientras");:} E
-        |REPETIR {:System.out.println("Se realizo un repetir");:} E
-        |RETORNO {:System.out.println("Se realizo un retorno");:}E
-        |METODO {:System.out.println("Se realizo un metodo");:}E
-        |FUNCION {:System.out.println("Se realizo un funcion");:}E
-        |EJECUTAR {:System.out.println("Se realizo un ejecutar");:}E
-        |IMPRIMIR E {:tmpPythonArray.add(tmpImprimir);:}
-        |IMPRIMIR_NL E {:tmpPythonArray.add(tmpImprimirnl);:}
-        |OPERACION {:System.out.println("Se realizo una operacion");:} E
-        |error {:tmpPython = "";:} E
-        |;
+INSTRUCCIONES::= E:n1 INSTRUCCIONES:n2 {: 
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("INSTRUCCIONES");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) n1);
+                nd.AddHijo((Nodo) n2);
+                parser.padre = (Nodo) nd;
+                RESULT = nd;     :}
 
-EXPRESION::= EXPRESION OPERACIONES:a {:RESULT = a;:}
-                |OPERACIONES:a {:RESULT = a;:};
+                |E:n1 {: 
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("INSTRUCCION");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) n1);
+                parser.padre = (Nodo) nd;
+                RESULT = nd;     :};
 
-OPERACIONES::= OPERACION:e {:System.out.println("=" + e + ";"); RESULT = e;:};
+E::=    DECLARACION:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("DECLARACION");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |IF:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("IF");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |COMENTARIO:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("COMENTARIO");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |COMENTARIO_VARIAS_LINEAS:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("COMENTARIO_VARIAS_LINEAS");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |ASIGNACION:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("ASIGNACION");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |SELECCION_MULTIPLE:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("SELECCION_MULTIPLE");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |PARA:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("PARA");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |PARA_SALTO:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("PARA_CON_SALTO");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |MIENTRAS:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("MIENTRAS");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |REPETIR:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("REPETIR");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |RETORNO:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("RETORNO");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |METODO:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("METODO");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |FUNCION:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("FUNCION");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |EJECUTAR:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("EJECUTAR");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |IMPRIMIR:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("IMPRIMIR");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :}  
+        |IMPRIMIR_NL:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("IMPRIMIR_NL");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;     :} 
+        |error ;
 
-OPERACION::= tnum:n {:RESULT = n;:}
-                | OPERACION:i tsum OPERACION:r {:RESULT = i + "+" + r;:}
-                | OPERACION:i trest OPERACION:r {:RESULT = i + "-" + r;:}
-                | OPERACION:i tmul OPERACION:r {:RESULT = i + "*" + r;:}
-                | OPERACION:i tdiv OPERACION:r {:RESULT = i + "/" + r;:}
-                | OPERACION:i tmod OPERACION:r {:RESULT = i + "+" + r;:}
-                | OPERACION:i tpot OPERACION:r {:RESULT = i + "**" + r;:}
-                | pare1 OPERACION:e pare2 {:RESULT = "(" + e + ")";:}
-                | cor1 OPERACION:e cor2 {:RESULT = "(" + e + ")";:}
+EXPRESION::= EXPRESION OPERACIONES:a {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("OPERACIONES");
+                nd.setIdNodo(parser.cont);
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+
+                RESULT = nd; :}
+                |OPERACIONES:a {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("OPERACION");
+                nd.setIdNodo(parser.cont);
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+
+                RESULT = nd;:};
+
+OPERACIONES::= OPERACION:e {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("OPERACION");
+                nd.setIdNodo(parser.cont);
+                parser.cont++;
+                nd.AddHijo((Nodo) e);
+
+                RESULT = nd;:};
+
+OPERACION::= tnum:n {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("NUMERO");
+                nd.setIdNodo(parser.cont);
+                parser.cont++;
+                nd.setValor(n);
+                RESULT = nd;:}
+                | OPERACION:i tsum OPERACION:r {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("SUMA");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("+");
+                parser.cont++;
+                nd.AddHijo((Nodo) i);
+                nd.AddHijo((Nodo) r);
+                RESULT = nd;:}
+                | OPERACION:i trest OPERACION:r {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("RESTA");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("-");
+                parser.cont++;
+                nd.AddHijo((Nodo) i);
+                nd.AddHijo((Nodo) r);
+                RESULT = nd;:}
+                | OPERACION:i tmul OPERACION:r {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("MULTIPLICACION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("*");
+                parser.cont++;
+                nd.AddHijo((Nodo) i);
+                nd.AddHijo((Nodo) r);
+                RESULT = nd;:}
+                | OPERACION:i tdiv OPERACION:r {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("DIVICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("/");
+                parser.cont++;
+                nd.AddHijo((Nodo) i);
+                nd.AddHijo((Nodo) r);
+                RESULT = nd;:}
+                | OPERACION:i tmod OPERACION:r {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("MODULO");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("%");
+                parser.cont++;
+                nd.AddHijo((Nodo) i);
+                nd.AddHijo((Nodo) r);
+                RESULT = nd;:}
+                | OPERACION:i tpot OPERACION:r {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("POTENCIA");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("**");
+                parser.cont++;
+                nd.AddHijo((Nodo) i);
+                nd.AddHijo((Nodo) r);
+                RESULT = nd;:}
+                | pare1 OPERACION:e pare2 {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("OPEACION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("+");
+                parser.cont++;
+                Nodo pare1 = new Nodo();
+                nd.AddHijo((Nodo) e);
+                RESULT = nd;:}
+                | cor1 OPERACION:e cor2 {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("OPEACION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("+");
+                parser.cont++;
+
+                nd.AddHijo((Nodo) e);
+                RESULT = nd;:}
                 
-                | tvariable:n {:RESULT = n;:}
-                | tvariable:i tsum tvariable:r {:RESULT = i + "+" + r;:}
-                | tvariable:i trest tvariable:r {:RESULT = i + "-" + r;:}
-                | tvariable:i tmul tvariable:r {:RESULT = i + "*" + r;:}
-                | tvariable:i tdiv tvariable:r {:RESULT = i + "/" + r;:}
-                | tvariable:i tmod tvariable:r {:RESULT = i + "+" + r;:}
-                | tvariable:i tpot tvariable:r {:RESULT = i + "**" + r;:};
+                | tvariable:n {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("VARIABLE");
+                nd.setIdNodo(parser.cont);
+                parser.cont++;
+                nd.setValor(n);
+                RESULT = nd;:}
+                
+                | prFloat:n {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("FLOAT");
+                nd.setIdNodo(parser.cont);
+                parser.cont++;
+                nd.setValor(n);
+                RESULT = nd;:};
 
-TIPO::=prBoolean
-        |prCaracter
-        |prNumero
-        |prCadena;
+TIPO::=prBoolean:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("BOOLEAN");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            RESULT = nd;     :}
+        |prCaracter:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("CARACTER");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            RESULT = nd;     :}
+        |prNumero:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("ENTERO");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            RESULT = nd;     :}
+        |prCadena:a {: 
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("CADENA");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            RESULT = nd;     :};
 
-DECLARACION::= prIngresar tvariable:a prComo TIPO prConValor VARIABLES:b tpuntoycoma {:
-                python += a + " = " + b + "\n"; 
-                pythonArray.add(a + " = " + b + "\n");
+DECLARACION::=prIngresar tvariable:a prComo TIPO:c prConValor VARIABLES:b tpuntoycoma {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("DECLARACION");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("=");
+                //Ingresar
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("INGRESAR");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor("prIngresar");
+                //Variable
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("VARIABLE");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor(a);
+                //prComo
+                Nodo nd3 = new Nodo();
+                nd3.setEtiqueta("COMO");
+                nd3.setIdNodo(parser.cont);
+                nd3.setValor("prComo");
+                //Tipo
+                Nodo nd4 = (Nodo) c;
+                //prConValor
+                Nodo nd5 = new Nodo();
+                nd5.setEtiqueta("CONVALOR");
+                nd5.setIdNodo(parser.cont);
+                nd5.setValor("prConValor");
+                //Variables
+                Nodo nd6 = (Nodo)  b;
+                //puntoycoma
+                Nodo nd7 = new Nodo();
+                nd7.setEtiqueta("PUNTOYCOMA");
+                nd7.setIdNodo(parser.cont);
+                nd7.setValor("tpuntoycoma");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                nd.AddHijo(nd6);
+                nd.AddHijo(nd7);
+                parser.cont++;
+                RESULT = nd; 
+                python += a.toString() + " = " + nd6.Valor  + "\n"; 
+                pythonArray.add(a.toString()  + " = " + nd6.Valor   + "\n");
                 :}
                 
-                |prIngresar LISTA_NOMBRES prComo TIPO prConValor VARIABLES:b tpuntoycoma {:
-                agregarTmpListaNombres(b);
+        |prIngresar LISTA_NOMBRES:a prComo TIPO:c prConValor VARIABLES:b tpuntoycoma {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("DECLARACION");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("=");
+                //Ingresar
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("INGRESAR");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor("prIngresar");
+                //Lista de nombres
+                Nodo nd2 = (Nodo) a;
+                //prComo
+                Nodo nd3 = new Nodo();
+                nd3.setEtiqueta("COMO");
+                nd3.setIdNodo(parser.cont);
+                nd3.setValor("prComo");
+                //Tipo
+                Nodo nd4 = (Nodo) c;
+                //prConValor
+                Nodo nd5 = new Nodo();
+                nd5.setEtiqueta("CONVALOR");
+                nd5.setIdNodo(parser.cont);
+                nd5.setValor("prConValor");
+                //Variables
+                Nodo nd6 = (Nodo) b;
+                //puntoycoma
+                Nodo nd7 = new Nodo();
+                nd7.setEtiqueta("PUNTOYCOMA");
+                nd7.setIdNodo(parser.cont);
+                nd7.setValor("tpuntoycoma");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                nd.AddHijo(nd6);
+                nd.AddHijo(nd7);
+                parser.cont++;
+
+                RESULT = nd;
+                agregarTmpListaNombres(nd6.Valor );
+                :}
+        |prIngresar tvariable:a prComo TIPO prConValor EXPRESION:b  tpuntoycoma{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("DECLARACION");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("=");
+                //Ingresar
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("INGRESAR");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor("prIngresar");
+                //Variable
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("VARIABLE");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor(a);
+                //prComo
+                Nodo nd3 = new Nodo();
+                nd3.setEtiqueta("COMO");
+                nd3.setIdNodo(parser.cont);
+                nd3.setValor("prComo");
+                //Tipo
+                Nodo nd4 = new Nodo();
+                nd4.setEtiqueta("TIPO");
+                nd4.setIdNodo(parser.cont);
+                nd4.setValor("prTipo");
+                //prConValor
+                Nodo nd5 = new Nodo();
+                nd5.setEtiqueta("CONVALOR");
+                nd5.setIdNodo(parser.cont);
+                nd5.setValor("prConValor");
+                //Expresion
+                Nodo nd6 = (Nodo) b;
+                //puntoycoma
+                Nodo nd7 = new Nodo();
+                nd7.setEtiqueta("PUNTOYCOMA");
+                nd7.setIdNodo(parser.cont);
+                nd7.setValor("tpuntoycoma");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                nd.AddHijo(nd6);
+                nd.AddHijo(nd7);
+                RESULT = nd;
+                parser.cont++;
+                python += a + " = " + nd6.Valor  + "\n";
+                pythonArray.add(a + " = " + nd6.Valor  + "\n");
+                :}
+                
+        |prIngresar LISTA_NOMBRES:a prComo TIPO:c prConValor EXPRESION:b  tpuntoycoma{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("DECLARACION");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("=");
+                //Ingresar
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("INGRESAR");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor("prIngresar");
+                //Lista de nombres
+                Nodo nd2 = (Nodo) a;
+                //prComo
+                Nodo nd3 = new Nodo();
+                nd3.setEtiqueta("COMO");
+                nd3.setIdNodo(parser.cont);
+                nd3.setValor("prComo");
+                //Tipo
+                Nodo nd4 = (Nodo) c;
+                //prConValor
+                Nodo nd5 = new Nodo();
+                nd5.setEtiqueta("CONVALOR");
+                nd5.setIdNodo(parser.cont);
+                nd5.setValor("prConValor");
+                //Variables
+                Nodo nd6 = (Nodo) b;
+                //puntoycoma
+                Nodo nd7 = new Nodo();
+                nd7.setEtiqueta("PUNTOYCOMA");
+                nd7.setIdNodo(parser.cont);
+                nd7.setValor("tpuntoycoma");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                nd.AddHijo(nd6);
+                nd.AddHijo(nd7);
+                parser.cont++;
+
+                agregarTmpListaNombres(nd6.Valor );
+                :}
+
+        |prIngresar tvariable:a prComo TIPO:c prConValor CONDICION:b  tpuntoycoma{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("DECLARACION");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("=");
+                //Ingresar
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("INGRESAR");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor("prIngresar");
+                //Variable
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("VARIABLE");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor(a);
+                //prComo
+                Nodo nd3 = new Nodo();
+                nd3.setEtiqueta("COMO");
+                nd3.setIdNodo(parser.cont);
+                nd3.setValor("prComo");
+                //Tipo
+                Nodo nd4 = (Nodo) c;
+                //prConValor
+                Nodo nd5 = new Nodo();
+                nd5.setEtiqueta("CONVALOR");
+                nd5.setIdNodo(parser.cont);
+                nd5.setValor("prConValor");
+                //Expresion
+                Nodo nd6 = (Nodo) b;
+                //puntoycoma
+                Nodo nd7 = new Nodo();
+                nd7.setEtiqueta("PUNTOYCOMA");
+                nd7.setIdNodo(parser.cont);
+                nd7.setValor("tpuntoycoma");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                nd.AddHijo(nd6);
+                nd.AddHijo(nd7);
+                RESULT = nd;
+                parser.cont++;
+                python += a + " = " + nd6.Valor  + "\n";
+                pythonArray.add(a + " = " + nd6.Valor  + "\n");
+                :}
+                
+        |prIngresar LISTA_NOMBRES:a prComo TIPO:c prConValor CONDICION:b  tpuntoycoma{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("DECLARACION");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("=");
+                //Ingresar
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("INGRESAR");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor("prIngresar");
+                //Lista de nombres
+                Nodo nd2 = (Nodo) a;
+                //prComo
+                Nodo nd3 = new Nodo();
+                nd3.setEtiqueta("COMO");
+                nd3.setIdNodo(parser.cont);
+                nd3.setValor("prComo");
+                //Tipo
+                Nodo nd4 = (Nodo) c;
+                //prConValor
+                Nodo nd5 = new Nodo();
+                nd5.setEtiqueta("CONVALOR");
+                nd5.setIdNodo(parser.cont);
+                nd5.setValor("prConValor");
+                //Variables
+                Nodo nd6 = (Nodo) b;
+                //puntoycoma
+                Nodo nd7 = new Nodo();
+                nd7.setEtiqueta("PUNTOYCOMA");
+                nd7.setIdNodo(parser.cont);
+                nd7.setValor("tpuntoycoma");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                nd.AddHijo(nd6);
+                nd.AddHijo(nd7);
+                parser.cont++;
+                RESULT = nd;
+                agregarTmpListaNombres(nd2.Valor );
                 :};
 //Gramatica de un comentario
-COMENTARIO::= tcomentario:c {:python +=c.replace("//","#")+"\n";:} ;
+COMENTARIO::= tcomentario:c {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("COMENTARIO");
+                nd.setIdNodo(parser.cont);
+                nd.setValor(c);
+                RESULT = nd;
+                parser.cont++;
+                :} ;
 //Gramatica de un comentario de varias lineas
-COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas:c {:python += c.replace("/*","'''").replace("*/","'''") + "\n";:};                
+COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas:c {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("COMENTARIO_VARIAS_LINEAS");
+                nd.setIdNodo(parser.cont);
+                nd.setValor(c);
+                RESULT = nd;
+                parser.cont++;
+                :};                
 //Gramatica de una asignacion
-ASIGNACION::= tvariable:a FLECHA tcadena:b tpuntoycoma {:python += a + " = " + b + "\n";:}
-                | tvariable:a FLECHA tnum:b tpuntoycoma {:python += a + " = " + b + "\n";:}
-                | tvariable:a FLECHA tvariable:b tpuntoycoma {:python += a + " = " + b + "\n";:} 
-                | tvariable:a FLECHA prFloat:b tpuntoycoma {:python += a + " = " + b + "\n";:} 
-                | tvariable:a FLECHA prVerdadero:b tpuntoycoma {:python += a+" = True\n";:}
-                | tvariable:a FLECHA prFalso:b tpuntoycoma {:python += a+" = False\n";:}
-                | tvariable:a FLECHA caracter:b tpuntoycoma {:python += a + " = " + b + "\n";:}
-                | LISTA_NOMBRES FLECHA tcadena:a tpuntoycoma {:agregarTmpListaNombres(a);:}
-                | LISTA_NOMBRES FLECHA tnum:a tpuntoycoma {:agregarTmpListaNombres(a);:}
-                | LISTA_NOMBRES FLECHA tvariable:a tpuntoycoma {:agregarTmpListaNombres(a);:}
-                | LISTA_NOMBRES FLECHA prFloat:a tpuntoycoma {:agregarTmpListaNombres(a);:}
-                | LISTA_NOMBRES FLECHA prVerdadero:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = True\n";
-                }; 
-                        tmpListaNombres = new ArrayList<String>(); 
+ASIGNACION::= tvariable:a FLECHA VARIABLES:b tpuntoycoma {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("ASIGNACION");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("=");
+                //Variable
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("VARIABLE");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor(a);
+                //Flecha
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("FLECHA");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("->");
+                //Variables
+                Nodo nd3 = (Nodo) b;
+                //puntoycoma
+                Nodo nd4 = new Nodo();
+                nd4.setEtiqueta("PUNTOYCOMA");
+                nd4.setIdNodo(parser.cont);
+                nd4.setValor("tpuntoycoma");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                RESULT = nd;
+                parser.cont++;
+                python += a + " = " + nd3.Valor  + "\n";
+                pythonArray.add(a + " = " + nd3.Valor  + "\n");
+                        :}
+                | LISTA_NOMBRES:b FLECHA VARIABLES:a tpuntoycoma {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("ASIGNACION");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("=");
+                //Lista de nombres
+                Nodo nd1 = (Nodo) b;
+                //Flecha
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("FLECHA");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("->");
+                //Variables
+                Nodo nd3 = (Nodo) a;
+                //puntoycoma
+                Nodo nd4 = new Nodo();
+                nd4.setEtiqueta("PUNTOYCOMA");
+                nd4.setIdNodo(parser.cont);
+                nd4.setValor("tpuntoycoma");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                RESULT = nd;
+                parser.cont++;
+                agregarTmpListaNombres(nd3.Valor );
                 :}
-                | LISTA_NOMBRES FLECHA prFalso:a tpuntoycoma 
-                {:for(String i: tmpListaNombres){
-                         python += i + " = False\n";
-                }; 
-                        tmpListaNombres = new ArrayList<String>(); 
+                | tvariable:a FLECHA EXPRESION:b tpuntoycoma {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("ASIGNACION");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("=");
+                //Variable
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("VARIABLE");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor(a);
+                //Flecha
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("FLECHA");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("->");
+                //Expresion
+                Nodo nd3 = (Nodo) b;
+                //puntoycoma
+                Nodo nd4 = new Nodo();
+                nd4.setEtiqueta("PUNTOYCOMA");
+                nd4.setIdNodo(parser.cont);
+                nd4.setValor("tpuntoycoma");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                RESULT = nd;
+                parser.cont++;
+                python += a + " = " + nd3.Valor  + "\n";
+                pythonArray.add(a + " = " + nd3.Valor  + "\n");
                 :}
-                | LISTA_NOMBRES FLECHA caracter:a tpuntoycoma {:agregarTmpListaNombres(a);:};
+                | LISTA_NOMBRES:b FLECHA EXPRESION:a tpuntoycoma {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("ASIGNACION");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("=");
+                //Lista de nombres
+                Nodo nd1 = (Nodo) b;
+                //Flecha
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("FLECHA");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("->");
+                //Expresion
+                Nodo nd3 = (Nodo) a;
+                //puntoycoma
+                Nodo nd4 = new Nodo();
+                nd4.setEtiqueta("PUNTOYCOMA");
+                nd4.setIdNodo(parser.cont);
+                nd4.setValor("tpuntoycoma");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                RESULT = nd;
+                parser.cont++;
+                agregarTmpListaNombres(nd3.Valor );
+                :};
 //Gramatica de seleccion multiple
-SELECCION_MULTIPLE::= prSegun SEGUN prFinSegun;
+SELECCION_MULTIPLE::= prSegun VALOR prHacer LISTA_SEGUN prFinSegun;
 
-SEGUN::= tinterrogacioninicio VALOR tinterrogacionfin prEntonces INSTRUCCIONES SEGUN
-        |tinterrogacioninicio VALOR tinterrogacionfin prEntonces INSTRUCCIONES;
+LISTA_SEGUN::= SEGUN LISTA_SEGUN
+        |SEGUN;
 
-VALOR::= tvariable:a {:valor = a;:} |tcadena:b {:valor = b;:};
+SEGUN::=tinterrogacioninicio VALOR tinterrogacionfin prEntonces E;        
 
-LISTA_NOMBRES::= tvariable:a {:tmpListaNombres.add(a);:} LISTA_NOMBRES2
-                |;
-LISTA_NOMBRES2::= tcoma tvariable:a {:tmpListaNombres.add(a);:} LISTA_NOMBRES2
-                |tcoma tvariable:a {:tmpListaNombres.add(a);:};
+VALOR::= tvariable:a {:valor = a;:} |tcadena:b {:valor = b;:} | tnum;
 
-IF::= prSi CONDICION prEntonces E prFinSi {:
-                //Iterate tmpPythonArray from the last element to the first
-                for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
-                        if(tmpPythonArray.get(i) != ""){
-                                if( tmpPythonArray.get(i).contains("if") || tmpPythonArray.get(i).contains("elif") || tmpPythonArray.get(i).contains("else") ){
-                                        tmpPython += tab(countTab - 1) + tmpPythonArray.get(i) + "\n";
-                                        tmpPythonArray.remove(i);
-                                        i--;
-                                }else{
-                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
-                                        tmpPythonArray.remove(i);
-                                        i--;
-                                }
-                        }
+LISTA_NOMBRES::= tvariable:a {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("VARIABLE");
+                nd.setIdNodo(parser.cont);
+                nd.setValor(a);
+                parser.cont++;
+                RESULT = nd;
+                tmpListaNombres.add(a);:} LISTA_NOMBRES2 {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("LISTA_NOMBRES");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("LISTA_NOMBRES");
+                parser.cont++;
+                for (int i = 0; i < tmpListaNombres.size(); i++) {
+                    Nodo nd2 = new Nodo();
+                    nd2.setEtiqueta("VARIABLE");
+                    nd2.setIdNodo(parser.cont);
+                    nd2.setValor(tmpListaNombres.get(i));
+                    parser.cont++;
+                    nd.AddHijo(nd2);
                 }
-                python += tmpPython + "\n"; 
-                tmpPython = "";
-                countTab -= 1;
-                instruccion = "";:}
-        |prSi CONDICION prEntonces E O_SI prFinSi{:
+                RESULT = nd;
+                :};
+LISTA_NOMBRES2::= tcoma tvariable:a {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("VARIABLE");
+                nd.setIdNodo(parser.cont);
+                nd.setValor(a);
+                parser.cont++;
+                tmpListaNombres.add(a);:} LISTA_NOMBRES2 
+                |tcoma tvariable:a {:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("VARIABLE");
+                nd.setIdNodo(parser.cont);
+                nd.setValor(a);
+                parser.cont++;
+                tmpListaNombres.add(a);:};
 
-                //Iterate tmpPythonArray from the last element to the first
-                for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
-                        if(tmpPythonArray.get(i) != ""){
-                               if( tmpPythonArray.get(i).contains("if") || tmpPythonArray.get(i).contains("elif") || tmpPythonArray.get(i).contains("else") ){
-                                        tmpPython += tab(countTab - 1) + tmpPythonArray.get(i) + "\n";
-                                        tmpPythonArray.remove(i);
-                                        i--;
-                                }else{
-                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
-                                        tmpPythonArray.remove(i);
-                                        i--;
-                                }
-                        }
-                }
-                
-                python += tmpPython + tmpPython2.get(tmpPython2.size() - 1) + "\n";
-                tmpPython = "";
-                tmpPython2.remove(tmpPython2.size() - 1);
-                tmpPython2 = new ArrayList<String>();
-                python += tmpPython + "\n"; 
-                tmpPython = "";
-                countTab -= 1;
-                tmpCountTab = 0;
-                instruccion = "";:}
-        |prSi CONDICION prEntonces E DE_LO_CONTRARIO prFinSi{:
+IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IF");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("IF");
+                //Condicion
+                Nodo nd1 = (Nodo) a;
+                //Entonces
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("ENTONCES");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("ENTONCES");
+                //Instrucciones
+                Nodo nd3 = (Nodo) b;
+                //Fin si
+                Nodo nd4 = new Nodo();
+                nd4.setEtiqueta("FIN_SI");
+                nd4.setIdNodo(parser.cont);
+                nd4.setValor("FIN_SI");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                RESULT = nd;
+                parser.cont++;
 
-                //Iterate tmpPythonArray from the last element to the first
-                for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
-                        if(tmpPythonArray.get(i) != ""){
-                               if( tmpPythonArray.get(i).contains("if") || tmpPythonArray.get(i).contains("elif") || tmpPythonArray.get(i).contains("else") ){
-                                        tmpPython += tab(countTab - 1) + tmpPythonArray.get(i) + "\n";
-                                        tmpPythonArray.remove(i);
-                                        i--;
-                                }else{
-                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
-                                        tmpPythonArray.remove(i);
-                                        i--;
-                                }
-                        }
-                }
-                
-                python += tmpPython + tmpPython2.get(tmpPython2.size() - 1) + "\n";
-                tmpPython = "";
-                tmpPython2.remove(tmpPython2.size() - 1);
-                tmpPython2 = new ArrayList<String>();
-                python += tmpPython + "\n"; 
-                tmpPython = "";
-                countTab -= 1;
-                tmpCountTab = 0;
-                instruccion = "";:}
-        |prSi CONDICION prEntonces E O_SI DE_LO_CONTRARIO prFinSi{:
- 
-                //Iterate tmpPythonArray from the last to the first element
-                for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
-                        if(tmpPythonArray.get(i) != ""){
-                                if( tmpPythonArray.get(i).contains("if") || tmpPythonArray.get(i).contains("elif") || tmpPythonArray.get(i).contains("else") ){
-                                        tmpPython += tab(countTab - 1) + tmpPythonArray.get(i) + "\n";
-                                        tmpPythonArray.remove(i);
-                                        i--;
-                                }else{
-                                        tmpPython += tab(countTab) + tmpPythonArray.get(i) + "\n";
-                                        tmpPythonArray.remove(i);
-                                        i--;
-                                }
-                        }
-                }
 
-                
-                python += tmpPython;
-                tmpPython = "";
-                //Iterate tmpPython2 from the last element to the first element
-                for(int i = tmpPython2.size() - 2; i >= 0; i--){
-                        if(tmpPython2.get(i) != ""){
-                                if( tmpPython2.get(i).contains("if") || tmpPython2.get(i).contains("elif") || tmpPython2.get(i).contains("else") ){
-                                        tmpPython += tab(countTab - 1) + tmpPython2.get(i) + "\n";
-                                }else{
-                                        tmpPython += tab(countTab) + tmpPython2.get(i) + "\n";
-                                }
-                        }
-                }
-                tmpPython += tmpPython2.get(tmpPython2.size() - 1) + "\n";
-                tmpPython2 = new ArrayList<String>();
-                python += tmpPython;
-                tmpPython = "";
-                python += tmpPython + "\n"; 
-                tmpPython = "";
-                countTab -= 1;
-                tmpCountTab = 0;
-                instruccion = "";:};
-
-DE_LO_CONTRARIO::= prDeLoContrario E{:
-                String tmpstr = "else:\n";
-                //Iterate tmpPythonArray from the last element to the first and end when found elif
-                for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
-                        if(tmpPythonArray.get(i) != "" && !tmpPythonArray.get(i).equals("elif")){
-                                tmpstr += tab(countTab) + tmpPythonArray.get(i) + "\n";
-                                tmpPythonArray.remove(i);
-                                i--;
-                        }
-                        if( i >= 0 && tmpPythonArray.get(i).equals("elif")){
-                                tmpPythonArray.remove(i);
-                                break;
-                        }
-                }
-                tmpPython2.add(tmpstr);
-                tmpCountTab = 0;
-                instruccion = "";:};
-
-O_SI::=  prO_Si CONDICION prEntonces E O_SI{:
-                String tmpstr = "elif " + condiciones.get(condiciones.size() - 1) + ":\n";
-                condiciones.remove(condiciones.size() - 1);
-                //Iterate tmpPythonArray from the last element to the first and end when found elif
-                for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
-                        if(tmpPythonArray.get(i) != "" && !tmpPythonArray.get(i).equals("elif")){
-                                tmpstr += tab(countTab) + tmpPythonArray.get(i) + "\n";
-                                tmpPythonArray.remove(i);
-                                i--;
-                        }
-                        if(tmpPythonArray.get(i).equals("elif")){
-                                tmpPythonArray.remove(i);
-                                break;
-                        }
-                }
-                tmpPython2.add(tmpstr);
-                tmpCountTab = 0;
-                instruccion = "";:}
-        |prO_Si  CONDICION prEntonces E{:
-                String tmpstr = "elif " + condiciones.get(condiciones.size() - 1) + ":\n";
-                condiciones.remove(condiciones.size() - 1);
-                //Iterate tmpPythonArray from the last element to the first and end when found elif
-                for(int i = tmpPythonArray.size() - 1; i >= 0; i--){
-                        if(tmpPythonArray.get(i) != "" && !tmpPythonArray.get(i).equals("elif")){
-                                tmpstr += tab(countTab) + tmpPythonArray.get(i) + "\n";
-                                tmpPythonArray.remove(i);
-                                i--;
-                        }
-                        if(tmpPythonArray.get(i).equals("elif")){
-                                tmpPythonArray.remove(i);
-                                break;
-                        }
-                }
-                tmpPython2.add(tmpstr);
-                tmpCountTab = 0;
-                instruccion = "";:};
-
-CONDICION::= VARIABLES:a prEsIgual VARIABLES:b {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "==" + b); 
-                        
-                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add("if2");
-                        countTab += 1;
-
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "==" + b); 
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "==" + b); 
-                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        countTab += 1;
-                }else{
-                        condiciones.add(a + "==" + b); 
-                }
-                :} 
-            |VARIABLES:a prMayor VARIABLES:b {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + ">" + b); 
-                        
-                        
-                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add("if2");
-                        countTab += 1;
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + ">" + b);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + ">" + b);
-                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        countTab += 1;
-                }else{
-                        condiciones.add(a + ">" + b);
-                }
-                :} 
-            |VARIABLES:a prMayorOIgual VARIABLES:b {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + ">=" + b);
-                        
-                        
-                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add("if2");
-                        countTab += 1;
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + ">=" + b);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + ">=" + b);
-                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        countTab += 1;
-                }else{
-                        condiciones.add(a + ">=" + b);
-                }
-                :} 
-            |VARIABLES:a prMenor VARIABLES:b {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "<" + b); 
-                        
-                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add("if2");
-                        countTab += 1;
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "<" + b); 
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "<" + b); 
-                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        countTab += 1;
-                }else{
-                        condiciones.add(a + "<" + b); 
-                }
-                :} 
-            |VARIABLES:a prMenorOIgual VARIABLES:b {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "<=" + b);
-                        
-                        
-                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add("if2");
-                        countTab += 1;
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "<=" + b);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "<=" + b);
-                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        countTab += 1;
-                }else{
-                        condiciones.add(a + "<=" + b);
-                }
-                :} 
-            |VARIABLES:a prEsDiferente VARIABLES:b {:
-                if(condiciones.get(condiciones.size() - 1).equals("if")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "!=" + b);
-                        
-                        
-                        tmpPython += tab(countTab) + "if " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add("if2");
-                        countTab += 1;
-                }else if(condiciones.get(condiciones.size() - 1).equals("if2")){
-                        tmpPythonArray.add("elif");
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "!=" + b);
-                }else if(condiciones.get(condiciones.size() -1).equals("mientras")){
-                        condiciones.remove(condiciones.size() - 1);
-                        condiciones.add(a + "!=" + b); 
-                        tmpPython += tab(countTab) + "while " + "(" + condiciones.get(condiciones.size() - 1) + ")" + ":\n";
-                        condiciones.remove(condiciones.size() - 1);
-                        countTab += 1;
-                }else{
-                        condiciones.add(a + "!=" + b); 
-
-                }
+                :}
+        |prSi CONDICION:a prEntonces INSTRUCCIONES:c O_SI:b prFinSi{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("IF");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("IF");
+                //Condicion
+                Nodo nd1 = (Nodo) a;
+                //Entonces
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("ENTONCES");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("ENTONCES");
+                //Instrucciones
+                Nodo nd3 = (Nodo) c;
+                //O si
+                Nodo nd4 = (Nodo) b;
+                //Fin si
+                Nodo nd5 = new Nodo();
+                nd5.setEtiqueta("FIN_SI");
+                nd5.setIdNodo(parser.cont);
+                nd5.setValor("FIN_SI");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                RESULT = nd;
+                parser.cont++;
+                :}
+        |prSi CONDICION:a prEntonces INSTRUCCIONES:c DE_LO_CONTRARIO:b prFinSi{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("IF");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("IF");
+                //Condicion
+                Nodo nd1 = (Nodo) a;
+                //Entonces
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("ENTONCES");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("ENTONCES");
+                //Instrucciones
+                Nodo nd3 = (Nodo) c;
+                //De lo contrario
+                Nodo nd4 = (Nodo) b;
+                //Fin si
+                Nodo nd5 = new Nodo();
+                nd5.setEtiqueta("FIN_SI");
+                nd5.setIdNodo(parser.cont);
+                nd5.setValor("FIN_SI");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                RESULT = nd;
+                parser.cont++;
+                :}
+        |prSi CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c DE_LO_CONTRARIO:d prFinSi{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("IF");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("IF");
+                //Condicion
+                Nodo nd1 = (Nodo) a;
+                //Entonces
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("ENTONCES");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("ENTONCES");
+                //Instrucciones
+                Nodo nd3 = (Nodo) b;
+                //O si
+                Nodo nd4 = (Nodo) c;
+                //De lo contrario
+                Nodo nd5 = (Nodo) d;
+                //Fin si
+                Nodo nd6 = new Nodo();
+                nd6.setEtiqueta("FIN_SI");
+                nd6.setIdNodo(parser.cont);
+                nd6.setValor("FIN_SI");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                nd.AddHijo(nd6);
+                RESULT = nd;
+                parser.cont++;
                 :};
 
-VARIABLE::= tvariable;
+DE_LO_CONTRARIO::= prDeLoContrario INSTRUCCIONES:a{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("DE_LO_CONTRARIO");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("DE_LO_CONTRARIO");
+                //Instrucciones
+                Nodo nd1 = (Nodo) a;
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                RESULT = nd;
+                parser.cont++;
+                :};
 
-VARIABLES::= tcadena:a {:RESULT = a;:}
-            |prFloat:a {:RESULT = a;:}
-            |prVerdadero {:RESULT = "True";:}
-            |prFalso {:RESULT = "False";:}
-            |caracter:a {:RESULT = a;:}
-            |ascii:a {:RESULT = (asciiToChar(a));:};
+O_SI::=  prO_Si CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("O_SI");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("O_SI");
+                //Condicion
+                Nodo nd1 = (Nodo) a;
+                //Entonces
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("ENTONCES");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("ENTONCES");
+                //Instrucciones
+                Nodo nd3 = (Nodo) b;
+                //O si
+                Nodo nd4 = (Nodo) c;
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                RESULT = nd;
+                parser.cont++;
+                
+                :}
+        |prO_Si  CONDICION:a prEntonces INSTRUCCIONES:b{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("O_SI");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("O_SI");
+                //Condicion
+                Nodo nd1 = (Nodo) a;
+                //Entonces
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("ENTONCES");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("ENTONCES");
+                //Instrucciones
+                Nodo nd3 = (Nodo) b;
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                
+                :};
 
-INSTRUCCIONES::=  INSTRUCCION tpuntoycoma INSTRUCCIONES
-                 |INSTRUCCION tpuntoycoma;
+CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("==");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+            |VARIABLES:a prMayor VARIABLES:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor(">");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+            |VARIABLES:a prMayorOIgual VARIABLES:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor(">=");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+            |VARIABLES:a prMenor VARIABLES:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("<");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+            |VARIABLES:a prMenorOIgual VARIABLES:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("<=");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+            |VARIABLES:a prEsDiferente VARIABLES:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("!=");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+
+
+            |EXPRESION:a prEsIgual EXPRESION:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("==");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+            |EXPRESION:a prMayor EXPRESION:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor(">");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+            |EXPRESION:a prMayorOIgual EXPRESION:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor(">=");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+            |EXPRESION:a prMenor EXPRESION:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("<");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+            |EXPRESION:a prMenorOIgual EXPRESION:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("<=");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+            |EXPRESION:a prEsDiferente EXPRESION:b {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CONDICION");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("!=");
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                nd.AddHijo((Nodo) b);
+                RESULT = nd;:}
+;
+
+VARIABLE::= tvariable:a {:RESULT = a;:};
+
+VARIABLES::= tcadena:a {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CADENA");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor(a.replace("\"", ""));
+                parser.cont++;
+                RESULT = nd;:}
+            |prVerdadero {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("BOOLEANO");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("True");
+                parser.cont++;
+                RESULT = nd;:}
+            |prFalso {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("BOOLEANO");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor("False");
+                parser.cont++;
+                RESULT = nd;:}
+            |caracter:a {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CARACTER");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor(a);
+                parser.cont++;
+                RESULT = nd;:}
+            |ascii:a {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("CARACTER");
+                nd.setIdNodo(parser.cont); 
+                nd.setValor(a);
+                parser.cont++;
+                RESULT = nd;:};
+
+
                  
-INSTRUCCIONES_CICLO::= INSTRUCCIONES_CICLO INSTRUCCION tpuntoycoma
+INSTRUCCIONES_CICLO::= INSTRUCCIONES_CICLO E tpuntoycoma
                        |INSTRUCCION tpuntoycoma
                        ;
-INSTRUCCION::= VARIABLE tigual VALOR;
 
-PARA::= prPara VARIABLE FLECHA tnum prHasta tnum prHacer INSTRUCCIONES_CICLO prFinPara;
+
+PARA::= prPara tvariable FLECHA EXPRESION prHasta EXPRESION prHacer E prFinPara;
 
 FLECHA::= trest tmayor;
 
-PARA_SALTO::= prPara VARIABLE FLECHA tnum prHasta tnum prCon prIncremental tnum prHacer INSTRUCCIONES_CICLO prFinPara;
+PARA_SALTO::= prPara tvariable FLECHA EXPRESION prHasta EXPRESION prCon prIncremental EXPRESION prHacer E prFinPara;
 
 MIENTRAS::= prMientras CONDICION prHacer E prFinMientras{:
                 //Iterate tmpPythonArray from the last element to the first
@@ -689,27 +1374,104 @@ REPETIR::= prRepetir INSTRUCCIONES_CICLO prHasta CONDICION;
 RETORNO::= prRetornar VALOR;
 
 METODO::= prMetodo VARIABLE prConParametros LISTA_PARAMETROS prConValor VALOR prFinMetodo
-                |prMetodo VARIABLE INSTRUCCIONES prFinMetodo;
+                |prMetodo VARIABLE E prFinMetodo;
 
 LISTA_PARAMETROS::= VARIABLE tcadena LISTA_PARAMETROS|VARIABLE tcadena tcoma LISTA_PARAMETROS;
 
 
-FUNCION::= prFuncion VARIABLE tcadena prConParametros LISTA_PARAMETROS INSTRUCCIONES prFinFuncion
-                |prFuncion VARIABLE tcadena INSTRUCCIONES prFinFuncion;
+FUNCION::= prFuncion VARIABLE tcadena prConParametros LISTA_PARAMETROS E prFinFuncion
+                |prFuncion VARIABLE tcadena E prFinFuncion;
 
 EJECUTAR::= prEjecutar VARIABLE pare1 pare2 tpuntoycoma|prEjecutar VARIABLE pare1 LISTA_PARAMETROS pare2 tpuntoycoma;
 
-IMPRIMIR::= prImprimir VARIABLES tpuntoycoma{:
-                tmpImprimir = "print(" + variables.get(variables.size() - 1) + ")";
-                variables.remove(variables.size() - 1);:}
-            |prImprimir pare1 VARIABLES pare2 tpuntoycoma{:
-                tmpImprimir = "print(" + variables.get(variables.size() - 1) + ")";
-                variables.remove(variables.size() - 1);:};
+IMPRIMIR::= prImprimir VARIABLES:a tpuntoycoma{:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:}
+            |prImprimir pare1 VARIABLES:a pare2 tpuntoycoma{:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:}
 
-IMPRIMIR_NL::= prImprimirNl VARIABLES tpuntoycoma {:
 
-                tmpImprimirnl = "print(" + variables.get(variables.size() - 1) + " + '\\n' )";
-                variables.remove(variables.size() - 1);:}
-                |prImprimirNl pare1 VARIABLES pare2 tpuntoycoma {:
-                tmpImprimirnl = "print(" + variables.get(variables.size() - 1) + " + '\\n' )";
-                variables.remove(variables.size() - 1);:};
+                |prImprimir EXPRESION:a tpuntoycoma {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:}
+                |prImprimir pare1 EXPRESION:a pare2 tpuntoycoma {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:}
+                
+                |prImprimir CONDICION:a tpuntoycoma {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:}
+                |prImprimir pare1 CONDICION:a pare2 tpuntoycoma {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:};
+
+IMPRIMIR_NL::= prImprimirNl VARIABLES:a tpuntoycoma {:
+            Nodo nd = new Nodo(); 
+            nd.setEtiqueta("IMPRIMIR_NL");
+            nd.setIdNodo(parser.cont); 
+            parser.cont++;
+            nd.AddHijo((Nodo) a);
+            RESULT = nd;:}
+                |prImprimirNl pare1 VARIABLES:a pare2 tpuntoycoma {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR_NL");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:}
+
+
+                |prImprimirNl EXPRESION:a tpuntoycoma {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR_NL");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:}
+                |prImprimirNl pare1 EXPRESION:a pare2 tpuntoycoma {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR_NL");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:}
+                
+                |prImprimirNl CONDICION:a tpuntoycoma {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR_NL");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:}
+                |prImprimirNl pare1 CONDICION:a pare2 tpuntoycoma {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IMPRIMIR_NL");
+                nd.setIdNodo(parser.cont); 
+                parser.cont++;
+                nd.AddHijo((Nodo) a);
+                RESULT = nd;:};

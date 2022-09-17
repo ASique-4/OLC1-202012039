@@ -1,5 +1,7 @@
 package analizadores;
 import java_cup.runtime.*;
+import proyecto1.Errors;
+import java.util.ArrayList;
 
 
 %%
@@ -15,6 +17,9 @@ import java_cup.runtime.*;
 %line
 %unicode
 
+%{
+  public ArrayList<Errors> errorsLex = new ArrayList<Errors>();
+%}
 
 num = [0-9]+
 variable = _[a-zA-Z0-9]+_
@@ -23,7 +28,7 @@ comentario = ([\/][\/])+(\s|\S)[^\n]*
 comentarioVariasLineas = [\/][\*]+(((\s|\S)[^\*]*)|([\n]*)|([\*]*[^\/]))([\*]+[\/])
 palabra = [a-zA-Z]+
 caracter = [\'][\s|\S][\']|[\"][\s|\S][\"]
-float = [\+|\-]*\d+[\.]\d+
+float = \d+[\.]\d+
 ascii = [\']\$\{[\d]+}[\']|[\"]\$\{[\d]+}[\"]
 
 %%
@@ -339,6 +344,9 @@ ascii = [\']\$\{[\d]+}[\']|[\"]\$\{[\d]+}[\"]
 
 .                     	{
                             System.out.println("Error Lexico : "+yytext()+ " Linea: "+yyline+" Columna: "+yycolumn);
+                            Errors tmp = new Errors("Lexico", yyline , yycolumn,"Componente " + yytext() + " no reconocido.");
+        
+                            errorsLex.add(tmp);
                         }
 
 

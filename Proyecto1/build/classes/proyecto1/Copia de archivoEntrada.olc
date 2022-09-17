@@ -22,7 +22,7 @@ ingresar _anio1_          como numero con_valor 1;
 ingresar _anio2_          como numero con_valor 9;
 ingresar _anio3_          como numero con_valor 4;
 ingresar _anio4_          como numero con_valor 5;
-ingresar _variableNeg_    como numero con_valor -5.0;
+ingresar _variableNeg_    como numero con_valor 5.0;
 ingresar _encabezado1_    como cadena con_valor "Universidad San Carlos de Guatemala...;";
 ingresar _encabezado2_    como cadena con_valor "Escuela de Ciencias y Sistemas
 Segundo semestre
@@ -37,25 +37,24 @@ ingresar _name5_          como caracter con_valor 'a';
 ingresar _name7_          como caracter con_valor '${100}';
 ingresar _name8_          como caracter con_valor '${111}';
 
-ingresar _operaciones1Basica_      como numero con_valor 1+(1);               //2 el resultado
 ingresar _operaciones1Basica2_      como numero con_valor _operaciones1Basica_+_operaciones1Basica_;               //               
 ingresar _operaciones1Intermedia_  Como nUmero con_valor 15+(9*8)+200/8*3+9;  //171 el resultado
 ingresar _operaciones1Avanzadas1_  ComO numeRo con_valor ((15+9)*8+200/8*3+9);   //291 el resultado
 ingresar _operaciones1Avanzadas2_  coMo numero con_valor 30 potencia [22.2-2.2] + (2);   
 ingresar _operaciones1Avanzadas3_  como nuMero con_valor (30 potencia [2]) + (2);   
 ingresar _operaciones1Avanzadas4_  Como numeRo con_valor (30 potencia [10-8+9-4*2-1]) + (2) ;  
-ingresar _operaciones1Avanzadas5_  coMo nUmero con_valor 30 potencia [10-8+9-4*2-1]) + (2) ;  
+ingresar _operaciones1Avanzadas5_  coMo nUmero con_valor (30 potencia [10-8+9-4*2-1]) + (2) ;  
 ingresar _operaciones1Avanzadas6_  Como numeRo con_valor (5*8) mod (1+5+6);   //4 es el resultado
 
-ingresar _operacionRela1_ como BooleaNa con_valor 5+5>5;
-ingresar _operacionRela3_ como booleana con_valor _operaciones1Basica_ mayor 8;
-ingresar _operacionRela3_ como BooLeana con_valor (_operaciones1Basica_+6) Mayor_o_igual 8;
-ingresar _operacionRela3_ como booleana con_valor (_operaciones1Basica_+6) menor_o_igual 8;
-ingresar _operacionRela4_ como booleAna con_valor _operaciones1Basica_ es_iGual 8;
-ingresar _operacionRela5_ como booleana con_valor _operaciones1Basica_ es_igual _operaciones1Basica_;
-ingresar _operacionRela6_ como BooleanA con_valor _operaciones1Basica_ es_iguAl _operaciones1Basica_+1;
-ingresar _operacionRela7_ como boolEana con_valor _operaciones1Basica_ es_igual (_operaciones1Basica_)*(8+5);
-ingresar _operacionRela5_ como bOoleAna con_valor _operaciones1Basica_ es_difeErente _operaciones1Basica_;
+ingresar _operacionRela1_ como BooleaN con_valor 5+5 mayor 5;
+ingresar _operacionRela3_ como boolean con_valor _operaciones1Basica_ mayor 8;
+ingresar _operacionRela3_ como BooLean con_valor (_operaciones1Basica_+6) Mayor_o_igual 8;
+ingresar _operacionRela3_ como boolean con_valor (_operaciones1Basica_+6) menor_o_igual 8;
+ingresar _operacionRela4_ como booleAn con_valor _operaciones1Basica_ es_iGual 8;
+ingresar _operacionRela5_ como boolean con_valor _operaciones1Basica_ es_igual _operaciones1Basica_;
+ingresar _operacionRela6_ como Boolean con_valor _operaciones1Basica_ es_iguAl _operaciones1Basica_+1;
+ingresar _operacionRela7_ como boolEan con_valor _operaciones1Basica_ es_igual (_operaciones1Basica_)*(8+5);
+ingresar _operacionRela5_ como bOoleAn con_valor _operaciones1Basica_ es_difeErente _operaciones1Basica_;
 
 ingresar_operLogica_ como boolean c
 
@@ -84,7 +83,6 @@ si _v1_ es_igual _v2_ entonces
 	imprimir_nl "Al parecer no funciona la asignacion";
 	mientras not (_variable1_ mayor_o_igual 5*5+8/2) hacer
 		imprimir _variable1_;
-		_variable1_ -> _variable1_ + 1;
 	fin_mientras
 fin_si
 
@@ -113,7 +111,7 @@ if _varB_ entonces
 	segun _varaux_ hacer
 		¿0? entonces
 			imprimir_nl "el valor es mayor a 0 y menos a 2";
-		¡2? entonces
+		¿2? entonces
 			imprimir_nl "el valor es mayor a 2";
 	fin_segun
 fin_si
@@ -140,11 +138,11 @@ fin_funcion
 metodo _metodo_1_
 	imprimir_nl "estamos entrando al metodo 1";	
 	ejecutar _potenciaManual_(3*1+4/2, 3+2);
-	imprimir ejecutar _potenciaFuncion_(3*1+4/2, 3+2);
+	imprimir _potenciaFuncion_(3*1+4/2, 3+2);
 	imprimit_nl " Esta es la potencia Funcion";
 fin_metodo
 
-ejecutar _metodo_1_();
+ejecutar _metodo_();
 
 
 fin
