@@ -904,23 +904,23 @@ public class Analizador_sintactico extends java_cup.runtime.lr_parser {
     "\020\027\024\020\030\021\031\006\032\044\033\035\034" +
     "\016\035\033\037\050\040\014\041\013\042\034\001\001" +
     "\000\002\001\001\000\010\022\370\044\053\045\054\001" +
-    "\001\000\006\044\053\045\100\001\001\000\046\007\017" +
-    "\011\042\014\010\015\041\016\007\017\372\020\027\024" +
-    "\020\030\021\031\006\032\044\033\035\034\016\035\033" +
-    "\037\050\040\014\041\013\042\034\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\043\u0100\001\001\000\050\004" +
-    "\u0102\007\017\011\042\014\010\015\041\016\007\017\031" +
-    "\020\027\024\020\030\021\031\006\032\044\033\035\034" +
-    "\016\035\033\037\050\040\014\041\013\042\034\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\004\036\u0105\001\001\000\002\001\001\000\050\004\u0107" +
+    "\001\000\006\044\053\045\100\001\001\000\050\004\372" +
     "\007\017\011\042\014\010\015\041\016\007\017\031\020" +
     "\027\024\020\030\021\031\006\032\044\033\035\034\016" +
     "\035\033\037\050\040\014\041\013\042\034\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\006" +
-    "\044\053\045\100\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001" });
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\004\043\u0100\001\001\000" +
+    "\050\004\u0102\007\017\011\042\014\010\015\041\016\007" +
+    "\017\031\020\027\024\020\030\021\031\006\032\044\033" +
+    "\035\034\016\035\033\037\050\040\014\041\013\042\034" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\004\036\u0105\001\001\000\002\001\001\000\050" +
+    "\004\u0107\007\017\011\042\014\010\015\041\016\007\017" +
+    "\031\020\027\024\020\030\021\031\006\032\044\033\035" +
+    "\034\016\035\033\037\050\040\014\041\013\042\034\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\006\044\053\045\100\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -2474,7 +2474,7 @@ class CUP$Analizador_sintactico$actions {
         nd.AddHijo(nd5);
         RESULT = nd;
         parser.cont++;
-        nd.pythonCode = "elif " + nd2.pythonCode + ":\n" + nd5.pythonCode + "\n";
+        nd.pythonCode = "elif " + nd2.pythonCode + ":\n" + "\t" + nd5.pythonCode + "\n";
         
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("SEGUN",19, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2616,8 +2616,7 @@ class CUP$Analizador_sintactico$actions {
                 RESULT = nd;
                 parser.cont++;
 
-                python += "if (" + nd1.Valor + "):\n";
-                python += "\t" + nd3.Valor + "\n";
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n";
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("IF",5, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2666,9 +2665,7 @@ class CUP$Analizador_sintactico$actions {
                 RESULT = nd;
                 parser.cont++;
 
-                python += "if (" + nd1.Valor + "):\n";
-                python += "\t" + nd3.Valor + "\n";
-                python +=  nd4.Valor + "\n";
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + nd4.pythonCode;
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("IF",5, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-5)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2717,10 +2714,7 @@ class CUP$Analizador_sintactico$actions {
                 RESULT = nd;
                 parser.cont++;
 
-                python += "if (" + nd1.Valor + "):\n";
-                python += "\t" + nd3.Valor + "\n";
-                python += "else:\n";
-                python += "\t" + nd4.Hijos.get(0).pythonCode + "\n";
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + "else:\n" + "\t" + nd4.pythonCode + "\n";
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("IF",5, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-5)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2775,11 +2769,7 @@ class CUP$Analizador_sintactico$actions {
                 RESULT = nd;
                 parser.cont++;
 
-                python += "if (" + nd1.Valor + "):\n";
-                python += "\t" + nd3.Valor + "\n";
-                python +=  nd4.Valor + "\n";
-                python += "else:\n";
-                python += "\t" + nd5.Valor + "\n";
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + nd4.pythonCode + "else:\n" + "\t" + nd5.pythonCode + "\n";
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("IF",5, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2803,6 +2793,7 @@ class CUP$Analizador_sintactico$actions {
                 nd.AddHijo(nd1);
                 RESULT = nd;
                 parser.cont++;
+                nd.pythonCode = "\t" + nd1.pythonCode + "\n";
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("DE_LO_CONTRARIO",15, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2844,7 +2835,7 @@ class CUP$Analizador_sintactico$actions {
                 nd.AddHijo(nd4);
                 RESULT = nd;
                 parser.cont++;
-                
+                nd.pythonCode = "elif " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + nd4.pythonCode;
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("O_SI",17, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2878,7 +2869,9 @@ class CUP$Analizador_sintactico$actions {
                 nd.AddHijo(nd1);
                 nd.AddHijo(nd2);
                 nd.AddHijo(nd3);
-                
+                RESULT = nd;
+                parser.cont++;
+                nd.pythonCode = "elif " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n";
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("O_SI",17, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2902,6 +2895,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " == " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2925,6 +2919,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " > " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2948,6 +2943,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " >= " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2971,6 +2967,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " < " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2994,6 +2991,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " <= " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3017,6 +3015,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " != " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3040,6 +3039,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " == " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3063,6 +3063,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " > " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3086,6 +3087,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " >= " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3109,6 +3111,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " < " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3132,6 +3135,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " <= " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3155,6 +3159,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " != " + ((Nodo) b).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3174,6 +3179,7 @@ class CUP$Analizador_sintactico$actions {
                 nd.setValor("!");
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
+                nd.pythonCode = "not " + ((Nodo) a).pythonCode;
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3193,6 +3199,7 @@ class CUP$Analizador_sintactico$actions {
                 nd.setValor("!");
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
+                nd.pythonCode = "not (" + ((Nodo) a).pythonCode + ")";
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3212,6 +3219,7 @@ class CUP$Analizador_sintactico$actions {
                 nd.setValor("!");
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
+                nd.pythonCode = "not (" + ((Nodo) a).pythonCode + ")";
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("CONDICION",1, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3403,6 +3411,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo(nd9);
                 RESULT = nd;
+                nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd6.pythonCode + "):" + nd8.pythonCode;
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("PARA",22, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-8)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3475,7 +3484,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo(nd8);
                 RESULT = nd;
-
+                nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd6.pythonCode + "):";
             
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("PARA",22, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-7)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3512,10 +3521,97 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 92: // PARA_SALTO ::= prPara tvariable FLECHA EXPRESION prHasta EXPRESION prCon prIncremental EXPRESION prHacer E prFinPara 
+          case 92: // PARA_SALTO ::= prPara tvariable FLECHA EXPRESION prHasta EXPRESION prCon prIncremental EXPRESION prHacer INSTRUCCIONES prFinPara 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-10)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-10)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-10)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-9)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-9)).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-9)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-8)).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-8)).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-8)).value;
+		int dleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)).left;
+		int dright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)).right;
+		Object d = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-6)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)).value;
+		int fleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
+		int fright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
+		Object f = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
+		
+                        Nodo nd = new Nodo();
+                        nd.setEtiqueta("PARA_SALTO");
+                        nd.setIdNodo(parser.cont);
+                        nd.setValor("PARA_SALTO");
+                        parser.cont++;
+                        //prPara
+                        Nodo nd1 = new Nodo();
+                        nd1.setEtiqueta("prPara");
+                        nd1.setIdNodo(parser.cont);
+                        nd1.setValor("prPara");
+                        parser.cont++;
+                        nd.AddHijo(nd1);
+                        //tvariable
+                        Nodo nd2 = new Nodo();
+                        nd2.setEtiqueta("VARIABLE");
+                        nd2.setIdNodo(parser.cont);
+                        nd2.setValor(a);
+                        parser.cont++;
+                        nd.AddHijo(nd2);
+                        //FLECHA
+                        Nodo nd3 = (Nodo) b;
+                        nd.AddHijo(nd3);
+                        //EXPRESION
+                        Nodo nd4 = (Nodo) c;
+                        nd.AddHijo(nd4);
+                        //prHasta
+                        Nodo nd5 = new Nodo();
+                        nd5.setEtiqueta("HASTA");
+                        nd5.setIdNodo(parser.cont);
+                        nd5.setValor("HASTA");
+                        parser.cont++;
+                        nd.AddHijo(nd5);
+                        //prCon
+                        Nodo nd6 = new Nodo();
+                        nd6.setEtiqueta("CON");
+                        nd6.setIdNodo(parser.cont);
+                        nd6.setValor("CON");
+                        parser.cont++;
+                        nd.AddHijo(nd6);
+                        //prIncremental
+                        Nodo nd7 = new Nodo();
+                        nd7.setEtiqueta("INCREMENTAL");
+                        nd7.setIdNodo(parser.cont);
+                        nd7.setValor("INCREMENTAL");
+                        parser.cont++;
+                        nd.AddHijo(nd7);
+                        //EXPRESION
+                        Nodo nd8 = (Nodo) e;
+                        nd.AddHijo(nd8);
+                        //prHacer
+                        Nodo nd9 = new Nodo();
+                        nd9.setEtiqueta("HACER");
+                        nd9.setIdNodo(parser.cont);
+                        nd9.setValor("HACER");
+                        parser.cont++;
+                        nd.AddHijo(nd9);
+                        //INSTRUCCIONES
+                        Nodo nd10 = (Nodo) f;
+                        nd.AddHijo(nd10);
+                        //prFinPara
+                        Nodo nd11 = new Nodo();
+                        nd11.setEtiqueta("FINPARA");
+                        nd11.setIdNodo(parser.cont);
+                        nd11.setValor("FINPARA");
+                        parser.cont++;
+                        nd.AddHijo(nd11);
+                        RESULT = nd;
+                        nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd8.pythonCode + "):" + nd10.pythonCode;
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("PARA_SALTO",23, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-11)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -3564,6 +3660,7 @@ class CUP$Analizador_sintactico$actions {
                 parser.cont++;
                 nd.AddHijo(nd5);
                 RESULT = nd;
+                nd.pythonCode = "while "  + nd2.pythonCode + ":\n" + "\t" + nd4.pythonCode;
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("MIENTRAS",24, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-4)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3606,6 +3703,7 @@ class CUP$Analizador_sintactico$actions {
                 Nodo nd4 = (Nodo) b;
                 nd.AddHijo(nd4);
                 RESULT = nd;
+                nd.pythonCode = "while True:" + "\t" + nd2.pythonCode + "\t" + "if " + nd4.pythonCode + ":" + "\t" + "\t" + "break";
                         
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("REPETIR",25, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -3642,6 +3740,7 @@ class CUP$Analizador_sintactico$actions {
                 Nodo nd3 = (Nodo) a;
                 nd.AddHijo(nd3);
                 RESULT = nd;
+                nd.pythonCode = "while True:" + "\t" + "if " + nd3.pythonCode + ":" + "\t" + "\t" + "break";
                 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("REPETIR",25, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -4098,6 +4197,7 @@ class CUP$Analizador_sintactico$actions {
                 nd.setIdNodo(parser.cont); 
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
+                nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
                 RESULT = nd;
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("IMPRIMIR",31, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }

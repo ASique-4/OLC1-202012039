@@ -887,7 +887,7 @@ SEGUN::=tinterrogacioninicio EXPRESION:a tinterrogacionfin prEntonces INSTRUCCIO
         nd.AddHijo(nd5);
         RESULT = nd;
         parser.cont++;
-        nd.pythonCode = "elif " + nd2.pythonCode + ":\n" + nd5.pythonCode + "\n";
+        nd.pythonCode = "elif " + nd2.pythonCode + ":\n" + "\t" + nd5.pythonCode + "\n";
         :}
 ;        
 
@@ -958,8 +958,7 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 RESULT = nd;
                 parser.cont++;
 
-                python += "if (" + nd1.Valor + "):\n";
-                python += "\t" + nd3.Valor + "\n";
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n";
                 :}
         |prSi CONDICION:a prEntonces INSTRUCCIONES:c O_SI:b prFinSi{:
                 Nodo nd = new Nodo();
@@ -991,9 +990,7 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 RESULT = nd;
                 parser.cont++;
 
-                python += "if (" + nd1.Valor + "):\n";
-                python += "\t" + nd3.Valor + "\n";
-                python +=  nd4.Valor + "\n";
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + nd4.pythonCode;
                 :}
         |prSi CONDICION:a prEntonces INSTRUCCIONES:c DE_LO_CONTRARIO:b prFinSi{:
                 Nodo nd = new Nodo();
@@ -1025,10 +1022,7 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 RESULT = nd;
                 parser.cont++;
 
-                python += "if (" + nd1.Valor + "):\n";
-                python += "\t" + nd3.Valor + "\n";
-                python += "else:\n";
-                python += "\t" + nd4.Hijos.get(0).pythonCode + "\n";
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + "else:\n" + "\t" + nd4.pythonCode + "\n";
                 :}
         |prSi CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c DE_LO_CONTRARIO:d prFinSi{:
                 Nodo nd = new Nodo();
@@ -1063,11 +1057,7 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 RESULT = nd;
                 parser.cont++;
 
-                python += "if (" + nd1.Valor + "):\n";
-                python += "\t" + nd3.Valor + "\n";
-                python +=  nd4.Valor + "\n";
-                python += "else:\n";
-                python += "\t" + nd5.Valor + "\n";
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + nd4.pythonCode + "else:\n" + "\t" + nd5.pythonCode + "\n";
                 :};
 
 DE_LO_CONTRARIO::= prDeLoContrario INSTRUCCIONES:a{:
@@ -1081,6 +1071,7 @@ DE_LO_CONTRARIO::= prDeLoContrario INSTRUCCIONES:a{:
                 nd.AddHijo(nd1);
                 RESULT = nd;
                 parser.cont++;
+                nd.pythonCode = "\t" + nd1.pythonCode + "\n";
                 :};
 
 O_SI::=  prO_Si CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c{:
@@ -1106,7 +1097,7 @@ O_SI::=  prO_Si CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c{:
                 nd.AddHijo(nd4);
                 RESULT = nd;
                 parser.cont++;
-                
+                nd.pythonCode = "elif " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + nd4.pythonCode;
                 :}
         |prO_Si  CONDICION:a prEntonces INSTRUCCIONES:b{:
                 Nodo nd = new Nodo();
@@ -1126,7 +1117,9 @@ O_SI::=  prO_Si CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c{:
                 nd.AddHijo(nd1);
                 nd.AddHijo(nd2);
                 nd.AddHijo(nd3);
-                
+                RESULT = nd;
+                parser.cont++;
+                nd.pythonCode = "elif " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n";
                 :};
 
 CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
@@ -1137,6 +1130,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " == " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |VARIABLES:a prMayor VARIABLES:b {:
                 Nodo nd = new Nodo(); 
@@ -1146,6 +1140,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " > " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |VARIABLES:a prMayorOIgual VARIABLES:b {:
                 Nodo nd = new Nodo(); 
@@ -1155,6 +1150,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " >= " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |VARIABLES:a prMenor VARIABLES:b {:
                 Nodo nd = new Nodo(); 
@@ -1164,6 +1160,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " < " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |VARIABLES:a prMenorOIgual VARIABLES:b {:
                 Nodo nd = new Nodo(); 
@@ -1173,6 +1170,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " <= " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |VARIABLES:a prEsDiferente VARIABLES:b {:
                 Nodo nd = new Nodo(); 
@@ -1182,6 +1180,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " != " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
 
 
@@ -1193,6 +1192,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " == " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |EXPRESION:a prMayor EXPRESION:b {:
                 Nodo nd = new Nodo(); 
@@ -1202,6 +1202,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " > " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |EXPRESION:a prMayorOIgual EXPRESION:b {:
                 Nodo nd = new Nodo(); 
@@ -1211,6 +1212,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " >= " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |EXPRESION:a prMenor EXPRESION:b {:
                 Nodo nd = new Nodo(); 
@@ -1220,6 +1222,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " < " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |EXPRESION:a prMenorOIgual EXPRESION:b {:
                 Nodo nd = new Nodo(); 
@@ -1229,6 +1232,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " <= " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |EXPRESION:a prEsDiferente EXPRESION:b {:
                 Nodo nd = new Nodo(); 
@@ -1238,6 +1242,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
+                nd.pythonCode = ((Nodo) a).pythonCode + " != " + ((Nodo) b).pythonCode;
                 RESULT = nd;:}
             |prNot VARIABLES:a {:
                 Nodo nd = new Nodo(); 
@@ -1246,6 +1251,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.setValor("!");
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
+                nd.pythonCode = "not " + ((Nodo) a).pythonCode;
                 RESULT = nd;:}
             |prNot EXPRESION:a {:
                 Nodo nd = new Nodo(); 
@@ -1254,6 +1260,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.setValor("!");
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
+                nd.pythonCode = "not (" + ((Nodo) a).pythonCode + ")";
                 RESULT = nd;:}
 
             |prNot pare1 CONDICION:a pare2 {:
@@ -1263,6 +1270,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.setValor("!");
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
+                nd.pythonCode = "not (" + ((Nodo) a).pythonCode + ")";
                 RESULT = nd;:}
                 |pare1 CONDICION:a pare2 {: RESULT = a;:}
                 ;
@@ -1367,6 +1375,7 @@ PARA::= prPara tvariable:a FLECHA:e EXPRESION:b prHasta EXPRESION:c prHacer INST
                 parser.cont++;
                 nd.AddHijo(nd9);
                 RESULT = nd;
+                nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd6.pythonCode + "):" + nd8.pythonCode;
                 :}
             
             |prPara tvariable:a FLECHA:e EXPRESION:b prHasta EXPRESION:c prHacer  prFinPara {:
@@ -1420,7 +1429,7 @@ PARA::= prPara tvariable:a FLECHA:e EXPRESION:b prHasta EXPRESION:c prHacer INST
                 parser.cont++;
                 nd.AddHijo(nd8);
                 RESULT = nd;
-
+                nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd6.pythonCode + "):";
             :};
 
 FLECHA::= trest tmayor {:
@@ -1446,7 +1455,76 @@ FLECHA::= trest tmayor {:
         RESULT = nd;
         :};
 
-PARA_SALTO::= prPara tvariable FLECHA EXPRESION prHasta EXPRESION prCon prIncremental EXPRESION prHacer E prFinPara;
+PARA_SALTO::= prPara tvariable:a FLECHA:b EXPRESION:c prHasta EXPRESION:d prCon prIncremental EXPRESION:e prHacer INSTRUCCIONES:f prFinPara{:
+                        Nodo nd = new Nodo();
+                        nd.setEtiqueta("PARA_SALTO");
+                        nd.setIdNodo(parser.cont);
+                        nd.setValor("PARA_SALTO");
+                        parser.cont++;
+                        //prPara
+                        Nodo nd1 = new Nodo();
+                        nd1.setEtiqueta("prPara");
+                        nd1.setIdNodo(parser.cont);
+                        nd1.setValor("prPara");
+                        parser.cont++;
+                        nd.AddHijo(nd1);
+                        //tvariable
+                        Nodo nd2 = new Nodo();
+                        nd2.setEtiqueta("VARIABLE");
+                        nd2.setIdNodo(parser.cont);
+                        nd2.setValor(a);
+                        parser.cont++;
+                        nd.AddHijo(nd2);
+                        //FLECHA
+                        Nodo nd3 = (Nodo) b;
+                        nd.AddHijo(nd3);
+                        //EXPRESION
+                        Nodo nd4 = (Nodo) c;
+                        nd.AddHijo(nd4);
+                        //prHasta
+                        Nodo nd5 = new Nodo();
+                        nd5.setEtiqueta("HASTA");
+                        nd5.setIdNodo(parser.cont);
+                        nd5.setValor("HASTA");
+                        parser.cont++;
+                        nd.AddHijo(nd5);
+                        //prCon
+                        Nodo nd6 = new Nodo();
+                        nd6.setEtiqueta("CON");
+                        nd6.setIdNodo(parser.cont);
+                        nd6.setValor("CON");
+                        parser.cont++;
+                        nd.AddHijo(nd6);
+                        //prIncremental
+                        Nodo nd7 = new Nodo();
+                        nd7.setEtiqueta("INCREMENTAL");
+                        nd7.setIdNodo(parser.cont);
+                        nd7.setValor("INCREMENTAL");
+                        parser.cont++;
+                        nd.AddHijo(nd7);
+                        //EXPRESION
+                        Nodo nd8 = (Nodo) e;
+                        nd.AddHijo(nd8);
+                        //prHacer
+                        Nodo nd9 = new Nodo();
+                        nd9.setEtiqueta("HACER");
+                        nd9.setIdNodo(parser.cont);
+                        nd9.setValor("HACER");
+                        parser.cont++;
+                        nd.AddHijo(nd9);
+                        //INSTRUCCIONES
+                        Nodo nd10 = (Nodo) f;
+                        nd.AddHijo(nd10);
+                        //prFinPara
+                        Nodo nd11 = new Nodo();
+                        nd11.setEtiqueta("FINPARA");
+                        nd11.setIdNodo(parser.cont);
+                        nd11.setValor("FINPARA");
+                        parser.cont++;
+                        nd.AddHijo(nd11);
+                        RESULT = nd;
+                        nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd8.pythonCode + "):" + nd10.pythonCode;
+                        :};
 
 MIENTRAS::= prMientras CONDICION:a prHacer INSTRUCCIONES:b prFinMientras{:
                 Nodo nd = new Nodo();
@@ -1482,6 +1560,7 @@ MIENTRAS::= prMientras CONDICION:a prHacer INSTRUCCIONES:b prFinMientras{:
                 parser.cont++;
                 nd.AddHijo(nd5);
                 RESULT = nd;
+                nd.pythonCode = "while "  + nd2.pythonCode + ":\n" + "\t" + nd4.pythonCode;
                 :}
                 ;
 
@@ -1513,6 +1592,7 @@ REPETIR::= prRepetir INSTRUCCION:a prHastaQue CONDICION:b {:
                 Nodo nd4 = (Nodo) b;
                 nd.AddHijo(nd4);
                 RESULT = nd;
+                nd.pythonCode = "while True:" + "\t" + nd2.pythonCode + "\t" + "if " + nd4.pythonCode + ":" + "\t" + "\t" + "break";
                         :}
         |prRepetir prHastaQue CONDICION:a {:
                 Nodo nd = new Nodo();
@@ -1538,6 +1618,7 @@ REPETIR::= prRepetir INSTRUCCION:a prHastaQue CONDICION:b {:
                 Nodo nd3 = (Nodo) a;
                 nd.AddHijo(nd3);
                 RESULT = nd;
+                nd.pythonCode = "while True:" + "\t" + "if " + nd3.pythonCode + ":" + "\t" + "\t" + "break";
                 :}
                         ;
 
@@ -1837,6 +1918,7 @@ IMPRIMIR::= prImprimir VARIABLES:a tpuntoycoma{:
                 nd.setIdNodo(parser.cont); 
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
+                nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
                 RESULT = nd;:}
                 |prImprimir pare1 EXPRESION:a pare2 tpuntoycoma {:
                 Nodo nd = new Nodo(); 
