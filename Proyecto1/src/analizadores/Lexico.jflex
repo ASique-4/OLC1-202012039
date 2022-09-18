@@ -186,6 +186,11 @@ ascii = [\']\$\{[\d]+}[\']|[\"]\$\{[\d]+}[\"]
 <YYINITIAL>"hasta_que" {
                     //codigo en java
                     System.out.println("Reconocio palabra_reservada hasta_que, lexema:"+yytext());
+                    return new Symbol(Simbolos.prHastaQue, yycolumn, yyline, yytext());
+                  }
+<YYINITIAL>"retornar" {
+                    //codigo en java
+                    System.out.println("Reconocio palabra_reservada retornar, lexema:"+yytext());
                     return new Symbol(Simbolos.prRetornar, yycolumn, yyline, yytext());
                   }
 <YYINITIAL>"metodo" {

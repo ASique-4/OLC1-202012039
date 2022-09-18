@@ -37,6 +37,13 @@ ingresar _operaciones1Avanzadas2_  coMo numero con_valor 30 potencia [22.2-2.2] 
 fin
 
 inicio
+metodo _potenciaManual_ con_parametros (_base_ Numero, _exponenete_ Numero)
+	ingresar _i_ como Numero con_valor 0;
+
+fin_metodo
+fin
+
+inicio
 para _i_->0 hasta _exponente_1 hacer
 		_acumulado_ -> _acumulado_ + _acumulado_;
 	fin_para
@@ -148,8 +155,10 @@ inicio
 ingresar _operaciones1Basica_      como numero con_valor (5*4)+(((2-9)-(2*7))/(2-9)); 
 fin
  */
-public class Ventana extends javax.swing.JFrame {
 
+
+public class Ventana extends javax.swing.JFrame {
+    public int ErroresCount = 0;
     /**
      * Creates new form Ventana
      */
@@ -164,12 +173,20 @@ public class Ventana extends javax.swing.JFrame {
     public String recorrido(Nodo raiz){
         String ast = "";
         for(Nodo hijos : raiz.Hijos){
-            if(!(hijos.Etiqueta.equals("vacio"))){
-                ast += "\"" + raiz.idNodo + "." + raiz.Etiqueta + ": " + raiz.Valor + "\"->\"" + hijos.idNodo + "." + hijos.Etiqueta + " == " + hijos.Valor + "\"\n";
-                ast += recorrido(hijos);
-            } else {
-                System.out.println(raiz.Etiqueta);
+            //If hijos is null then eliminate
+            if(hijos != null){
+                if(!(hijos.Etiqueta.equals(""))){
+                    ast += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"->\"<" + hijos.idNodo + "." + hijos.Etiqueta + ">  " + hijos.Valor + "\"\n";
+                    ast += recorrido(hijos);
+                } else {
+                    System.out.println(raiz.Etiqueta);
+                }
+            }else{
+                
+                ast += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"->\" " + Integer.toString(ErroresCount) + "<ERROR>  \"\n";
+                ErroresCount++;
             }
+            
         }
         return ast;
     }
@@ -490,7 +507,7 @@ public class Ventana extends javax.swing.JFrame {
                 "<body bgcolor=\"B7C4CF\">"+
                     "<center>";
                         
-            String html =  htmlstyle + "<table border=1><tr><th>Linea</th><th>Columna</th><th>Descripcion</th><th>Columna</th></tr>";
+            String html =  htmlstyle + "<table border=1><tr><th>Linea</th><th>Columna</th><th>Descripcion</th><th>Tipo</th></tr>";
             for (int i = 0; i < sintactico.errorsSint.size(); i++) {
                 html += "<tr><td><center>" + sintactico.errorsSint.get(i).getLine() + "</center></td><td><center>" + 
                 sintactico.errorsSint.get(i).getColumn() + "</center></td><td><center>" + sintactico.errorsSint.get(i).getDescription() + 

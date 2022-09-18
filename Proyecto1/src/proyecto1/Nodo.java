@@ -3,10 +3,11 @@ package proyecto1;
 import java.util.ArrayList;
 
 public class Nodo {
-    public String Etiqueta;
+    public String Etiqueta = "";
     public ArrayList<Nodo> Hijos = new ArrayList<>();
     public String Valor;
     public int idNodo;
+    public String pythonCode = "";
 
     //Add hijo
     public void AddHijo(Nodo hijo) {
@@ -32,4 +33,11 @@ public class Nodo {
     public void setIdNodo(int idNodo) {
         this.idNodo = idNodo;
     }
+    public String getPythonCode() {
+        return pythonCode;
+    }
+    public void setPythonCode(String pythonCode) {
+        this.pythonCode = pythonCode;
+    }
+
 }
