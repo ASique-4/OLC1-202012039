@@ -8,6 +8,7 @@ public class Nodo {
     public String Valor;
     public int idNodo;
     public String pythonCode = "";
+    public String GolangCode = "";
 
     //Add hijo
     public void AddHijo(Nodo hijo) {

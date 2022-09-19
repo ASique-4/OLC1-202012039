@@ -16,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -69,6 +70,13 @@ de_lo_contrario
 		imprimir "de lo contrario";
 	fin_si
 fin_si
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "no tiene que imprimir este mensaje";
+de_lo_contrario
+	mientras not (_variable1_ mayor_o_igual 5*5+8/2) hacer
+		imprimir _variable1_;
+	fin_mientras
+fin_si
 fin
 
 inicio
@@ -103,7 +111,9 @@ si _v1_ es_igual _v2_ entonces
 		o_si _v1_ es_igual 13 entonces
 		    imprimir_nl "mensaje de prueba2";
 		o_si _v1_ es_igual 14 entonces
-		    imprimir_nl "mensaje de prueba3";
+		    ingresar _operaciones1Basica2_      como numero con_valor _operaciones1Basica_+_operaciones1Basica_; 
+ingresar _operaciones1Intermedia_  Como nUmero con_valor 15+(9*8)+200/8*3+9;
+ingresar _operaciones1Avanzadas2_  coMo numero con_valor 30 potencia [22.2-2.2] + (2); 
 	de_lo_contrario
 	    imprimir_nl "este print es un ejemplo4";
 fin_si
@@ -159,6 +169,7 @@ fin
 
 public class Ventana extends javax.swing.JFrame {
     public int ErroresCount = 0;
+    public String rank = "";
     /**
      * Creates new form Ventana
      */
@@ -168,24 +179,37 @@ public class Ventana extends javax.swing.JFrame {
         //Centrar
         this.setLocationRelativeTo(null);
     }
+    //Obtener rank
+    public String getRank(Nodo raiz){
+        String tmpRank = "";
+        if(raiz != null){
+            if(raiz.Hijos != null){
+                if(raiz.Hijos.size() > 1){
+                    tmpRank += "\"<" + raiz.Hijos.get(1).idNodo + "." + raiz.Hijos.get(1).Etiqueta + ">  " + raiz.Hijos.get(1).Valor + "\"";
+                    if(raiz.Hijos.get(1).Hijos != null){
+                        tmpRank += getRank(raiz.Hijos.get(1));
+                    }
+                }else{
+                    tmpRank += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"";
+                }
+            }
+        }
+        
+        return tmpRank;
+    }
 
     //Create AST
     public String recorrido(Nodo raiz){
         String ast = "";
         for(Nodo hijos : raiz.Hijos){
             //If hijos is null then eliminate
-            if(hijos != null){
                 if(!(hijos.Etiqueta.equals(""))){
                     ast += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"->\"<" + hijos.idNodo + "." + hijos.Etiqueta + ">  " + hijos.Valor + "\"\n";
                     ast += recorrido(hijos);
                 } else {
                     System.out.println(raiz.Etiqueta);
                 }
-            }else{
-                
-                ast += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"->\" " + Integer.toString(ErroresCount) + "<ERROR>  \"\n";
-                ErroresCount++;
-            }
+
             
         }
         return ast;
@@ -200,6 +224,7 @@ public class Ventana extends javax.swing.JFrame {
             pw = new PrintWriter(fichero);
             pw.println("digraph G {");
             pw.println("node [shape=box, style=filled, color=seashell2];");
+            pw.println("{rank = same; " + rank + "}");
             pw.println(cadena);
             pw.println("\n}");
             fichero.close();
@@ -416,7 +441,8 @@ public class Ventana extends javax.swing.JFrame {
             errorNumber.setText(Integer.toString(sintactico.erroresSintacticos));
 
             Nodo raiz = sintactico.padre;
-
+            //Recorreo raiz
+            rank = getRank(raiz.getHijos().get(0));
             crearAST(recorrido(raiz));
         } catch (Exception e) {
             System.out.println(e);

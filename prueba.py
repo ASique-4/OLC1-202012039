@@ -1,6 +1,13 @@
+if _v1_ == _v2_:
+	print("no tiene que imprimir este mensaje""\n")
 
+elif _v1_ > _v2_:
+		print("mayor""\n")
+else:
+	if _v1_ == _v2_:
+		print("no tiene que imprimir este mensaje""\n")
 
-def Hola(a,b):
-    print("Hola " + a)
-    return 0
+	else:
+		print("de lo contrario")
+
 

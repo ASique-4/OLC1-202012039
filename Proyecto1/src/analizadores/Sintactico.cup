@@ -22,6 +22,7 @@ parser code
         String tmpPython = "";
         String tmpImprimir = "";
         String tmpImprimirnl = "";
+        Nodo nodoError = new Nodo();
         Boolean osiBool = false;
         ArrayList<String> variables = new ArrayList<String>();
         public ArrayList<Errors> errorsSint = new ArrayList<Errors>();
@@ -40,7 +41,11 @@ parser code
                         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
 
                         Errors tmp = new Errors("Sitactico", s.left , s.right,"No se esperaba este componente: " +s.value);
-                        
+                        nodoError = new Nodo();
+                        nodoError.setEtiqueta("ERROR");
+                        nodoError.setIdNodo(cont); 
+                        nodoError.setValor("No se esperaba este componente: " +s.value);
+                        cont++;
                         errorsSint.add(tmp);
                 }
         
@@ -64,7 +69,7 @@ parser code
                 for(int i = 0; i < asciiArray.length; i++){
                         charValue += (char)Integer.parseInt(asciiArray[i]);
                 }
-                return "\"" + charValue + "\"";
+                return charValue;
         }
         public void agregarTmpListaNombres(String a, Nodo b){
     
@@ -106,18 +111,29 @@ parser code
         }
         
         public String recorrido(Nodo raiz){
+
                 String ast = "";
                 for(Nodo hijos : raiz.Hijos){
-                        //If hijos is null then eliminate
-                        if(!(hijos.Etiqueta.equals(""))){
-                                if(hijos.pythonCode.equals("")){
-                                        ast += recorrido(hijos);
-                                }else{
-                                        ast += hijos.pythonCode;
+                        if(hijos != null){
+                                //If hijos is null then eliminate
+                                if(!(hijos.Etiqueta.equals(""))){
+                                        if(hijos.pythonCode.equals("")){
+                                                ast += recorrido(hijos);
+                                        }else{
+                                                ast += hijos.pythonCode;
+                                        }
+                                } else {
+                                        System.out.println(raiz.Etiqueta);
                                 }
-                        } else {
-                                System.out.println(raiz.Etiqueta);
+                        }else{
+                                Nodo tmp = new Nodo();
+                                tmp.Etiqueta = "null";
+                                raiz.Hijos.add(tmp);
+                                ast += "Error" + "\n";
                         }
+                                
+                        
+                        
                 
                 
                 }
@@ -205,7 +221,10 @@ INICIO::= prInicio INSTRUCCIONES:n1 prFin{:
             parser.cont++;
             nd.AddHijo((Nodo) n1);
             parser.padre = (Nodo) nd;
+            python += "def main():\n";
             python = recorrido(nd);
+            python += "if __name__ == '__main__':\n";
+            python += "\tmain()\n";
             RESULT = nd;     :};
 
 INSTRUCCIONES::= E:n1 INSTRUCCIONES:n2 {: 
@@ -213,11 +232,12 @@ INSTRUCCIONES::= E:n1 INSTRUCCIONES:n2 {:
                 nd.setEtiqueta("INSTRUCCIONES");
                 nd.setIdNodo(parser.cont); 
                 parser.cont++;
+
                 nd.AddHijo((Nodo) n1);
                 nd.AddHijo((Nodo) n2);
-
-                RESULT = nd; 
                 nd.pythonCode = tab(countTab) + ((Nodo) n1).pythonCode + "\n" + ((Nodo) n2).pythonCode; 
+                RESULT = nd; 
+                
                 :}
 
                 |E:n1 {: 
@@ -225,43 +245,35 @@ INSTRUCCIONES::= E:n1 INSTRUCCIONES:n2 {:
                 nd.setEtiqueta("INSTRUCCION");
                 nd.setIdNodo(parser.cont); 
                 parser.cont++;
+
                 nd.AddHijo((Nodo) n1);
                 RESULT = nd;  
-                if(((Nodo) n1).Etiqueta.equals("IF") || ((Nodo) n1).Etiqueta.equals("MIENTRAS") 
-                        || ((Nodo) n1).Etiqueta.equals("PARA") || ((Nodo) n1).Etiqueta.equals("REPETIR") 
-                        || ((Nodo) n1).Etiqueta.equals("SELECCION_MULTIPLE") || ((Nodo) n1).Etiqueta.equals("METODO")
-                        || ((Nodo) n1).Etiqueta.equals("FUNCION") || ((Nodo) n1).Etiqueta.equals("PARA_SALTO")){
-                        countTab--;
-                        nd.pythonCode = tab(countTab) + ((Nodo) n1).pythonCode + "\n";
+                
+                
+                if(((Nodo) n1).Etiqueta.equals("DE_LO_CONTRARIO") || ((Nodo) n1).Etiqueta.equals("O_SI") 
+                || ((Nodo) n1).Etiqueta.equals("SEGUN")){
+                        nd.pythonCode = tab(countTab-1) + ((Nodo) n1).pythonCode + "\n";
                 }else{
                         nd.pythonCode = tab(countTab) + ((Nodo) n1).pythonCode + "\n";
                 }
-                
                 :};
 
 E::=    DECLARACION:a {:  RESULT = a;     :} 
-        | {:countTab++;:} IF:a {: RESULT = a;     :} 
+        | {:countTab++;:} IF:a {: countTab--; RESULT = a;     :} 
         |COMENTARIO:a {: RESULT = a;     :} 
         |COMENTARIO_VARIAS_LINEAS:a {: RESULT = a;     :} 
         |ASIGNACION:a {: RESULT = a;     :} 
-        | {:countTab++;:} SELECCION_MULTIPLE:a {: RESULT = a;     :} 
-        | {:countTab++;:} PARA:a {: RESULT = a;     :} 
-        | {:countTab++;:} PARA_SALTO:a {: RESULT = a;     :} 
-        | {:countTab++;:} MIENTRAS:a {: RESULT = a;     :} 
-        | {:countTab++;:} REPETIR:a {: RESULT = a;     :} 
+        | {:countTab++;:} SELECCION_MULTIPLE:a {: countTab--; RESULT = a;     :} 
+        | {:countTab++;:} PARA:a {: countTab--; RESULT = a;     :} 
+        | {:countTab++;:} MIENTRAS:a {: countTab--; RESULT = a;     :} 
+        | {:countTab++;:} REPETIR:a {: countTab--; RESULT = a;     :} 
         |RETORNO:a {: RESULT = a;     :} 
-        | {:countTab++;:} METODO:a {: RESULT = a;     :} 
-        | {:countTab++;:} FUNCION:a {: RESULT = a;     :} 
+        | {:countTab++;:} METODO:a {: countTab--; RESULT = a;     :} 
+        | {:countTab++;:} FUNCION:a {: countTab--; RESULT = a;     :} 
         |EJECUTAR:a {: RESULT = a;     :} 
         |IMPRIMIR:a {: RESULT = a;     :} 
         |IMPRIMIR_NL:a {: RESULT = a;     :} 
-        |error:a {: 
-                Nodo nd = new Nodo(); 
-                nd.setEtiqueta("ERROR");
-                nd.setIdNodo(parser.cont); 
-                parser.cont++;
-                nd.setPythonCode("ERROR");
-                RESULT = nd;     :};
+        |error {: RESULT = nodoError;:};
 
 EXPRESION::= EXPRESION OPERACIONES:a {:
                 Nodo nd = new Nodo();
@@ -990,7 +1002,7 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 RESULT = nd;
                 parser.cont++;
 
-                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + nd4.pythonCode;
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + nd3.pythonCode + "\n" + nd4.pythonCode;
                 :}
         |prSi CONDICION:a prEntonces INSTRUCCIONES:c DE_LO_CONTRARIO:b prFinSi{:
                 Nodo nd = new Nodo();
@@ -1022,7 +1034,7 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 RESULT = nd;
                 parser.cont++;
 
-                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + "else:\n" + "\t" + nd4.pythonCode ;
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + nd3.pythonCode + "\n" + tab(countTab - 1) + "else:\n" + nd4.pythonCode ;
                 :}
         |prSi CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c DE_LO_CONTRARIO:d prFinSi{:
                 Nodo nd = new Nodo();
@@ -1057,7 +1069,7 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 RESULT = nd;
                 parser.cont++;
 
-                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + nd4.pythonCode + "else:\n" + "\t" + nd5.pythonCode ;
+                nd.pythonCode = "if " + nd1.pythonCode + ":\n" + nd3.pythonCode + "\n" + nd4.pythonCode + tab(countTab - 1) + "else:\n" + nd5.pythonCode ;
                 :};
 
 DE_LO_CONTRARIO::= prDeLoContrario INSTRUCCIONES:a{:
@@ -1071,7 +1083,7 @@ DE_LO_CONTRARIO::= prDeLoContrario INSTRUCCIONES:a{:
                 nd.AddHijo(nd1);
                 RESULT = nd;
                 parser.cont++;
-                nd.pythonCode = "\t" + nd1.pythonCode ;
+                nd.pythonCode = nd1.pythonCode ;
                 :};
 
 O_SI::=  prO_Si CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c{:
@@ -1119,7 +1131,7 @@ O_SI::=  prO_Si CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c{:
                 nd.AddHijo(nd3);
                 RESULT = nd;
                 parser.cont++;
-                nd.pythonCode = "elif " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode ;
+                nd.pythonCode = tab(countTab - 1) + "elif " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode ;
                 :};
 
 CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
@@ -1281,7 +1293,7 @@ VARIABLES::= tcadena:a {:
                 Nodo nd = new Nodo(); 
                 nd.setEtiqueta("CADENA");
                 nd.setIdNodo(parser.cont); 
-                nd.setValor(a.replace("\"", ""));
+                nd.setValor(a.replace("\"", "").replace("\'", ""));
                 parser.cont++;
                 nd.pythonCode = a;
                 RESULT = nd;:}
@@ -1305,7 +1317,7 @@ VARIABLES::= tcadena:a {:
                 Nodo nd = new Nodo(); 
                 nd.setEtiqueta("CARACTER");
                 nd.setIdNodo(parser.cont); 
-                nd.setValor(a);
+                nd.setValor(a.replace("\"", "").replace("\'", ""));
                 parser.cont++;
                 nd.pythonCode = a;
                 RESULT = nd;:}
@@ -1430,7 +1442,11 @@ PARA::= prPara tvariable:a FLECHA:e EXPRESION:b prHasta EXPRESION:c prHacer INST
                 nd.AddHijo(nd8);
                 RESULT = nd;
                 nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd6.pythonCode + "):\n";
-            :};
+            :}
+            |PARA_SALTO:a {:
+                Nodo nd = (Nodo) a;
+                RESULT = nd;
+                :};
 
 FLECHA::= trest tmayor {:
         Nodo nd = new Nodo();
