@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 num = [0-9]+
 variable = _[a-zA-Z0-9]+_
-cadena = [\'][^\'\n]*[\']|[\"][^\"\n]*[\"]
+cadena = [\'][^\']*[\']|[\"][^\"]*[\"]
 comentario = ([\/][\/])+(\s|\S)[^\n]*
 comentarioVariasLineas = [\/][\*]+(((\s|\S)[^\*]*)|([\n]*)|([\*]*[^\/]))([\*]+[\/])
 palabra = [a-zA-Z]+

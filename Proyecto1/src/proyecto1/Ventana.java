@@ -169,7 +169,6 @@ fin
 
 public class Ventana extends javax.swing.JFrame {
     public int ErroresCount = 0;
-    public String rank = "";
     /**
      * Creates new form Ventana
      */
@@ -198,6 +197,9 @@ public class Ventana extends javax.swing.JFrame {
         return tmpRank;
     }
 
+
+
+
     //Create AST
     public String recorrido(Nodo raiz){
         String ast = "";
@@ -224,7 +226,6 @@ public class Ventana extends javax.swing.JFrame {
             pw = new PrintWriter(fichero);
             pw.println("digraph G {");
             pw.println("node [shape=box, style=filled, color=seashell2];");
-            pw.println("{rank = same; " + rank + "}");
             pw.println(cadena);
             pw.println("\n}");
             fichero.close();
@@ -320,6 +321,11 @@ public class Ventana extends javax.swing.JFrame {
         GolangView.setFont(new java.awt.Font("Fira Code Medium", 0, 18)); // NOI18N
         GolangView.setForeground(new java.awt.Color(0, 173, 181));
         GolangView.setText("View code Golang");
+        GolangView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GolangViewActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Fira Code Medium", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(165, 201, 202));
@@ -442,8 +448,45 @@ public class Ventana extends javax.swing.JFrame {
 
             Nodo raiz = sintactico.padre;
             //Recorreo raiz
-            rank = getRank(raiz.getHijos().get(0));
             crearAST(recorrido(raiz));
+            //Crar HTML de errores
+            String htmlstyle = "<!DOCTYPE html>"+
+            "<html>"+
+            
+                "<head>" +
+                "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">" +
+                "<title>Errores</title>"+
+                "</head>"+
+                "<style>"+
+                "table, th{background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"+
+                "border-collapse: collapse;"+
+                "background-color: #D7C0AE;"+
+                "}"+
+                "th:nth-child(even),td:nth-child(even) {"+
+                "background-color: #EEE3CB;"+
+                "}"+
+                "</style>"+
+                "<body bgcolor=\"B7C4CF\">"+
+                    "<center>";
+                        
+            String html =  htmlstyle + "<table border=1><tr><th>Linea</th><th>Columna</th><th>Descripcion</th><th>Tipo</th></tr>";
+            for (int i = 0; i < sintactico.errorsSint.size(); i++) {
+                html += "<tr><td><center>" + sintactico.errorsSint.get(i).getLine() + "</center></td><td><center>" + 
+                sintactico.errorsSint.get(i).getColumn() + "</center></td><td><center>" + sintactico.errorsSint.get(i).getDescription() + 
+                "</center></td><td><center>" + sintactico.errorsSint.get(i).getError()  + "</center></td></tr>";
+            }
+            //Generate HTML table of errorsLex
+            for (int i = 0; i < lexico.errorsLex.size(); i++) {
+                html += "<tr><td><center>" + lexico.errorsLex.get(i).getLine() + "</center></td><td><center>" + 
+                lexico.errorsLex.get(i).getColumn() + "</center></td><td><center>" + lexico.errorsLex.get(i).getDescription() + 
+                "</center></td><td><center>" + lexico.errorsLex.get(i).getError()  + "</center></td></tr>";
+            }
+            html += "</table></center></body></html>";
+            //Save on a file named "errores.html"
+            File file = new File("errores.html");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(html);
+            bw.close();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -513,6 +556,15 @@ public class Ventana extends javax.swing.JFrame {
             sintactico.parse();
             errorNumber.setText(Integer.toString(sintactico.erroresSintacticos));
             TextArea.setText(sintactico.python);
+            //Create a py file containing sintactico.python
+            try{
+            File file = new File("output.py");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(sintactico.python);
+            bw.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
             //Generate HTML table of errorsSint
             String htmlstyle = "<!DOCTYPE html>"+
             "<html>"+
@@ -568,6 +620,69 @@ public class Ventana extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_ErrorsOptionActionPerformed
+
+    private void GolangViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GolangViewActionPerformed
+        // TODO add your handling code here:
+        try {
+            String dato= TextArea.getText();
+            System.out.println(dato);
+            Analizador_Lexico lexico = new Analizador_Lexico(new BufferedReader(new StringReader(dato)));
+            Analizador_sintactico sintactico = new Analizador_sintactico(lexico);
+            sintactico.parse();
+            errorNumber.setText(Integer.toString(sintactico.erroresSintacticos));
+            TextArea.setText(sintactico.golang);
+            //Create a go file with sintactico.golang
+            try{
+            File file = new File("output.go");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(sintactico.golang);
+            bw.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            //Generate HTML table of errorsSint
+            String htmlstyle = "<!DOCTYPE html>"+
+            "<html>"+
+            
+                "<head>" +
+                "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">" +
+                "<title>Errores</title>"+
+                "</head>"+
+                "<style>"+
+                "table, th{background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"+
+                "border-collapse: collapse;"+
+                "background-color: #D7C0AE;"+
+                "}"+
+                "th:nth-child(even),td:nth-child(even) {"+
+                "background-color: #EEE3CB;"+
+                "}"+
+                "</style>"+
+                "<body bgcolor=\"B7C4CF\">"+
+                    "<center>";
+                        
+            String html =  htmlstyle + "<table border=1><tr><th>Linea</th><th>Columna</th><th>Descripcion</th><th>Tipo</th></tr>";
+            for (int i = 0; i < sintactico.errorsSint.size(); i++) {
+                html += "<tr><td><center>" + sintactico.errorsSint.get(i).getLine() + "</center></td><td><center>" + 
+                sintactico.errorsSint.get(i).getColumn() + "</center></td><td><center>" + sintactico.errorsSint.get(i).getDescription() + 
+                "</center></td><td><center>" + sintactico.errorsSint.get(i).getError()  + "</center></td></tr>";
+            }
+            //Generate HTML table of errorsLex
+            for (int i = 0; i < lexico.errorsLex.size(); i++) {
+                html += "<tr><td><center>" + lexico.errorsLex.get(i).getLine() + "</center></td><td><center>" + 
+                lexico.errorsLex.get(i).getColumn() + "</center></td><td><center>" + lexico.errorsLex.get(i).getDescription() + 
+                "</center></td><td><center>" + lexico.errorsLex.get(i).getError()  + "</center></td></tr>";
+            }
+            html += "</table></center></body></html>";
+            //Save on a file named "errores.html"
+            File file = new File("errores.html");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(html);
+            bw.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_GolangViewActionPerformed
 
 
     /**

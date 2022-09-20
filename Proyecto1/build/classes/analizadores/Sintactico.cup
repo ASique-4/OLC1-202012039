@@ -6,10 +6,10 @@ import proyecto1.Nodo;
 
 
 parser code 
-{:
+{:      
         public static Nodo padre;
-        boolean cambiar = true;
-        int countTab = 0;
+        boolean potenciaGo = false;
+        int countTab = 1;
         int tmpCountTab = 0;
         int cont = 0;
         public String python = "";
@@ -22,6 +22,7 @@ parser code
         String tmpPython = "";
         String tmpImprimir = "";
         String tmpImprimirnl = "";
+        Nodo nodoError = new Nodo();
         Boolean osiBool = false;
         ArrayList<String> variables = new ArrayList<String>();
         public ArrayList<Errors> errorsSint = new ArrayList<Errors>();
@@ -32,17 +33,21 @@ parser code
         ArrayList<String> pythonArray = new ArrayList<String>();
         ArrayList<String> tmpPythonArray = new ArrayList<String>();
         ArrayList<String> tmpPython2 = new ArrayList<String>();
+        Nodo tmpErrores = new Nodo();
         public void syntax_error(Symbol s){ 
-                if(s.value != null){
                         erroresSintacticos++;
                         //Imprimir error
                         System.out.println("Error Sintáctico en la Línea " + (s.left) +
                         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
 
-                        Errors tmp = new Errors("Sitactico", s.left , s.right,"No se esperaba este componente: " +s.value);
-                        
+                        Errors tmp = new Errors("Sitactico", s.right , s.left,"No se esperaba este componente: " +s.value);
+                        nodoError = new Nodo();
+                        nodoError.setEtiqueta("ERROR");
+                        nodoError.setIdNodo(cont); 
+                        nodoError.setValor("No se esperaba este componente: " +s.value);
+                        cont++;
                         errorsSint.add(tmp);
-                }
+                
         
         } 
         //Repet tab
@@ -64,12 +69,19 @@ parser code
                 for(int i = 0; i < asciiArray.length; i++){
                         charValue += (char)Integer.parseInt(asciiArray[i]);
                 }
-                return "\"" + charValue + "\"";
+                return charValue;
         }
         public void agregarTmpListaNombres(String a, Nodo b){
-    
+                int j = 0;
                 for(String i: tmpListaNombres){
-                        b.pythonCode += i + " = " + a + "\n";
+                        if(j == 0){
+                                b.pythonCode += i + " = \"" + a + "\"\n";
+                                b.GolangCode += i + " = \"" + a + "\"\n";
+                        }else{
+                                b.pythonCode += tab(countTab) + i + " = \"" + a + "\"\n";
+                                b.GolangCode += tab(countTab) + i + " = \"" + a + "\"\n";
+                        }
+                        j++;
                 }; 
 
                 tmpListaNombres = new ArrayList<String>();
@@ -126,11 +138,33 @@ parser code
                                 raiz.Hijos.add(tmp);
                                 ast += "Error" + "\n";
                         }
-                                
-                        
-                        
-                
-                
+
+                }
+                return ast;
+        }
+
+        //Recorrido para GolangCode
+        public String recorridoGolang(Nodo raiz){
+                String ast = "";
+                for(Nodo hijos : raiz.Hijos){
+                        if(hijos != null){
+                                //If hijos is null then eliminate
+                                if(!(hijos.Etiqueta.equals(""))){
+                                        if(hijos.GolangCode.equals("")){
+                                                ast += recorridoGolang(hijos);
+                                        }else{
+                                                ast += hijos.GolangCode;
+                                        }
+                                } else {
+                                        System.out.println(raiz.Etiqueta);
+                                }
+                        }else{
+                                Nodo tmp = new Nodo();
+                                tmp.Etiqueta = "null";
+                                raiz.Hijos.add(tmp);
+                                ast += "Error" + "\n";
+                        }
+
                 }
                 return ast;
         }
@@ -139,14 +173,13 @@ parser code
         * en el que ya no es posible una recuperación de errores.
         **/ 
         public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
-                if(s.value != null){
                         System.out.println("Error síntactico irrecuperable en la Línea " + 
                         (s.left)+ " Columna "+s.right+". Componente " + s.value + 
                         " no reconocido."); 
                         Errors tmp = new Errors("Sitactico", s.left , s.right,"Componente " + s.value + " no reconocido.");
                         
                         errorsSint.add(tmp);
-                }
+                
         }  
 :} 
 
@@ -216,26 +249,63 @@ INICIO::= prInicio INSTRUCCIONES:n1 prFin{:
             parser.cont++;
             nd.AddHijo((Nodo) n1);
             parser.padre = (Nodo) nd;
-            python = recorrido(nd);
+            python += "def main():\n";
+            python += recorrido(nd);
+            python += "if __name__ == '__main__':\n";
+            python += "\tmain()\n";
+            golang += "package main;\n";
+            if(potenciaGo){
+                golang += "import ( \n\t\"math\" \n)\n";
+            }
+            golang += "func main() {\n";
+            golang += recorridoGolang(nd);
+            golang += "}";
             RESULT = nd;     :};
 
 INSTRUCCIONES::= E:n1 INSTRUCCIONES:n2 {: 
                 Nodo nd = new Nodo(); 
                 nd.setEtiqueta("INSTRUCCIONES");
                 nd.setIdNodo(parser.cont); 
+
                 parser.cont++;
                 if(n1 == null){
-                        n1 = new Nodo();
-                        ((Nodo) n1).setEtiqueta("ERROR");
-                        ((Nodo) n1).pythonCode = "Error";
+                        tmpErrores.setIdNodo(parser.cont);
+                        parser.cont++;
+                        tmpErrores.setEtiqueta("ERROR");
+                        nd.AddHijo((Nodo) n2);
+                        tmpErrores = nd;
+                        tmpErrores.setIdNodo(parser.cont);
+                        nd.pythonCode = ((Nodo) n2).pythonCode; 
+                        nd.GolangCode = ((Nodo) n2).GolangCode;
                 }else if(n2 == null){
-                        n2 = new Nodo();
-                        ((Nodo) n2).setEtiqueta("ERROR");
-                        ((Nodo) n2).pythonCode = "Error";
+                        tmpErrores.setIdNodo(parser.cont);
+                        parser.cont++;
+                        tmpErrores.setEtiqueta("ERROR");
+                        nd.AddHijo((Nodo) n1);
+                        nd.AddHijo(tmpErrores);
+                        tmpErrores = nd;
+                        if((nd.Hijos.get(0).Etiqueta.equals("DE_LO_CONTRARIO") || nd.Hijos.get(0).Etiqueta.equals("O_SI"))){
+                                nd.pythonCode = tab(countTab-1) + ((Nodo) n1).pythonCode;  
+                                nd.GolangCode = tab(countTab-1) + ((Nodo) n1).GolangCode;
+                        }else{
+                                nd.pythonCode = tab(countTab) + ((Nodo) n1).pythonCode;  
+                                nd.GolangCode = tab(countTab) + ((Nodo) n1).GolangCode;
+                        }
+                        
+                }else{
+                        nd.AddHijo((Nodo) n1);
+                        nd.AddHijo((Nodo) n2);
+                        tmpErrores = nd;
+                        if((nd.Hijos.get(0).Etiqueta.equals("DE_LO_CONTRARIO") || nd.Hijos.get(0).Etiqueta.equals("O_SI"))){
+                                nd.pythonCode = tab(countTab-1) + ((Nodo) n1).pythonCode + "\n" + ((Nodo) n2).pythonCode; 
+                                nd.GolangCode = tab(countTab-1) + ((Nodo) n1).GolangCode + "\n" + ((Nodo) n2).GolangCode;
+                        }else{
+                                nd.pythonCode = tab(countTab) + ((Nodo) n1).pythonCode + "\n" + ((Nodo) n2).pythonCode; 
+                                nd.GolangCode = tab(countTab) + ((Nodo) n1).GolangCode + "\n" + ((Nodo) n2).GolangCode;
+                        }
+                        
                 }
-                nd.AddHijo((Nodo) n1);
-                nd.AddHijo((Nodo) n2);
-                nd.pythonCode = tab(countTab) + ((Nodo) n1).pythonCode + "\n" + ((Nodo) n2).pythonCode; 
+                
                 RESULT = nd; 
                 
                 :}
@@ -244,22 +314,34 @@ INSTRUCCIONES::= E:n1 INSTRUCCIONES:n2 {:
                 Nodo nd = new Nodo(); 
                 nd.setEtiqueta("INSTRUCCION");
                 nd.setIdNodo(parser.cont); 
+
                 parser.cont++;
+
                 if(n1 == null){
-                        n1 = new Nodo();
-                        ((Nodo) n1).setEtiqueta("ERROR");
-                        ((Nodo) n1).pythonCode = "Error";
+                        tmpErrores.setIdNodo(parser.cont);
+                        tmpErrores.setEtiqueta("ERROR");
+                        parser.cont++;
+                        tmpErrores = nd;
+
+                }else{
+                        tmpErrores.setIdNodo(parser.cont);
+                        tmpErrores.setEtiqueta("ERROR");
+                        nd.AddHijo((Nodo) n1);
+                        tmpErrores = nd;
+                        parser.cont++;
+                        if((nd.Hijos.get(0).Etiqueta.equals("DE_LO_CONTRARIO") || nd.Hijos.get(0).Etiqueta.equals("O_SI"))){
+                                nd.pythonCode = tab(countTab-1) + nd.Hijos.get(0).pythonCode + "\n";
+                                nd.GolangCode = tab(countTab-1) + nd.Hijos.get(0).GolangCode + "\n";
+                        }else{
+                                nd.pythonCode = tab(countTab) + nd.Hijos.get(0).pythonCode + "\n";
+                                nd.GolangCode = tab(countTab) + nd.Hijos.get(0).GolangCode + "\n";
+                        }
                 }
-                nd.AddHijo((Nodo) n1);
                 RESULT = nd;  
                 
                 
-                if(((Nodo) n1).Etiqueta.equals("DE_LO_CONTRARIO") || ((Nodo) n1).Etiqueta.equals("O_SI") 
-                || ((Nodo) n1).Etiqueta.equals("SEGUN")){
-                        nd.pythonCode = tab(countTab-1) + ((Nodo) n1).pythonCode + "\n";
-                }else{
-                        nd.pythonCode = tab(countTab) + ((Nodo) n1).pythonCode + "\n";
-                }
+
+                
                 :};
 
 E::=    DECLARACION:a {:  RESULT = a;     :} 
@@ -277,7 +359,7 @@ E::=    DECLARACION:a {:  RESULT = a;     :}
         |EJECUTAR:a {: RESULT = a;     :} 
         |IMPRIMIR:a {: RESULT = a;     :} 
         |IMPRIMIR_NL:a {: RESULT = a;     :} 
-        |error;
+        |error ;
 
 EXPRESION::= EXPRESION OPERACIONES:a {:
                 Nodo nd = new Nodo();
@@ -298,6 +380,7 @@ OPERACION::= tnum:n {:
                 parser.cont++;
                 nd.setValor(n);
                 nd.pythonCode = n;
+                nd.GolangCode = n;
                 RESULT = nd;:}
                 | OPERACION:i tsum OPERACION:r {:
                 Nodo nd = new Nodo(); 
@@ -308,6 +391,7 @@ OPERACION::= tnum:n {:
                 nd.AddHijo((Nodo) i);
                 nd.AddHijo((Nodo) r);
                 nd.pythonCode = ( (Nodo) i).pythonCode + "+" + ( (Nodo) r).pythonCode  ;
+                nd.GolangCode = ( (Nodo) i).GolangCode + "+" + ( (Nodo) r).GolangCode  ;
                 RESULT = nd;:}
                 | OPERACION:i trest OPERACION:r {:
                 Nodo nd = new Nodo(); 
@@ -318,6 +402,7 @@ OPERACION::= tnum:n {:
                 nd.AddHijo((Nodo) i);
                 nd.AddHijo((Nodo) r);
                 nd.pythonCode = ( (Nodo) i).pythonCode + "-" + ( (Nodo) r).pythonCode ;
+                nd.GolangCode = ( (Nodo) i).GolangCode + "-" + ( (Nodo) r).GolangCode ;
                 RESULT = nd;:}
                 | OPERACION:i tmul OPERACION:r {:
                 Nodo nd = new Nodo(); 
@@ -328,6 +413,7 @@ OPERACION::= tnum:n {:
                 nd.AddHijo((Nodo) i);
                 nd.AddHijo((Nodo) r);
                 nd.pythonCode = ( (Nodo) i).pythonCode + "*" + ( (Nodo) r).pythonCode ;
+                nd.GolangCode = ( (Nodo) i).GolangCode + "*" + ( (Nodo) r).GolangCode ;
                 RESULT = nd;:}
                 | OPERACION:i tdiv OPERACION:r {:
                 Nodo nd = new Nodo(); 
@@ -338,6 +424,7 @@ OPERACION::= tnum:n {:
                 nd.AddHijo((Nodo) i);
                 nd.AddHijo((Nodo) r);
                 nd.pythonCode = ( (Nodo) i).pythonCode + "/" + ( (Nodo) r).pythonCode ;
+                nd.GolangCode = ( (Nodo) i).GolangCode + "/" + ( (Nodo) r).GolangCode ;
                 RESULT = nd;:}
                 | OPERACION:i tmod OPERACION:r {:
                 Nodo nd = new Nodo(); 
@@ -348,6 +435,7 @@ OPERACION::= tnum:n {:
                 nd.AddHijo((Nodo) i);
                 nd.AddHijo((Nodo) r);
                 nd.pythonCode = ( (Nodo) i).pythonCode + "%" + ( (Nodo) r).pythonCode ;
+                nd.GolangCode = ( (Nodo) i).GolangCode + "%" + ( (Nodo) r).GolangCode ;
                 RESULT = nd;:}
                 | OPERACION:i tpot OPERACION:r {:
                 Nodo nd = new Nodo(); 
@@ -358,13 +446,16 @@ OPERACION::= tnum:n {:
                 nd.AddHijo((Nodo) i);
                 nd.AddHijo((Nodo) r);
                 nd.pythonCode = ( (Nodo) i).pythonCode + "**" + ( (Nodo) r).pythonCode ;
+                nd.GolangCode = "math.Pow(" + ( (Nodo) i).GolangCode + "," + ( (Nodo) r).GolangCode.replace("[","").replace("]","") + ")" ;
                 RESULT = nd;:}
                 | pare1 OPERACION:e pare2 {:
                 ((Nodo) e).pythonCode = "(" + ((Nodo) e).pythonCode + ")";
+                ((Nodo) e).GolangCode = "(" + ((Nodo) e).GolangCode + ")";
                 RESULT = e;:}
 
                 | cor1 OPERACION:e cor2 {:
                 ((Nodo) e).pythonCode = "[" + ((Nodo) e).pythonCode + "]";
+                ((Nodo) e).GolangCode = "[" + ((Nodo) e).GolangCode + "]";
                 RESULT = e;:}
                 
                 | tvariable:n {:
@@ -374,6 +465,7 @@ OPERACION::= tnum:n {:
                 parser.cont++;
                 nd.setValor(n);
                 nd.pythonCode = n;
+                nd.GolangCode = n;
                 RESULT = nd;:}
                 
                 | prFloat:n {:
@@ -383,6 +475,7 @@ OPERACION::= tnum:n {:
                 parser.cont++;
                 nd.setValor(n);
                 nd.pythonCode = n;
+                nd.GolangCode = n;
                 RESULT = nd;:};
 
 TIPO::=prBoolean:a {: 
@@ -390,24 +483,28 @@ TIPO::=prBoolean:a {:
             nd.setEtiqueta("BOOLEAN");
             nd.setIdNodo(parser.cont); 
             parser.cont++;
+            nd.GolangCode = " bool";
             RESULT = nd;     :}
         |prCaracter:a {: 
             Nodo nd = new Nodo(); 
             nd.setEtiqueta("CARACTER");
             nd.setIdNodo(parser.cont); 
             parser.cont++;
+            nd.GolangCode = " string";
             RESULT = nd;     :}
         |prNumero:a {: 
             Nodo nd = new Nodo(); 
             nd.setEtiqueta("ENTERO");
             nd.setIdNodo(parser.cont); 
             parser.cont++;
+            nd.GolangCode = " int";
             RESULT = nd;     :}
         |prCadena:a {: 
             Nodo nd = new Nodo(); 
             nd.setEtiqueta("CADENA");
             nd.setIdNodo(parser.cont); 
             parser.cont++;
+            nd.GolangCode = " string";
             RESULT = nd;     :};
 
 DECLARACION::=prIngresar tvariable:a prComo TIPO:c prConValor VARIABLES:b tpuntoycoma {:
@@ -455,7 +552,7 @@ DECLARACION::=prIngresar tvariable:a prComo TIPO:c prConValor VARIABLES:b tpunto
                 parser.cont++;
                  
                 nd.pythonCode += a.toString() + " = " + nd6.pythonCode  ; 
-                System.out.println("Python: " + nd.pythonCode);
+                nd.GolangCode += "var " + a.toString() + nd4.GolangCode + " = " + nd6.GolangCode  ;
                 
                 RESULT = nd;
                 :}
@@ -548,7 +645,8 @@ DECLARACION::=prIngresar tvariable:a prComo TIPO:c prConValor VARIABLES:b tpunto
                 nd.AddHijo(nd7);
                 RESULT = nd;
                 parser.cont++;
-                nd.pythonCode = a + "= " + nd6.pythonCode  ;
+                nd.pythonCode = a.toString() + " = " + nd6.pythonCode  ;
+                nd.GolangCode += "var " + a.toString() + nd4.GolangCode + " = " + nd6.GolangCode  ;
                 :}
                 
         |prIngresar LISTA_NOMBRES:a prComo TIPO:c prConValor EXPRESION:b  tpuntoycoma{:
@@ -642,6 +740,7 @@ DECLARACION::=prIngresar tvariable:a prComo TIPO:c prConValor VARIABLES:b tpunto
                 parser.cont++;
                 
                 nd.pythonCode = a.toString() + " = " + ((Nodo) b).pythonCode;
+                nd.GolangCode += "var " + a.toString() + nd4.GolangCode + " = " + nd6.GolangCode  ;
                 :}
                 
         |prIngresar LISTA_NOMBRES:a prComo TIPO:c prConValor CONDICION:b  tpuntoycoma{:
@@ -695,7 +794,8 @@ COMENTARIO::= tcomentario:c {:
                 nd.setValor(c);
                 RESULT = nd;
                 parser.cont++;
-                nd.pythonCode = c.toString();
+                //nd.pythonCode = c.toString();
+                //nd.GolangCode = c.toString();
                 :} ;
 //Gramatica de un comentario de varias lineas
 COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas:c {:
@@ -705,7 +805,8 @@ COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas:c {:
                 nd.setValor(c);
                 RESULT = nd;
                 parser.cont++;
-                nd.pythonCode = c.toString();
+                //nd.pythonCode = c.toString();
+                //nd.GolangCode = c.toString();
                 :};                
 //Gramatica de una asignacion
 ASIGNACION::= tvariable:a FLECHA:c VARIABLES:b tpuntoycoma {:
@@ -736,6 +837,7 @@ ASIGNACION::= tvariable:a FLECHA:c VARIABLES:b tpuntoycoma {:
                 parser.cont++;
                 
                 nd.pythonCode = a.toString() + " = " + nd3.pythonCode ;
+                nd.GolangCode = a.toString() + " = " + nd3.GolangCode;
                 :}
                 | LISTA_NOMBRES:b FLECHA:c VARIABLES:a tpuntoycoma {:
                 Nodo nd = new Nodo();
@@ -789,6 +891,7 @@ ASIGNACION::= tvariable:a FLECHA:c VARIABLES:b tpuntoycoma {:
                 RESULT = nd;
                 parser.cont++;
                 nd.pythonCode = a.toString() + " = " + nd3.pythonCode ;
+                nd.GolangCode = a.toString() + " = " + nd3.GolangCode;
                 :}
                 | LISTA_NOMBRES:b FLECHA:c EXPRESION:a tpuntoycoma {:
                 Nodo nd = new Nodo();
@@ -847,7 +950,8 @@ SELECCION_MULTIPLE::= prSegun EXPRESION:a prHacer LISTA_SEGUN:b prFinSegun{:
                 nd.AddHijo(nd5);
                 RESULT = nd;
                 parser.cont++;
-                nd.pythonCode = "if " + nd2.pythonCode + ":\n" + nd4.pythonCode ;
+                nd.pythonCode = "if " + nd2.pythonCode + nd4.pythonCode ;
+                nd.GolangCode = "if " + nd2.GolangCode + "{" + nd4.GolangCode + tab(countTab - 1) + "}";
                 :}
 
 ;
@@ -867,8 +971,12 @@ LISTA_SEGUN::= SEGUN:a LISTA_SEGUN:b {:
                 RESULT = nd;
                 parser.cont++;
                 nd.pythonCode = nd1.pythonCode + nd2.pythonCode;
+                nd.GolangCode = nd1.GolangCode + nd2.GolangCode;
                 :}
-        |SEGUN:a {: RESULT = a;:}
+        |SEGUN:a {: 
+                ((Nodo) a).pythonCode = "elif " + ((Nodo) a).pythonCode;
+                ((Nodo) a).GolangCode = "case " + ((Nodo) a).GolangCode;
+                RESULT = a;:}
         ;
 
 SEGUN::=tinterrogacioninicio EXPRESION:a tinterrogacionfin prEntonces INSTRUCCIONES:b{:
@@ -903,7 +1011,8 @@ SEGUN::=tinterrogacioninicio EXPRESION:a tinterrogacionfin prEntonces INSTRUCCIO
         nd.AddHijo(nd5);
         RESULT = nd;
         parser.cont++;
-        nd.pythonCode = "elif " + nd2.pythonCode + ":\n" + "\t" + nd5.pythonCode + "\n";
+        nd.pythonCode = nd2.pythonCode + ":\n" + nd5.pythonCode + "\n";
+        nd.GolangCode = nd2.GolangCode + ":\n" + nd5.GolangCode + "\n";
         :}
 ;        
 
@@ -915,6 +1024,7 @@ LISTA_NOMBRES::= tvariable:a {:
                 nd.setValor(a);
                 parser.cont++;
                 nd.pythonCode = a;
+                nd.GolangCode = a;
                 RESULT = nd;
                 tmpListaNombres.add(a);:} LISTA_NOMBRES2 {:
                 Nodo nd = new Nodo();
@@ -975,6 +1085,7 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 parser.cont++;
 
                 nd.pythonCode = "if " + nd1.pythonCode + ":\n" + nd3.pythonCode ;
+                nd.GolangCode = "if " + nd1.GolangCode + "{\n" + nd3.GolangCode + tab(countTab - 1) + "}";
                 :}
         |prSi CONDICION:a prEntonces INSTRUCCIONES:c O_SI:b prFinSi{:
                 Nodo nd = new Nodo();
@@ -1007,6 +1118,7 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 parser.cont++;
 
                 nd.pythonCode = "if " + nd1.pythonCode + ":\n" + nd3.pythonCode + "\n" + nd4.pythonCode;
+                nd.GolangCode = "if " + nd1.GolangCode + "{\n" + nd3.GolangCode + tab(countTab - 1) + "}" + nd4.GolangCode;
                 :}
         |prSi CONDICION:a prEntonces INSTRUCCIONES:c DE_LO_CONTRARIO:b prFinSi{:
                 Nodo nd = new Nodo();
@@ -1039,6 +1151,7 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 parser.cont++;
 
                 nd.pythonCode = "if " + nd1.pythonCode + ":\n" + nd3.pythonCode + "\n" + tab(countTab - 1) + "else:\n" + nd4.pythonCode ;
+                nd.GolangCode = "if " + nd1.GolangCode + "{\n" + nd3.GolangCode + "\n" + tab(countTab - 1) + "}else {\n" + nd4.GolangCode + tab(countTab - 1) + "}";
                 :}
         |prSi CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c DE_LO_CONTRARIO:d prFinSi{:
                 Nodo nd = new Nodo();
@@ -1074,6 +1187,152 @@ IF::= prSi CONDICION:a prEntonces INSTRUCCIONES:b prFinSi {:
                 parser.cont++;
 
                 nd.pythonCode = "if " + nd1.pythonCode + ":\n" + nd3.pythonCode + "\n" + nd4.pythonCode + tab(countTab - 1) + "else:\n" + nd5.pythonCode ;
+                nd.GolangCode = "if " + nd1.GolangCode + "{\n" + nd3.GolangCode + tab(countTab - 1) + "}" + nd4.GolangCode + tab(countTab - 1) + "}else {\n" + nd5.GolangCode + tab(countTab - 1) + "}";
+                :}
+        
+        
+        |prSi tvariable:a prEntonces INSTRUCCIONES:b prFinSi {:
+                Nodo nd = new Nodo(); 
+                nd.setEtiqueta("IF");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("IF");
+                //Variable
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("VARIABLE");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor((String) a);
+                //Entonces
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("ENTONCES");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("ENTONCES");
+                //Instrucciones
+                Nodo nd3 = (Nodo) b;
+                //Fin si
+                Nodo nd4 = new Nodo();
+                nd4.setEtiqueta("FIN_SI");
+                nd4.setIdNodo(parser.cont);
+                nd4.setValor("FIN_SI");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                RESULT = nd;
+                parser.cont++;
+
+                nd.pythonCode = "if " + nd1.toString() + ":\n" + nd3.pythonCode ;
+                nd.GolangCode = "if " + nd1.toString() + "{\n" + nd3.GolangCode + tab(countTab - 1) + "}";
+                :}
+        |prSi tvariable:a prEntonces INSTRUCCIONES:c O_SI:b prFinSi{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("IF");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("IF");
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("VARIABLE");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor((String) a);
+                //Entonces
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("ENTONCES");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("ENTONCES");
+                //Instrucciones
+                Nodo nd3 = (Nodo) c;
+                //O si
+                Nodo nd4 = (Nodo) b;
+                //Fin si
+                Nodo nd5 = new Nodo();
+                nd5.setEtiqueta("FIN_SI");
+                nd5.setIdNodo(parser.cont);
+                nd5.setValor("FIN_SI");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                RESULT = nd;
+                parser.cont++;
+
+                nd.pythonCode = "if " + nd1.toString() + ":\n" + nd3.pythonCode + nd4.pythonCode;
+                nd.GolangCode = "if " + nd1.toString() + "{\n" + nd3.GolangCode + tab(countTab - 1) + "}" + nd4.GolangCode;
+                :}
+        |prSi tvariable:a prEntonces INSTRUCCIONES:c DE_LO_CONTRARIO:b prFinSi{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("IF");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("IF");
+                //Variable
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("VARIABLE");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor((String) a);
+                //Entonces
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("ENTONCES");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("ENTONCES");
+                //Instrucciones
+                Nodo nd3 = (Nodo) c;
+                //De lo contrario
+                Nodo nd4 = (Nodo) b;
+                //Fin si
+                Nodo nd5 = new Nodo();
+                nd5.setEtiqueta("FIN_SI");
+                nd5.setIdNodo(parser.cont);
+                nd5.setValor("FIN_SI");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                RESULT = nd;
+                parser.cont++;
+
+                nd.pythonCode = "if  " + nd1.toString() + ":\n" + nd3.pythonCode + "\n" + tab(countTab - 1) + "else:\n" + nd4.pythonCode ;
+                nd.GolangCode = "if  " + nd1.toString() + "{\n" + nd3.GolangCode + "\n" + tab(countTab - 1) + "}else {\n" + nd4.GolangCode + tab(countTab - 1) + "}";
+                :}
+        |prSi tvariable:a prEntonces INSTRUCCIONES:b O_SI:c DE_LO_CONTRARIO:d prFinSi{:
+                Nodo nd = new Nodo();
+                nd.setEtiqueta("IF");
+                nd.setIdNodo(parser.cont);
+                nd.setValor("IF");
+                //variable
+                Nodo nd1 = new Nodo();
+                nd1.setEtiqueta("VARIABLE");
+                nd1.setIdNodo(parser.cont);
+                nd1.setValor((String) a);
+                //Entonces
+                Nodo nd2 = new Nodo();
+                nd2.setEtiqueta("ENTONCES");
+                nd2.setIdNodo(parser.cont);
+                nd2.setValor("ENTONCES");
+                //Instrucciones
+                Nodo nd3 = (Nodo) b;
+                //O si
+                Nodo nd4 = (Nodo) c;
+                //De lo contrario
+                Nodo nd5 = (Nodo) d;
+                //Fin si
+                Nodo nd6 = new Nodo();
+                nd6.setEtiqueta("FIN_SI");
+                nd6.setIdNodo(parser.cont);
+                nd6.setValor("FIN_SI");
+                //Agregando hijos
+                nd.AddHijo(nd1);
+                nd.AddHijo(nd2);
+                nd.AddHijo(nd3);
+                nd.AddHijo(nd4);
+                nd.AddHijo(nd5);
+                nd.AddHijo(nd6);
+                RESULT = nd;
+                parser.cont++;
+
+                nd.pythonCode = "if " + nd1.toString() + ":\n" + nd3.pythonCode + nd4.pythonCode + tab(countTab - 1) + "else:\n" + nd5.pythonCode ;
+                nd.GolangCode = "if " + nd1.toString() + "{\n" + nd3.GolangCode + tab(countTab - 1) + nd4.GolangCode + tab(countTab - 1) + "}else {\n" + nd5.GolangCode + tab(countTab - 1) + "}";
                 :};
 
 DE_LO_CONTRARIO::= prDeLoContrario INSTRUCCIONES:a{:
@@ -1088,6 +1347,7 @@ DE_LO_CONTRARIO::= prDeLoContrario INSTRUCCIONES:a{:
                 RESULT = nd;
                 parser.cont++;
                 nd.pythonCode = nd1.pythonCode ;
+                nd.GolangCode = nd1.GolangCode ;
                 :};
 
 O_SI::=  prO_Si CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c{:
@@ -1113,7 +1373,8 @@ O_SI::=  prO_Si CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c{:
                 nd.AddHijo(nd4);
                 RESULT = nd;
                 parser.cont++;
-                nd.pythonCode = "elif " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode + "\n" + nd4.pythonCode;
+                nd.pythonCode = "elif " + nd1.pythonCode + ":\n"  + nd3.pythonCode + "\n" + nd4.pythonCode;
+                nd.GolangCode = "else if " + nd1.GolangCode + "{\n"  + nd3.GolangCode + nd4.GolangCode;
                 :}
         |prO_Si  CONDICION:a prEntonces INSTRUCCIONES:b{:
                 Nodo nd = new Nodo();
@@ -1135,7 +1396,8 @@ O_SI::=  prO_Si CONDICION:a prEntonces INSTRUCCIONES:b O_SI:c{:
                 nd.AddHijo(nd3);
                 RESULT = nd;
                 parser.cont++;
-                nd.pythonCode = tab(countTab - 1) + "elif " + nd1.pythonCode + ":\n" + "\t" + nd3.pythonCode ;
+                nd.pythonCode = tab(countTab - 1) + "elif " + nd1.pythonCode + ":\n" + nd3.pythonCode ;
+                nd.GolangCode = tab(countTab - 1) + "else if " + nd1.GolangCode + "{\n" + nd3.GolangCode;
                 :};
 
 CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
@@ -1147,6 +1409,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " == " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " == " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |VARIABLES:a prMayor VARIABLES:b {:
                 Nodo nd = new Nodo(); 
@@ -1157,6 +1420,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " > " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " > " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |VARIABLES:a prMayorOIgual VARIABLES:b {:
                 Nodo nd = new Nodo(); 
@@ -1167,6 +1431,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " >= " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " >= " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |VARIABLES:a prMenor VARIABLES:b {:
                 Nodo nd = new Nodo(); 
@@ -1177,6 +1442,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " < " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " < " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |VARIABLES:a prMenorOIgual VARIABLES:b {:
                 Nodo nd = new Nodo(); 
@@ -1187,6 +1453,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " <= " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " <= " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |VARIABLES:a prEsDiferente VARIABLES:b {:
                 Nodo nd = new Nodo(); 
@@ -1197,6 +1464,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " != " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " != " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
 
 
@@ -1209,6 +1477,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " == " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " == " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |EXPRESION:a prMayor EXPRESION:b {:
                 Nodo nd = new Nodo(); 
@@ -1219,6 +1488,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " > " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " > " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |EXPRESION:a prMayorOIgual EXPRESION:b {:
                 Nodo nd = new Nodo(); 
@@ -1229,6 +1499,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " >= " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " >= " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |EXPRESION:a prMenor EXPRESION:b {:
                 Nodo nd = new Nodo(); 
@@ -1239,6 +1510,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " < " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " < " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |EXPRESION:a prMenorOIgual EXPRESION:b {:
                 Nodo nd = new Nodo(); 
@@ -1249,6 +1521,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " <= " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " <= " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |EXPRESION:a prEsDiferente EXPRESION:b {:
                 Nodo nd = new Nodo(); 
@@ -1259,6 +1532,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 nd.AddHijo((Nodo) a);
                 nd.AddHijo((Nodo) b);
                 nd.pythonCode = ((Nodo) a).pythonCode + " != " + ((Nodo) b).pythonCode;
+                nd.GolangCode = ((Nodo) a).GolangCode + " != " + ((Nodo) b).GolangCode;
                 RESULT = nd;:}
             |prNot VARIABLES:a {:
                 Nodo nd = new Nodo(); 
@@ -1268,6 +1542,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.pythonCode = "not " + ((Nodo) a).pythonCode;
+                nd.GolangCode = "!" + ((Nodo) a).GolangCode;
                 RESULT = nd;:}
             |prNot EXPRESION:a {:
                 Nodo nd = new Nodo(); 
@@ -1277,6 +1552,7 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.pythonCode = "not (" + ((Nodo) a).pythonCode + ")";
+                nd.GolangCode = "!" + ((Nodo) a).GolangCode;
                 RESULT = nd;:}
 
             |prNot pare1 CONDICION:a pare2 {:
@@ -1287,9 +1563,11 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.pythonCode = "not (" + ((Nodo) a).pythonCode + ")";
+                nd.GolangCode = "!" + ((Nodo) a).GolangCode;
                 RESULT = nd;:}
                 |pare1 CONDICION:a pare2 {: RESULT = a;:}
-                ;
+                
+;
 
 VARIABLE::= tvariable:a {:RESULT = a;:};
 
@@ -1297,9 +1575,10 @@ VARIABLES::= tcadena:a {:
                 Nodo nd = new Nodo(); 
                 nd.setEtiqueta("CADENA");
                 nd.setIdNodo(parser.cont); 
-                nd.setValor(a.replace("\"", ""));
+                nd.setValor(a.replace("\"", "").replace("\'", ""));
                 parser.cont++;
                 nd.pythonCode = a;
+                nd.GolangCode = a;
                 RESULT = nd;:}
             |prVerdadero {:
                 Nodo nd = new Nodo(); 
@@ -1308,6 +1587,7 @@ VARIABLES::= tcadena:a {:
                 nd.setValor("True");
                 parser.cont++;
                 nd.pythonCode = "True";
+                nd.GolangCode = "true";
                 RESULT = nd;:}
             |prFalso {:
                 Nodo nd = new Nodo(); 
@@ -1316,14 +1596,16 @@ VARIABLES::= tcadena:a {:
                 nd.setValor("False");
                 parser.cont++;
                 nd.pythonCode = "False";
+                nd.GolangCode = "false";
                 RESULT = nd;:}
             |caracter:a {:
                 Nodo nd = new Nodo(); 
                 nd.setEtiqueta("CARACTER");
                 nd.setIdNodo(parser.cont); 
-                nd.setValor(a);
+                nd.setValor(a.replace("\"", "").replace("\'", ""));
                 parser.cont++;
                 nd.pythonCode = a;
+                nd.GolangCode = a;
                 RESULT = nd;:}
             |ascii:a {:
                 Nodo nd = new Nodo(); 
@@ -1331,7 +1613,8 @@ VARIABLES::= tcadena:a {:
                 nd.setIdNodo(parser.cont); 
                 nd.setValor(asciiToChar(a));
                 parser.cont++;
-                nd.pythonCode = asciiToChar(a);
+                nd.pythonCode = "\'" + asciiToChar(a) + "\'";
+                nd.GolangCode = "\'" + asciiToChar(a) + "\'";
                 RESULT = nd;:};
 
 
@@ -1392,6 +1675,7 @@ PARA::= prPara tvariable:a FLECHA:e EXPRESION:b prHasta EXPRESION:c prHacer INST
                 nd.AddHijo(nd9);
                 RESULT = nd;
                 nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd6.pythonCode + "):\n\t" + nd8.pythonCode;
+                nd.GolangCode = "for " + a + " := " + nd4.GolangCode + "; " + a + " < " + nd6.GolangCode + "; " + a + "++ {\n\t" + nd8.GolangCode + "\n}";
                 :}
             
             |prPara tvariable:a FLECHA:e EXPRESION:b prHasta EXPRESION:c prHacer  prFinPara {:
@@ -1446,6 +1730,7 @@ PARA::= prPara tvariable:a FLECHA:e EXPRESION:b prHasta EXPRESION:c prHacer INST
                 nd.AddHijo(nd8);
                 RESULT = nd;
                 nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd6.pythonCode + "):\n";
+                nd.GolangCode = "for " + a + " := " + nd4.GolangCode + "; " + a + " < " + nd6.GolangCode + "; " + a + "++ {\n";
             :}
             |PARA_SALTO:a {:
                 Nodo nd = (Nodo) a;
@@ -1508,42 +1793,46 @@ PARA_SALTO::= prPara tvariable:a FLECHA:b EXPRESION:c prHasta EXPRESION:d prCon 
                         nd5.setValor("HASTA");
                         parser.cont++;
                         nd.AddHijo(nd5);
-                        //prCon
-                        Nodo nd6 = new Nodo();
-                        nd6.setEtiqueta("CON");
-                        nd6.setIdNodo(parser.cont);
-                        nd6.setValor("CON");
-                        parser.cont++;
+                        //EXPRESION
+                        Nodo nd6 = (Nodo) d;
                         nd.AddHijo(nd6);
-                        //prIncremental
+                        //prCon
                         Nodo nd7 = new Nodo();
-                        nd7.setEtiqueta("INCREMENTAL");
+                        nd7.setEtiqueta("CON");
                         nd7.setIdNodo(parser.cont);
-                        nd7.setValor("INCREMENTAL");
+                        nd7.setValor("CON");
                         parser.cont++;
                         nd.AddHijo(nd7);
-                        //EXPRESION
-                        Nodo nd8 = (Nodo) e;
+                        //prIncremental
+                        Nodo nd8 = new Nodo();
+                        nd8.setEtiqueta("INCREMENTAL");
+                        nd8.setIdNodo(parser.cont);
+                        nd8.setValor("INCREMENTAL");
+                        parser.cont++;
                         nd.AddHijo(nd8);
-                        //prHacer
-                        Nodo nd9 = new Nodo();
-                        nd9.setEtiqueta("HACER");
-                        nd9.setIdNodo(parser.cont);
-                        nd9.setValor("HACER");
-                        parser.cont++;
+                        //EXPRESION
+                        Nodo nd9 = (Nodo) e;
                         nd.AddHijo(nd9);
-                        //INSTRUCCIONES
-                        Nodo nd10 = (Nodo) f;
-                        nd.AddHijo(nd10);
-                        //prFinPara
-                        Nodo nd11 = new Nodo();
-                        nd11.setEtiqueta("FINPARA");
-                        nd11.setIdNodo(parser.cont);
-                        nd11.setValor("FINPARA");
+                        //prHacer
+                        Nodo nd10 = new Nodo();
+                        nd10.setEtiqueta("HACER");
+                        nd10.setIdNodo(parser.cont);
+                        nd10.setValor("HACER");
                         parser.cont++;
+                        nd.AddHijo(nd10);
+                        //INSTRUCCIONES
+                        Nodo nd11 = (Nodo) f;
                         nd.AddHijo(nd11);
+                        //prFinPara
+                        Nodo nd12 = new Nodo();
+                        nd12.setEtiqueta("FINPARA");
+                        nd12.setIdNodo(parser.cont);
+                        nd12.setValor("FINPARA");
+                        parser.cont++;
+                        nd.AddHijo(nd12);
                         RESULT = nd;
-                        nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd8.pythonCode + "):\n\t" + nd10.pythonCode;
+                        nd.pythonCode = "for " + a + " in range(" + nd4.pythonCode + "," + nd6.pythonCode + "," + nd9.pythonCode + "):\n" + nd11.pythonCode;
+                        nd.GolangCode = "for " + a + " := " + nd4.GolangCode + "; " + a + " < " + nd6.GolangCode + "; " + a + " += " + nd9.GolangCode + " {\n" + nd11.GolangCode + tab(countTab - 1) + "}";
                         :};
 
 MIENTRAS::= prMientras CONDICION:a prHacer INSTRUCCIONES:b prFinMientras{:
@@ -1669,7 +1958,8 @@ RETORNO::= prRetornar CONDICION:a tpuntoycoma{:
                 parser.cont++;
                 nd.AddHijo(nd3);
                 RESULT = nd;
-                nd.pythonCode = "return " + nd2.pythonCode;
+                nd.pythonCode = tab(countTab + 1) + "return " + nd2.pythonCode;
+                nd.GolangCode = tab(countTab + 1) + "return " + nd2.GolangCode;
                 :}
         |prRetornar EXPRESION:a tpuntoycoma{:
                 Nodo nd = new Nodo();
@@ -1696,6 +1986,7 @@ RETORNO::= prRetornar CONDICION:a tpuntoycoma{:
                 nd.AddHijo(nd3);
                 RESULT = nd;
                 nd.pythonCode = "return " + nd2.pythonCode;
+                nd.GolangCode = "return " + nd2.GolangCode;
                 :}
                 ;
 
@@ -1739,7 +2030,8 @@ METODO::= prMetodo tvariable:a prConParametros pare1 LISTA_PARAMETROS:b pare2 IN
                 nd7.setValor("prFinMetodo");
                 parser.cont++;
                 nd.AddHijo(nd7);
-                nd.pythonCode = "def " + nd2.pythonCode + "(" + nd4.pythonCode + "):\n" + "\t" + nd5.pythonCode;
+                nd.pythonCode = "def " + nd2.Valor + "(" + nd4.pythonCode + "):\n" + nd5.pythonCode;
+                nd.GolangCode = "func " + nd2.Valor + "(" + nd4.GolangCode + "){\n" + nd5.GolangCode + tab(countTab) +  "}";
                 RESULT = nd;
                 :}
                 |prMetodo tvariable:a INSTRUCCIONES:b prFinMetodo {:
@@ -1773,7 +2065,8 @@ METODO::= prMetodo tvariable:a prConParametros pare1 LISTA_PARAMETROS:b pare2 IN
                 parser.cont++;
                 nd.AddHijo(nd4);
                 RESULT = nd;
-                nd.pythonCode = "def " + nd2.pythonCode + "():\n\t" + nd3.pythonCode;
+                nd.pythonCode = "def " + nd2.Valor + "():\n" + nd3.pythonCode;
+                nd.GolangCode = "func " + nd2.Valor + "(){\n" + nd3.GolangCode + tab(countTab - 1) + "}";
                 :};
 
 LISTA_PARAMETROS::= LISTA_PARAMETROS:c tvariable:a TIPO:b  {:
@@ -1803,6 +2096,7 @@ LISTA_PARAMETROS::= LISTA_PARAMETROS:c tvariable:a TIPO:b  {:
                 nd1.AddHijo(nd5);
                 nd.AddHijo(nd1);
                 nd.pythonCode = nd4.pythonCode + nd5.pythonCode + a.toString();
+                nd.GolangCode = nd4.GolangCode + a.toString() + nd5.GolangCode;
                 RESULT = nd;
                 :}
 
@@ -1830,6 +2124,7 @@ LISTA_PARAMETROS::= LISTA_PARAMETROS:c tvariable:a TIPO:b  {:
                 parser.cont++;
                 nd.AddHijo(nd3);
                 nd.pythonCode = nd2.pythonCode + a.toString() + ",";
+                nd.GolangCode = a.toString() + nd2.GolangCode + ",";
                 RESULT = nd;
                 :};
 
@@ -1878,7 +2173,8 @@ FUNCION::= prFuncion tvariable:a TIPO:d prConParametros pare1 LISTA_PARAMETROS:b
                 parser.cont++;
                 nd.AddHijo(nd7);
                 RESULT = nd;
-                nd.pythonCode = "def " + nd2.pythonCode + "(" + nd5.pythonCode + "):\n\t" + nd6.pythonCode;
+                nd.pythonCode = "def " + nd2.Valor + "(" + nd5.pythonCode + "):\n\t" + nd6.pythonCode;
+                nd.GolangCode = "func " + nd2.Valor + "(" + nd5.GolangCode + ") " + nd3.GolangCode + "{\n" + nd6.GolangCode + tab(countTab - 1) + "}";
                 :}
         |prFuncion tvariable:a TIPO:b INSTRUCCIONES:c prFinFuncion {:
                 Nodo nd = new Nodo();
@@ -1914,7 +2210,8 @@ FUNCION::= prFuncion tvariable:a TIPO:d prConParametros pare1 LISTA_PARAMETROS:b
                 parser.cont++;
                 nd.AddHijo(nd5);
                 RESULT = nd;
-                nd.pythonCode = "def " + nd2.pythonCode + "():\n\t" + nd4.pythonCode;
+                nd.pythonCode = "def " + nd2.Valor + "():\n" + nd4.pythonCode;
+                nd.GolangCode = "func " + nd2.Valor + "() " + nd3.GolangCode + "{\n" + nd4.GolangCode + tab(countTab - 1) + "}";
                 :};
 
 EJECUTAR::= prEjecutar tvariable:a pare1 pare2 tpuntoycoma{:
@@ -1946,6 +2243,7 @@ EJECUTAR::= prEjecutar tvariable:a pare1 pare2 tpuntoycoma{:
                 nd.AddHijo(nd3);
                 RESULT = nd;
                 nd.pythonCode = nd2.pythonCode + "()";
+                nd.GolangCode = nd2.GolangCode + "()";
                         :}
         |prEjecutar tvariable:a pare1 LISTA_PARAMETROS:b pare2 tpuntoycoma{:
                 Nodo nd = new Nodo();
@@ -1979,6 +2277,7 @@ EJECUTAR::= prEjecutar tvariable:a pare1 pare2 tpuntoycoma{:
                 nd.AddHijo(nd4);
                 RESULT = nd;
                 nd.pythonCode = nd2.pythonCode + "(" + nd3.pythonCode + ");";
+                nd.GolangCode = nd2.GolangCode + "(" + nd3.GolangCode + ")";
                 :};
 
 IMPRIMIR::= prImprimir VARIABLES:a tpuntoycoma{:
@@ -1989,6 +2288,7 @@ IMPRIMIR::= prImprimir VARIABLES:a tpuntoycoma{:
                 nd.AddHijo((Nodo) a);
                 RESULT = nd;
                 nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                nd.GolangCode = "fmt.Print(" + ((Nodo) a).GolangCode + ")";
                 :}
             |prImprimir pare1 VARIABLES:a pare2 tpuntoycoma{:
                 Nodo nd = new Nodo(); 
@@ -1998,6 +2298,7 @@ IMPRIMIR::= prImprimir VARIABLES:a tpuntoycoma{:
                 nd.AddHijo((Nodo) a);
                 RESULT = nd;
                 nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                nd.GolangCode = "fmt.Print(" + ((Nodo) a).GolangCode + ")";
                 :}
 
 
@@ -2008,6 +2309,7 @@ IMPRIMIR::= prImprimir VARIABLES:a tpuntoycoma{:
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
                 nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                nd.GolangCode = "fmt.Print(" + ((Nodo) a).GolangCode + ")";
                 RESULT = nd;:}
                 |prImprimir pare1 EXPRESION:a pare2 tpuntoycoma {:
                 Nodo nd = new Nodo(); 
@@ -2017,6 +2319,7 @@ IMPRIMIR::= prImprimir VARIABLES:a tpuntoycoma{:
                 nd.AddHijo((Nodo) a);
                 RESULT = nd;
                 nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                nd.GolangCode = "fmt.Print(" + ((Nodo) a).GolangCode + ")";
                 :}
                 
                 |prImprimir CONDICION:a tpuntoycoma {:
@@ -2027,6 +2330,7 @@ IMPRIMIR::= prImprimir VARIABLES:a tpuntoycoma{:
                 nd.AddHijo((Nodo) a);
                 RESULT = nd;
                 nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                nd.GolangCode = "fmt.Print(" + ((Nodo) a).GolangCode + ")";
                 :}
                 |prImprimir pare1 CONDICION:a pare2 tpuntoycoma {:
                 Nodo nd = new Nodo(); 
@@ -2036,6 +2340,7 @@ IMPRIMIR::= prImprimir VARIABLES:a tpuntoycoma{:
                 nd.AddHijo((Nodo) a);
                 RESULT = nd;
                 nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                nd.GolangCode = "fmt.Print(" + ((Nodo) a).GolangCode + ")";
                 :};
 
 IMPRIMIR_NL::= prImprimirNl VARIABLES:a tpuntoycoma {:
@@ -2045,7 +2350,8 @@ IMPRIMIR_NL::= prImprimirNl VARIABLES:a tpuntoycoma {:
                         parser.cont++;
                         nd.AddHijo((Nodo) a);
                         RESULT = nd;
-                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + "\"\\n\")";
+                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                        nd.GolangCode = "fmt.Println(" + ((Nodo) a).GolangCode + ")";
                         :}
 
                 |prImprimirNl pare1 VARIABLES:a pare2 tpuntoycoma {:
@@ -2055,7 +2361,8 @@ IMPRIMIR_NL::= prImprimirNl VARIABLES:a tpuntoycoma {:
                         parser.cont++;
                         nd.AddHijo((Nodo) a);
                         RESULT = nd;
-                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + "\"\\n\")";
+                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                        nd.GolangCode = "fmt.Println(" + ((Nodo) a).GolangCode + ")";
                         :}
 
 
@@ -2066,7 +2373,8 @@ IMPRIMIR_NL::= prImprimirNl VARIABLES:a tpuntoycoma {:
                         parser.cont++;
                         nd.AddHijo((Nodo) a);
                         RESULT = nd;
-                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + "\"\\n\")";
+                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                        nd.GolangCode = "fmt.Println(" + ((Nodo) a).GolangCode + ")";
                         :}
                 |prImprimirNl pare1 EXPRESION:a pare2 tpuntoycoma {:
                         Nodo nd = new Nodo(); 
@@ -2075,7 +2383,8 @@ IMPRIMIR_NL::= prImprimirNl VARIABLES:a tpuntoycoma {:
                         parser.cont++;
                         nd.AddHijo((Nodo) a);
                         RESULT = nd;
-                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + "\"\\n\")";
+                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                        nd.GolangCode = "fmt.Println(" + ((Nodo) a).GolangCode + ")";
                         :}
                 
                 |prImprimirNl CONDICION:a tpuntoycoma {:
@@ -2085,7 +2394,8 @@ IMPRIMIR_NL::= prImprimirNl VARIABLES:a tpuntoycoma {:
                         parser.cont++;
                         nd.AddHijo((Nodo) a);
                         RESULT = nd;
-                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + "\"\\n\")";
+                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                        nd.GolangCode = "fmt.Println(" + ((Nodo) a).GolangCode + ")";
                         :}
                 |prImprimirNl pare1 CONDICION:a pare2 tpuntoycoma {:
                         Nodo nd = new Nodo(); 
@@ -2094,5 +2404,6 @@ IMPRIMIR_NL::= prImprimirNl VARIABLES:a tpuntoycoma {:
                         parser.cont++;
                         nd.AddHijo((Nodo) a);
                         RESULT = nd;
-                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + "\"\\n\")";
+                        nd.pythonCode = "print(" + ((Nodo) a).pythonCode + ")";
+                        nd.GolangCode = "fmt.Println(" + ((Nodo) a).GolangCode + ")";
                         :};
