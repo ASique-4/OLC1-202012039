@@ -9,6 +9,8 @@ public class Nodo {
     public int idNodo;
     public String pythonCode = "";
     public String GolangCode = "";
+    public String FiguraFlowChart = "";
+    public ArrayList<Nodo> Abajo = new ArrayList<>();
 
     //Add hijo
     public void AddHijo(Nodo hijo) {

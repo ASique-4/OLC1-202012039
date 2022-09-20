@@ -169,6 +169,11 @@ fin
 
 public class Ventana extends javax.swing.JFrame {
     public int ErroresCount = 0;
+    public String ellipse = "";
+    public String diamond = "";
+    public String parallelogram = "";
+    public String rectangle = "";
+    public String invhouse = "";
     /**
      * Creates new form Ventana
      */
@@ -197,7 +202,123 @@ public class Ventana extends javax.swing.JFrame {
         return tmpRank;
     }
 
+    //Get INICIO
+    public void getInicio(Nodo raiz) {
 
+        if(raiz.Etiqueta.equals("INICIO")){
+            ellipse += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"";
+        }
+    }
+    //Get SI
+    public String getIF(Nodo raiz){
+        String tmp = "";
+        for(Nodo hijos : raiz.Hijos){
+            //If hijos is null then eliminate
+                if(raiz.Etiqueta.equals("IF") || raiz.Etiqueta.equals("O_SI") || raiz.Etiqueta.equals("DE_LO_CONTRARIO")){
+                    tmp += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"" + ",";
+                    tmp += getIF(hijos);
+                }else{
+                    tmp += getIF(hijos);
+                }
+        }
+        return tmp;
+    }
+
+    //Get PROCEDIMIENTOS
+    public String getProcedimientos(Nodo raiz){
+        String tmp = "";
+        for(Nodo hijos : raiz.Hijos){
+            //If hijos is null then eliminate
+                if(!(raiz.Etiqueta.equals("IF")) && !(raiz.Etiqueta.equals("INICIO")) 
+                && !(raiz.Etiqueta.equals("O_SI")) && !(raiz.Etiqueta.equals("DE_LO_CONTRARIO"))){
+                    tmp += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"" + ",";
+                    tmp += getProcedimientos(hijos);
+                }else{
+                    tmp += getProcedimientos(hijos);
+                }
+        }
+        return tmp;
+    }
+
+    //Get VARIABLES
+    public String getVariables(Nodo raiz){
+        String tmp = "";
+        for(Nodo hijos : raiz.Hijos){
+            //If hijos is null then eliminate
+                if(raiz.Etiqueta.equals("VARIABLES") || raiz.Etiqueta.equals("VARIABLE") 
+                || raiz.Etiqueta.equals("IMPRIMIR") || raiz.Etiqueta.equals("IMPRIMIR_LN") 
+                || raiz.Etiqueta.equals("EJECUTAR") || raiz.Etiqueta.equals("RETORNO")
+                || raiz.Etiqueta.equals("SUMA") || raiz.Etiqueta.equals("RESTA")
+                || raiz.Etiqueta.equals("MULTIPLICACION") || raiz.Etiqueta.equals("DIVISION")
+                || raiz.Etiqueta.equals("POTENCIA") || raiz.Etiqueta.equals("MODULO")
+                || raiz.Etiqueta.equals("OPERACION") || raiz.Etiqueta.equals("OPEACIONES")){
+                    tmp += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"" + ",";
+                    tmp += getVariables(hijos);
+                }else{
+                    tmp += getVariables(hijos);
+                }
+        }
+        return tmp;
+    }
+
+    //Get SALIDAS
+    public String getSalidas(Nodo raiz){
+        String tmp = "";
+        for(Nodo hijos : raiz.Hijos){
+            //If hijos is null then eliminate
+                if((raiz.Hijos == null)){
+                    tmp += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"" + ",";
+                }else {
+                    tmp += getSalidas(hijos);
+                }
+        }
+        return tmp;
+    }
+    //Create flochart
+    public void crearFlowchart(String cadena){
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter("FLOW.dot");
+            pw = new PrintWriter(fichero);
+            pw.println("digraph G {");
+            pw.println("node [shape=box, style=filled, color=seashell2];");
+            if(!(ellipse.equals(""))){
+                pw.println( ellipse + "[shape=ellipse, style=filled, color=seashell2];");
+            }
+            if(!(diamond.equals(""))){
+                pw.println( diamond.substring(0,diamond.length() - 1) + "[shape=diamond, style=filled, color=seashell2];");
+            }
+            if(!(rectangle.equals(""))){
+                pw.println( rectangle.substring(0, rectangle.length() - 1) + "[shape=rectangle, style=filled, color=seashell2];");
+            }
+            if(!(parallelogram.equals(""))){
+                pw.println( parallelogram.substring(0, parallelogram.length() - 1) + "[shape=parallelogram, style=filled, color=seashell2];");
+            }
+            if(!(invhouse.equals(""))){
+                pw.println( invhouse.substring(0, invhouse.length() - 1) + "[shape=invhouse, style=filled, color=seashell2];");
+            }
+            
+            pw.println(cadena);
+            pw.println("\n}");
+            fichero.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Runtime rt = Runtime.getRuntime();
+            rt.exec("dot -Tpng FLOW.dot -o FLOW.png");
+            //Open FLOW.png
+            try {
+                Runtime.getRuntime().exec("xdg-open FLOW.png");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
 
 
     //Create AST
@@ -235,6 +356,12 @@ public class Ventana extends javax.swing.JFrame {
         try {
             Runtime rt = Runtime.getRuntime();
             rt.exec("dot -Tpng AST.dot -o AST.png");
+            //Open AST.png
+            try {
+                Runtime.getRuntime().exec("xdg-open AST.png");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         } catch (IOException ex) {
             System.out.println(ex);
         }
@@ -447,8 +574,16 @@ public class Ventana extends javax.swing.JFrame {
             errorNumber.setText(Integer.toString(sintactico.erroresSintacticos));
 
             Nodo raiz = sintactico.padre;
+            //Crear flowchart
+            getInicio(raiz);
+            diamond = getIF(raiz);
+            rectangle = getProcedimientos(raiz);  
+            parallelogram = getVariables(raiz);
+            invhouse = getSalidas(raiz);
+            crearFlowchart(recorrido(raiz));
             //Recorreo raiz
             crearAST(recorrido(raiz));
+            
             //Crar HTML de errores
             String htmlstyle = "<!DOCTYPE html>"+
             "<html>"+
@@ -611,10 +746,9 @@ public class Ventana extends javax.swing.JFrame {
 
     private void ErrorsOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ErrorsOptionActionPerformed
         // TODO add your handling code here:
-        //Open HTML file
+        //Open a file named "errores.html"
         try {
-            File path = new File("errores.html");
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + path);
+            Runtime.getRuntime().exec("xdg-open errores.html");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -678,7 +812,7 @@ public class Ventana extends javax.swing.JFrame {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             bw.write(html);
             bw.close();
-
+            
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -1,5 +1,9 @@
 digraph G {
 node [shape=box, style=filled, color=seashell2];
+"<33.INICIO>  null""<15.INICIO>  null"[shape=ellipse, style=filled, color=seashell2];
+"<12.IF>  IF","<12.IF>  IF","<12.IF>  IF","<12.IF>  IF","<11.DE_LO_CONTRARIO>  DE_LO_CONTRARIO","<12.IF>  IF"[shape=diamond, style=filled, color=seashell2];
+"<13.INSTRUCCION>  null","<2.CONDICION>  ==","<2.CONDICION>  ==","<10.ERROR>  null","<4.IMPRIMIR_NL>  null","<14.ERROR>  null","<8.IMPRIMIR>  null"[shape=rectangle, style=filled, color=seashell2];
+"<8.IMPRIMIR>  null"[shape=parallelogram, style=filled, color=seashell2];
 "<15.INICIO>  null"->"<13.INSTRUCCION>  null"
 "<13.INSTRUCCION>  null"->"<12.IF>  IF"
 "<12.IF>  IF"->"<2.CONDICION>  =="
