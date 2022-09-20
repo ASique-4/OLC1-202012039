@@ -1,6 +1,0 @@
-inicio
-
-imprimir_nl "no tiene que imprimir este mensaje"
-    imprimir_nl "no tiene que imprimir este mensaje2";
-    imprimir_nl "no tiene que imprimir este mensaje3";
-	fin

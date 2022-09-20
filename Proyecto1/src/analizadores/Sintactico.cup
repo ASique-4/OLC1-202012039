@@ -203,7 +203,6 @@ non terminal IF;
 non terminal VALOR;
 non terminal LISTA_NOMBRES;
 non terminal LISTA_NOMBRES2;
-non terminal VARIABLE;
 non terminal DECLARACION;
 non terminal COMENTARIO;
 non terminal COMENTARIO_VARIAS_LINEAS;
@@ -1623,10 +1622,6 @@ CONDICION::=   VARIABLES:a prEsIgual VARIABLES:b {:
                 
 ;
 
-VARIABLE::= tvariable:a {:RESULT = a;
-                nd.FiguraFlowChart = "rectangle";
-                nd.Abajo = nd.Hijos;
-                        :};
 
 VARIABLES::= tcadena:a {:
                 Nodo nd = new Nodo(); 

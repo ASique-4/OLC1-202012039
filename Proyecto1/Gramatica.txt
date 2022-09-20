@@ -1,0 +1,223 @@
+
+num = [0-9]+
+variable = _[a-zA-Z0-9]+_
+cadena = [\'][^\']*[\']|[\"][^\"]*[\"]
+comentario = ([\/][\/])+(\s|\S)[^\n]*
+comentarioVariasLineas = [\/][\*]+(((\s|\S)[^\*]*)|([\n]*)|([\*]*[^\/]))([\*]+[\/])
+palabra = [a-zA-Z]+
+caracter = [\'][\s|\S][\']|[\"][\s|\S][\"]
+float = \d+[\.]\d+
+ascii = [\']\$\{[\d]+}[\']|[\"]\$\{[\d]+}[\"]
+
+terminal String tnum;
+terminal String trest,tsum,tdiv,tmul,tpot,tmod, pare1, pare2, prInicio,prFin,
+        tinterrogacioninicio,tinterrogacionfin,tcoma,tmayor, tcomentario, tcomentariovariaslineas,
+        tpuntoycoma,prIngresar,prComo,prConValor,prSi,prEntonces,prFinSi,prO_Si,prDeLoContrario,prSegun,prHacer,prPara,
+        prHasta,prFinPara,prCon,prIncremental,prMientras,prFinMientras,prRepetir,prHastaQue,prRetornar,prMetodo,
+        prFinMetodo,prConParametros,prFuncion,prFinFuncion,prEjecutar,prImprimir,prImprimirNl,tigual,tvariable,tcadena,
+        prFinSegun,palabra, prBoolean,prCaracter,prNumero,prCadena,prVerdadero,prFalso,
+        prEsIgual,prEsDiferente,prMayor,prFloat,prMenor,prMayorOIgual,prMenorOIgual,caracter,cor1,cor2,ascii,prNot;           
+
+
+non terminal INICIO;
+non terminal CONDICION;
+non terminal INSTRUCCIONES;
+non terminal INSTRUCCIONES_CICLO;
+non terminal INSTRUCCION;
+non terminal IF;
+non terminal VALOR;
+non terminal LISTA_NOMBRES;
+non terminal LISTA_NOMBRES2;
+non terminal VARIABLE;
+non terminal DECLARACION;
+non terminal COMENTARIO;
+non terminal COMENTARIO_VARIAS_LINEAS;
+non terminal E;
+non terminal ASIGNACION;
+non terminal DE_LO_CONTRARIO;
+non terminal EXPRESION;
+non terminal O_SI;
+non terminal SELECCION_MULTIPLE;
+non terminal SEGUN;
+non terminal LISTA_SEGUN;
+non terminal FLECHA;
+non terminal PARA;
+non terminal PARA_SALTO;
+non terminal MIENTRAS;
+non terminal REPETIR;
+non terminal RETORNO;
+non terminal METODO;
+non terminal LISTA_PARAMETROS;
+non terminal FUNCION;
+non terminal EJECUTAR;
+non terminal IMPRIMIR;
+non terminal IMPRIMIR_NL;
+non terminal TIPO;
+non terminal OPERACION;
+non terminal OPERACIONES;
+non terminal VARIABLES;
+
+precedence left tsum, trest;
+precedence left tdiv, tmul;
+precedence left tmod, tpot;
+precedence left pare1;
+precedence left pare2;
+precedence left cor1;
+precedence left cor2;
+precedence left tnum,prFloat,tvariable;
+
+start with INICIO;
+
+INICIO::= prInicio INSTRUCCIONES:n1 prFin
+
+INSTRUCCIONES::= E:n1 INSTRUCCIONES:n2 
+                |E:n1;
+
+E::=    DECLARACION 
+        | IF 
+        |COMENTARIO
+        |COMENTARIO_VARIAS_LINEAS
+        |ASIGNACION 
+        |SELECCION_MULTIPLE 
+        |PARA 
+        |MIENTRAS 
+        |REPETIR 
+        |RETORNO 
+        |METODO 
+        |FUNCION
+        |EJECUTAR
+        |IMPRIMIR
+        |IMPRIMIR_NL
+
+EXPRESION::= EXPRESION OPERACIONES
+                |OPERACIONES 
+
+OPERACIONES::= OPERACION 
+
+OPERACION::= tnum
+                | OPERACION
+                | OPERACION:i trest OPERACION:r 
+                | OPERACION:i tmul OPERACION:r 
+                | OPERACION:i tdiv OPERACION:r 
+                | OPERACION:i tmod OPERACION:r 
+                | OPERACION:i tpot OPERACION
+                | pare1 OPERACION pare2
+                | cor1 OPERACION cor2 
+                | tvariable:n 
+                | prFloat:n 
+
+TIPO::=prBoolean 
+        |prCaracter 
+        |prNumero 
+        |prCadena 
+
+DECLARACION::=prIngresar tvariable prComo TIPO prConValor VARIABLES tpuntoycoma 
+        |prIngresar LISTA_NOMBRES prComo TIPO prConValor VARIABLES tpuntoycoma 
+        |prIngresar tvariable prComo TIPO prConValor EXPRESION  tpuntoycoma
+        |prIngresar LISTA_NOMBRES prComo TIPO prConValor EXPRESION  tpuntoycoma
+        |prIngresar tvariable prComo TIPO prConValor CONDICION  tpuntoycoma
+        |prIngresar LISTA_NOMBRES prComo TIPO prConValor CONDICION  tpuntoycoma
+
+COMENTARIO::= tcomentario
+COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas 
+ASIGNACION::= tvariable FLECHA VARIABLES tpuntoycoma 
+                | LISTA_NOMBRES FLECHA VARIABLES tpuntoycoma 
+                | tvariable FLECHA EXPRESION tpuntoycoma 
+                | LISTA_NOMBRES FLECHA EXPRESION tpuntoycoma 
+
+SELECCION_MULTIPLE::= prSegun EXPRESION prHacer LISTA_SEGUN prFinSegun
+
+LISTA_SEGUN::= SEGUN LISTA_SEGUN 
+        |SEGUN 
+
+SEGUN::=tinterrogacioninicio EXPRESION tinterrogacionfin prEntonces INSTRUCCIONES
+
+
+LISTA_NOMBRES::= tvariable LISTA_NOMBRES2 
+
+LISTA_NOMBRES2::= tcoma tvariable LISTA_NOMBRES2 
+                |tcoma tvariable 
+
+IF::= prSi CONDICION prEntonces INSTRUCCIONES prFinSi 
+        |prSi CONDICION prEntonces INSTRUCCIONES O_SI prFinSi
+        |prSi CONDICION prEntonces INSTRUCCIONES DE_LO_CONTRARIO prFinSi
+        |prSi CONDICION prEntonces INSTRUCCIONES O_SI DE_LO_CONTRARIO prFinSi
+        |prSi tvariable prEntonces INSTRUCCIONES prFinSi 
+        |prSi tvariable prEntonces INSTRUCCIONES O_SI prFinSi
+        |prSi tvariable prEntonces INSTRUCCIONES DE_LO_CONTRARIO prFinSi
+        |prSi tvariable prEntonces INSTRUCCIONES O_SI DE_LO_CONTRARIO prFinSi
+
+DE_LO_CONTRARIO::= prDeLoContrario INSTRUCCIONES
+O_SI::=  prO_Si CONDICION prEntonces INSTRUCCIONES O_SI
+        |prO_Si  CONDICION prEntonces INSTRUCCIONES
+
+CONDICION::=   VARIABLES prEsIgual VARIABLES 
+            |VARIABLES prMayor VARIABLES 
+            |VARIABLES prMayorOIgual VARIABLES 
+            |VARIABLES prMenor VARIABLES 
+            |VARIABLES prMenorOIgual VARIABLES 
+            |VARIABLES prEsDiferente VARIABLES 
+            |EXPRESION prEsIgual EXPRESION 
+            |EXPRESION prMayor EXPRESION 
+            |EXPRESION prMayorOIgual EXPRESION 
+            |EXPRESION prMenor EXPRESION 
+            |EXPRESION prMenorOIgual EXPRESION 
+            |EXPRESION prEsDiferente EXPRESION 
+            |prNot VARIABLES 
+            |prNot EXPRESION 
+            |prNot pare1 CONDICION pare2 
+            |pare1 CONDICION pare2 
+
+
+VARIABLES::= tcadena 
+            |prVerdadero 
+            |prFalso 
+            |caracter
+            |ascii
+
+PARA::= prPara tvariable FLECHA EXPRESION prHasta EXPRESION prHacer INSTRUCCIONES prFinPara 
+            |prPara tvariable FLECHA EXPRESION prHasta EXPRESION prHacer  prFinPara
+            |PARA_SALTO 
+
+FLECHA::= trest tmayor 
+
+PARA_SALTO::= prPara tvariable FLECHA EXPRESION prHasta EXPRESION prCon prIncremental EXPRESION prHacer INSTRUCCIONES prFinPara
+
+MIENTRAS::= prMientras CONDICION prHacer INSTRUCCIONES prFinMientras
+
+
+REPETIR::= prRepetir INSTRUCCION prHastaQue CONDICION 
+        |prRepetir prHastaQue CONDICION
+
+
+
+
+RETORNO::= prRetornar CONDICION tpuntoycoma
+        |prRetornar EXPRESION tpuntoycoma
+
+METODO::= prMetodo tvariable prConParametros pare1 LISTA_PARAMETROS pare2 INSTRUCCIONES prFinMetodo 
+                |prMetodo tvariable INSTRUCCIONES prFinMetodo 
+
+LISTA_PARAMETROS::= LISTA_PARAMETROS tvariable TIPO  
+                |tvariable TIPO tcoma  
+
+
+FUNCION::= prFuncion tvariable TIPO prConParametros pare1 LISTA_PARAMETROS pare2 INSTRUCCIONES prFinFuncion 
+        |prFuncion tvariable TIPO INSTRUCCIONES prFinFuncion 
+
+EJECUTAR::= prEjecutar tvariable pare1 pare2 tpuntoycoma
+        |prEjecutar tvariable pare1 LISTA_PARAMETROS pare2 tpuntoycoma
+
+IMPRIMIR::= prImprimir VARIABLES tpuntoycoma
+            |prImprimir pare1 VARIABLES pare2 tpuntoycoma
+                |prImprimir EXPRESION tpuntoycoma 
+                |prImprimir pare1 EXPRESION pare2 tpuntoycoma 
+                |prImprimir CONDICION tpuntoycoma 
+                |prImprimir pare1 CONDICION pare2 tpuntoycoma 
+
+IMPRIMIR_NL::= prImprimirNl VARIABLES tpuntoycoma 
+                |prImprimirNl pare1 VARIABLES pare2 tpuntoycoma 
+                |prImprimirNl EXPRESION tpuntoycoma 
+                |prImprimirNl pare1 EXPRESION pare2 tpuntoycoma 
+                |prImprimirNl CONDICION tpuntoycoma 
+                |prImprimirNl pare1 CONDICION pare2 tpuntoycoma 
