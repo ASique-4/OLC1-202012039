@@ -1359,6 +1359,9 @@ class CUP$Analizador_sintactico$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
 		  RESULT = a;     
+                        ((Nodo) a).FiguraFlowChart = "rectangle";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1381,7 +1384,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 countTab--; RESULT = a;     
+		 countTab--; RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "diamond";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1417,7 +1423,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 RESULT = a;     
+		 RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1440,7 +1449,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 countTab--; RESULT = a;     
+		 countTab--; RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1463,7 +1475,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 countTab--; RESULT = a;     
+		 countTab--; RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1486,7 +1501,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 countTab--; RESULT = a;     
+		 countTab--; RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1509,7 +1527,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 countTab--; RESULT = a;     
+		 countTab--; RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1521,7 +1542,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 RESULT = a;     
+		 RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1544,7 +1568,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 countTab--; RESULT = a;     
+		 countTab--; RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1567,7 +1594,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 countTab--; RESULT = a;     
+		 countTab--; RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1579,7 +1609,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 RESULT = a;     
+		 RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1591,7 +1624,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 RESULT = a;     
+		 RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1603,7 +1639,10 @@ countTab++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
-		 RESULT = a;     
+		 RESULT = a;  
+                        ((Nodo) a).FiguraFlowChart = "parallelogram";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;   
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("E",13, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
@@ -1630,7 +1669,8 @@ countTab++;
                 nd.setIdNodo(parser.cont);
                 parser.cont++;
                 nd.AddHijo((Nodo) a);
-
+                nd.FiguraFlowChart = "rectangle";
+                nd.Abajo = nd.Hijos;
                 RESULT = nd; 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("EXPRESION",16, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
@@ -1644,6 +1684,9 @@ countTab++;
 		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
 		 RESULT = a;
+                        ((Nodo) a).FiguraFlowChart = "rectangle";
+                        ((Nodo) a).Abajo = ((Nodo) a).Hijos;
+                        
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("EXPRESION",16, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;

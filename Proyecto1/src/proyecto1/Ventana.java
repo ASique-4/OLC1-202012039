@@ -183,23 +183,38 @@ public class Ventana extends javax.swing.JFrame {
         //Centrar
         this.setLocationRelativeTo(null);
     }
-    //Obtener rank
-    public String getRank(Nodo raiz){
+    
+    //Recorrer raiz y agregarlos a las String de ingresada
+    public String recorridoFlow(Nodo raiz, String figura){
         String tmpRank = "";
         if(raiz != null){
             if(raiz.Hijos != null){
-                if(raiz.Hijos.size() > 1){
-                    tmpRank += "\"<" + raiz.Hijos.get(1).idNodo + "." + raiz.Hijos.get(1).Etiqueta + ">  " + raiz.Hijos.get(1).Valor + "\"";
-                    if(raiz.Hijos.get(1).Hijos != null){
-                        tmpRank += getRank(raiz.Hijos.get(1));
-                    }
-                }else{
+                if(raiz.FiguraFlowChart == figura){
                     tmpRank += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"";
+                    tmpRank += recorridoFlow(raiz, figura);
+                }else{
+                    
                 }
             }
         }
         
         return tmpRank;
+    }
+    //Obtener rank
+    public String getRank(Nodo raiz){
+        String ast = "";
+        for(Nodo hijos : raiz.Hijos){
+            //If hijos is null then eliminate
+                if(!(hijos.Etiqueta.equals(""))){
+                    ast += "\"<" + raiz.idNodo + "." + raiz.Etiqueta + ">  " + raiz.Valor + "\"->\"<" + hijos.idNodo + "." + hijos.Etiqueta + ">  " + hijos.Valor + "\"\n";
+                    ast += recorrido(hijos);
+                } else {
+                    System.out.println(raiz.Etiqueta);
+                }
+
+            
+        }
+        return ast;
     }
 
     //Get INICIO
@@ -310,11 +325,11 @@ public class Ventana extends javax.swing.JFrame {
             Runtime rt = Runtime.getRuntime();
             rt.exec("dot -Tpng FLOW.dot -o FLOW.png");
             //Open FLOW.png
-            try {
-                Runtime.getRuntime().exec("xdg-open FLOW.png");
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            // try {
+            //     Runtime.getRuntime().exec("xdg-open FLOW.png");
+            // } catch (Exception ex) {
+            //     ex.printStackTrace();
+            // }
         } catch (IOException ex) {
             System.out.println(ex);
         }
@@ -575,12 +590,12 @@ public class Ventana extends javax.swing.JFrame {
 
             Nodo raiz = sintactico.padre;
             //Crear flowchart
-            getInicio(raiz);
-            diamond = getIF(raiz);
-            rectangle = getProcedimientos(raiz);  
-            parallelogram = getVariables(raiz);
-            invhouse = getSalidas(raiz);
-            crearFlowchart(recorrido(raiz));
+            // getInicio(raiz);
+            // diamond = getIF(raiz);
+            // rectangle = getProcedimientos(raiz);  
+            // parallelogram = getVariables(raiz);
+            // invhouse = getSalidas(raiz);
+            // crearFlowchart(recorrido(raiz));
             //Recorreo raiz
             crearAST(recorrido(raiz));
             
