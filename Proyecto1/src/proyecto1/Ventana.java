@@ -521,10 +521,20 @@ public class Ventana extends javax.swing.JFrame {
 
         jMenuItem3.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
         jMenuItem3.setText("User Manual");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem3);
 
         jMenuItem4.setFont(new java.awt.Font("Fira Code Medium", 0, 16)); // NOI18N
         jMenuItem4.setText("Technical Manual");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem4);
 
         jMenuBar1.add(jMenu3);
@@ -832,6 +842,26 @@ public class Ventana extends javax.swing.JFrame {
             System.out.println(e);
         }
     }//GEN-LAST:event_GolangViewActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        //Open User Manual
+        try {
+            Runtime.getRuntime().exec("xdg-open Proyecto1/Manual_De_Usuario_P1.pdf");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        //Open Technical Manual
+        try {
+            Runtime.getRuntime().exec("xdg-open Proyecto1/Manual_Tecnico_P1.pdf");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
 
     /**
