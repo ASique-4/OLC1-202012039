@@ -57,21 +57,13 @@ non terminal OPERACION;
 non terminal OPERACIONES;
 non terminal VARIABLES;
 
-precedence left tsum, trest;
-precedence left tdiv, tmul;
-precedence left tmod, tpot;
-precedence left pare1;
-precedence left pare2;
-precedence left cor1;
-precedence left cor2;
-precedence left tnum,prFloat,tvariable;
 
 start with INICIO;
 
-INICIO::= prInicio INSTRUCCIONES:n1 prFin
+INICIO::= prInicio INSTRUCCIONES1 prFin
 
-INSTRUCCIONES::= E:n1 INSTRUCCIONES:n2 
-                |E:n1;
+INSTRUCCIONES::= E1 INSTRUCCIONES2 
+                |E1;
 
 E::=    DECLARACION 
         | IF 
@@ -96,15 +88,15 @@ OPERACIONES::= OPERACION
 
 OPERACION::= tnum
                 | OPERACION
-                | OPERACION:i trest OPERACION:r 
-                | OPERACION:i tmul OPERACION:r 
-                | OPERACION:i tdiv OPERACION:r 
-                | OPERACION:i tmod OPERACION:r 
-                | OPERACION:i tpot OPERACION
+                | OPERACION trest OPERACION
+                | OPERACION tmul OPERACION
+                | OPERACION tdiv OPERACION
+                | OPERACION tmod OPERACION
+                | OPERACION tpot OPERACION
                 | pare1 OPERACION pare2
                 | cor1 OPERACION cor2 
-                | tvariable:n 
-                | prFloat:n 
+                | tvariable 
+                | prFloat 
 
 TIPO::=prBoolean 
         |prCaracter 
@@ -119,7 +111,9 @@ DECLARACION::=prIngresar tvariable prComo TIPO prConValor VARIABLES tpuntoycoma
         |prIngresar LISTA_NOMBRES prComo TIPO prConValor CONDICION  tpuntoycoma
 
 COMENTARIO::= tcomentario
+
 COMENTARIO_VARIAS_LINEAS::= tcomentariovariaslineas 
+
 ASIGNACION::= tvariable FLECHA VARIABLES tpuntoycoma 
                 | LISTA_NOMBRES FLECHA VARIABLES tpuntoycoma 
                 | tvariable FLECHA EXPRESION tpuntoycoma 
@@ -148,6 +142,7 @@ IF::= prSi CONDICION prEntonces INSTRUCCIONES prFinSi
         |prSi tvariable prEntonces INSTRUCCIONES O_SI DE_LO_CONTRARIO prFinSi
 
 DE_LO_CONTRARIO::= prDeLoContrario INSTRUCCIONES
+
 O_SI::=  prO_Si CONDICION prEntonces INSTRUCCIONES O_SI
         |prO_Si  CONDICION prEntonces INSTRUCCIONES
 
