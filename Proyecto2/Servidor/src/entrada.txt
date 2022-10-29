@@ -1,0 +1,11 @@
+int hola ;
+char mundo ;
+int olc;
+string nombe;
+print("Albertt");
+print("angel");
+print(olc());
+{
+    int olc1;
+    print("Muy fácil");
+}
