@@ -8,7 +8,8 @@
     "tsc": "tsc",
     "start": "ts-node-dev src/index.ts",
     "jison": "jison ./src/Grammar/grammar.jison && mv grammar.js ./src/Grammar",
-    "nodemon": "nodemon"
+    "nodemon": "nodemon",
+    "dev": "jison ./src/Grammar/grammar.jison && mv grammar.js ./src/Grammar && nodemon"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,392 @@
+string curso_ = "organización de compiladores 1 2022";
+char var_111 = 'a'; 
+celular = true;
+int var1, var2, var3;
+boolean flag_1, flag2_, flag33 = false;
+char ch_1, ch_2, ch3, qwert123 = 'M';
+universidad= "usac";
+boolean flag_personalizada;
+Int edad = (Int) 18.6; //toma el valor entero de 18
+Int intBool = (Int) false; //false = 0, true = 1
+Int intDecimal = (Int) '0'; // = 0 caracteres numerales de longitud 1
+Int intCadena = (Int) "100"; // = 100 cadena de caracteres de longitud variable
+Double doubleInt = (Double) 16; //16.0
+Double doubleString = (Double) "16.0"; //16.0 Cadenas numericas
+Boolean boolInt = (Boolean) 0; //false
+Boolean boolDouble = (Boolean) 1.0; //true
+Boolean boolString = (Boolean) "0"; //false
+Boolean boolChar = (Boolean) '1'; //true
+Char charInt = (Char) 16; //'1' solo toma el primer carácter
+Char charDouble = (Char) 16.1; //'1' solo toma el primer carácter
+Char charBoolean = (Char) false; //'0' false = '0' true='1'
+Char charString = (Char) "asdf"; //'a' solo toma el primer carácter
+String stringInt = (String) 16; //'16"
+String stringDouble = (String) 16.1; //"16.1"
+String stringBoolean = (String) false; //"0" false = "0" true="1"
+String stringChar = (String) "a"; //"'a"
+int edad = 18;
+edad++; //tiene el valor de 19 edad--; //tiene el valor 18
+int anio=2020;
+anio = 1 + anio++; //obtiene el valor de 2022
+anio = anio--; //obtiene el valor de 2021
+
+//declaracion de vectores
+Int [ ] vector1 = new Int[4];
+Char [ ][ ] vectorDosd = new Char [(Int) "4"] [4] ;
+String [ ] vector2 = {"hola", "Mundo"};
+Char [ ][ ] vectordosd2 = {{ 0 ,0},{0 , 0}};
+
+
+//acceso a vectores
+String [ ] vector2 = {"hola", "Mundo"}; //creamos un vector de 2 posiciones de tipo string
+String valorPosicion = vector2[1]; //posición 1, valorPosicion = "hola"
+Char [ ][ ] vectorDosd = new char [4] [4] ; // creamos vector de 4x4
+Char valor = vectorDosd[1][1]; // posición 1,1
+
+//modificacion de vectores
+String [ ] vector2 = {"hola", "Mundo"}; //vector de 2 posiciones, con "Hola" y "Mundo"
+Int [ ] vectorNumero = {2020,2021,2022};
+vector2[1] = "OLC1 ";
+vector2[2] = "2do Semestre "+vectorNumero[2];
+
+
+//condicional if 
+if (x <50)
+{
+Println("Menor que 50");
+//Más sentencias
+}
+//Ejemplo de cómo se implementar una sentencia if else
+if (x <50)
+{
+Println("Menor que 50");
+//Más sentencias
+}
+else
+{
+Println("Mayor que 100");
+//Más sentencias
+}
+//Ejemplo de cómo se implementar un ciclo else if
+if (x > 50)
+{
+ Print("Mayor que 50");
+ //Más sentencias
+}
+elif (x <= 50 && x > 0)
+{
+ Print ("Menor que 50");
+ if (x > 25)
+ {
+ Print("Número mayor que 25");
+ //Más sentencias
+ }else{
+ Print("Número menor que 25");
+ //Más sentencias
+ }
+ //Más sentencias
+}
+else
+{
+Print("Número negativo");
+//Más
+}
+
+	//provicional
+
+		if (x <50)
+		{
+		tomas = nuevoAA;
+		tomas = nuevoA;
+		//Más sentencias
+		}
+		//Ejemplo de cómo se implementar una sentencia if else
+		if (x <50)
+		{
+		tomas = nuevoB;
+		//Más sentencias
+		}
+		else
+		{
+		tomas = nuevoC;
+		//Más sentencias
+		}
+		//Ejemplo de cómo se implementar un ciclo else if
+		if (x > 50)
+		{
+		 tomas = nuevo;
+		 //Más sentencias
+		}
+		elif (x <= 50 && x > 0)
+		{
+		 tomas = nuevo2;
+		 if (x > 25)
+		 {
+		 tomas = nuevo3;
+		 //Más sentencias
+		 }else{
+		 tomas = nuevo4;
+		 //Más sentencias
+		 }
+		 //Más sentencias
+		}
+		else
+		{
+		tomas = nuevo5;
+		//Más
+		}
+
+//switch
+
+// EJEMPLO DE SWITCH
+int edad = 18;
+switch( edad ) {
+Case 10:
+Println("Tengo 10 anios.");
+// mas sentencias Break;
+Case 18:
+Print("Tengo 18 anios.\n");
+// mas sentencias Case 25:
+Println("Tengo 25 anios.");
+// mas sentencias Break;
+Default:
+Print("No se que edad tengo. :(\n");
+// mas sentencias Break;
+}
+/* Salida esperada Tengo 18 anios.
+No se que edad tengo. :(
+*/
+
+
+//Ejemplo de cómo se implementar un ciclo while
+while (x<100){
+if (x > 50)
+{
+Print("Mayor que 50");
+//Más sentencias
+}
+else
+{
+Print("Menor que 100");
+//Más sentencias
+} X++;
+//Más sentencias
+}
+
+
+//para FOR
+//Ejemplo 1: declaración dentro del for con incremento
+for ( int i=0; i<3;i++ ){
+Println("i="+i);
+//más sentencias
+}
+/*RESULTADO
+i=0 i=1 i=2
+*/
+//Ejemplo 2: asignación de variable previamente declarada y decremento por asignación
+Int i;
+for ( i=5; i>2;i,tomas=i-1 ){
+Print("i="+i+"\n");
+//más sentencias
+}
+/*RESULTADO
+i=5 i=4 i=3
+*/
+
+//Ejemplo de cómo se implementar un ciclo do-while Int a=5;
+do{
+ if (a>=1 && a <3){
+ Println(true);
+ }
+ else{
+ Println(false);
+ }
+ a--;
+} while (a>0);
+/*RESULTADO
+false false false true true
+*/
+
+
+//para el break;
+ //Ejemplo en un ciclo for
+for(int i = 0; i < 9; i++){
+ if(i==5){
+ Println("Me salgo del ciclo en el numero " + i);
+ break;
+ }
+ Println(i);
+ }
+
+
+ //para el continue
+ //Ejemplo en un ciclo for
+for(int i = 0; i < 9; i++){
+ if(i==5){
+ Println("Me salte el numero " + i); continue;
+ }
+ Println(i);
+}
+
+
+//para el return
+//Ejemplos
+//--> Dentro de un metodo
+mi_metodo(): void{
+int i;
+for(i = 0; i < 9; i++){ if(i==5){
+ return; //se detiene
+}
+Print(i);
+}
+}
+//--> Dentro de una función
+sumar(int n1, int n2): int {
+int n3;
+n3 = n1+n2;
+return n3; //retorno el valor
+}
+
+//Ejemplo de declaración de una función de enteros
+conversion (string tipo): double {
+    if (tipo == "metro")
+    {
+    return pies/3.281;
+    }else{
+    return -1;
+    }
+ }
+
+
+//declaracion de metodos
+holamundo(): void {
+Print("Hola mundo");
+}
+//Ejemplo sin tipo definido de un método
+HolaCompi() {
+Print("Hola Compi 1");
+}
+
+//Ejemplo de llamada de un método
+Print("Ejemplo de llamada a método");
+holamundo();
+/* Salida esperada
+Ejemplo de llamada a método Hola Mundo
+*/
+//Ejemplo de llamada de una función
+Print("Ejemplo de llamada a función");
+Int num = suma(6,5); // a = 11
+Println("El valor de a es: " + a);
+/* Salida esperada
+Ejemplo de llamada a función
+Aquí puede venir cualquier sentencia :D El valor de a es: 11
+*/
+suma(int num1, int num2):int {
+Println("Aquí puede venir cualquier sentencia :D");
+return num1 + num2;
+Println("Aquí pueden venir más sentencias, pero no se ejecutarán por la sentencia RETURN D:"); //Print en una línea
+}
+
+
+
+//para imprimir
+Print("Hola mundo!!");
+Print("Sale compi \n" + valor + "!!");
+Print(suma(2,2));
+/*
+Salida Esperada:
+Hola Mundo!!Sale compi
+25!!4
+*/
+// 25 es el valor almacenado en la variable "valor"
+
+
+Println("Hola mundo!!");
+Println("Sale compi \n" + valor + "!!");
+Println(suma(2,2));
+/*
+Salida Esperada:
+Hola Mundo!!
+Sale compi
+25!!
+4
+*/
+// 25 es el valor almacenado en la variable "valor"
+
+
+//TO LOWER
+//Ejemplo
+string cad_1 = toLower("hOla MunDo"); // cad_1 = "hola mundo"
+string cad_2 = toLower("RESULTADO = " + 100); // cad_2 = "resultado = 100"
+
+
+
+
+//Ejemplo UPPER
+string cad_1 = toUpper("hOla MunDo"); // cad_1 = "HOLA MUNDO"
+string cad_2 = toUpper("resultado = " + 100); // cad_2 = "RESULTADO = 100"
+
+// Ejemplo ROUND
+Double valor = round(5.8); //valor = 6
+Double valor2 = round(5.4); //valor2 = 5
+
+//EJEMPLO LENGTH
+// En donde <VALOR> puede ser:
+// - lista
+// -vector
+// -cadena
+string[ ] vector2 = {"hola", "Mundo"};
+int tam_vector = length(vector2); // tam_vector = 2
+int tam_hola = length(tam_vector[0]); // tam_hola = 4
+
+//Ejemplo TYPEOF
+Int[] lista2 =new int [1];
+String tipo = typeof(15); // tipo = "int"
+String tipo2 = typeof(15.25); // tipo = "double"
+String tipo3 = typeof(lista2);// tipo3 = "vector"
+
+//Ejemplo TO STRING 
+String valor = toString(14); // valor = "14"
+String valor2 = toString(true); // valor = "true"
+
+
+//Ejemplo to char array
+Char[] caracteres = toCharArray("Hola");
+/*
+caracteres [1] = "H"
+caracteres [2] = "o"
+caracteres [3] = "l"
+caracteres [4] = "a"
+*/
+
+//vector de ejemplo
+string[ ] vector2 = {"hola", "Mundo"};
+vector2.push("bonito");
+//contenido del vector
+//= ["hola", "Mundo","bonito"]
+
+
+//vector de ejemplo
+string[ ] vector2 = {"hola", "Mundo","bonito"};
+vector2.pop();
+//contenido del vector
+//= ["hola", "Mundo"]
+
+
+//Ejemplo 1 
+funcion1():void{
+Print("hola");
+}
+run funcion1();
+/*RESULTADO
+hola
+*/
+
+//Ejemplo 2
+funcion2(string mensaje):void{
+Print(mensaje);
+}
+Run funcion2("hola soy un mensaje");
+/*RESULTADO
+Hola soy un mensaje
+*/

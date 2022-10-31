@@ -18,6 +18,8 @@ export class Declaracion extends Instruccion {
 
         Env.guardar_variable(this.nombre, this.tipo);
 
+        return this.tipo + " " + this.nombre;
+
 
         //guardar un metodo asi        
         //Env.guardar_funcion(this.nombre,this);

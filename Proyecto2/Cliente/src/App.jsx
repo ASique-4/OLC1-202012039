@@ -13,7 +13,7 @@ export default function App() {
   function showValue() {
     alert(editorRef.current.getValue());
     const result = document.getElementById("result");
-    result.innerHTML = editorRef.current.getValue();
+    
     
 
     
@@ -29,9 +29,9 @@ export default function App() {
         return res.json();
       })
       .then(function (data) {
-        alert(JSON.stringify(data));
+        result.innerHTML = data.msg;
       });
-
+      
       
   }
 
@@ -52,7 +52,7 @@ export default function App() {
           />
         </div>
 
-        <textarea name="result" id="result" cols="30" rows="10"></textarea>
+        <textarea name="result" id="result" cols="50" rows="10"></textarea>
         <br></br>
         <button onClick={showValue} class="button-3">
           Ejecutar
