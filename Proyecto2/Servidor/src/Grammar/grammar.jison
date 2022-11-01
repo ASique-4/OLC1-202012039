@@ -13,6 +13,22 @@
     const {Vector_2D_T2} = require('../Instrucciones/Vector_2D_T2.ts');
     const {Acceso_Vector_1D} = require('../Instrucciones/Acceso_Vector_1D.ts');
     const {Acceso_Vector_2D} = require('../Instrucciones/Acceso_Vector_2D.ts');
+    const {IF} = require('../Instrucciones/IF.ts');
+    const {IF_ELIF} = require('../Instrucciones/IF_ELIF.ts');
+    const {IF_ELSE} = require('../Instrucciones/IF_ELSE.ts');
+    const {CONDICION} = require('../Instrucciones/CONDICION.ts');
+    const {Switch} = require('../Instrucciones/Switch.ts');
+    const {Case} = require('../Instrucciones/Case.ts');
+    const {Default} = require('../Instrucciones/Default.ts');
+    const {While} = require('../Instrucciones/While.ts');
+    const {For} = require('../Instrucciones/For.ts');
+    const {Do_While} = require('../Instrucciones/Do_While.ts');
+    const {Do_Until} = require('../Instrucciones/Do_Until.ts');
+    const {Break} = require('../Instrucciones/Break.ts');
+    const {Continue} = require('../Instrucciones/Continue.ts');
+    const {Return} = require('../Instrucciones/Return.ts');
+    const {Funcion} = require('../Instrucciones/Funcion.ts');
+    const {Parametro} = require('../Instrucciones/Parametro.ts');
 %}
 
 %lex
@@ -46,27 +62,45 @@ bool    "true"|"false"
 "Char"   return 'pr_char'
 "Double"   return 'pr_double'
 "Boolean"   return 'pr_bool'
-"print"   return 'Systemoutprintln'
+"print"   return 'pr_print'
+"println"   return 'pr_println'
 "new"   return 'pr_new'
+"if"   return 'pr_if'
+"else"   return 'pr_else'
+"elif"   return 'pr_elif'
+'Case'   return 'pr_case'
+'break'   return 'pr_break'
+'default'   return 'pr_default'
+'switch'   return 'pr_switch'
+'break'   return 'pr_break'
+'while'   return 'pr_while'
+'for'   return 'pr_for'
+'do'   return 'pr_do'
+'until'   return 'pr_until'
+'continue'   return 'pr_continue'
+'return'   return 'pr_return'
 
 
 ";"  return ';'
+":"  return ':'
 ")"  return ')'
 "("  return '('
 "}"  return '}'
 "{"  return '{'
-"="  return '='
 ","  return ','
 "++"  return '++'
 "--"  return '--'
 "+"  return '+'
 "-"  return '-'
+"<=" return '<='
+">=" return '>='
 "<"  return '<'
 ">"  return '>'
 "=="  return '=='
 "!="  return '!='
 "&&"  return '&&'
 "||"  return '||'
+"="  return '='
 "!"  return '!'
 "["  return '['
 "]"  return ']'
@@ -114,7 +148,17 @@ INSTRUCCION :
     |VECTOR_1D_T2{$$=$1;}
     |VECTOR_2D_T1{$$=$1;}
     |VECTOR_2D_T2{$$=$1;}
-    |error {console.log("error sintactico")}
+    |IF{$$=$1;}
+    |SWITCH{$$=$1;}
+    |WHILE{$$=$1;}
+    |FOR{$$=$1;}
+    |DO_WHILE{$$=$1;}
+    |DO_UNTIL{$$=$1;}
+    |BREAK{$$=$1;}
+    |FUNCION{$$=$1;}
+    |CONTINUE{$$=$1;}
+    |RETURN{$$=$1;}
+    |error {console.log($1); console.log("error sintactico");}
 ;
 
 BLOQUE: '{' LISTAINSTRUCCIONES '}' { $$= new Bloque($2,@1.first_line,@1.first_column);}
@@ -126,7 +170,12 @@ DECLARACION: TIPOS  'expreID' ';' {
 }
 ;
 
-IMPRESION: 'Systemoutprintln' '(' E ')' ';' { $$= new Impresion($3,@1.first_line,@1.first_column);}
+IMPRESION: 'pr_print' '(' VALORES ')' ';' {
+    $$= new Impresion("print",$3,@1.first_line,@1.first_column);
+}
+| 'pr_println' '(' VALORES ')' ';' {
+    $$= new Impresion("println",$3,@1.first_line,@1.first_column);
+}
 ;
 
 E: 'expreCADENA' {$$=$1;}
@@ -146,17 +195,14 @@ LISTA_EXPREID: LISTA_EXPREID ',' 'expreID' {$$=$1; $1.push($3);}
 ;
 
 VALORES: 
-    'expreCADENA' {$$=$1;}
-    |'expreBOOL' {$$=$1;}
+    'expreBOOL' {$$=$1;}
     |EXPRESION {$$=$1;}
     |CASTEO {$$='(' + $1.casteo + ') ' + $1.expresion;}
-    |Acceso_Vector_1D {$$=$1.variable + $1.expresion;}
-    |Acceso_Vector_2D {$$=$1.variable + $1.expresion;}
+    
 ;
 
 VALORES2: 
-    'expreCADENA' {$$=$1;}
-    |'expreBOOL' {$$=$1;}
+    'expreBOOL' {$$=$1;}
     |EXPRESION {$$=$1;}
 ;
 
@@ -169,15 +215,20 @@ OPERACIONES: OPERACION {$$=$1;};
 OPERACION: 'expreNUMBER' {$$=$1;}
     |'expreDECIMAL' {$$=$1;}
     |'expreID' {$$=$1;}
+    |'expreCADENA' {$$=$1;}
+    |ACCESO_VECTOR_1D {$$=$1.variable + "[" + $1.expresion + "]";}
+    |ACCESO_VECTOR_2D {$$=$1.variable + "[" + $1.expresion + "]" + "[" + $1.expresion2 + "]";}
     |OPERACION '+' OPERACION {$$=$1 + '+' + $3;}
-    |OPERACION '-' OPERACION {$$=$1 - $3;}
-    |OPERACION '*' OPERACION {$$=$1 * $3;}
-    |OPERACION '/' OPERACION {$$=$1 / $3;}
-    |OPERACION '%' OPERACION {$$=$1 % $3;}
-    |OPERACION '^' OPERACION {$$=$1 ^ $3;}
+    |OPERACION '-' OPERACION {$$=$1 + '-' + $3;}
+    |OPERACION '*' OPERACION {$$=$1 + '*' + $3;}
+    |OPERACION '/' OPERACION {$$=$1 + '/' + $3;}
+    |OPERACION '%' OPERACION {$$=$1 + '%' + $3;}
+    |OPERACION '^' OPERACION {$$=$1 + '^' + $3;}
     |'(' OPERACION ')' {$$=$2;}
     |OPERACION '++' {$$=$1 + '++';}
     |OPERACION '--' {$$=$1 + '--';}
+    //Negativos
+    |'-' OPERACION {$$='-' + $2;}
 
 ;
 
@@ -188,7 +239,6 @@ INCREMENTO: 'expreID' '++' ';' {$$= new Incremento($1,'++',@1.first_line,@1.firs
 
 CASTEO: '(' TIPOS ')' VALORES2 {
     $$= new Casteo(null,null,$2,$4,@1.first_line,@1.first_column);
-    console.log($$);
     }
     ; 
 
@@ -198,14 +248,21 @@ ASIGNACION: TIPOS 'expreID' '=' VALORES ';' {
     |'expreID' '=' VALORES ';' {
         $$= new Asignacion(null,$1,$3,@1.first_line,@1.first_column);
     }
+    |ACCESO_VECTOR_1D '=' VALORES ';' {
+        $$= new Asignacion(null,$1.variable + "[" + $1.expresion + "]",$3,@1.first_line,@1.first_column);
+    }
+    |ACCESO_VECTOR_2D '=' VALORES ';' {
+        $$= new Asignacion(null,$1.variable + "[" + $1.expresion + "]" + "[" + $1.expresion2 + "]",$3,@1.first_line,@1.first_column);
+    }
     |TIPOS LISTA_EXPREID ';' {
         
         $$= new Declaracion($2,$1,@1.first_line,@1.first_column);
     }
     |TIPOS LISTA_EXPREID '=' VALORES ';' {
-        
         $$= new Asignacion($1,$2,$4,@1.first_line,@1.first_column);
-
+    }
+    |LISTA_EXPREID '=' VALORES ';' {
+        $$= new Asignacion(null,$1,$3,@1.first_line,@1.first_column);
     }
 ;
 
@@ -238,8 +295,163 @@ LISTA_VALORES_VECTORES_2D: LISTA_VALORES_VECTORES_2D ',' '{' LISTA_VALORES_VECTO
     | '{' LISTA_VALORES_VECTORES '}' {$$=['{'+$2+'}'];}
 ;
 
-ACCESO_VECTOR_1D: 'expreID' '[' 'expreNUMBER' ']' {$$= new Acceso_Vector_1D($1,$3,@1.first_line,@1.first_column);}
+ACCESO_VECTOR_1D: 'expreID' '[' 'expreNUMBER' ']' {$$= new Acceso_Vector_1D($1,$3,@1.first_line,@1.first_column);
+    }
 ;
 
-ACCESO_VECTOR_2D: 'expreID' '[' 'expreNUMBER' ']' '[' 'expreNUMBER' ']' {$$= new Acceso_Vector_2D($1,$3,$5,@1.first_line,@1.first_column);}
+ACCESO_VECTOR_2D: 'expreID' '[' 'expreNUMBER' ']' '[' 'expreNUMBER' ']' {$$= new Acceso_Vector_2D($1,$3,$6,@1.first_line,@1.first_column);}
+;
+
+IF: 'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' {
+    console.log($6 );
+    $$= new IF($3.valor1 + $3.condicion + $3.valor2,$6,null,@1.first_line,@1.first_column);
+    }
+    |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' 'pr_else' '{' LISTAINSTRUCCIONES '}' {
+        $$= new IF_ELSE($3.valor1 + $3.condicion + $3.valor2,$6,null,$10,@1.first_line,@1.first_column);
+    }
+    |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' ELIF {
+        $$= new IF($3.valor1 + $3.condicion + $3.valor2,$6,$8,@1.first_line,@1.first_column);
+    }
+    |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' ELIF 'pr_else' '{' LISTAINSTRUCCIONES '}' {
+        $$= new IF_ELSE($3.valor1 + $3.condicion + $3.valor2,$6,$8,$11,@1.first_line,@1.first_column);
+    }
+;
+
+ELIF: 'pr_elif' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' {
+    $$= new IF_ELIF($3.valor1 + $3.condicion + $3.valor2,$6,null,@1.first_line,@1.first_column);
+    }
+    |'pr_elif' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' ELIF {
+        $$= new IF_ELIF($3.valor1 + $3.condicion + $3.valor2,$6,$10,@1.first_line,@1.first_column);
+    }
+    ;
+
+
+
+CONDICION: VALORES CONDICIONAL VALORES  {
+    $$= new CONDICION($1 + " " ,$2 + " ",$3,@1.first_line,@1.first_column);
+    }
+    |CONDICION CONDICIONAL2 CONDICION {
+        $$= new CONDICION($1.valor1 + $1.condicion + $1.valor2 + " ",$2," " + $3.valor1 + $3.condicion + $3.valor2,@1.first_line,@1.first_column);
+    }
+;
+
+CONDICIONAL: '==' {$$=$1;}
+    |'!=' {$$=$1;}
+    |'>' {$$=$1;}
+    |'<' {$$=$1;}
+    |'>=' {$$=$1;}
+    |'<=' {$$=$1;}
+;
+
+CONDICIONAL2: '&&' {$$=$1;}
+    |'||' {$$=$1;}
+;
+
+SWITCH: 'pr_switch' '(' 'expreID' ')' '{' LISTA_CASES DEFAULT '}' {
+    $$= new Switch($3,$6,$7,@1.first_line,@1.first_column);
+    }
+;
+
+LISTA_CASES: LISTA_CASES CASE {
+    $$=$1;
+    $1.push($2);
+    }
+    | CASE {
+        $$=[$1];
+    }
+;
+
+CASE: 'pr_case' VALORES ':' LISTAINSTRUCCIONES 'pr_break' ';' {
+    $$= new Case($2,$4,@1.first_line,@1.first_column);
+    }
+;
+
+DEFAULT: 'pr_default' ':' LISTAINSTRUCCIONES 'pr_break' ';' {
+    $$= new Default($3,@1.first_line,@1.first_column);
+    }
+;
+
+WHILE: 'pr_while' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' {
+    $$= new While($3.valor1 + $3.condicion + $3.valor2,$6,@1.first_line,@1.first_column);
+    }
+;
+
+FOR: 'pr_for' '(' ASIGNACION CONDICION ';' ASIGNACION_FOR ')' '{' LISTAINSTRUCCIONES '}' {
+    $$= new For($3,$4.valor1 + $4.condicion + $4.valor2,$6,$9,@1.first_line,@1.first_column);
+    }
+;
+
+ASIGNACION_FOR: 'expreID' '=' VALORES {
+    $$= new Asignacion(null,$1,$3,@1.first_line,@1.first_column);
+    }
+    |INCREMENTO_FOR {
+        $$=$1;
+    }
+    |LISTA_EXPREID '=' VALORES {
+        $$= new Asignacion(null,$1,$3,@1.first_line,@1.first_column);
+        console.log("------");
+        console.log($3);
+        console.log("------");
+    }
+;
+
+INCREMENTO_FOR: 'expreID' '++' {
+    $$= new Incremento($1,$2,@1.first_line,@1.first_column);
+    }
+    |'expreID' '--' {
+        $$= new Incremento($1,$2,@1.first_line,@1.first_column);
+    }
+;
+
+DO_WHILE: 'pr_do' '{' LISTAINSTRUCCIONES '}' 'pr_while' '(' CONDICION ')' ';' {
+    $$= new Do_While($3,$7.valor1 + $7.condicion + $7.valor2,@1.first_line,@1.first_column);
+    }
+;
+
+DO_UNTIL: 'pr_do' '{' LISTAINSTRUCCIONES '}' 'pr_until' '(' CONDICION ')' ';' {
+    $$= new Do_Until($3,$7.valor1 + $7.condicion + $7.valor2,@1.first_line,@1.first_column);
+    }
+;
+
+BREAK: 'pr_break' ';' {
+    $$= new Break(@1.first_line,@1.first_column);
+    }
+;
+
+CONTINUE: 'pr_continue' ';' {
+    $$= new Continue(@1.first_line,@1.first_column);
+    }
+;
+
+RETURN: 'pr_return' VALORES ';' {
+    $$= new Return($2,@1.first_line,@1.first_column);
+    }
+    |'pr_return' ';' {
+        $$= new Return(null,@1.first_line,@1.first_column);
+    }
+;
+
+FUNCION: 'expreID' '(' LISTA_PARAMETROS ')' ':' TIPOS '{' LISTAINSTRUCCIONES '}' {
+    $$= new Funcion($1,$3,$6,$8,@1.first_line,@1.first_column);
+    console.log("------");
+    console.log($$);
+    console.log("------");
+    }
+    |'expreID' '(' ')' ':' TIPOS '{' LISTAINSTRUCCIONES '}' {
+        $$= new Funcion($1,null,$5,$7,@1.first_line,@1.first_column);
+    }
+;
+
+LISTA_PARAMETROS: LISTA_PARAMETROS ',' PARAMETRO {
+    $$=$1;
+    $1.push($3);
+    }
+    | PARAMETRO {
+        $$=[$1];
+    }
+;
+
+PARAMETRO: TIPOS 'expreID' {
+    $$= new Parametro($1,$2,@1.first_line,@1.first_column);
+    }
 ;

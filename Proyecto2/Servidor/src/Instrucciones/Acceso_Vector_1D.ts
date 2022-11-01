@@ -7,6 +7,7 @@ export class Acceso_Vector_1D extends Instruccion {
         public expresion: string,
         linea: number, columna:number) {
         super(linea,columna);
+        
     }
 
     public ejecutar():any {

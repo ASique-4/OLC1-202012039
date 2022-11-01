@@ -13,8 +13,8 @@ export class Incremento extends Instruccion {
     public ejecutar():any {
             
             console.log("Incremento");
-            console.log(this.variable + this.tipo);
-            return this.variable + this.tipo;
+            console.log(this.variable + this.tipo + ";");
+            return this.variable + this.tipo + ";";
             
     }
 }
