@@ -15,18 +15,18 @@ export class Asignacion extends Instruccion {
 
         if(this.tipo == null){
             console.log("Asignacion");
-            console.log(this.variable + " = " + this.expresion);
-            return this.variable + " = " + this.expresion;
+            console.log(this.variable + " = " + this.expresion + ";");
+            return this.variable + " = " + this.expresion + ";";
         }
             
         if(this.expresion != null){
                 console.log("Asignacion");
-                console.log(this.tipo + " " + this.variable + "= " + this.expresion);
-                return this.tipo + " " + this.variable + "= " + this.expresion;
+                console.log(this.tipo + " " + this.variable + "= " + this.expresion + ";");
+                return this.tipo + " " + this.variable + "= " + this.expresion + ";";
         }else{
             console.log("Declaracion");
-            console.log(this.tipo + " " + this.variable);
-            return this.tipo + " " + this.variable;
+            console.log(this.tipo + " " + this.variable + ";");
+            return this.tipo + " " + this.variable + ";";
         }
             
             

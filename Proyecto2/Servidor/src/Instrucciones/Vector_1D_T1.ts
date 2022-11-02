@@ -13,9 +13,15 @@ export class Vector_1D_T1 extends Instruccion {
     
         public ejecutar():any {
     
-            console.log("Vector");
-            console.log(this.tipo + " [] " + this.variable + " = new " + this.tipo2 + "[" + this.expresion + "]");
-            return this.tipo + " [] " + this.variable + " = new " + this.tipo2 + "[" + this.expresion + "]";
+            if(this.tipo2 != null){
+                console.log("Vector");
+                console.log(this.tipo + " [] " + this.variable + " = new " + this.tipo2 + "[" + this.expresion + "]");
+                return this.tipo + " [] " + this.variable + " = new " + this.tipo2 + "[" + this.expresion + "]";
+            }else{
+                console.log("Vector");
+                console.log(this.tipo + " [] " + this.variable + " = toCharArray (" + this.expresion + ")");
+                return this.tipo + " [] " + this.variable + " = toCharArray (" + this.expresion + ")";
+            }
     
             //implementacion semantica
             //validar

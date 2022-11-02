@@ -29,6 +29,18 @@
     const {Return} = require('../Instrucciones/Return.ts');
     const {Funcion} = require('../Instrucciones/Funcion.ts');
     const {Parametro} = require('../Instrucciones/Parametro.ts');
+    const {Metodo} = require('../Instrucciones/Metodo.ts');
+    const {Llamada} = require('../Instrucciones/Llamada.ts');
+    const {ToLower} = require('../Instrucciones/ToLower.ts');
+    const {ToUpper} = require('../Instrucciones/ToUpper.ts');
+    const {Length} = require('../Instrucciones/Length.ts');
+    const {TypeOf} = require('../Instrucciones/TypeOf.ts');
+    const {ToString} = require('../Instrucciones/ToString.ts');
+    const {ToCharArray} = require('../Instrucciones/ToCharArray.ts');
+    const {Round} = require('../Instrucciones/Round.ts');
+    const {Push} = require('../Instrucciones/Push.ts');
+    const {Pop} = require('../Instrucciones/Pop.ts');
+    const {Run} = require('../Instrucciones/Run.ts');
 %}
 
 %lex
@@ -79,6 +91,18 @@ bool    "true"|"false"
 'until'   return 'pr_until'
 'continue'   return 'pr_continue'
 'return'   return 'pr_return'
+'void'   return 'pr_void'
+'ToLower'   return 'pr_tolower'
+'ToUpper'   return 'pr_toupper'
+'Length'   return 'pr_length'
+'TypeOf'   return 'pr_typeof'
+'ToString'   return 'pr_tostring'
+'ToCharArray'   return 'pr_tochararray'
+'Round'   return 'pr_round'
+'Push'   return 'pr_push'
+'Pop'   return 'pr_pop'
+'Run'   return 'pr_run'
+
 
 
 ";"  return ';'
@@ -108,6 +132,7 @@ bool    "true"|"false"
 "/"  return '/'
 "%"  return '%'
 '^'  return '^'
+'.'  return '.'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'expreID';
 
@@ -158,6 +183,11 @@ INSTRUCCION :
     |FUNCION{$$=$1;}
     |CONTINUE{$$=$1;}
     |RETURN{$$=$1;}
+    |METODO{$$=$1;}
+    |LLAMADA ';'{$$=$1;}
+    |RUN {$$=$1;}
+    |PUSH {$$=$1;}
+    |POP {$$=$1;}
     |error {console.log($1); console.log("error sintactico");}
 ;
 
@@ -198,6 +228,13 @@ VALORES:
     'expreBOOL' {$$=$1;}
     |EXPRESION {$$=$1;}
     |CASTEO {$$='(' + $1.casteo + ') ' + $1.expresion;}
+    |TO_LOWER {$$=$1.ejecutar();}
+    |TO_UPPER {$$=$1.ejecutar();}
+    |LENGTH {$$=$1.ejecutar();}
+    |TYPE_OF {$$=$1.ejecutar();}
+    |ROUND {$$=$1.ejecutar();}
+    |TO_STRING {$$=$1.ejecutar();}
+    |TO_CHAR_ARRAY {$$=$1.ejecutar();}
     
 ;
 
@@ -216,6 +253,7 @@ OPERACION: 'expreNUMBER' {$$=$1;}
     |'expreDECIMAL' {$$=$1;}
     |'expreID' {$$=$1;}
     |'expreCADENA' {$$=$1;}
+    |LLAMADA {$$=$1.id + "(" + $1.parametros + ")" ;}
     |ACCESO_VECTOR_1D {$$=$1.variable + "[" + $1.expresion + "]";}
     |ACCESO_VECTOR_2D {$$=$1.variable + "[" + $1.expresion + "]" + "[" + $1.expresion2 + "]";}
     |OPERACION '+' OPERACION {$$=$1 + '+' + $3;}
@@ -268,6 +306,10 @@ ASIGNACION: TIPOS 'expreID' '=' VALORES ';' {
 
 VECTOR_1D_T1: TIPOS '[' ']' 'expreID' '=' 'pr_new' TIPOS '[' VALORES ']' ';' {
     $$= new Vector_1D_T1($1,$4,$7,$9,@1.first_line,@1.first_column);
+}
+| TIPOS '[' ']' 'expreID' '=' TO_CHAR_ARRAY ';' {
+    console.log($6);
+    $$= new Vector_1D_T1($1,$4,null,$6.cadena,@1.first_line,@1.first_column);
 }
 ;
 
@@ -453,5 +495,126 @@ LISTA_PARAMETROS: LISTA_PARAMETROS ',' PARAMETRO {
 
 PARAMETRO: TIPOS 'expreID' {
     $$= new Parametro($1,$2,@1.first_line,@1.first_column);
+    }
+;
+
+LISTA_INSTRUCCIONES_METODO: LISTA_INSTRUCCIONES_METODO INSTRUCCION_METODO {
+    $$=$1;
+    $1.push($2);
+    }
+    | INSTRUCCION_METODO {
+        $$=[$1];
+    }
+;
+
+INSTRUCCION_METODO :
+    IMPRESION {$$=$1;}
+    |CASTEO{$$=$1;}
+    |ASIGNACION{$$=$1;}
+    |INCREMENTO{$$=$1;}
+    |VECTOR_1D_T1{$$=$1;}
+    |VECTOR_1D_T2{$$=$1;}
+    |VECTOR_2D_T1{$$=$1;}
+    |VECTOR_2D_T2{$$=$1;}
+    |IF{$$=$1;}
+    |SWITCH{$$=$1;}
+    |WHILE{$$=$1;}
+    |FOR{$$=$1;}
+    |DO_WHILE{$$=$1;}
+    |DO_UNTIL{$$=$1;}
+    |BREAK{$$=$1;}
+    |FUNCION{$$=$1;}
+    |CONTINUE{$$=$1;}
+    |METODO{$$=$1;}
+    |LLAMADA ';'{$$=$1;}
+    |RUN{$$=$1;}
+    |PUSH{$$=$1;}
+    |POP{$$=$1;}
+    |error {console.log($1); console.log("error sintactico");}
+;
+
+METODO: 'expreID' '(' LISTA_PARAMETROS ')' ':' 'pr_void' '{' LISTA_INSTRUCCIONES_METODO '}' {
+    $$= new Metodo($1,$3,$8,"void",@1.first_line,@1.first_column);
+    }
+    |'expreID' '(' ')' ':' 'pr_void' '{' LISTA_INSTRUCCIONES_METODO '}' {
+        $$= new Metodo($1,null,$7,"void",@1.first_line,@1.first_column);
+    }
+    |'expreID' '(' LISTA_PARAMETROS ')' '{' LISTA_INSTRUCCIONES_METODO '}' {
+        $$= new Metodo($1,$3,$6,null,@1.first_line,@1.first_column);
+    }
+    |'expreID' '(' ')' '{' LISTA_INSTRUCCIONES_METODO '}' {
+        $$= new Metodo($1,null,$5,null,@1.first_line,@1.first_column);
+    }
+;
+
+LLAMADA: 'expreID' '(' LISTA_PARAMETROS_LLAMADA ')'  {
+    $$= new Llamada($1,$3,@1.first_line,@1.first_column);
+    }
+    |'expreID' '(' ')'  {
+        $$= new Llamada($1,null,@1.first_line,@1.first_column);
+    }
+;
+
+LISTA_PARAMETROS_LLAMADA: LISTA_PARAMETROS_LLAMADA ',' VALORES {
+    $$=$1;
+    $1.push($3);
+    }
+    | VALORES {
+        $$=[$1];
+    }
+;
+
+TO_LOWER: 'pr_tolower' '(' VALORES ')' {
+    $$= new ToLower($3,@1.first_line,@1.first_column);
+    }
+;
+
+TO_UPPER: 'pr_toupper' '(' VALORES ')' {
+    $$= new ToUpper($3,@1.first_line,@1.first_column);
+    }
+;
+
+TO_STRING: 'pr_tostring' '(' VALORES ')' {
+    $$= new ToString($3,@1.first_line,@1.first_column);
+    }
+;
+
+LENGTH: 'pr_length' '(' EXPRESION ')' {
+    $$= new Length($3,@1.first_line,@1.first_column);
+    }
+;
+
+TYPE_OF: 'pr_typeof' '(' VALORES ')' {
+    $$= new TypeOf($3,@1.first_line,@1.first_column);
+    }
+;
+
+TO_CHAR_ARRAY: 'pr_tochararray' '(' 'expreCADENA' ')' {
+    $$= new ToCharArray($3,@1.first_line,@1.first_column);
+    
+    }
+;
+
+PUSH: 'expreID' '.' 'pr_push' '(' VALORES ')' ';' {
+    $$= new Push($1,$5,@1.first_line,@1.first_column);
+    }
+;
+
+POP: 'expreID' '.' 'pr_pop' '(' ')' {
+    $$= new Pop($1,@1.first_line,@1.first_column);
+    }
+;
+
+RUN: 'pr_run' 'expreID' '(' ')' ';' {
+    $$= new Run($2,null,@1.first_line,@1.first_column);
+    }
+    |'pr_run' 'expreID' '(' LISTA_PARAMETROS_LLAMADA ')' ';' {
+        $$= new Run($2,$4,@1.first_line,@1.first_column);
+        
+    }
+;
+
+ROUND: 'pr_round' '(' VALORES ')' {
+    $$= new Round($3,@1.first_line,@1.first_column);
     }
 ;

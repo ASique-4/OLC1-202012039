@@ -9,7 +9,7 @@
     "start": "ts-node-dev src/index.ts",
     "jison": "jison ./src/Grammar/grammar.jison && mv grammar.js ./src/Grammar",
     "nodemon": "nodemon",
-    "dev": "jison ./src/Grammar/grammar.jison && mv grammar.js ./src/Grammar && nodemon"
+    "dev": "clear && jison ./src/Grammar/grammar.jison && mv grammar.js ./src/Grammar && nodemon"
   },
   "keywords": [],
   "author": "",

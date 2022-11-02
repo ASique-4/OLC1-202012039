@@ -12,7 +12,6 @@ class ApiController {
 
   public async funcion2(req: Request, res: Response) {
     try{
-      console.log("Texto -> [" + req.body.texto + "]\n");
       const parser = require("../Grammar/grammar");
       const ast = parser.parse(req.body.texto.toString());
       const env = new Env(null);

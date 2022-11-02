@@ -1,5 +1,4 @@
 import { Instruccion } from "../Abstractas/instruccion";
-import { Env } from "../Symbols/env";
 
 export class Declaracion extends Instruccion {
 
@@ -11,22 +10,9 @@ export class Declaracion extends Instruccion {
         super(linea,columna);
     }
 
-    public ejecutar(Env: Env):any {
-        console.log("Encontre una declaracion, tipo:"+this.tipo+" nombre:"+this.nombre+" lo encontre en la linea "+this.line);
-        //metodo para guardar la variable, tabla de simbolos
-
-
-        Env.guardar_variable(this.nombre, this.tipo);
-
-        return this.tipo + " " + this.nombre;
-
-
-        //guardar un metodo asi        
-        //Env.guardar_funcion(this.nombre,this);
-
-
-        //implementacion semantica
-        //validar
-    
+    public ejecutar(): any {
+        console.log("Declaracion");
+        console.log(this.tipo + " " + this.nombre + ";");
+        return this.tipo + " " + this.nombre + ";";
     }
 }

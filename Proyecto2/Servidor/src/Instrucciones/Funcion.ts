@@ -15,8 +15,8 @@ export class Funcion extends Instruccion {
 
     public ejecutar(): any {
         console.log("Funcion");
-        console.log(this.identificador + " (" + this.ejecutarParam(this.parametros) + ") " + this.tipo + " {\n" + this.ejecutarInst(this.instrucciones) + "\n}");
-        return this.identificador + " (" + this.ejecutarParam(this.parametros)  + ") " + this.tipo + " {\n" + this.ejecutarInst(this.instrucciones) + "\n}";
+        console.log(this.identificador + " (" + this.ejecutarParam(this.parametros) + "): " + this.tipo + " {\n" + this.ejecutarInst(this.instrucciones) + "\n}");
+        return this.identificador + " (" + this.ejecutarParam(this.parametros)  + "): " + this.tipo + " {\n" + this.ejecutarInst(this.instrucciones) + "\n}";
     }
 
     //Funcion que obtiene un arreglo de instrucciones y las ejecuta y retorna el resultado
@@ -24,16 +24,20 @@ export class Funcion extends Instruccion {
     public ejecutarInst(instrucciones: any) {
         let resultado = "";
         instrucciones.forEach((element: any) => {
-            resultado += element.ejecutar();
+            resultado += element.ejecutar() + "\n";
         });
+        //Elimina el ultimo salto de linea
+        resultado = resultado.substring(0, resultado.length - 1);
         return resultado;
     }
     //Funcion que obtiene un arreglo de parametros y los ejecuta y retorna el resultado
     public ejecutarParam(parametros: any) {
         let resultado = "";
         parametros.forEach((element: any) => {
-            resultado += element.ejecutar();
+            resultado += element.ejecutar() + ", ";
         });
+        //Elimina la ultima coma y espacio
+        resultado = resultado.substring(0, resultado.length - 2);
         return resultado;
     }
      
