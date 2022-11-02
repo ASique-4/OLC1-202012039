@@ -41,6 +41,7 @@
     const {Push} = require('../Instrucciones/Push.ts');
     const {Pop} = require('../Instrucciones/Pop.ts');
     const {Run} = require('../Instrucciones/Run.ts');
+    const {Ternario} = require('../Instrucciones/Ternario.ts');
 %}
 
 %lex
@@ -115,16 +116,16 @@ bool    "true"|"false"
 "++"  return '++'
 "--"  return '--'
 "+"  return '+'
+"<"  return '<'
+">"  return '>'
+"="  return '='
 "-"  return '-'
 "<=" return '<='
 ">=" return '>='
-"<"  return '<'
-">"  return '>'
 "=="  return '=='
 "!="  return '!='
 "&&"  return '&&'
 "||"  return '||'
-"="  return '='
 "!"  return '!'
 "["  return '['
 "]"  return ']'
@@ -133,6 +134,7 @@ bool    "true"|"false"
 "%"  return '%'
 '^'  return '^'
 '.'  return '.'
+'?'  return '?'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'expreID';
 
@@ -188,6 +190,7 @@ INSTRUCCION :
     |RUN {$$=$1;}
     |PUSH {$$=$1;}
     |POP {$$=$1;}
+    |TERNARIO {$$=$1;}
     |error {console.log($1); console.log("error sintactico");}
 ;
 
@@ -530,6 +533,7 @@ INSTRUCCION_METODO :
     |RUN{$$=$1;}
     |PUSH{$$=$1;}
     |POP{$$=$1;}
+    |TERNARIO{$$=$1;}
     |error {console.log($1); console.log("error sintactico");}
 ;
 
@@ -616,5 +620,10 @@ RUN: 'pr_run' 'expreID' '(' ')' ';' {
 
 ROUND: 'pr_round' '(' VALORES ')' {
     $$= new Round($3,@1.first_line,@1.first_column);
+    }
+;
+
+TERNARIO: 'expreID' '=' CONDICION '?' VALORES ':' VALORES ';' {
+    $$= new Ternario($1 + $3.ejecutar(),$5,$7,@1.first_line,@1.first_column);
     }
 ;

@@ -10,6 +10,12 @@ export default function App() {
     editorRef.current = editor;
   }
 
+  //Open file in editor
+  function openFile() {
+    editorRef.current.getModel().setValue("Hello World");
+    
+  }
+
   function showValue() {
     alert(editorRef.current.getValue());
     const result = document.getElementById("result");
@@ -41,6 +47,11 @@ export default function App() {
       <br />
       <br />
       <center>
+      <div>
+      <button onClick={openFile} class="button-4">
+          Abrir Archivo
+        </button>
+      </div>
         <div class="editor">
           <Editor
             height="50vh"
