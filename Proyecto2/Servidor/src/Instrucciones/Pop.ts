@@ -15,4 +15,13 @@ export class Pop extends Instruccion {
         return this.arreglo + ".pop();";
 
     }
+
+    public getNodo() {
+        let ast = "node" + this.line + this.column + "\n";
+        let nodo = "node" + this.line + this.column + "[label=\"Pop\"];\n";
+        let nodoArreglo = "node" + this.line + this.column + "arreglo[label=\"" + this.arreglo + "\"];\n";
+        ast += nodo + nodoArreglo;
+        ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "arreglo;\n";
+        return ast;
+    }
 }

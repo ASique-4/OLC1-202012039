@@ -1,0 +1,96 @@
+digraph AST {
+node [shape=box];
+rankdir=TB;
+node0[label="Instrucciones"];
+node0->nodo10
+nodo10[label="Asignacion"];
+nodo10igual[label="="];
+nodo101[label="Variable"];
+nodo101->nodo10hijo0
+nodo10hijo0[label="var_3"];
+nodo102[label="Expresion"];
+nodo102->node17
+node17[label="Condicion"];
+node17valor1[label="Izquierda"];
+node17valor1 ->node116
+node116[label="Suma"];
+node116derecha[label="Izquierda"];
+node116derecha -> node112
+node112[label="Suma"];
+node112derecha[label="Izquierda"];
+node112derecha -> node110
+node110[label="Resta"];
+node110derecha[label="Izquierda"];
+node110derecha -> node18
+node18[label="Suma"];
+node18derecha[label="Izquierda"];
+node18derecha -> nodo18hijo0
+nodo18hijo0[label="5"];
+node18izquierda[label="Derecha"];
+node18izquierda -> nodo18hijo1
+nodo18hijo1[label="5"];
+node18 -> node18derecha;
+node18 -> node18izquierda;
+node110izquierda[label="Derecha"];
+node110izquierda -> nodo110hijo0
+nodo110hijo0[label="8"];
+node110 -> node110derecha;
+node110 -> node110izquierda;
+node112izquierda[label="Derecha"];
+node112izquierda -> node114
+node114[label=" * "];
+node1140 [label="izquierda"];
+node1140 -> nodo114hijo0
+nodo114hijo0[label="6"];
+node1141 [label="derecha"];
+node1141 -> nodo114hijo1
+nodo114hijo1[label="8"];
+node114 -> node1140;
+node114 -> node1141;
+node112 -> node112derecha;
+node112 -> node112izquierda;
+node116izquierda[label="Derecha"];
+node116izquierda -> node118
+node118[label=" / "];
+node1180 [label="izquierda"];
+node1180 -> nodo118hijo0
+nodo118hijo0[label="1"];
+node1181 [label="derecha"];
+node1181 -> node120
+node120[label="Modulo"];
+node120derecha[label="Izquierda"];
+node120derecha -> nodo120hijo0
+nodo120hijo0[label="7"];
+node120izquierda[label="Derecha"];
+node120izquierda -> nodo120hijo1
+nodo120hijo1[label="9"];
+node120 -> node120derecha;
+node120 -> node120izquierda;
+node118 -> node1180;
+node118 -> node1181;
+node116 -> node116derecha;
+node116 -> node116izquierda;
+
+node17condicion[label="Condicion"];
+node17condicion ->nodo17hijo0
+nodo17hijo0[label=">"];
+
+node17valor2[label="Derecha"];
+node17valor2 ->node125
+node125[label="Suma"];
+node125derecha[label="Izquierda"];
+node125derecha -> nodo125hijo0
+nodo125hijo0[label="45"];
+node125izquierda[label="Derecha"];
+node125izquierda -> nodo125hijo1
+nodo125hijo1[label="6"];
+node125 -> node125derecha;
+node125 -> node125izquierda;
+
+node17 -> node17valor1;
+node17 -> node17condicion;
+node17 -> node17valor2;
+nodo10igual->nodo101;
+nodo10igual->nodo102;
+nodo10->nodo10igual;
+}

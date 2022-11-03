@@ -14,4 +14,11 @@ export class Continue extends Instruccion {
             console.log("continue;");
             return "continue;";
         }
+
+        public getNodo() {
+            let ast = "node" + this.line + this.column + "\n";
+            let nodo = "node" + this.line + this.column + "[label=\"Continue\"];\n";
+            ast += nodo;
+            return ast;
+        }
     }

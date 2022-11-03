@@ -14,4 +14,11 @@ export class Break extends Instruccion {
         console.log("break;");
         return "break;";
     }
+
+    public getNodo() {
+        let ast = "node" + this.line + this.column + "\n";
+        let nodo = "node" + this.line + this.column + "[label=\"Break\"];\n";
+        ast += nodo;
+        return ast;
+    }
 }

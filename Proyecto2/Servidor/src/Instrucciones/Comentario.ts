@@ -20,4 +20,18 @@ export class Comentario extends Instruccion {
         //validar
     }
 
+    //Create a nodo of graphviz for the AST
+    public getNodo():string{
+        //This.expresion whitoout the first and last character
+        let expresion = this.comentario.substring(1, this.comentario.length-1);
+        let ast = "nodo"+this.line+this.column + "\n";
+        let nodo = "nodo"+this.line+this.column+"[label=\"Comentario\"];\n";
+        let nodo1 = "nodo"+this.line+this.column+"1[label=\"\\\" " + expresion + "\\\"\"];\n";
+        //Apuntar nodo a nodo1
+        ast += nodo + nodo1;
+        ast += "nodo"+this.line+this.column+"->"+"nodo"+this.line+this.column+"1;\n";
+        
+        return ast;
+    }
+
 }

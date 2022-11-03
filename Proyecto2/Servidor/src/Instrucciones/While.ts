@@ -3,7 +3,7 @@ import { Instruccion } from "../Abstractas/instruccion";
 export class While extends Instruccion {
   constructor(
     public condicion: string,
-    public instrucciones: string,
+    public instrucciones: Instruccion[],
     linea: number,
     columna: number
   ) {
@@ -24,4 +24,19 @@ export class While extends Instruccion {
         });
         return resultado;
       }
+
+  public getNodo() {
+    let ast = "node" + this.line + this.column + "\n";
+    ast += "[label=\"While\"];\n";
+    ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "0;\n";
+    ast += "node" + this.line + this.column + "0[label=\"" + this.condicion + "\"];\n";
+    ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "1;\n";
+    ast += "node" + this.line + this.column + "1[label=\"Instrucciones\"];\n";
+    this.instrucciones.forEach((element: any) => {
+      ast += element.getNodo();
+      ast += "node" + this.line + this.column + "1 -> node" + element.line + element.column + ";\n";
+    }
+    );
+    return ast;
+  }
 }

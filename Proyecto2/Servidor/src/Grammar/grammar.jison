@@ -42,12 +42,19 @@
     const {Pop} = require('../Instrucciones/Pop.ts');
     const {Run} = require('../Instrucciones/Run.ts');
     const {Ternario} = require('../Instrucciones/Ternario.ts');
+    const {AST} = require('../AST/AST.ts');
+    const {Potencia} = require('../Instrucciones/Expresion/Potencia.ts');
+    const {Multiplicacion} = require('../Instrucciones/Expresion/Multiplicacion.ts');
+    const {Division} = require('../Instrucciones/Expresion/Division.ts');
+    const {Modulo} = require('../Instrucciones/Expresion/Modulo.ts');
+    const {Resta} = require('../Instrucciones/Expresion/Resta.ts');
+    const {Suma} = require('../Instrucciones/Expresion/Suma.ts');
 %}
 
 %lex
 %options case-insensitive
 
-decimal  [0-9]+.[0-9]+
+decimal  [0-9]+[.][0-9]+
 number  [0-9]+  
 id  [a-z]+      
 cadena   [\"][^\"]*[\"]|[\'][^\']*[\']
@@ -116,16 +123,18 @@ bool    "true"|"false"
 "++"  return '++'
 "--"  return '--'
 "+"  return '+'
-"<"  return '<'
-">"  return '>'
-"="  return '='
-"-"  return '-'
 "<=" return '<='
 ">=" return '>='
+"<"  return '<'
+">"  return '>'
 "=="  return '=='
 "!="  return '!='
 "&&"  return '&&'
 "||"  return '||'
+"="  return '='
+"-"  return '-'
+
+
 "!"  return '!'
 "["  return '['
 "]"  return ']'
@@ -157,7 +166,10 @@ bool    "true"|"false"
 %%
 
 
-INIT :  LISTAINSTRUCCIONES  EOF  {return $1;}
+INIT :  LISTAINSTRUCCIONES  EOF  {
+    $$ = new AST($1);
+    $$.graphAST();
+}
 ;
 
 
@@ -190,7 +202,7 @@ INSTRUCCION :
     |RUN {$$=$1;}
     |PUSH {$$=$1;}
     |POP {$$=$1;}
-    |TERNARIO {$$=$1;}
+    |TERNARIO ';' {$$=$1;}
     |error {console.log($1); console.log("error sintactico");}
 ;
 
@@ -204,6 +216,7 @@ DECLARACION: TIPOS  'expreID' ';' {
 ;
 
 IMPRESION: 'pr_print' '(' VALORES ')' ';' {
+    console.log("impresion")
     $$= new Impresion("print",$3,@1.first_line,@1.first_column);
 }
 | 'pr_println' '(' VALORES ')' ';' {
@@ -231,13 +244,8 @@ VALORES:
     'expreBOOL' {$$=$1;}
     |EXPRESION {$$=$1;}
     |CASTEO {$$='(' + $1.casteo + ') ' + $1.expresion;}
-    |TO_LOWER {$$=$1.ejecutar();}
-    |TO_UPPER {$$=$1.ejecutar();}
-    |LENGTH {$$=$1.ejecutar();}
-    |TYPE_OF {$$=$1.ejecutar();}
-    |ROUND {$$=$1.ejecutar();}
-    |TO_STRING {$$=$1.ejecutar();}
-    |TO_CHAR_ARRAY {$$=$1.ejecutar();}
+    |CONDICION {$$=$1;}
+    |TERNARIO {$$=$1.ejecutar();}
     
 ;
 
@@ -252,20 +260,28 @@ EXPRESION: EXPRESION OPERACION { $$=$1; $1.push($2);}
 
 OPERACIONES: OPERACION {$$=$1;};
 
-OPERACION: 'expreNUMBER' {$$=$1;}
-    |'expreDECIMAL' {$$=$1;}
+
+OPERACION: 'expreDECIMAL' {$$=$1;}
+    |'expreNUMBER' {$$=$1;}
     |'expreID' {$$=$1;}
     |'expreCADENA' {$$=$1;}
+    |TO_LOWER {$$=$1.ejecutar(); }
+    |TO_UPPER {$$=$1.ejecutar();}
+    |LENGTH {$$=$1.ejecutar();}
+    |TYPE_OF {$$=$1.ejecutar();}
+    |ROUND {$$=$1.ejecutar();}
+    |TO_STRING {$$=$1.ejecutar();}
+    |TO_CHAR_ARRAY {$$=$1.ejecutar();}
     |LLAMADA {$$=$1.id + "(" + $1.parametros + ")" ;}
     |ACCESO_VECTOR_1D {$$=$1.variable + "[" + $1.expresion + "]";}
     |ACCESO_VECTOR_2D {$$=$1.variable + "[" + $1.expresion + "]" + "[" + $1.expresion2 + "]";}
-    |OPERACION '+' OPERACION {$$=$1 + '+' + $3;}
-    |OPERACION '-' OPERACION {$$=$1 + '-' + $3;}
-    |OPERACION '*' OPERACION {$$=$1 + '*' + $3;}
-    |OPERACION '/' OPERACION {$$=$1 + '/' + $3;}
-    |OPERACION '%' OPERACION {$$=$1 + '%' + $3;}
-    |OPERACION '^' OPERACION {$$=$1 + '^' + $3;}
-    |'(' OPERACION ')' {$$=$2;}
+    |OPERACION '+' OPERACION {$$= new Suma($1,$3,@2.first_line,@2.first_column);}
+    |OPERACION '-' OPERACION {$$= new Resta($1,$3,@2.first_line,@2.first_column);}
+    |OPERACION '*' OPERACION {$$= new Multiplicacion($1,$3,@2.first_line,@2.first_column);}
+    |OPERACION '/' OPERACION {$$= new Division($1,$3,@2.first_line,@2.first_column);}
+    |OPERACION '%' OPERACION {$$= new Modulo($1,$3,@2.first_line,@2.first_column);}
+    |OPERACION '^' OPERACION {$$= new Potencia($1,$3,@2.first_line,@2.first_column);}
+    |'(' OPERACION ')' {$$= $2;}
     |OPERACION '++' {$$=$1 + '++';}
     |OPERACION '--' {$$=$1 + '--';}
     //Negativos
@@ -275,6 +291,8 @@ OPERACION: 'expreNUMBER' {$$=$1;}
 
 INCREMENTO: 'expreID' '++' ';' {$$= new Incremento($1,'++',@1.first_line,@1.first_column);}
     |'expreID' '--' ';' {$$= new Incremento($1,'--',@1.first_line,@1.first_column);}
+    |'++' 'expreID' ';' {$$= new Incremento($2,'++',@1.first_line,@1.first_column);}
+    |'--' 'expreID' ';' {$$= new Incremento($2,'--',@1.first_line,@1.first_column);}
 ;
 
 
@@ -348,44 +366,45 @@ ACCESO_VECTOR_2D: 'expreID' '[' 'expreNUMBER' ']' '[' 'expreNUMBER' ']' {$$= new
 ;
 
 IF: 'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' {
-    console.log($6 );
-    $$= new IF($3.valor1 + $3.condicion + $3.valor2,$6,null,@1.first_line,@1.first_column);
+    $$= new IF($3,$6,null,@1.first_line,@1.first_column);
     }
     |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' 'pr_else' '{' LISTAINSTRUCCIONES '}' {
-        $$= new IF_ELSE($3.valor1 + $3.condicion + $3.valor2,$6,null,$10,@1.first_line,@1.first_column);
+        $$= new IF_ELSE($3,$6,null,$10,@1.first_line,@1.first_column);
     }
-    |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' ELIF {
-        $$= new IF($3.valor1 + $3.condicion + $3.valor2,$6,$8,@1.first_line,@1.first_column);
+    |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' LISTA_ELIF {
+        $$= new IF($3,$6,$8,@1.first_line,@1.first_column);
     }
-    |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' ELIF 'pr_else' '{' LISTAINSTRUCCIONES '}' {
-        $$= new IF_ELSE($3.valor1 + $3.condicion + $3.valor2,$6,$8,$11,@1.first_line,@1.first_column);
+    |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' LISTA_ELIF 'pr_else' '{' LISTAINSTRUCCIONES '}' {
+        $$= new IF_ELSE($3,$6,$8,$11,@1.first_line,@1.first_column);
     }
 ;
 
+LISTA_ELIF: LISTA_ELIF ELIF {$$=$1; $1.push($2); console.log($1);}
+    | ELIF {$$=[$1]; ;}
+;
+
 ELIF: 'pr_elif' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' {
-    $$= new IF_ELIF($3.valor1 + $3.condicion + $3.valor2,$6,null,@1.first_line,@1.first_column);
-    }
-    |'pr_elif' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' ELIF {
-        $$= new IF_ELIF($3.valor1 + $3.condicion + $3.valor2,$6,$10,@1.first_line,@1.first_column);
+    $$= new IF_ELIF($3,$6,null,@1.first_line,@1.first_column);
     }
     ;
 
 
 
 CONDICION: VALORES CONDICIONAL VALORES  {
-    $$= new CONDICION($1 + " " ,$2 + " ",$3,@1.first_line,@1.first_column);
+    $$= new CONDICION($1,$2,$3,@1.first_line,@1.first_column);
     }
     |CONDICION CONDICIONAL2 CONDICION {
-        $$= new CONDICION($1.valor1 + $1.condicion + $1.valor2 + " ",$2," " + $3.valor1 + $3.condicion + $3.valor2,@1.first_line,@1.first_column);
+        $$= new CONDICION($1,$2,$3,@1.first_line,@1.first_column);
     }
 ;
 
 CONDICIONAL: '==' {$$=$1;}
     |'!=' {$$=$1;}
-    |'>' {$$=$1;}
-    |'<' {$$=$1;}
     |'>=' {$$=$1;}
     |'<=' {$$=$1;}
+    |'>' {$$=$1;}
+    |'<' {$$=$1;}
+    
 ;
 
 CONDICIONAL2: '&&' {$$=$1;}
@@ -434,9 +453,6 @@ ASIGNACION_FOR: 'expreID' '=' VALORES {
     }
     |LISTA_EXPREID '=' VALORES {
         $$= new Asignacion(null,$1,$3,@1.first_line,@1.first_column);
-        console.log("------");
-        console.log($3);
-        console.log("------");
     }
 ;
 
@@ -446,10 +462,17 @@ INCREMENTO_FOR: 'expreID' '++' {
     |'expreID' '--' {
         $$= new Incremento($1,$2,@1.first_line,@1.first_column);
     }
+    |'++' 'expreID' {
+        $$= new Incremento($2,$1,@1.first_line,@1.first_column);
+    }
+    |'--' 'expreID' {
+        $$= new Incremento($2,$1,@1.first_line,@1.first_column);
+    }
 ;
 
 DO_WHILE: 'pr_do' '{' LISTAINSTRUCCIONES '}' 'pr_while' '(' CONDICION ')' ';' {
     $$= new Do_While($3,$7.valor1 + $7.condicion + $7.valor2,@1.first_line,@1.first_column);
+    console.log($$);
     }
 ;
 
@@ -478,12 +501,11 @@ RETURN: 'pr_return' VALORES ';' {
 
 FUNCION: 'expreID' '(' LISTA_PARAMETROS ')' ':' TIPOS '{' LISTAINSTRUCCIONES '}' {
     $$= new Funcion($1,$3,$6,$8,@1.first_line,@1.first_column);
-    console.log("------");
-    console.log($$);
-    console.log("------");
+    
     }
     |'expreID' '(' ')' ':' TIPOS '{' LISTAINSTRUCCIONES '}' {
         $$= new Funcion($1,null,$5,$7,@1.first_line,@1.first_column);
+        
     }
 ;
 
@@ -519,7 +541,7 @@ INSTRUCCION_METODO :
     |VECTOR_1D_T2{$$=$1;}
     |VECTOR_2D_T1{$$=$1;}
     |VECTOR_2D_T2{$$=$1;}
-    |IF{$$=$1;}
+    |IF{$$=$1; }
     |SWITCH{$$=$1;}
     |WHILE{$$=$1;}
     |FOR{$$=$1;}
@@ -533,7 +555,7 @@ INSTRUCCION_METODO :
     |RUN{$$=$1;}
     |PUSH{$$=$1;}
     |POP{$$=$1;}
-    |TERNARIO{$$=$1;}
+    |TERNARIO ';'{$$=$1;}
     |error {console.log($1); console.log("error sintactico");}
 ;
 
@@ -604,7 +626,7 @@ PUSH: 'expreID' '.' 'pr_push' '(' VALORES ')' ';' {
     }
 ;
 
-POP: 'expreID' '.' 'pr_pop' '(' ')' {
+POP: 'expreID' '.' 'pr_pop' '(' ')' ';' {
     $$= new Pop($1,@1.first_line,@1.first_column);
     }
 ;
@@ -623,7 +645,10 @@ ROUND: 'pr_round' '(' VALORES ')' {
     }
 ;
 
-TERNARIO: 'expreID' '=' CONDICION '?' VALORES ':' VALORES ';' {
-    $$= new Ternario($1 + $3.ejecutar(),$5,$7,@1.first_line,@1.first_column);
+TERNARIO:  CONDICION '?' VALORES ':' VALORES {
+    $$= new Ternario( $1.ejecutar(),$3,$5,@1.first_line,@1.first_column);
+    }
+    | '(' CONDICION ')' '?' VALORES ':' VALORES{
+        $$= new Ternario("(" + $2.ejecutar() + ")" ,$5,$7,@1.first_line,@1.first_column);
     }
 ;

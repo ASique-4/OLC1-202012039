@@ -14,4 +14,13 @@ export class Return extends Instruccion {
         console.log("return " + this.valor + ";");
         return "return " + this.valor + ";";
     }
+
+    public getNodo() {
+        let ast = "node" + this.line + this.column + "\n";
+        let nodo = "node" + this.line + this.column + "[label=\"Return\"];\n";
+        let nodoValor = "node" + this.line + this.column + "valor[label=\"" + this.valor + "\"];\n";
+        ast += nodo + nodoValor;
+        ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "valor;\n";
+        return ast;
+    }
 }

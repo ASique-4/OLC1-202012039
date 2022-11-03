@@ -36,4 +36,15 @@ export class Llamada extends Instruccion {
         resultado = resultado.substring(0, resultado.length - 2);
         return resultado;
     }
+
+    public getNodo() {
+        let ast = "node" + this.line + this.column + "[label=\"Llamada\"];\n";
+        ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "1[label=\"Identificador\"];\n";
+        ast += "node" + this.line + this.column + "1[label=\"" + this.id + "\"];\n";
+        if(this.parametros != null){
+            ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "2[label=\"Parametros\"];\n";
+            ast += "node" + this.line + this.column + "2[label=\"" + this.parametros + "\"];\n";
+        }
+        return ast;
+    }
 }

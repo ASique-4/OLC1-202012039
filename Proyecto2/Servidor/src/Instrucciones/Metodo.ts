@@ -1,10 +1,11 @@
 import { Instruccion } from "../Abstractas/instruccion";
+import { Parametro } from "./Parametro";
 
 export class Metodo extends Instruccion {
     constructor(
         public id: string,
-        public parametros: string,
-        public instrucciones: string,
+        public parametros: Parametro[],
+        public instrucciones: Instruccion[],
         public tipo: string,
         linea: number,
         columna: number
@@ -57,5 +58,31 @@ export class Metodo extends Instruccion {
         //Elimina el ultimo salto de linea
         resultado = resultado.substring(0, resultado.length - 1);
         return resultado;
+    }
+
+    public getNodo() {
+        let ast = "node" + this.line + this.column + "[label=\"Metodo\"];\n";
+        ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "1;\n";
+        ast += "node" + this.line + this.column + "1[label=\"" + this.id + "\"];\n";
+        if (this.parametros != null) {
+            ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "2;\n";
+            ast += "node" + this.line + this.column + "2[label=\"Parametros\"];\n";
+            this.parametros.forEach((element: any) => {
+                ast += element.getNodo();
+                ast += "node" + this.line + this.column + "2 -> node" + element.line + element.column + ";\n";
+            });
+        }
+        if (this.tipo != null) {
+            ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "3;\n";
+            ast += "node" + this.line + this.column + "3[label=\"" + this.tipo + "\"];\n";
+        }
+        ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "4;\n";
+        ast += "node" + this.line + this.column + "4[label=\"Instrucciones\"];\n";
+        this.instrucciones.forEach((element: any) => {
+            ast += element.getNodo();
+            ast += "node" + this.line + this.column + "4 -> node" + element.line + element.column + ";\n";
+        }
+        );
+        return ast;
     }
 }

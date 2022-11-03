@@ -22,4 +22,13 @@ export class Run extends Instruccion {
         }
 
     }
+
+    public getNodo() {
+        let ast = "node" + this.line + this.column + "\n";
+        let nodo = "node" + this.line + this.column + "[label=\"Run\"];\n";
+        let nodoCadena = "node" + this.line + this.column + "cadena[label=\"" + this.cadena + "\"];\n";
+        ast += nodo + nodoCadena;
+        ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "cadena;\n";
+        return ast;
+    }
 }

@@ -8,4 +8,5 @@ export abstract class Instruccion{
     }
     
     public abstract ejecutar(Env: Env):any;
+    public abstract getNodo():string;
 }
