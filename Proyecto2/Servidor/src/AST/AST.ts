@@ -9,8 +9,9 @@ export class AST {
     public graphAST() {
         
         //Create the graphviz code
+        
         let ast = "digraph AST {\n";
-        ast += "node [shape=box];\n";
+        ast += "node [shape=ellipse];\n";
         ast += "rankdir=TB;\n";
         ast += "node0[label=\"Instrucciones\"];\n";
         ast += this.getNodos(this.instrucciones);
@@ -53,6 +54,7 @@ export class AST {
         let resultado = "";
         instrucciones.forEach((element: any) => {
             resultado += "node0->" + element.getNodo();
+            
         });
         return resultado;
     }

@@ -32,25 +32,36 @@ export class Multiplicacion extends Instruccion {
             let ast = "node" + this.line + this.column + "\n";
             ast += "node" + this.line + this.column + "[label=\" * \"];\n";
             let nodoIzq = "node" + this.line + this.column + "0 [label=\"izquierda\"];\n";
-            nodoIzq += "node" + this.line + this.column + "0 -> " + this.getNodos(this.izquierda);
+            nodoIzq += this.getNodos(this.izquierda,"0");
             let nodoDer = "node" + this.line + this.column + "1 [label=\"derecha\"];\n";
-            nodoDer += "node" + this.line + this.column + "1 -> " + this.getNodos(this.derecha);
+            nodoDer +=  this.getNodos(this.derecha,"1");
             ast += nodoIzq + nodoDer;
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "0;\n";
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "1;\n";
             return ast;
         }
 
-        public getNodos(instrucciones: any) {
+        public getNodos(instrucciones: any,nombre:string) {
             //Si es un string
             if (typeof instrucciones == "string") {
-                let nodo = "nodo" + this.line + this.column + "hijo" + this.contador + "\n";
-            nodo += "nodo" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instrucciones + "\"];\n";
-            this.contador++;
-            return nodo;
+                //Instruccion sin comillas
+                let instruccion = instrucciones.replace(/\"/g, "");
+                let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+                nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
+                this.contador++;
+                return "node" + this.line + this.column + nombre + " -> " + nodo;
             }else{
                 
-                return instrucciones.getNodo();
+                try{
+                    let resultado = '';
+                    instrucciones.forEach((element: any) => {
+                        resultado += "node" + this.line + this.column + nombre + " -> " + element.getNodo();
+                    }
+                    );
+                    return resultado;
+                  }catch{
+                    return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
+                  }
             }
         }
 

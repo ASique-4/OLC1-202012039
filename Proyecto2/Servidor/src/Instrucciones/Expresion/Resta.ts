@@ -19,16 +19,27 @@ export class Resta extends Instruccion {
 
     }
 
-    public getNodos(instrucciones: any) {
+    public getNodos(instrucciones: any,nombre:string) {
         //Si es un string
         if (typeof instrucciones == "string") {
-            let nodo = "nodo" + this.line + this.column + "hijo" + this.contador + "\n";
-            nodo += "nodo" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instrucciones + "\"];\n";
+            //Instruccion sin comillas
+            let instruccion = instrucciones.replace(/\"/g, "");
+            let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+            nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
             this.contador++;
-            return nodo;
+            return "node" + this.line + this.column + nombre + " -> " + nodo;
         }else{
             
-            return instrucciones.getNodo();
+            try{
+                let resultado = '';
+                instrucciones.forEach((element: any) => {
+                    resultado += "node" + this.line + this.column + nombre + " -> " + element.getNodo();
+                }
+                );
+                return resultado;
+              }catch{
+                return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
+              }
         }
     }
 
@@ -37,9 +48,9 @@ export class Resta extends Instruccion {
         let nodo = "node" + this.line + this.column + "[label=\"Resta\"];\n";
         let nodoDerecha = "node" + this.line + this.column + "derecha[label=\"Izquierda\"];\n";
         let nodoIzquierda = "node" + this.line + this.column + "izquierda[label=\"Derecha\"];\n";
-        nodoIzquierda += "node" + this.line + this.column + "izquierda -> " + this.getNodos(this.derecha);
+        nodoIzquierda += this.getNodos(this.derecha,"derecha");
 
-        nodoDerecha += "node" + this.line + this.column + "derecha -> " + this.getNodos(this.izquierda);
+        nodoDerecha += this.getNodos(this.izquierda,"izquierda");
         ast += nodo + nodoDerecha + nodoIzquierda;
         ast += "node" + this.line + this.column + " -> " + "node" + this.line + this.column + "derecha;\n";
         ast += "node" + this.line + this.column + " -> " + "node" + this.line + this.column + "izquierda;\n";

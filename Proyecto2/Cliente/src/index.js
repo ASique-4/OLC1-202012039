@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 
 import About from "./component/About";
+import Reportes from "./component/Reportes";
 
 import App from "./App.jsx";
 import Navbar from "./component/NavBar.js";
@@ -32,6 +33,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={  <App />} />
         <Route path="/about" element={<About />} />
+        <Route path="/reportes" element={<Reportes />} />
       </Routes>
     </Router>
     </React.StrictMode>,

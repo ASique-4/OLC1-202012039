@@ -44,7 +44,7 @@ export class IF extends Instruccion {
       let nodoCondicion = "node" + this.line + this.column + "condicion[label=\" CONDICION \"];\n";
       nodoCondicion += "node" + this.line + this.column + "condicion -> " + this.condicion.getNodo();
       let nodoInstrucciones = "node" + this.line + this.column + "instrucciones[label=\"Instrucciones\"];\n";
-      nodoInstrucciones += "node" + this.line + this.column + "instrucciones->" + this.getNodos(this.instrucciones);
+      nodoInstrucciones += this.getNodos(this.instrucciones,"instrucciones");
       ast += nodo + nodoCondicion + nodoInstrucciones;
       ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "condicion;\n";
       ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "instrucciones;\n";
@@ -56,9 +56,9 @@ export class IF extends Instruccion {
       let nodoCondicion = "node" + this.line + this.column + "condicion[label=\" CONDICION \"];\n";
       nodoCondicion += "node" + this.line + this.column + "condicion -> " + this.condicion.getNodo();
       let nodoInstrucciones = "node" + this.line + this.column + "instrucciones[label=\"Instrucciones\"];\n";
-      nodoInstrucciones += "node" + this.line + this.column + "instrucciones->" + this.getNodos(this.instrucciones);
+      nodoInstrucciones +=  this.getNodos(this.instrucciones,"instrucciones");
       let nodoElif = "node" + this.line + this.column + "elif[label=\"Elif\"];\n";
-      nodoElif += "node" + this.line + this.column + "elif->" + this.getNodos(this.elif);
+      nodoElif +=  this.getNodos(this.elif,"elif");
       ast += nodo + nodoCondicion + nodoInstrucciones + nodoElif;
       ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "condicion;\n";
       ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "instrucciones;\n";
@@ -67,20 +67,29 @@ export class IF extends Instruccion {
     }
   }
 
-  public getNodos(instrucciones: any) {
-      //Si es un string
-      if (typeof instrucciones == "string") {
-          //Instruccion sin comillas
-          let instruccion = instrucciones.replace(/\"/g, "");
-          let nodo = "nodo" + this.line + this.column + "hijo" + this.contador + "\n";
-          nodo += "nodo" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
-          this.contador++;
-          return nodo;
-      }else{
-          
-          return instrucciones.getNodo();
-      }
-  }
+  public getNodos(instrucciones: any,nombre:string) {
+    //Si es un string
+    if (typeof instrucciones == "string") {
+        //Instruccion sin comillas
+        let instruccion = instrucciones.replace(/\"/g, "");
+        let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+        nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
+        this.contador++;
+        return "node" + this.line + this.column + nombre + " -> " + nodo;
+    }else{
+        
+        try{
+            let resultado = '';
+            instrucciones.forEach((element: any) => {
+                resultado += "node" + this.line + this.column + nombre + " -> " + element.getNodo();
+            }
+            );
+            return resultado;
+          }catch{
+            return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
+          }
+    }
+}
 
   
     

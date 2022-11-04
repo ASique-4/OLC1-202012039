@@ -33,22 +33,22 @@ export class Impresion extends Instruccion {
     public getNodo():string{
         if (this.tipo == "print"){
             let ast = "node" + this.line + this.column + "\n";
-            ast += "[label=\"Impresion\"];\n";
-            let nodoExpresion = "nodo" + this.line + this.column + "expresion[label=\"Expresion\"];\n";
-            nodoExpresion += "node" + this.line + this.column + "expresion ->" + this.getNodos(this.expresion) + "\n";
+            ast += "node" + this.line + this.column + "[label=\"Impresion\"];\n";
+            let nodoExpresion = "node" + this.line + this.column + "expresion[label=\"Expresion\"];\n";
+            nodoExpresion +=  this.getNodos(this.expresion,"expresion") + "\n";
             ast += nodoExpresion;
-            let nodoTipo = "nodo" + this.line + this.column + "tipo[label=\"Tipo: print\"];\n";
+            let nodoTipo = "node" + this.line + this.column + "tipo[label=\"Tipo: print\"];\n";
             ast += nodoTipo;
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "tipo;\n";
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "expresion;\n";
             return ast;
         }else{
             let ast = "node" + this.line + this.column + "\n";
-            ast += "[label=\"Impresion\"];\n";
-            let nodoExpresion = "nodo" + this.line + this.column + "expresion[label=\"Expresion\"];\n";
-            nodoExpresion += "node" + this.line + this.column + "expresion ->" + this.getNodos(this.expresion) + "\n";
+            ast += "node" + this.line + this.column + "[label=\"Impresion\"];\n";
+            let nodoExpresion = "node" + this.line + this.column + "expresion[label=\"Expresion\"];\n";
+            nodoExpresion += this.getNodos(this.expresion,"expresion") + "\n";
             ast += nodoExpresion;
-            let nodoTipo = "nodo" + this.line + this.column + "tipo[label=\"Tipo: println\"];\n";
+            let nodoTipo = "node" + this.line + this.column + "tipo[label=\"Tipo: println\"];\n";
             ast += nodoTipo;
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "tipo;\n";
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "expresion;\n";
@@ -56,18 +56,27 @@ export class Impresion extends Instruccion {
         }
     }
 
-    public getNodos(instrucciones: any) {
+    public getNodos(instrucciones: any,nombre:string) {
         //Si es un string
         if (typeof instrucciones == "string") {
             //Instruccion sin comillas
             let instruccion = instrucciones.replace(/\"/g, "");
-            let nodo = "nodo" + this.line + this.column + "hijo" + this.contador + "\n";
-            nodo += "nodo" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
+            let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+            nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
             this.contador++;
-            return nodo;
+            return "node" + this.line + this.column + nombre + " -> " + nodo;
         }else{
             
-            return instrucciones.getNodo();
+            try{
+                let resultado = '';
+                instrucciones.forEach((element: any) => {
+                    resultado += "node" + this.line + this.column + nombre + " -> " + element.getNodo();
+                }
+                );
+                return resultado;
+              }catch{
+                return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
+              }
         }
     }
 }

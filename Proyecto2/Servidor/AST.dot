@@ -1,96 +1,69 @@
 digraph AST {
-node [shape=box];
+node [shape=ellipse];
 rankdir=TB;
 node0[label="Instrucciones"];
-node0->nodo10
-nodo10[label="Asignacion"];
-nodo10igual[label="="];
-nodo101[label="Variable"];
-nodo101->nodo10hijo0
-nodo10hijo0[label="var_3"];
-nodo102[label="Expresion"];
-nodo102->node17
-node17[label="Condicion"];
-node17valor1[label="Izquierda"];
-node17valor1 ->node116
-node116[label="Suma"];
-node116derecha[label="Izquierda"];
-node116derecha -> node112
-node112[label="Suma"];
-node112derecha[label="Izquierda"];
-node112derecha -> node110
-node110[label="Resta"];
-node110derecha[label="Izquierda"];
-node110derecha -> node18
-node18[label="Suma"];
-node18derecha[label="Izquierda"];
-node18derecha -> nodo18hijo0
-nodo18hijo0[label="5"];
-node18izquierda[label="Derecha"];
-node18izquierda -> nodo18hijo1
-nodo18hijo1[label="5"];
-node18 -> node18derecha;
-node18 -> node18izquierda;
-node110izquierda[label="Derecha"];
-node110izquierda -> nodo110hijo0
-nodo110hijo0[label="8"];
-node110 -> node110derecha;
-node110 -> node110izquierda;
-node112izquierda[label="Derecha"];
-node112izquierda -> node114
-node114[label=" * "];
-node1140 [label="izquierda"];
-node1140 -> nodo114hijo0
-nodo114hijo0[label="6"];
-node1141 [label="derecha"];
-node1141 -> nodo114hijo1
-nodo114hijo1[label="8"];
-node114 -> node1140;
-node114 -> node1141;
-node112 -> node112derecha;
-node112 -> node112izquierda;
-node116izquierda[label="Derecha"];
-node116izquierda -> node118
-node118[label=" / "];
-node1180 [label="izquierda"];
-node1180 -> nodo118hijo0
-nodo118hijo0[label="1"];
-node1181 [label="derecha"];
-node1181 -> node120
-node120[label="Modulo"];
-node120derecha[label="Izquierda"];
-node120derecha -> nodo120hijo0
-nodo120hijo0[label="7"];
-node120izquierda[label="Derecha"];
-node120izquierda -> nodo120hijo1
-nodo120hijo1[label="9"];
-node120 -> node120derecha;
-node120 -> node120izquierda;
-node118 -> node1180;
-node118 -> node1181;
-node116 -> node116derecha;
-node116 -> node116izquierda;
-
-node17condicion[label="Condicion"];
-node17condicion ->nodo17hijo0
-nodo17hijo0[label=">"];
-
-node17valor2[label="Derecha"];
-node17valor2 ->node125
-node125[label="Suma"];
-node125derecha[label="Izquierda"];
-node125derecha -> nodo125hijo0
-nodo125hijo0[label="45"];
-node125izquierda[label="Derecha"];
-node125izquierda -> nodo125hijo1
-nodo125hijo1[label="6"];
-node125 -> node125derecha;
-node125 -> node125izquierda;
-
-node17 -> node17valor1;
-node17 -> node17condicion;
-node17 -> node17valor2;
-nodo10igual->nodo101;
-nodo10igual->nodo102;
-nodo10->nodo10igual;
+node0->node29
+node29[label="Asignacion"];
+node29igual[label="="];
+node291[label="Variable"];
+node291 -> node29hijo0
+node29hijo0[label="mivar"];
+node292[label="Expresion"];
+node292 -> node231
+node231[label="Suma"];
+node231derecha[label="Izquierda"];
+node231derecha -> node211
+node211[label="ToLower"];
+node211cadena[label="Cadena"];
+node211cadena -> node226
+node226[label="Suma"];
+node226derecha[label="Izquierda"];
+node226derecha -> node226hijo0
+node226hijo0[label="QWERT"];
+node226izquierda[label="Derecha"];
+node226izquierda -> node226hijo1
+node226hijo1[label=" "];
+node226 -> node226derecha;
+node226 -> node226izquierda;
+node211->node211cadena;
+node231izquierda[label="Derecha"];
+node231izquierda -> node231hijo0
+node231hijo0[label="1+5"];
+node231 -> node231derecha;
+node231 -> node231izquierda;
+node29igual->node291;
+node29igual->node292;
+node29->node29igual;
+node0->node39
+node39[label="Asignacion"];
+node39igual[label="="];
+node391[label="Variable"];
+node391 -> node39hijo0
+node39hijo0[label="mivar"];
+node392[label="Expresion"];
+node392 -> node331
+node331[label="Suma"];
+node331derecha[label="Izquierda"];
+node331derecha -> node311
+node311[label="ToUpper"];
+node311cadena[label="Cadena"];
+node311cadena -> node326
+node326[label="Suma"];
+node326derecha[label="Izquierda"];
+node326derecha -> node326hijo0
+node326hijo0[label="QWERT"];
+node326izquierda[label="Derecha"];
+node326izquierda -> node326hijo1
+node326hijo1[label=" "];
+node326 -> node326derecha;
+node326 -> node326izquierda;
+node311->node311cadena;
+node331izquierda[label="Derecha"];
+node331izquierda -> node331hijo0
+node331hijo0[label="hola!"];
+node331 -> node331derecha;
+node331 -> node331izquierda;
+node39igual->node391;
+node39igual->node392;
+node39->node39igual;
 }

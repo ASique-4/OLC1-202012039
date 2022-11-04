@@ -3,8 +3,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon,  XMarkIcon } from '@heroicons/react/24/outline'
 const navigation = [
   { name: 'Código', href: '/', current: true },
-  { name: 'Inicio', href: '/about', current: false },
-  { name: 'Reportes', href: '#', current: false },
+  { name: 'Sobre el proyecto', href: '/about', current: false },
+  { name: 'Reportes', href: '/reportes', current: false },
 ]
 
 function classNames(...classes) {
@@ -76,32 +76,24 @@ export default function Example() {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Your Profile
-                          </a>
+                          
+                          <div className="block px-4 py-2 text-sm text-gray-700">
+                            Angel Sique
+                          </div>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Settings
-                          </a>
+                          <div className="block px-4 py-2 text-sm text-gray-700">
+                          202012039
+                        </div>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Sign out
-                          </a>
+                          <div className="block px-4 py-2 text-sm text-gray-700">
+                          OLC1 Sección C
+                        </div>
                         )}
                       </Menu.Item>
                     </Menu.Items>

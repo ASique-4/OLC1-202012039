@@ -37,15 +37,15 @@ export class Case extends Instruccion {
 
     public getNodo() {
         let ast = "node" + this.line + this.column + "\n";
-        ast += "[label=\"Case\"];\n";
+        ast += "node" + this.line + this.column + "[label=\"Case\"];\n";
 
-        let nodoCaso = "nodo" + this.line + this.column + "caso[label=\"Caso\"];\n";
-        nodoCaso += "node" + this.line + this.column + "caso ->" + this.getNodos(this.condicion) + "\n";
+        let nodoCaso = "node" + this.line + this.column + "caso[label=\"Caso\"];\n";
+        nodoCaso +=  this.getNodos(this.condicion,"caso");
         ast += nodoCaso;
         ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "caso;\n";
 
         let nodoInstrucciones = "node" + this.line + this.column + "instrucciones[label=\"Instrucciones\"];\n";
-        nodoInstrucciones += "node" + this.line + this.column + "instrucciones ->" + this.getNodos(this.instrucciones) + "\n";
+        nodoInstrucciones += this.getNodos(this.instrucciones,"instrucciones") + "\n";
         ast += nodoInstrucciones;
 
         ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "instrucciones;\n";
@@ -53,18 +53,27 @@ export class Case extends Instruccion {
         
     }
 
-    public getNodos(instrucciones: any) {
+    public getNodos(instrucciones: any,nombre:string) {
         //Si es un string
         if (typeof instrucciones == "string") {
             //Instruccion sin comillas
             let instruccion = instrucciones.replace(/\"/g, "");
-            let nodo = "nodo" + this.line + this.column + "hijo" + this.contador + "\n";
-            nodo += "nodo" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
+            let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+            nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
             this.contador++;
-            return nodo;
+            return "node" + this.line + this.column + nombre + " -> " + nodo;
         }else{
             
-            return instrucciones.getNodo();
+            try{
+                let resultado = '';
+                instrucciones.forEach((element: any) => {
+                    resultado += "node" + this.line + this.column + nombre + " -> " + element.getNodo();
+                }
+                );
+                return resultado;
+              }catch{
+                return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
+              }
         }
     }
 

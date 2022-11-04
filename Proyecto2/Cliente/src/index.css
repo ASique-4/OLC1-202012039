@@ -8,7 +8,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #0F3D3E;
+  background: #354259;
 }
 
 
@@ -18,9 +18,19 @@ code {
 }
 
 h1 {
-  color: #E2DCC8;
+  color: #ECE5C7;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   font-size: 100px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+  text-align: center;
+}
+
+h2 {
+  color: #ECE5C7;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  font-size: 50px;
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 1;
@@ -95,9 +105,12 @@ div {
   }
 }
 
-.button-4 {
+
+
+/* CSS */
+.Abrir {
   align-items: center;
-  background-color: #BCEAD5;
+  background-color: #FEC260;
   border: 2px solid #111;
   border-radius: 8px;
   box-sizing: border-box;
@@ -117,9 +130,89 @@ div {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  margin : 0 10px;
 }
 
-.button-4:after {
+.Abrir:after {
+  background-color: #111;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+  
+}
+
+.Abrir:hover:after {
+  transform: translate(0, 0);
+}
+
+.Abrir:active {
+  background-color: #ffdeda;
+  outline: 0;
+}
+
+.Abrir:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .Abrir {
+    padding: 0 40px;
+  }
+}
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  background-color: #898AA6;
+  border: 1px solid #898AA6;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin : 0 10px;
+  border-radius: 8px;
+}
+
+.botones-div {
+  display: flex;
+  justify-content: center;
+}
+
+
+.Agregar {
+  align-items: center;
+  background-color: #DF7861;
+  border: 2px solid #111;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin : 0 10px;
+}
+
+.Agregar:after {
   background-color: #111;
   border-radius: 8px;
   content: "";
@@ -134,22 +227,97 @@ div {
   z-index: -1;
 }
 
-.button-4:hover:after {
+.Agregar:hover:after {
   transform: translate(0, 0);
 }
 
-.button-4:active {
-  background-color: #8EC3B0;
+.Agregar:active {
+  background-color: #ffdeda;
   outline: 0;
 }
 
-.button-4:hover {
+.Agregar:hover {
   outline: 0;
 }
 
 @media (min-width: 768px) {
-  .button-3 {
+  .Agregar {
     padding: 0 40px;
   }
 }
 
+
+.Guardar {
+  align-items: center;
+  background-color: #81CACF;
+  border: 2px solid #111;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin : 0 10px;
+}
+
+.Guardar:after {
+  background-color: #111;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+.Guardar:hover:after {
+  transform: translate(0, 0);
+}
+
+.Guardar:active {
+  background-color: #ffdeda;
+  outline: 0;
+}
+
+.Guardar:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .Guardar {
+    padding: 0 40px;
+  }
+}
+
+.contenido {
+  align-items: center;
+  margin-top: 20px;
+}
+
+p {
+  /* Card */
+  background: #C2DED1;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  margin: 20px 300px;
+  /* font color */
+  
+}

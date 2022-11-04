@@ -3,10 +3,12 @@ import { Instruccion } from "../Abstractas/instruccion";
 
 export class Vector_2D_T2 extends Instruccion {
 
+    public contador = 0;
+
     constructor(
         public tipo: string,
         public variable: string,
-        public expresion: string,
+        public expresion: Instruccion[],
         linea: number, columna:number) {
         super(linea,columna);
     }
@@ -21,14 +23,41 @@ export class Vector_2D_T2 extends Instruccion {
 
     public getNodo() {
         let ast = "node" + this.line + this.column + "\n";
-        let nodo = "node" + this.line + this.column + "[label=\"Vector_2D_T2\"];\n";
-        let nodoTipo = "node" + this.line + this.column + "tipo[label=\"" + this.tipo + "\"];\n";
-        let nodoVariable = "node" + this.line + this.column + "variable[label=\"" + this.variable + "\"];\n";
-        let nodoExpresion = "node" + this.line + this.column + "expresion[label=\"" + this.expresion + "\"];\n";
-        ast += nodo + nodoTipo + nodoVariable + nodoExpresion;
-        ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "tipo;\n";
-        ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "variable;\n";
-        ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "expresion;\n";
+        ast += "node" + this.line + this.column + "[label=\"Vector\"];\n";
+        let nodoExpresion = "node" + this.line + this.column + "expresion[label=\"Expresion\"];\n";
+        nodoExpresion += this.getNodos(this.expresion,"expresion") + "\n";
+        ast += nodoExpresion;
+        let nodoTipo = "node" + this.line + this.column + "tipo[label=\"Tipo: " + this.tipo + "\"];\n";
+        ast += nodoTipo;
+        ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "tipo;\n";
+        let nodoVariable = "node" + this.line + this.column + "variable[label=\"Variable: " + this.variable + "\"];\n";
+        ast += nodoVariable;
+        ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "variable;\n";
+        ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "expresion;\n";
         return ast;
+    }
+
+    public getNodos(instrucciones: any,nombre:string) {
+        //Si es un string
+        if (typeof instrucciones == "string") {
+            //Instruccion sin comillas
+            let instruccion = instrucciones.replace(/\"/g, "");
+            let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+            nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
+            this.contador++;
+            return "node" + this.line + this.column + nombre + " -> " + nodo;
+        }else{
+            
+            try{
+                let resultado = '';
+                instrucciones.forEach((element: any) => {
+                    resultado += "node" + this.line + this.column + nombre + " -> " + element.getNodo();
+                }
+                );
+                return resultado;
+              }catch{
+                return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
+              }
+        }
     }
 }

@@ -48,43 +48,65 @@ export class Funcion extends Instruccion {
     }
 
     public getNodo() {
-        let ast = "nodo" + this.line + this.column + "\n";
-        ast += "nodo" + this.line + this.column + "[label=\"Funcion\"];\n";
-        let nodoId = "nodo" + this.line + this.column + "id[label=\" ID: " + this.identificador + "\"];\n";
-        ast += nodoId;
-        ast += "nodo" + this.line + this.column + "->" + "nodo" + this.line + this.column + "id;\n";
-        let nodoTipo = "nodo" + this.line + this.column + "tipo[label=\" Tipo: " + this.tipo + "\"];\n";
-        ast += nodoTipo;
-        ast += "nodo" + this.line + this.column + "->" + "nodo" + this.line + this.column + "tipo;\n";
         if(this.parametros != null){
-            let nodoParam = "nodo" + this.line + this.column + "param[label=\" Parametros\"];\n";
-            ast += nodoParam;
-            ast += "nodo" + this.line + this.column + "->" + "nodo" + this.line + this.column + "param;\n";
-            this.parametros.forEach((element: any) => {
-                ast += element.getNodo();
-                ast += "nodo" + this.line + this.column + "param" + "->" + "nodo" + element.line + element.column + ";\n";
-            });
+            console.log("Funcion");
+            let ast = "node" + this.line + this.column + "\n";
+            let nodo = "node" + this.line + this.column + "[label=\"Funcion\"];\n";
+            let nodoIdentificador = "node" + this.line + this.column + "identificador[label=\"Identificador\"];\n";
+            
+            nodoIdentificador += this.getNodos(this.identificador,"identificador");
+            let nodoParametros = "node" + this.line + this.column + "parametros[label=\"Parametros\"];\n";
+            nodoParametros += this.getNodos(this.parametros,"parametros");
+            let nodoTipo = "node" + this.line + this.column + "tipo[label=\"Tipo\"];\n";
+            nodoTipo +=  this.getNodos(this.tipo,"tipo");
+            let nodoInstrucciones = "node" + this.line + this.column + "instrucciones[label=\"Instrucciones\"];\n";
+            nodoInstrucciones += this.getNodos(this.instrucciones,"instrucciones");
+            ast += nodo + nodoIdentificador + nodoParametros + nodoTipo + nodoInstrucciones;
+            ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "identificador;\n";
+            ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "parametros;\n";
+            ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "tipo;\n";
+            ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "instrucciones;\n";
+            return ast;
+        }else{
+            let ast = "node" + this.line + this.column + "\n";
+            let nodo = "node" + this.line + this.column + "[label=\"Funcion\"];\n";
+            let nodoIdentificador = "node" + this.line + this.column + "identificador[label=\"Identificador\"];\n";
+            nodoIdentificador += this.getNodos(this.identificador, "identificador");
+            let nodoTipo = "node" + this.line + this.column + "tipo[label=\"Tipo\"];\n";
+            nodoTipo += this.getNodos(this.tipo, "tipo");
+            let nodoInstrucciones = "node" + this.line + this.column + "instrucciones[label=\"Instrucciones\"];\n";
+            nodoInstrucciones += this.getNodos(this.instrucciones, "instrucciones");
+            ast += nodo + nodoIdentificador + nodoTipo + nodoInstrucciones;
+            ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "identificador;\n";
+            ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "tipo;\n";
+            ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "instrucciones;\n";
+            
+            return ast;
         }
-        let nodoInst = "nodo" + this.line + this.column + "inst[label=\" Instrucciones\"];\n";
-        nodoInst += "nodo" + this.line + this.column + "inst ->" + this.getNodos(this.instrucciones) + "\n";
-        ast += nodoInst;
-        ast += "nodo" + this.line + this.column + "->" + "nodo" + this.line + this.column + "inst;\n";
-        return ast;
 
     }
 
-    public getNodos(instrucciones: any) {
+    public getNodos(instrucciones: any,nombre:string) {
         //Si es un string
         if (typeof instrucciones == "string") {
             //Instruccion sin comillas
             let instruccion = instrucciones.replace(/\"/g, "");
-            let nodo = "nodo" + this.line + this.column + "hijo" + this.contador + "\n";
-            nodo += "nodo" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
+            let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+            nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
             this.contador++;
-            return nodo;
+            return "node" + this.line + this.column + nombre + " -> " + nodo;
         }else{
             
-            return instrucciones.getNodo();
+            try{
+                let resultado = '';
+                instrucciones.forEach((element: any) => {
+                    resultado += "node" + this.line + this.column + nombre + " -> " + element.getNodo();
+                }
+                );
+                return resultado;
+              }catch{
+                return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
+              }
         }
     }
      

@@ -4,6 +4,8 @@ import { Default } from "./Default";
 
 export class Switch extends Instruccion {
 
+    public contador = 0;
+
     constructor(
         public condicion: CONDICION,
         public instrucciones: Instruccion[],
@@ -29,21 +31,46 @@ export class Switch extends Instruccion {
       }
 
     public getNodo() {
-      let ast = "node" + this.line + this.column + "\n";
-      ast += "[label=\"Switch\"];\n";
-      ast += "node" + this.line + this.column + " -> node" + this.condicion.line + this.condicion.column + ";\n";
-      ast += "node" + this.condicion.line + this.condicion.column + "[label=\"Condicion\"];\n";
-      ast += "node" + this.condicion.line + this.condicion.column + " -> node" + this.condicion.line + this.condicion.column + "0;\n";
-      ast += "node" + this.condicion.line + this.condicion.column + "0[label=\"" + this.condicion + "\"];\n";
-      ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "0;\n";
-      ast += "node" + this.line + this.column + "0[label=\"Instrucciones\"];\n";
-      this.instrucciones.forEach((element: any) => {
-        ast += element.getNodo();
-        ast += "node" + this.line + this.column + "0 -> node" + element.line + element.column + ";\n";
-      }
-      );
-      ast += this.switch_default.getNodo();
-      ast += "node" + this.line + this.column + " -> node" + this.switch_default.line + this.switch_default.column + ";\n";
-      return ast;
+        let ast = "node" + this.line + this.column + "\n";
+        ast += "node" + this.line + this.column + "[label=\"Switch\"];\n";
+        let nodoCondicion = "node" + this.line + this.column + "condicion[label=\""+ this.condicion +"\"];\n";
+        ast += nodoCondicion;
+        
+        let nodoInstrucciones = "node" + this.line + this.column + "instrucciones[label=\"Instrucciones\"];\n";
+        nodoInstrucciones +=  this.getNodos(this.instrucciones,"instrucciones") + "\n";
+        ast += nodoInstrucciones;
+
+        let nodoDefault = "node" + this.line + this.column + "default[label=\"Default\"];\n";
+        nodoDefault += "node" + this.line + this.column + "default -> " + this.switch_default.getNodo() + "\n";
+        ast += nodoDefault;
+        ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "condicion;\n";
+        ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "instrucciones;\n";
+        ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "default;\n";
+        return ast;
+
     }
+
+    public getNodos(instrucciones: any,nombre:string) {
+      //Si es un string
+      if (typeof instrucciones == "string") {
+          //Instruccion sin comillas
+          let instruccion = instrucciones.replace(/\"/g, "");
+          let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+          nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
+          this.contador++;
+          return "node" + this.line + this.column + nombre + " -> " + nodo;
+      }else{
+          
+          try{
+              let resultado = '';
+              instrucciones.forEach((element: any) => {
+                  resultado += "node" + this.line + this.column + nombre + " -> " + element.getNodo();
+              }
+              );
+              return resultado;
+            }catch{
+              return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
+            }
+      }
+  }
 }

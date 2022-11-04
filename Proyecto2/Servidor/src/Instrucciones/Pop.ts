@@ -24,4 +24,6 @@ export class Pop extends Instruccion {
         ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "arreglo;\n";
         return ast;
     }
+
+    
 }

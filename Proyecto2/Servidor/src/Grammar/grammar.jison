@@ -49,6 +49,7 @@
     const {Modulo} = require('../Instrucciones/Expresion/Modulo.ts');
     const {Resta} = require('../Instrucciones/Expresion/Resta.ts');
     const {Suma} = require('../Instrucciones/Expresion/Suma.ts');
+    const {Variable} = require('../Instrucciones/Variable.ts');
 %}
 
 %lex
@@ -168,6 +169,7 @@ bool    "true"|"false"
 
 INIT :  LISTAINSTRUCCIONES  EOF  {
     $$ = new AST($1);
+    console.log($$);
     $$.graphAST();
 }
 ;
@@ -203,6 +205,7 @@ INSTRUCCION :
     |PUSH {$$=$1;}
     |POP {$$=$1;}
     |TERNARIO ';' {$$=$1;}
+    |DECLARACION {$$=$1;}
     |error {console.log($1); console.log("error sintactico");}
 ;
 
@@ -236,16 +239,16 @@ TIPOS:
     |'pr_double' {$$=$1;}
 ;
 
-LISTA_EXPREID: LISTA_EXPREID ',' 'expreID' {$$=$1; $1.push($3);}
-    | 'expreID' {$$=[$1];}
+LISTA_EXPREID: LISTA_EXPREID ',' 'expreID' {$$=$1; $1.push(new Variable($3,@3.first_line,@3.first_column));}
+    | 'expreID' {$$= [new Variable($1,@1.first_line,@1.first_column)];}
 ;
 
 VALORES: 
     'expreBOOL' {$$=$1;}
     |EXPRESION {$$=$1;}
-    |CASTEO {$$='(' + $1.casteo + ') ' + $1.expresion;}
+    |CASTEO {$$=$1;}
     |CONDICION {$$=$1;}
-    |TERNARIO {$$=$1.ejecutar();}
+    |TERNARIO {$$=$1;}
     
 ;
 
@@ -265,16 +268,16 @@ OPERACION: 'expreDECIMAL' {$$=$1;}
     |'expreNUMBER' {$$=$1;}
     |'expreID' {$$=$1;}
     |'expreCADENA' {$$=$1;}
-    |TO_LOWER {$$=$1.ejecutar(); }
-    |TO_UPPER {$$=$1.ejecutar();}
-    |LENGTH {$$=$1.ejecutar();}
-    |TYPE_OF {$$=$1.ejecutar();}
-    |ROUND {$$=$1.ejecutar();}
-    |TO_STRING {$$=$1.ejecutar();}
-    |TO_CHAR_ARRAY {$$=$1.ejecutar();}
-    |LLAMADA {$$=$1.id + "(" + $1.parametros + ")" ;}
-    |ACCESO_VECTOR_1D {$$=$1.variable + "[" + $1.expresion + "]";}
-    |ACCESO_VECTOR_2D {$$=$1.variable + "[" + $1.expresion + "]" + "[" + $1.expresion2 + "]";}
+    |TO_LOWER {$$=$1; }
+    |TO_UPPER {$$=$1;}
+    |LENGTH {$$=$1;}
+    |TYPE_OF {$$=$1;}
+    |ROUND {$$=$1;}
+    |TO_STRING {$$=$1;}
+    |TO_CHAR_ARRAY {$$=$1;}
+    |LLAMADA {$$=$1;}
+    |ACCESO_VECTOR_1D {$$=$1;}
+    |ACCESO_VECTOR_2D {$$=$1;}
     |OPERACION '+' OPERACION {$$= new Suma($1,$3,@2.first_line,@2.first_column);}
     |OPERACION '-' OPERACION {$$= new Resta($1,$3,@2.first_line,@2.first_column);}
     |OPERACION '*' OPERACION {$$= new Multiplicacion($1,$3,@2.first_line,@2.first_column);}
@@ -302,26 +305,26 @@ CASTEO: '(' TIPOS ')' VALORES2 {
     ; 
 
 ASIGNACION: TIPOS 'expreID' '=' VALORES ';' {
-    $$= new Asignacion($1,$2,$4,@1.first_line,@1.first_column);
+    $$= new Asignacion($1,$2,$4,@2.first_line,@2.first_column);
     }
     |'expreID' '=' VALORES ';' {
-        $$= new Asignacion(null,$1,$3,@1.first_line,@1.first_column);
+        $$= new Asignacion(null,$1,$3,@2.first_line,@2.first_column);
     }
     |ACCESO_VECTOR_1D '=' VALORES ';' {
-        $$= new Asignacion(null,$1.variable + "[" + $1.expresion + "]",$3,@1.first_line,@1.first_column);
+        $$= new Asignacion(null,$1,$3,@2.first_line,@2.first_column);
     }
     |ACCESO_VECTOR_2D '=' VALORES ';' {
-        $$= new Asignacion(null,$1.variable + "[" + $1.expresion + "]" + "[" + $1.expresion2 + "]",$3,@1.first_line,@1.first_column);
+        $$= new Asignacion(null,$1,$3,@2.first_line,@2.first_column);
     }
     |TIPOS LISTA_EXPREID ';' {
         
-        $$= new Declaracion($2,$1,@1.first_line,@1.first_column);
+        $$= new Declaracion($2,$1,@3.first_line,@3.first_column);
     }
     |TIPOS LISTA_EXPREID '=' VALORES ';' {
-        $$= new Asignacion($1,$2,$4,@1.first_line,@1.first_column);
+        $$= new Asignacion($1,$2,$4,@3.first_line,@3.first_column);
     }
     |LISTA_EXPREID '=' VALORES ';' {
-        $$= new Asignacion(null,$1,$3,@1.first_line,@1.first_column);
+        $$= new Asignacion(null,$1,$3,@2.first_line,@2.first_column);
     }
 ;
 
@@ -391,10 +394,10 @@ ELIF: 'pr_elif' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' {
 
 
 CONDICION: VALORES CONDICIONAL VALORES  {
-    $$= new CONDICION($1,$2,$3,@1.first_line,@1.first_column);
+    $$= new CONDICION($1,$2,$3,@2.first_line,@2.first_column);
     }
     |CONDICION CONDICIONAL2 CONDICION {
-        $$= new CONDICION($1,$2,$3,@1.first_line,@1.first_column);
+        $$= new CONDICION($1,$2,$3,@2.first_line,@2.first_column);
     }
 ;
 
@@ -436,17 +439,18 @@ DEFAULT: 'pr_default' ':' LISTAINSTRUCCIONES 'pr_break' ';' {
 ;
 
 WHILE: 'pr_while' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' {
-    $$= new While($3.valor1 + $3.condicion + $3.valor2,$6,@1.first_line,@1.first_column);
+    $$= new While($3,$6,@1.first_line,@1.first_column);
     }
 ;
 
 FOR: 'pr_for' '(' ASIGNACION CONDICION ';' ASIGNACION_FOR ')' '{' LISTAINSTRUCCIONES '}' {
-    $$= new For($3,$4.valor1 + $4.condicion + $4.valor2,$6,$9,@1.first_line,@1.first_column);
+    $$= new For($3,$4,$6,$9,@1.first_line,@1.first_column);
+    console.log($$);
     }
 ;
 
 ASIGNACION_FOR: 'expreID' '=' VALORES {
-    $$= new Asignacion(null,$1,$3,@1.first_line,@1.first_column);
+    $$= new Asignacion(null,$1,$3,@2.first_line,@2.first_column);
     }
     |INCREMENTO_FOR {
         $$=$1;
@@ -471,13 +475,13 @@ INCREMENTO_FOR: 'expreID' '++' {
 ;
 
 DO_WHILE: 'pr_do' '{' LISTAINSTRUCCIONES '}' 'pr_while' '(' CONDICION ')' ';' {
-    $$= new Do_While($3,$7.valor1 + $7.condicion + $7.valor2,@1.first_line,@1.first_column);
+    $$= new Do_While($3,$7,@1.first_line,@1.first_column);
     console.log($$);
     }
 ;
 
 DO_UNTIL: 'pr_do' '{' LISTAINSTRUCCIONES '}' 'pr_until' '(' CONDICION ')' ';' {
-    $$= new Do_Until($3,$7.valor1 + $7.condicion + $7.valor2,@1.first_line,@1.first_column);
+    $$= new Do_Until($3,$7,@1.first_line,@1.first_column);
     }
 ;
 
@@ -592,6 +596,7 @@ LISTA_PARAMETROS_LLAMADA: LISTA_PARAMETROS_LLAMADA ',' VALORES {
 
 TO_LOWER: 'pr_tolower' '(' VALORES ')' {
     $$= new ToLower($3,@1.first_line,@1.first_column);
+    console.log($$);
     }
 ;
 
@@ -646,9 +651,9 @@ ROUND: 'pr_round' '(' VALORES ')' {
 ;
 
 TERNARIO:  CONDICION '?' VALORES ':' VALORES {
-    $$= new Ternario( $1.ejecutar(),$3,$5,@1.first_line,@1.first_column);
+    $$= new Ternario( $1,$3,$5,@1.first_line,@1.first_column);
     }
     | '(' CONDICION ')' '?' VALORES ':' VALORES{
-        $$= new Ternario("(" + $2.ejecutar() + ")" ,$5,$7,@1.first_line,@1.first_column);
+        $$= new Ternario($2,$5,$7,@1.first_line,@1.first_column);
     }
 ;
