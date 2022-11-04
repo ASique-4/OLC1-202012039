@@ -97,9 +97,11 @@ export default function App() {
         </div>
 
         <br></br>
+        <div class="ejecutar">
         <button onClick={showValue} class="button-3">
           Ejecutar
         </button>
+        </div>
       </center>
       <br></br>
       <br></br>

@@ -10,9 +10,9 @@ class ApiRoutes {
   }
 
   config(): void {
-    this.router.get("/", apiController.funcion1);
+    this.router.get("/errores", apiController.getErrores);
     this.router.post("/", apiController.funcion2);
-
+    this.router.get("/ast", apiController.getAST);
   }
 }
 

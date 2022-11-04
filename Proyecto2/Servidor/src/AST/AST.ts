@@ -18,7 +18,7 @@ export class AST {
         ast += "}";
         //Create the file
         let fs = require('fs');
-        fs.writeFile("AST.dot", ast, (err: any) => {
+        fs.writeFile("./src/AST.dot", ast, (err: any) => {
             if (err) {
                 console.error(err);
                 return;
@@ -26,26 +26,21 @@ export class AST {
             console.log("File has been created");
         }
         );
-        //Convert the file to png
+        //Convert the file to svg withot comments
         const exec = require('child_process').exec;
-        exec('dot -Tpng AST.dot -o AST.png', (err: any, _stdout: any, _stderr: any) => {
+        exec('dot -Tsvg ./src/AST.dot -o ./src/AST.svg', (err: any, stdout: any, _stderr: any) => {
             if (err) {
                 console.error(err);
                 return;
             }
-            console.log("File has been converted");
-        }
-        );
+            console.log(stdout);
+        });
 
-        //Open the file
-        // exec('xdg-open AST.png', (err: any, _stdout: any, _stderr: any) => {
-        //     if (err) {
-        //         console.error(err);
-        //         return;
-        //     }
-        //     console.log("File has been opened");
-        // }
-        // );
+        //make a regex to remove the comments
+        let regex = /<!--[\s\S]*?-->/g;
+        let file = fs.readFileSync('./src/AST.svg', 'utf8');
+        let result = file.replace(regex, '');
+        fs.writeFileSync('./src/AST.svg', result, 'utf8');
 
         
     }
@@ -58,6 +53,19 @@ export class AST {
         });
         return resultado;
     }
+
+    public createFile(nameFile: string, content: string) {
+        let fs = require('fs');
+        fs.writeFile(nameFile, content, (err: any) => {
+            if (err) {
+                console.error(err);
+                return;
+            };
+            console.log("File has been created");
+        }
+        );
+    }
+
 
 
 }

@@ -25,24 +25,38 @@ h1 {
   letter-spacing: -1px;
   line-height: 1;
   text-align: center;
+  /* animation */
+  animation: flipInX;
+  animation-duration: 1s;
 }
 
 h2 {
-  color: #ECE5C7;
+  color: #B2B2B2;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   font-size: 50px;
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 1;
   text-align: center;
+  /* animation */
+  animation: fadeInDown;
+  animation-duration: 1s;
 }
 
 .editor {
   align-content: center;
+  animation: bounceInLeft;
+  animation-duration: 1s;
 }
 
 div {
   border-radius: 15px;
+
+}
+
+.ejecutar {
+  animation: backInUp;
+  animation-duration: 1s;
 
 }
 
@@ -69,6 +83,7 @@ div {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+
 }
 
 .button-3:after {
@@ -184,6 +199,9 @@ input[type="file"] {
 .botones-div {
   display: flex;
   justify-content: center;
+  /* animation */
+  animation: slideInUp;
+  animation-duration: 1s;
 }
 
 
@@ -313,11 +331,29 @@ input[type="file"] {
 
 p {
   /* Card */
-  background: #C2DED1;
+  background: #1E2939;
   border-radius: 8px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 20px;
   margin: 20px 300px;
-  /* font color */
+  /* Text */
+  font-family: Inter,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #9ca3af;
+  /* animation */
+  animation: fadeIn;
+  animation-duration: 2s;
   
 }
+
+.reporte {
+  padding: 20px 80px 0 80px;
+}
+
+svg {
+  width: inherit;
+  height: inherit;
+ }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+
+        <table class="w-full text-sm text-left text-gray-400">
+            <thead class="text-xs  uppercase bg-gray-50 bg-gray-700 text-gray-400">
+                <tr>
+                    <th scope="col" class="py-3 px-6">
+                        Tipo error
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Descripcion
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Linea
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Columna
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Error
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class=" bg-gray-800 border-gray-700  hover:bg-gray-600">
+                    <th scope="row" class="py-4 px-6 font-medium whitespace-nowrap text-white">Sintactico
+                    </th>
+                    <td class="py-4 px-6">Error de sintaxis, se esperaba una instruccion</td>
+                    <td class="py-4 px-6">5</td>
+                    <td class="py-4 px-6">0</td>
+                    <td class="py-4 px-6">}</td>
+                </tr>
+                <tr class="bg-gray-800 border-gray-700 hover:bg-gray-600">
+                    <th scope="row" class="py-4 px-6 font-medium whitespace-nowrap text-white">Lexico
+                    </th>
+                    <td class="py-4 px-6">Caracter no reconocido</td>
+                    <td class="py-4 px-6">7</td>
+                    <td class="py-4 px-6">1</td>
+                    <td class="py-4 px-6">@</td>
+                </tr>
+                <tr class="bg-gray-800 border-gray-700 hover:bg-gray-600">
+                    <th scope="row" class="py-4 px-6 font-medium  whitespace-nowrap text-white">Sintactico
+                    </th>
+                    <td class="py-4 px-6">Error de sintaxis, se esperaba una instruccion</td>
+                    <td class="py-4 px-6">6</td>
+                    <td class="py-4 px-6">0</td>
+                    <td class="py-4 px-6"></td>
+                </tr>
+    
+    
+        </table>
+    </div>
+    
+</body>
+</html>

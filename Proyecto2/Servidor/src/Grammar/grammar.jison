@@ -50,6 +50,8 @@
     const {Resta} = require('../Instrucciones/Expresion/Resta.ts');
     const {Suma} = require('../Instrucciones/Expresion/Suma.ts');
     const {Variable} = require('../Instrucciones/Variable.ts');
+    const {Singleton} = require('../Singleton/Singleton.ts');
+    const {error} = require("../tool/error.ts");
 %}
 
 %lex
@@ -151,8 +153,11 @@ bool    "true"|"false"
 <<EOF>>		            return 'EOF'
 
 
-.   { 
+.   {   
         console.log("error lexico")
+        let s = Singleton.getInstance();
+        s.add_error(new error('Lexico', 'Caracter no reconocido', yylineno + 1, yylloc.first_column + 1, yytext));
+        
     }
 
 
@@ -206,7 +211,15 @@ INSTRUCCION :
     |POP {$$=$1;}
     |TERNARIO ';' {$$=$1;}
     |DECLARACION {$$=$1;}
-    |error {console.log($1); console.log("error sintactico");}
+    |error {console.log($1); 
+        let s = Singleton.getInstance();
+        if($1 != null){
+            s.add_error(new error('Sintactico', 'Error de sintaxis, se esperaba una instruccion', yylineno + 1, @1.first_column, $1));
+        }else{
+            s.add_error(new error('Sintactico', 'Error de sintaxis, se esperaba una instruccion', yylineno + 1, @1.first_column, 'EOF'));
+        }
+        console.log("error sintactico")
+    }
 ;
 
 BLOQUE: '{' LISTAINSTRUCCIONES '}' { $$= new Bloque($2,@1.first_line,@1.first_column);}
