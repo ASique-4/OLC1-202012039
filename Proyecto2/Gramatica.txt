@@ -1,0 +1,366 @@
+
+decimal  [0-9]+[.][0-9]+
+number  [0-9]+  
+id  [a-z]+      
+cadena   [\"][^\"]*[\"]|[\'][^\']*[\']
+bool    "true"|"false"    
+
+
+\s+                   /* skip whitespace */
+"//".*                              // comentario simple línea
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/] // comentario multiple líneas
+
+
+{decimal}              return 'expreDECIMAL'
+{number}               return 'expreNUMBER' 
+{cadena}               return 'expreCADENA' 
+{bool}                 return 'expreBOOL'
+
+
+
+
+
+"String"   return 'pr_string'
+"Int"   return 'pr_int'
+"Char"   return 'pr_char'
+"Double"   return 'pr_double'
+"Boolean"   return 'pr_bool'
+"print"   return 'pr_print'
+"println"   return 'pr_println'
+"new"   return 'pr_new'
+"if"   return 'pr_if'
+"else"   return 'pr_else'
+"elif"   return 'pr_elif'
+'Case'   return 'pr_case'
+'break'   return 'pr_break'
+'default'   return 'pr_default'
+'switch'   return 'pr_switch'
+'break'   return 'pr_break'
+'while'   return 'pr_while'
+'for'   return 'pr_for'
+'do'   return 'pr_do'
+'until'   return 'pr_until'
+'continue'   return 'pr_continue'
+'return'   return 'pr_return'
+'void'   return 'pr_void'
+'ToLower'   return 'pr_tolower'
+'ToUpper'   return 'pr_toupper'
+'Length'   return 'pr_length'
+'TypeOf'   return 'pr_typeof'
+'ToString'   return 'pr_tostring'
+'ToCharArray'   return 'pr_tochararray'
+'Round'   return 'pr_round'
+'Push'   return 'pr_push'
+'Pop'   return 'pr_pop'
+'Run'   return 'pr_run'
+
+
+
+";"  return ';'
+":"  return ':'
+")"  return ')'
+"("  return '('
+"}"  return '}'
+"{"  return '{'
+","  return ','
+"++"  return '++'
+"--"  return '--'
+"+"  return '+'
+"<=" return '<='
+">=" return '>='
+"<"  return '<'
+">"  return '>'
+"=="  return '=='
+"!="  return '!='
+"&&"  return '&&'
+"||"  return '||'
+"="  return '='
+"-"  return '-'
+
+
+"!"  return '!'
+"["  return '['
+"]"  return ']'
+"*"  return '*'
+"/"  return '/'
+"%"  return '%'
+'^'  return '^'
+'.'  return '.'
+'?'  return '?'
+
+([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'expreID';
+
+<<EOF>>		            return 'EOF'
+
+
+
+INIT :  LISTAINSTRUCCIONES  EOF  
+
+
+LISTAINSTRUCCIONES: LISTAINSTRUCCIONES INSTRUCCION 
+                  |  INSTRUCCION 
+
+
+
+INSTRUCCION :
+    IMPRESION 
+    |CASTEO
+    |ASIGNACION
+    |INCREMENTO
+    |VECTOR_1D_T1
+    |VECTOR_1D_T2
+    |VECTOR_2D_T1
+    |VECTOR_2D_T2
+    |IF
+    |SWITCH
+    |WHILE
+    |FOR
+    |DO_WHILE
+    |DO_UNTIL
+    |BREAK
+    |FUNCION
+    |CONTINUE
+    |RETURN
+    |METODO
+    |LLAMADA ';'
+    |RUN 
+    |PUSH 
+    |POP 
+    |TERNARIO ';' 
+    |DECLARACION 
+    |error 
+
+BLOQUE: '{' LISTAINSTRUCCIONES '}' 
+
+DECLARACION: TIPOS  'expreID' ';' 
+IMPRESION: 'pr_print' '(' VALORES ')' ';' 
+| 'pr_println' '(' VALORES ')' ';' 
+
+E: 'expreCADENA' 
+    |'expreID' '(' ')' 
+
+
+TIPOS: 
+    'pr_int' 
+    |'pr_char' 
+    |'pr_string' 
+    |'pr_bool' 
+    |'pr_double' 
+
+
+LISTA_EXPREID: LISTA_EXPREID ',' 'expreID' 
+    | 'expreID' 
+
+VALORES: 
+    'expreBOOL' 
+    |EXPRESION 
+    |CASTEO 
+    |CONDICION 
+    |TERNARIO 
+    
+
+
+VALORES2: 
+    'expreBOOL' 
+    |EXPRESION 
+
+
+EXPRESION: EXPRESION OPERACION 
+    |OPERACIONES 
+
+
+OPERACIONES: OPERACION ;
+
+
+OPERACION: 'expreDECIMAL' 
+    |'expreNUMBER' 
+    |'expreID' 
+    |'expreCADENA' 
+    |TO_LOWER 
+    |TO_UPPER 
+    |LENGTH 
+    |TYPE_OF 
+    |ROUND 
+    |TO_STRING 
+    |TO_CHAR_ARRAY 
+    |LLAMADA 
+    |ACCESO_VECTOR_1D 
+    |ACCESO_VECTOR_2D 
+    |OPERACION '+' OPERACION 
+    |OPERACION '-' OPERACION 
+    |OPERACION '*' OPERACION 
+    |OPERACION '/' OPERACION 
+    |OPERACION '%' OPERACION 
+    |OPERACION '^' OPERACION 
+    |'(' OPERACION ')' 
+    |OPERACION '++' 
+    |OPERACION '--' 
+    |'-' OPERACION 
+
+INCREMENTO: 'expreID' '++' ';'
+    |'expreID' '--' ';' 
+    |'++' 'expreID' ';' 
+    |'--' 'expreID' ';' 
+
+
+
+CASTEO: '(' TIPOS ')' VALORES2 
+
+ASIGNACION: TIPOS 'expreID' '=' VALORES ';' 
+    |'expreID' '=' VALORES ';' 
+    |ACCESO_VECTOR_1D '=' VALORES ';'
+    |ACCESO_VECTOR_2D '=' VALORES ';' 
+    |TIPOS LISTA_EXPREID ';' 
+    |TIPOS LISTA_EXPREID '=' VALORES ';' 
+    |LISTA_EXPREID '=' VALORES ';'
+
+VECTOR_1D_T1: TIPOS '[' ']' 'expreID' '=' 'pr_new' TIPOS '[' VALORES ']' ';' 
+| TIPOS '[' ']' 'expreID' '=' TO_CHAR_ARRAY ';' 
+
+VECTOR_1D_T2: TIPOS '[' ']' 'expreID' '=' '{' LISTA_VALORES_VECTORES '}' ';' 
+
+LISTA_VALORES_VECTORES: LISTA_VALORES_VECTORES ',' VALORES 
+    | VALORES 
+;   
+
+VECTOR_2D_T1: TIPOS '[' ']' '[' ']' 'expreID' '=' 'pr_new' TIPOS '[' VALORES ']' '[' VALORES ']' ';' 
+
+VECTOR_2D_T2: TIPOS '[' ']' '[' ']' 'expreID' '=' '{' LISTA_VALORES_VECTORES_2D '}' ';' 
+
+LISTA_VALORES_VECTORES_2D: LISTA_VALORES_VECTORES_2D ',' '{' LISTA_VALORES_VECTORES '}'
+    | '{' LISTA_VALORES_VECTORES '}' 
+
+ACCESO_VECTOR_1D: 'expreID' '[' 'expreNUMBER' ']'
+
+ACCESO_VECTOR_2D: 'expreID' '[' 'expreNUMBER' ']' '[' 'expreNUMBER' ']' 
+
+IF: 'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' 
+    |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' 'pr_else' '{' LISTAINSTRUCCIONES '}'
+    |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' LISTA_ELIF 
+    |'pr_if' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' LISTA_ELIF 'pr_else' '{' LISTAINSTRUCCIONES '}' 
+
+LISTA_ELIF: LISTA_ELIF ELIF 
+
+ELIF: 'pr_elif' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' 
+
+
+
+CONDICION: VALORES CONDICIONAL VALORES  
+    |CONDICION CONDICIONAL2 CONDICION 
+
+CONDICIONAL: '==' 
+    |'!=' 
+    |'>=' 
+    |'<=' 
+    |'>' 
+    |'<' 
+    
+
+
+CONDICIONAL2: '&&' 
+    |'||' 
+
+
+SWITCH: 'pr_switch' '(' 'expreID' ')' '{' LISTA_CASES DEFAULT '}' 
+
+LISTA_CASES: LISTA_CASES CASE 
+    | CASE 
+
+
+CASE: 'pr_case' VALORES ':' LISTAINSTRUCCIONES 'pr_break' ';' 
+
+DEFAULT: 'pr_default' ':' LISTAINSTRUCCIONES 'pr_break' ';' 
+WHILE: 'pr_while' '(' CONDICION ')' '{' LISTAINSTRUCCIONES '}' 
+
+FOR: 'pr_for' '(' ASIGNACION CONDICION ';' ASIGNACION_FOR ')' '{' LISTAINSTRUCCIONES '}' 
+
+ASIGNACION_FOR: 'expreID' '=' VALORES 
+    |INCREMENTO_FOR 
+    |LISTA_EXPREID '=' VALORES 
+INCREMENTO_FOR: 'expreID' '++' 
+    |'expreID' '--' 
+    |'++' 'expreID' 
+    |'--' 'expreID' 
+
+DO_WHILE: 'pr_do' '{' LISTAINSTRUCCIONES '}' 'pr_while' '(' CONDICION ')' ';' 
+
+DO_UNTIL: 'pr_do' '{' LISTAINSTRUCCIONES '}' 'pr_until' '(' CONDICION ')' ';' 
+
+BREAK: 'pr_break' ';'
+
+CONTINUE: 'pr_continue' ';' 
+
+RETURN: 'pr_return' VALORES ';' 
+    |'pr_return' ';' 
+
+FUNCION: 'expreID' '(' LISTA_PARAMETROS ')' ':' TIPOS '{' LISTAINSTRUCCIONES '}'
+    |'expreID' '(' ')' ':' TIPOS '{' LISTAINSTRUCCIONES '}' 
+
+LISTA_PARAMETROS: LISTA_PARAMETROS ',' PARAMETRO 
+    | PARAMETRO 
+
+
+PARAMETRO: TIPOS 'expreID' 
+
+LISTA_INSTRUCCIONES_METODO: LISTA_INSTRUCCIONES_METODO INSTRUCCION_METODO 
+    | INSTRUCCION_METODO 
+
+
+INSTRUCCION_METODO :
+    IMPRESION 
+    |CASTEO
+    |ASIGNACION
+    |INCREMENTO
+    |VECTOR_1D_T1
+    |VECTOR_1D_T2
+    |VECTOR_2D_T1
+    |VECTOR_2D_T2
+    |IF
+    |SWITCH
+    |WHILE
+    |FOR
+    |DO_WHILE
+    |DO_UNTIL
+    |BREAK
+    |FUNCION
+    |CONTINUE
+    |METODO
+    |LLAMADA ';'
+    |RUN
+    |PUSH
+    |POP
+    |TERNARIO 
+
+METODO: 'expreID' '(' LISTA_PARAMETROS ')' ':' 'pr_void' '{' LISTA_INSTRUCCIONES_METODO '}' 
+    |'expreID' '(' ')' ':' 'pr_void' '{' LISTA_INSTRUCCIONES_METODO '}' 
+    |'expreID' '(' LISTA_PARAMETROS ')' '{' LISTA_INSTRUCCIONES_METODO '}' 
+    |'expreID' '(' ')' '{' LISTA_INSTRUCCIONES_METODO '}' 
+
+LLAMADA: 'expreID' '(' LISTA_PARAMETROS_LLAMADA ')'  
+    |'expreID' '(' ')' 
+
+LISTA_PARAMETROS_LLAMADA: LISTA_PARAMETROS_LLAMADA ',' VALORES 
+    | VALORES 
+
+TO_LOWER: 'pr_tolower' '(' VALORES ')' 
+
+TO_UPPER: 'pr_toupper' '(' VALORES ')' 
+TO_STRING: 'pr_tostring' '(' VALORES ')' 
+
+LENGTH: 'pr_length' '(' EXPRESION ')' 
+
+TYPE_OF: 'pr_typeof' '(' VALORES ')' 
+
+TO_CHAR_ARRAY: 'pr_tochararray' '(' 'expreCADENA' ')'
+
+PUSH: 'expreID' '.' 'pr_push' '(' VALORES ')' ';' 
+
+POP: 'expreID' '.' 'pr_pop' '(' ')' ';' 
+
+RUN: 'pr_run' 'expreID' '(' ')' ';' 
+    |'pr_run' 'expreID' '(' LISTA_PARAMETROS_LLAMADA ')' ';' 
+
+ROUND: 'pr_round' '(' VALORES ')'
+
+TERNARIO:  CONDICION '?' VALORES ':' VALORES 
+    | '(' CONDICION ')' '?' VALORES ':' VALORES
