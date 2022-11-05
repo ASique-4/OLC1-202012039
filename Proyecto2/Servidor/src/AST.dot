@@ -3,1153 +3,387 @@ node [shape=ellipse fillcolor="#6B728E" style=filled];
 rankdir=TB;
 bgcolor="#474E68";
 node0[label="Instrucciones"];
-node0->node17as
-node17as[label="Asignacion"];
-node17igual[label="="];
-node17var[label="Variable"];
-node17var -> node17hijo0
-node17hijo0[label="curso_"];
-node17expre[label="Expresion"];
-node17expre -> node17hijo1
-node17hijo1[label="organización de compiladores 1 2022"];
-node17tipo[label="Tipo"];
-node17tipo -> node17hijo2
-node17hijo2[label="string"];
-node17igual -> node17tipo;
-node17igual -> node17var;
-node17igual -> node17expre;
-node17as -> node17igual;
-node0->node25as
-node25as[label="Asignacion"];
-node25igual[label="="];
-node25var[label="Variable"];
-node25var -> node25hijo0
-node25hijo0[label="var_111"];
-node25expre[label="Expresion"];
-node25expre -> node25hijo1
-node25hijo1[label="'a'"];
-node25tipo[label="Tipo"];
-node25tipo -> node25hijo2
-node25hijo2[label="char"];
-node25igual -> node25tipo;
-node25igual -> node25var;
-node25igual -> node25expre;
-node25as -> node25igual;
-node0->node38as
-node38as[label="Asignacion"];
-node38igual[label="="];
-node38var[label="Variable"];
-node38var -> node38hijo0
-node38hijo0[label="celular"];
-node38expre[label="Expresion"];
-node38expre -> node38hijo1
-node38hijo1[label="true"];
-node38igual->node38var;
-node38igual->node38expre;
-node38as->node38igual;
-node0->node420
-node420[label="Declaracion"];
-node420tipo[label="Tipo"];
-node420tipo -> node420hijo0
-node420hijo0[label="int"];
-node420nombre[label="Nombre"];
-node420nombre -> node44
-node44[label="Variable"];
-node44id[label="var1"];
-node44->node44id;
-node420nombre -> node410
-node410[label="Variable"];
-node410id[label="var2"];
-node410->node410id;
-node420nombre -> node416
-node416[label="Variable"];
-node416id[label="var3"];
-node416->node416id;
-node420 -> node420tipo;
-node420 -> node420nombre;
-node0->node531as
-node531as[label="Asignacion"];
-node531igual[label="="];
-node531var[label="Variable"];
-node531var -> node58
-node58[label="Variable"];
-node58id[label="flag_1"];
-node58->node58id;
-node531var -> node516
-node516[label="Variable"];
-node516id[label="flag2_"];
-node516->node516id;
-node531var -> node524
-node524[label="Variable"];
-node524id[label="flag33"];
-node524->node524id;
-node531expre[label="Expresion"];
-node531expre -> node531hijo0
-node531hijo0[label="false"];
-node531tipo[label="Tipo"];
-node531tipo -> node531hijo1
-node531hijo1[label="boolean"];
-node531igual -> node531tipo;
-node531igual -> node531var;
-node531igual -> node531expre;
-node531as -> node531igual;
-node0->node631as
-node631as[label="Asignacion"];
-node631igual[label="="];
-node631var[label="Variable"];
-node631var -> node65
-node65[label="Variable"];
-node65id[label="ch_1"];
-node65->node65id;
-node631var -> node611
-node611[label="Variable"];
-node611id[label="ch_2"];
-node611->node611id;
-node631var -> node617
-node617[label="Variable"];
-node617id[label="ch3"];
-node617->node617id;
-node631var -> node622
-node622[label="Variable"];
-node622id[label="qwert123"];
-node622->node622id;
-node631expre[label="Expresion"];
-node631expre -> node631hijo0
-node631hijo0[label="'M'"];
-node631tipo[label="Tipo"];
-node631tipo -> node631hijo1
-node631hijo1[label="char"];
-node631igual -> node631tipo;
-node631igual -> node631var;
-node631igual -> node631expre;
-node631as -> node631igual;
-node0->node711as
-node711as[label="Asignacion"];
-node711igual[label="="];
-node711var[label="Variable"];
-node711var -> node711hijo0
-node711hijo0[label="universidad"];
-node711expre[label="Expresion"];
-node711expre -> node711hijo1
-node711hijo1[label="usac"];
-node711igual->node711var;
-node711igual->node711expre;
-node711as->node711igual;
-node0->node80
-node80[label="Declaracion"];
-node80tipo[label="Tipo"];
-node80tipo -> node80hijo0
-node80hijo0[label="boolean"];
-node80nombre[label="Nombre"];
-node80nombre -> node80hijo1
-node80hijo1[label="flag_personalizada"];
-node80 -> node80tipo;
-node80 -> node80nombre;
-node0->node94as
-node94as[label="Asignacion"];
-node94igual[label="="];
-node94var[label="Variable"];
-node94var -> node94hijo0
-node94hijo0[label="edad"];
-node94expre[label="Expresion"];
-node94expre -> node911
-node911[label="Casteo"];
-node9111[label="Casteo"];
-node9111 -> node911hijo0
-node911hijo0[label="Int"];
-node9112[label="Expresion"];
-node9112 -> node911hijo1
-node911hijo1[label="18.6"];
-node911->node9111;
-node911->node9112;
-node94tipo[label="Tipo"];
-node94tipo -> node94hijo1
-node94hijo1[label="Int"];
-node94igual -> node94tipo;
-node94igual -> node94var;
-node94igual -> node94expre;
-node94as -> node94igual;
-node0->node104as
-node104as[label="Asignacion"];
-node104igual[label="="];
-node104var[label="Variable"];
-node104var -> node104hijo0
-node104hijo0[label="intBool"];
-node104expre[label="Expresion"];
-node104expre -> node1014
-node1014[label="Casteo"];
-node10141[label="Casteo"];
-node10141 -> node1014hijo0
-node1014hijo0[label="Int"];
-node10142[label="Expresion"];
-node10142 -> node1014hijo1
-node1014hijo1[label="false"];
-node1014->node10141;
-node1014->node10142;
-node104tipo[label="Tipo"];
-node104tipo -> node104hijo1
-node104hijo1[label="Int"];
-node104igual -> node104tipo;
-node104igual -> node104var;
-node104igual -> node104expre;
-node104as -> node104igual;
-node0->node114as
-node114as[label="Asignacion"];
-node114igual[label="="];
-node114var[label="Variable"];
-node114var -> node114hijo0
-node114hijo0[label="intDecimal"];
-node114expre[label="Expresion"];
-node114expre -> node1117
-node1117[label="Casteo"];
-node11171[label="Casteo"];
-node11171 -> node1117hijo0
-node1117hijo0[label="Int"];
-node11172[label="Expresion"];
-node11172 -> node1117hijo1
-node1117hijo1[label="'0'"];
-node1117->node11171;
-node1117->node11172;
-node114tipo[label="Tipo"];
-node114tipo -> node114hijo1
-node114hijo1[label="Int"];
-node114igual -> node114tipo;
-node114igual -> node114var;
-node114igual -> node114expre;
-node114as -> node114igual;
-node0->node124as
-node124as[label="Asignacion"];
-node124igual[label="="];
-node124var[label="Variable"];
-node124var -> node124hijo0
-node124hijo0[label="intCadena"];
-node124expre[label="Expresion"];
-node124expre -> node1216
-node1216[label="Casteo"];
-node12161[label="Casteo"];
-node12161 -> node1216hijo0
-node1216hijo0[label="Int"];
-node12162[label="Expresion"];
-node12162 -> node1216hijo1
-node1216hijo1[label="100"];
-node1216->node12161;
-node1216->node12162;
-node124tipo[label="Tipo"];
-node124tipo -> node124hijo1
-node124hijo1[label="Int"];
-node124igual -> node124tipo;
-node124igual -> node124var;
-node124igual -> node124expre;
-node124as -> node124igual;
-node0->node137as
-node137as[label="Asignacion"];
-node137igual[label="="];
-node137var[label="Variable"];
-node137var -> node137hijo0
-node137hijo0[label="doubleInt"];
-node137expre[label="Expresion"];
-node137expre -> node1319
-node1319[label="Casteo"];
-node13191[label="Casteo"];
-node13191 -> node1319hijo0
-node1319hijo0[label="Double"];
-node13192[label="Expresion"];
-node13192 -> node1319hijo1
-node1319hijo1[label="16"];
-node1319->node13191;
-node1319->node13192;
-node137tipo[label="Tipo"];
-node137tipo -> node137hijo1
-node137hijo1[label="Double"];
-node137igual -> node137tipo;
-node137igual -> node137var;
-node137igual -> node137expre;
-node137as -> node137igual;
-node0->node147as
-node147as[label="Asignacion"];
-node147igual[label="="];
-node147var[label="Variable"];
-node147var -> node147hijo0
-node147hijo0[label="doubleString"];
-node147expre[label="Expresion"];
-node147expre -> node1422
-node1422[label="Casteo"];
-node14221[label="Casteo"];
-node14221 -> node1422hijo0
-node1422hijo0[label="Double"];
-node14222[label="Expresion"];
-node14222 -> node1422hijo1
-node1422hijo1[label="16.0"];
-node1422->node14221;
-node1422->node14222;
-node147tipo[label="Tipo"];
-node147tipo -> node147hijo1
-node147hijo1[label="Double"];
-node147igual -> node147tipo;
-node147igual -> node147var;
-node147igual -> node147expre;
-node147as -> node147igual;
-node0->node158as
-node158as[label="Asignacion"];
-node158igual[label="="];
-node158var[label="Variable"];
-node158var -> node158hijo0
-node158hijo0[label="boolInt"];
-node158expre[label="Expresion"];
-node158expre -> node1518
-node1518[label="Casteo"];
-node15181[label="Casteo"];
-node15181 -> node1518hijo0
-node1518hijo0[label="Boolean"];
-node15182[label="Expresion"];
-node15182 -> node1518hijo1
-node1518hijo1[label="0"];
-node1518->node15181;
-node1518->node15182;
-node158tipo[label="Tipo"];
-node158tipo -> node158hijo1
-node158hijo1[label="Boolean"];
-node158igual -> node158tipo;
-node158igual -> node158var;
-node158igual -> node158expre;
-node158as -> node158igual;
-node0->node168as
-node168as[label="Asignacion"];
-node168igual[label="="];
-node168var[label="Variable"];
-node168var -> node168hijo0
-node168hijo0[label="boolDouble"];
-node168expre[label="Expresion"];
-node168expre -> node1621
-node1621[label="Casteo"];
-node16211[label="Casteo"];
-node16211 -> node1621hijo0
-node1621hijo0[label="Boolean"];
-node16212[label="Expresion"];
-node16212 -> node1621hijo1
-node1621hijo1[label="1.0"];
-node1621->node16211;
-node1621->node16212;
-node168tipo[label="Tipo"];
-node168tipo -> node168hijo1
-node168hijo1[label="Boolean"];
-node168igual -> node168tipo;
-node168igual -> node168var;
-node168igual -> node168expre;
-node168as -> node168igual;
-node0->node178as
-node178as[label="Asignacion"];
-node178igual[label="="];
-node178var[label="Variable"];
-node178var -> node178hijo0
-node178hijo0[label="boolString"];
-node178expre[label="Expresion"];
-node178expre -> node1721
-node1721[label="Casteo"];
-node17211[label="Casteo"];
-node17211 -> node1721hijo0
-node1721hijo0[label="Boolean"];
-node17212[label="Expresion"];
-node17212 -> node1721hijo1
-node1721hijo1[label="0"];
-node1721->node17211;
-node1721->node17212;
-node178tipo[label="Tipo"];
-node178tipo -> node178hijo1
-node178hijo1[label="Boolean"];
-node178igual -> node178tipo;
-node178igual -> node178var;
-node178igual -> node178expre;
-node178as -> node178igual;
-node0->node188as
-node188as[label="Asignacion"];
-node188igual[label="="];
-node188var[label="Variable"];
-node188var -> node188hijo0
-node188hijo0[label="boolChar"];
-node188expre[label="Expresion"];
-node188expre -> node1819
-node1819[label="Casteo"];
-node18191[label="Casteo"];
-node18191 -> node1819hijo0
-node1819hijo0[label="Boolean"];
-node18192[label="Expresion"];
-node18192 -> node1819hijo1
-node1819hijo1[label="'1'"];
-node1819->node18191;
-node1819->node18192;
-node188tipo[label="Tipo"];
-node188tipo -> node188hijo1
-node188hijo1[label="Boolean"];
-node188igual -> node188tipo;
-node188igual -> node188var;
-node188igual -> node188expre;
-node188as -> node188igual;
-node0->node195as
-node195as[label="Asignacion"];
-node195igual[label="="];
-node195var[label="Variable"];
-node195var -> node195hijo0
-node195hijo0[label="charInt"];
-node195expre[label="Expresion"];
-node195expre -> node1915
-node1915[label="Casteo"];
-node19151[label="Casteo"];
-node19151 -> node1915hijo0
-node1915hijo0[label="Char"];
-node19152[label="Expresion"];
-node19152 -> node1915hijo1
-node1915hijo1[label="16"];
-node1915->node19151;
-node1915->node19152;
-node195tipo[label="Tipo"];
-node195tipo -> node195hijo1
-node195hijo1[label="Char"];
-node195igual -> node195tipo;
-node195igual -> node195var;
-node195igual -> node195expre;
-node195as -> node195igual;
-node0->node205as
-node205as[label="Asignacion"];
-node205igual[label="="];
-node205var[label="Variable"];
-node205var -> node205hijo0
-node205hijo0[label="charDouble"];
-node205expre[label="Expresion"];
-node205expre -> node2018
-node2018[label="Casteo"];
-node20181[label="Casteo"];
-node20181 -> node2018hijo0
-node2018hijo0[label="Char"];
-node20182[label="Expresion"];
-node20182 -> node2018hijo1
-node2018hijo1[label="16.1"];
-node2018->node20181;
-node2018->node20182;
-node205tipo[label="Tipo"];
-node205tipo -> node205hijo1
-node205hijo1[label="Char"];
-node205igual -> node205tipo;
-node205igual -> node205var;
-node205igual -> node205expre;
-node205as -> node205igual;
-node0->node215as
-node215as[label="Asignacion"];
-node215igual[label="="];
-node215var[label="Variable"];
-node215var -> node215hijo0
-node215hijo0[label="charBoolean"];
-node215expre[label="Expresion"];
-node215expre -> node2119
-node2119[label="Casteo"];
-node21191[label="Casteo"];
-node21191 -> node2119hijo0
-node2119hijo0[label="Char"];
-node21192[label="Expresion"];
-node21192 -> node2119hijo1
-node2119hijo1[label="false"];
-node2119->node21191;
-node2119->node21192;
-node215tipo[label="Tipo"];
-node215tipo -> node215hijo1
-node215hijo1[label="Char"];
-node215igual -> node215tipo;
-node215igual -> node215var;
-node215igual -> node215expre;
-node215as -> node215igual;
-node0->node225as
-node225as[label="Asignacion"];
-node225igual[label="="];
-node225var[label="Variable"];
-node225var -> node225hijo0
-node225hijo0[label="charString"];
-node225expre[label="Expresion"];
-node225expre -> node2218
-node2218[label="Casteo"];
-node22181[label="Casteo"];
-node22181 -> node2218hijo0
-node2218hijo0[label="Char"];
-node22182[label="Expresion"];
-node22182 -> node2218hijo1
-node2218hijo1[label="asdf"];
-node2218->node22181;
-node2218->node22182;
-node225tipo[label="Tipo"];
-node225tipo -> node225hijo1
-node225hijo1[label="Char"];
-node225igual -> node225tipo;
-node225igual -> node225var;
-node225igual -> node225expre;
-node225as -> node225igual;
-node0->node237as
-node237as[label="Asignacion"];
-node237igual[label="="];
-node237var[label="Variable"];
-node237var -> node237hijo0
-node237hijo0[label="stringInt"];
-node237expre[label="Expresion"];
-node237expre -> node2319
-node2319[label="Casteo"];
-node23191[label="Casteo"];
-node23191 -> node2319hijo0
-node2319hijo0[label="String"];
-node23192[label="Expresion"];
-node23192 -> node2319hijo1
-node2319hijo1[label="16"];
-node2319->node23191;
-node2319->node23192;
-node237tipo[label="Tipo"];
-node237tipo -> node237hijo1
-node237hijo1[label="String"];
-node237igual -> node237tipo;
-node237igual -> node237var;
-node237igual -> node237expre;
-node237as -> node237igual;
-node0->node247as
-node247as[label="Asignacion"];
-node247igual[label="="];
-node247var[label="Variable"];
-node247var -> node247hijo0
-node247hijo0[label="stringDouble"];
-node247expre[label="Expresion"];
-node247expre -> node2422
-node2422[label="Casteo"];
-node24221[label="Casteo"];
-node24221 -> node2422hijo0
-node2422hijo0[label="String"];
-node24222[label="Expresion"];
-node24222 -> node2422hijo1
-node2422hijo1[label="16.1"];
-node2422->node24221;
-node2422->node24222;
-node247tipo[label="Tipo"];
-node247tipo -> node247hijo1
-node247hijo1[label="String"];
-node247igual -> node247tipo;
-node247igual -> node247var;
-node247igual -> node247expre;
-node247as -> node247igual;
-node0->node257as
-node257as[label="Asignacion"];
-node257igual[label="="];
-node257var[label="Variable"];
-node257var -> node257hijo0
-node257hijo0[label="stringBoolean"];
-node257expre[label="Expresion"];
-node257expre -> node2523
-node2523[label="Casteo"];
-node25231[label="Casteo"];
-node25231 -> node2523hijo0
-node2523hijo0[label="String"];
-node25232[label="Expresion"];
-node25232 -> node2523hijo1
-node2523hijo1[label="false"];
-node2523->node25231;
-node2523->node25232;
-node257tipo[label="Tipo"];
-node257tipo -> node257hijo1
-node257hijo1[label="String"];
-node257igual -> node257tipo;
-node257igual -> node257var;
-node257igual -> node257expre;
-node257as -> node257igual;
-node0->node267as
-node267as[label="Asignacion"];
-node267igual[label="="];
-node267var[label="Variable"];
-node267var -> node267hijo0
-node267hijo0[label="stringChar"];
-node267expre[label="Expresion"];
-node267expre -> node2620
-node2620[label="Casteo"];
-node26201[label="Casteo"];
-node26201 -> node2620hijo0
-node2620hijo0[label="String"];
-node26202[label="Expresion"];
-node26202 -> node2620hijo1
-node2620hijo1[label="a"];
-node2620->node26201;
-node2620->node26202;
-node267tipo[label="Tipo"];
-node267tipo -> node267hijo1
-node267hijo1[label="String"];
-node267igual -> node267tipo;
-node267igual -> node267var;
-node267igual -> node267expre;
-node267as -> node267igual;
-node0->node274as
-node274as[label="Asignacion"];
-node274igual[label="="];
-node274var[label="Variable"];
-node274var -> node274hijo0
-node274hijo0[label="edad"];
-node274expre[label="Expresion"];
-node274expre -> node274hijo1
-node274hijo1[label="18"];
-node274tipo[label="Tipo"];
-node274tipo -> node274hijo2
-node274hijo2[label="int"];
-node274igual -> node274tipo;
-node274igual -> node274var;
-node274igual -> node274expre;
-node274as -> node274igual;
-node0->node280
-node280[label="Incremento"];
-node280tipo[label="++"];
-node280variable[label="edad"];
-node280->node280tipo;
-node280->node280variable;
-node0->node294as
-node294as[label="Asignacion"];
-node294igual[label="="];
-node294var[label="Variable"];
-node294var -> node294hijo0
-node294hijo0[label="anio"];
-node294expre[label="Expresion"];
-node294expre -> node294hijo1
-node294hijo1[label="2020"];
-node294tipo[label="Tipo"];
-node294tipo -> node294hijo2
-node294hijo2[label="int"];
-node294igual -> node294tipo;
-node294igual -> node294var;
-node294igual -> node294expre;
-node294as -> node294igual;
-node0->node305as
-node305as[label="Asignacion"];
-node305igual[label="="];
-node305var[label="Variable"];
-node305var -> node305hijo0
-node305hijo0[label="anio"];
-node305expre[label="Expresion"];
-node305expre -> node309
-node309[label="Suma"];
-node309derecha[label="Izquierda"];
-node309derecha -> node309hijo0
-node309hijo0[label="1"];
-node309izquierda[label="Derecha"];
-node309izquierda -> node309hijo1
-node309hijo1[label="anio++"];
-node309 -> node309derecha;
-node309 -> node309izquierda;
-node305igual->node305var;
-node305igual->node305expre;
-node305as->node305igual;
-node0->node315as
-node315as[label="Asignacion"];
-node315igual[label="="];
-node315var[label="Variable"];
-node315var -> node315hijo0
-node315hijo0[label="anio"];
-node315expre[label="Expresion"];
-node315expre -> node315hijo1
-node315hijo1[label="anio--"];
-node315igual->node315var;
-node315igual->node315expre;
-node315as->node315igual;
-node0->node340
-node340[label="Vector"];
-node340expresion[label="Expresion"];
-node340expresion -> node340hijo0
-node340hijo0[label="4"];
+node0->node10
+node10[label="Funcion"];
+node10identificador[label="Identificador"];
+node10identificador -> node10hijo0
+node10hijo0[label="division"];
+node10tipo[label="Tipo"];
+node10tipo -> node10hijo1
+node10hijo1[label="string"];
+node10instrucciones[label="Instrucciones"];
+node10instrucciones -> node211as
+node211as[label="Asignacion"];
+node211igual[label="="];
+node211var[label="Variable"];
+node211var -> node211hijo0
+node211hijo0[label="v_2"];
+node211expre[label="Expresion"];
+node211expre -> node216
+node216[label="Casteo"];
+node2161[label="Casteo"];
+node2161 -> node216hijo0
+node216hijo0[label="string"];
+node2162[label="Expresion"];
+node2162 -> node229
+node229[label="Suma"];
+node229derecha[label="Izquierda"];
+node229derecha -> node229hijo0
+node229hijo0[label="12.25"];
+node229izquierda[label="Derecha"];
+node229izquierda -> node229hijo1
+node229hijo1[label="1.20"];
+node229 -> node229derecha;
+node229 -> node229izquierda;
+node216->node2161;
+node216->node2162;
+node211tipo[label="Tipo"];
+node211tipo -> node211hijo1
+node211hijo1[label="string"];
+node211igual -> node211tipo;
+node211igual -> node211var;
+node211igual -> node211expre;
+node211as -> node211igual;
+node10instrucciones -> node311as
+node311as[label="Asignacion"];
+node311igual[label="="];
+node311var[label="Variable"];
+node311var -> node311hijo0
+node311hijo0[label="v_3"];
+node311expre[label="Expresion"];
+node311expre -> node316
+node316[label="Casteo"];
+node3161[label="Casteo"];
+node3161 -> node316hijo0
+node316hijo0[label="string"];
+node3162[label="Expresion"];
+node3162 -> node316hijo1
+node316hijo1[label="true"];
+node316->node3161;
+node316->node3162;
+node311tipo[label="Tipo"];
+node311tipo -> node311hijo1
+node311hijo1[label="string"];
+node311igual -> node311tipo;
+node311igual -> node311var;
+node311igual -> node311expre;
+node311as -> node311igual;
+node10instrucciones -> node411as
+node411as[label="Asignacion"];
+node411igual[label="="];
+node411var[label="Variable"];
+node411var -> node411hijo0
+node411hijo0[label="v_4"];
+node411expre[label="Expresion"];
+node411expre -> node416
+node416[label="Casteo"];
+node4161[label="Casteo"];
+node4161 -> node416hijo0
+node416hijo0[label="string"];
+node4162[label="Expresion"];
+node4162 -> node416hijo1
+node416hijo1[label="'A'"];
+node416->node4161;
+node416->node4162;
+node411tipo[label="Tipo"];
+node411tipo -> node411hijo1
+node411hijo1[label="string"];
+node411igual -> node411tipo;
+node411igual -> node411var;
+node411igual -> node411expre;
+node411as -> node411igual;
+node10instrucciones -> node54
+node54[label="Return"];
+node54expresion[label="Expresion"];
+node54expresion -> node54hijo0
+node54hijo0[label="olc1"];
 
-node340tipo[label="Tipo: Int"];
-node340 -> node340tipo;
-node340tipo2[label="New: Int"];
-node340 -> node340tipo2;
-node340variable[label="Variable: vector1"];
-node340 -> node340variable;
-node340 -> node340expresion;
-node0->node355
-node355[label="Vector"];
-node355tipo[label="Tipo: Char"];
-node355 -> node355tipo;
-node355variable[label="Variable: vectorDosd"];
-node355 -> node355variable;
-node355tipo2[label="Tipo: Char"];
-node355 -> node355tipo2;
-node355expresion[label="Expresion"];
-node355expresion -> node3535
-node3535[label="Casteo"];
-node35351[label="Casteo"];
-node35351 -> node3535hijo0
-node3535hijo0[label="Int"];
-node35352[label="Expresion"];
-node35352 -> node3535hijo1
-node3535hijo1[label="4"];
-node3535->node35351;
-node3535->node35352;
-node355 -> node355expresion;
-node355expresion2[label="Expresion"];
-node355expresion2 -> node355hijo0
-node355hijo0[label="4"];
-
-node355 -> node355expresion2;
-node0->node367
-node367[label="Vector"];
-node367tipo[label="Tipo: String"];
-node367variable[label="Variable: vector2"];
-node367expresion[label="Expresion"];
-node367expresion -> node367hijo0
-node367hijo0[label="hola"];
-node367expresion -> node367hijo1
-node367hijo1[label="Mundo"];
-
-node367 -> node367tipo;
-node367 -> node367variable;
-node367 -> node367expresion;
-node0->node375
-node375[label="Vector"];
-node375expresion[label="Expresion"];
-node375hijo0
-node375hijo0[label="Lista"];
-node375hijo1
-node375hijo1[label="Lista"];
-node375hijo2 -> node375hijo2
-node375hijo2[label="0"];
-node375hijo3 -> node375hijo3
-node375hijo3[label="0"];
-node375hijo4
-node375hijo4[label="Lista"];
-node375hijo5 -> node375hijo5
-node375hijo5[label="0"];
-node375hijo6 -> node375hijo6
-node375hijo6[label="0"];
-
-node375tipo[label="Tipo: Char"];
-node375 -> node375tipo;
-node375variable[label="Variable: vectordosd2"];
-node375 -> node375variable;
-node375 -> node375expresion;
-node0->node417
-node417[label="Vector"];
-node417tipo[label="Tipo: String"];
-node417variable[label="Variable: vector2"];
-node417expresion[label="Expresion"];
-node417expresion -> node417hijo0
-node417hijo0[label="hola"];
-node417expresion -> node417hijo1
-node417hijo1[label="Mundo"];
-
-node417 -> node417tipo;
-node417 -> node417variable;
-node417 -> node417expresion;
-node0->node427as
-node427as[label="Asignacion"];
-node427igual[label="="];
-node427var[label="Variable"];
-node427var -> node427hijo0
-node427hijo0[label="valorPosicion"];
-node427expre[label="Expresion"];
-node427expre -> node4223
-node4223[label="Acceso_Vector"];
-node42231[label="Variable"];
-node42231 -> node4223hijo0
-node4223hijo0[label="vector2"];
-node42232[label="Expresion"];
-node42232 -> node4223hijo1
-node4223hijo1[label="1"];
-node4223->node42231;
-node4223->node42232;
-node427tipo[label="Tipo"];
-node427tipo -> node427hijo1
-node427hijo1[label="String"];
-node427igual -> node427tipo;
-node427igual -> node427var;
-node427igual -> node427expre;
-node427as -> node427igual;
-node0->node435
-node435[label="Vector"];
-node435tipo[label="Tipo: Char"];
-node435 -> node435tipo;
-node435variable[label="Variable: vectorDosd"];
-node435 -> node435variable;
-node435tipo2[label="Tipo: char"];
-node435 -> node435tipo2;
-node435expresion[label="Expresion"];
-node435expresion -> node435hijo0
-node435hijo0[label="4"];
-node435 -> node435expresion;
-node435expresion2[label="Expresion"];
-node435expresion2 -> node435hijo1
-node435hijo1[label="4"];
-
-node435 -> node435expresion2;
-node0->node445as
-node445as[label="Asignacion"];
-node445igual[label="="];
-node445var[label="Variable"];
-node445var -> node445hijo0
-node445hijo0[label="valor"];
-node445expre[label="Expresion"];
-node445expre -> node4413
-node4413[label="Acceso_Vector_2D"];
-node4413variable[label="vectorDosd"];
-node4413expresion[label="Expresion"];
-node4413expresion -> node4413hijo0
-node4413hijo0[label="1"];
-node4413expresion2[label="Expresion"];
-node4413expresion2 -> node4413hijo1
-node4413hijo1[label="1"];
-node4413->node4413variable;
-node4413->node4413expresion;
-node4413->node4413expresion2;
-node445tipo[label="Tipo"];
-node445tipo -> node445hijo1
-node445hijo1[label="Char"];
-node445igual -> node445tipo;
-node445igual -> node445var;
-node445igual -> node445expre;
-node445as -> node445igual;
-node0->node477
-node477[label="Vector"];
-node477tipo[label="Tipo: String"];
-node477variable[label="Variable: vector2"];
-node477expresion[label="Expresion"];
-node477expresion -> node477hijo0
-node477hijo0[label="hola"];
-node477expresion -> node477hijo1
-node477hijo1[label="Mundo"];
-
-node477 -> node477tipo;
-node477 -> node477variable;
-node477 -> node477expresion;
-node0->node484
-node484[label="Vector"];
-node484tipo[label="Tipo: Int"];
-node484variable[label="Variable: vectorNumero"];
-node484expresion[label="Expresion"];
-node484expresion -> node484hijo0
-node484hijo0[label="2020"];
-node484expresion -> node484hijo1
-node484hijo1[label="2021"];
-node484expresion -> node484hijo2
-node484hijo2[label="2022"];
-
-node484 -> node484tipo;
-node484 -> node484variable;
-node484 -> node484expresion;
-node0->node4911as
-node4911as[label="Asignacion"];
-node4911igual[label="="];
-node4911var[label="Variable"];
-node4911var -> node490
-node490[label="Acceso_Vector"];
-node4901[label="Variable"];
-node4901 -> node490hijo0
-node490hijo0[label="vector2"];
-node4902[label="Expresion"];
-node4902 -> node490hijo1
-node490hijo1[label="1"];
-node490->node4901;
-node490->node4902;
-node4911expre[label="Expresion"];
-node4911expre -> node4911hijo0
-node4911hijo0[label="OLC1 "];
-node4911igual->node4911var;
-node4911igual->node4911expre;
-node4911as->node4911igual;
-node0->node5011as
-node5011as[label="Asignacion"];
-node5011igual[label="="];
-node5011var[label="Variable"];
-node5011var -> node500
-node500[label="Acceso_Vector"];
-node5001[label="Variable"];
-node5001 -> node500hijo0
-node500hijo0[label="vector2"];
-node5002[label="Expresion"];
-node5002 -> node500hijo1
-node500hijo1[label="2"];
-node500->node5001;
-node500->node5002;
-node5011expre[label="Expresion"];
-node5011expre -> node5028
-node5028[label="Suma"];
-node5028derecha[label="Izquierda"];
-node5028derecha -> node5028hijo0
-node5028hijo0[label="2do Semestre "];
-node5028izquierda[label="Derecha"];
-node5028izquierda -> node5029
-node5029[label="Acceso_Vector"];
-node50291[label="Variable"];
-node50291 -> node5029hijo0
-node5029hijo0[label="vectorNumero"];
-node50292[label="Expresion"];
-node50292 -> node5029hijo1
-node5029hijo1[label="2"];
-node5029->node50291;
-node5029->node50292;
-node5028 -> node5028derecha;
-node5028 -> node5028izquierda;
-node5011igual->node5011var;
-node5011igual->node5011expre;
-node5011as->node5011igual;
-node0->node540
-node540[label="IF"];
-node540condicion[label=" CONDICION "];
-node540condicion -> node546
-node546[label="Condicion"];
-node546valor1[label="Izquierda"];
-node546valor1 -> node546hijo0
-node546hijo0[label="x"];
-
-node546condicion[label="Condicion"];
-node546condicion -> node546hijo1
-node546hijo1[label="<"];
-
-node546valor2[label="Derecha"];
-node546valor2 -> node546hijo2
-node546hijo2[label="50"];
-
-node546 -> node546valor1;
-node546 -> node546condicion;
-node546 -> node546valor2;
-node540instrucciones[label="Instrucciones"];
-node540instrucciones -> node560
-node560[label="Impresion"];
-node560expresion[label="Expresion"];
-node560expresion -> node560hijo0
-node560hijo0[label="Menor que 50"];
-
-node560tipo[label="Tipo: println"];
-node560 -> node560tipo;
-node560 -> node560expresion;
-node540->node540condicion;
-node540->node540instrucciones;
-node0->node600
-node600[label="IF"];
-node600condicion[label="CONDICION"];
-node600condicion -> node606
-node606[label="Condicion"];
-node606valor1[label="Izquierda"];
-node606valor1 -> node606hijo0
-node606hijo0[label="x"];
-
-node606condicion[label="Condicion"];
-node606condicion -> node606hijo1
-node606hijo1[label="<"];
-
-node606valor2[label="Derecha"];
-node606valor2 -> node606hijo2
-node606hijo2[label="50"];
-
-node606 -> node606valor1;
-node606 -> node606condicion;
-node606 -> node606valor2;
-
-node600instrucciones1[label="Instrucciones"];
-node600instrucciones1 -> node620
-node620[label="Impresion"];
-node620expresion[label="Expresion"];
-node620expresion -> node620hijo0
-node620hijo0[label="Menor que 50"];
-
-node620tipo[label="Tipo: println"];
-node620 -> node620tipo;
-node620 -> node620expresion;
-node600instrucciones2[label="ELSE"];
-node600instrucciones2 -> node670
-node670[label="Impresion"];
-node670expresion[label="Expresion"];
-node670expresion -> node670hijo0
-node670hijo0[label="Mayor que 100"];
-
-node670tipo[label="Tipo: println"];
-node670 -> node670tipo;
-node670 -> node670expresion;
-node600->node600condicion;
-node600->node600instrucciones1;
-node600->node600instrucciones2;
-node0->node710
-node710[label="IF_ELSE"];
-node710condicion[label="CONDICION"];
-node710condicion -> node716
-node716[label="Condicion"];
-node716valor1[label="Izquierda"];
-node716valor1 -> node716hijo0
-node716hijo0[label="x"];
-
-node716condicion[label="Condicion"];
-node716condicion -> node716hijo1
-node716hijo1[label=">"];
-
-node716valor2[label="Derecha"];
-node716valor2 -> node716hijo2
-node716hijo2[label="50"];
-
-node716 -> node716valor1;
-node716 -> node716condicion;
-node716 -> node716valor2;
-
-node710instrucciones1[label="Instrucciones"];
-node710instrucciones1 -> node731
-node731[label="Impresion"];
-node731expresion[label="Expresion"];
-node731expresion -> node731hijo0
-node731hijo0[label="Mayor que 50"];
-
-node731tipo[label="Tipo: print"];
-node731 -> node731tipo;
-node731 -> node731expresion;
-node710instrucciones2[label="ELSE"];
-node710instrucciones2 -> node910
-node910[label="Impresion"];
-node910expresion[label="Expresion"];
-node910expresion -> node910hijo0
-node910hijo0[label="Número negativo"];
-
-node910tipo[label="Tipo: print"];
-node910 -> node910tipo;
-node910 -> node910expresion;
-node710->node710condicion;
-node710->node710instrucciones1;
-node710->node710instrucciones2;
-node0->node972
-node972[label="IF"];
-node972condicion[label=" CONDICION "];
-node972condicion -> node978
-node978[label="Condicion"];
-node978valor1[label="Izquierda"];
-node978valor1 -> node978hijo0
-node978hijo0[label="x"];
-
-node978condicion[label="Condicion"];
-node978condicion -> node978hijo1
-node978hijo1[label="<"];
-
-node978valor2[label="Derecha"];
-node978valor2 -> node978hijo2
-node978hijo2[label="50"];
-
-node978 -> node978valor1;
-node978 -> node978condicion;
-node978 -> node978valor2;
-node972instrucciones[label="Instrucciones"];
-node972instrucciones -> node998as
-node998as[label="Asignacion"];
-node998igual[label="="];
-node998var[label="Variable"];
-node998var -> node998hijo0
-node998hijo0[label="tomas"];
-node998expre[label="Expresion"];
-node998expre -> node998hijo1
-node998hijo1[label="nuevoAA"];
-node998igual->node998var;
-node998igual->node998expre;
-node998as->node998igual;
-node972instrucciones -> node1008as
-node1008as[label="Asignacion"];
-node1008igual[label="="];
-node1008var[label="Variable"];
-node1008var -> node1008hijo0
-node1008hijo0[label="tomas"];
-node1008expre[label="Expresion"];
-node1008expre -> node1008hijo1
-node1008hijo1[label="nuevoA"];
-node1008igual->node1008var;
-node1008igual->node1008expre;
-node1008as->node1008igual;
-node972->node972condicion;
-node972->node972instrucciones;
-node0->node1042
-node1042[label="IF"];
-node1042condicion[label="CONDICION"];
-node1042condicion -> node1048
-node1048[label="Condicion"];
-node1048valor1[label="Izquierda"];
-node1048valor1 -> node1048hijo0
-node1048hijo0[label="x"];
-
-node1048condicion[label="Condicion"];
-node1048condicion -> node1048hijo1
-node1048hijo1[label="<"];
-
-node1048valor2[label="Derecha"];
-node1048valor2 -> node1048hijo2
-node1048hijo2[label="50"];
-
-node1048 -> node1048valor1;
-node1048 -> node1048condicion;
-node1048 -> node1048valor2;
-
-node1042instrucciones1[label="Instrucciones"];
-node1042instrucciones1 -> node1068as
-node1068as[label="Asignacion"];
-node1068igual[label="="];
-node1068var[label="Variable"];
-node1068var -> node1068hijo0
-node1068hijo0[label="tomas"];
-node1068expre[label="Expresion"];
-node1068expre -> node1068hijo1
-node1068hijo1[label="nuevoB"];
-node1068igual->node1068var;
-node1068igual->node1068expre;
-node1068as->node1068igual;
-node1042instrucciones2[label="ELSE"];
-node1042instrucciones2 -> node1118as
-node1118as[label="Asignacion"];
-node1118igual[label="="];
-node1118var[label="Variable"];
-node1118var -> node1118hijo0
-node1118hijo0[label="tomas"];
-node1118expre[label="Expresion"];
-node1118expre -> node1118hijo1
-node1118hijo1[label="nuevoC"];
-node1118igual->node1118var;
-node1118igual->node1118expre;
-node1118as->node1118igual;
-node1042->node1042condicion;
-node1042->node1042instrucciones1;
-node1042->node1042instrucciones2;
-node0->node1152
-node1152[label="IF_ELSE"];
-node1152condicion[label="CONDICION"];
-node1152condicion -> node1158
-node1158[label="Condicion"];
-node1158valor1[label="Izquierda"];
-node1158valor1 -> node1158hijo0
-node1158hijo0[label="x"];
-
-node1158condicion[label="Condicion"];
-node1158condicion -> node1158hijo1
-node1158hijo1[label=">"];
-
-node1158valor2[label="Derecha"];
-node1158valor2 -> node1158hijo2
-node1158hijo2[label="50"];
-
-node1158 -> node1158valor1;
-node1158 -> node1158condicion;
-node1158 -> node1158valor2;
-
-node1152instrucciones1[label="Instrucciones"];
-node1152instrucciones1 -> node1179as
-node1179as[label="Asignacion"];
-node1179igual[label="="];
-node1179var[label="Variable"];
-node1179var -> node1179hijo0
-node1179hijo0[label="tomas"];
-node1179expre[label="Expresion"];
-node1179expre -> node1179hijo1
-node1179hijo1[label="nuevo"];
-node1179igual->node1179var;
-node1179igual->node1179expre;
-node1179as->node1179igual;
-node1152instrucciones2[label="ELSE"];
-node1152instrucciones2 -> node1358as
-node1358as[label="Asignacion"];
-node1358igual[label="="];
-node1358var[label="Variable"];
-node1358var -> node1358hijo0
-node1358hijo0[label="tomas"];
-node1358expre[label="Expresion"];
-node1358expre -> node1358hijo1
-node1358hijo1[label="nuevo5"];
-node1358igual->node1358var;
-node1358igual->node1358expre;
-node1358as->node1358igual;
-node1152->node1152condicion;
-node1152->node1152instrucciones1;
-node1152->node1152instrucciones2;
+node54 -> node54expresion;
+node10instrucciones -> node69as
+node69as[label="Asignacion"];
+node69igual[label="="];
+node69var[label="Variable"];
+node69var -> node69hijo0
+node69hijo0[label="mivar"];
+node69expre[label="Expresion"];
+node69expre -> node631
+node631[label="Suma"];
+node631derecha[label="Izquierda"];
+node631derecha -> node611
+node611[label="ToLower"];
+node611cadena[label="Cadena"];
+node611cadena -> node626
+node626[label="Suma"];
+node626derecha[label="Izquierda"];
+node626derecha -> node626hijo0
+node626hijo0[label="QWERT"];
+node626izquierda[label="Derecha"];
+node626izquierda -> node626hijo1
+node626hijo1[label=" "];
+node626 -> node626derecha;
+node626 -> node626izquierda;
+node611->node611cadena;
+node631izquierda[label="Derecha"];
+node631izquierda -> node631hijo0
+node631hijo0[label="1+5"];
+node631 -> node631derecha;
+node631 -> node631izquierda;
+node69igual->node69var;
+node69igual->node69expre;
+node69as->node69igual;
+node10instrucciones -> node79as
+node79as[label="Asignacion"];
+node79igual[label="="];
+node79var[label="Variable"];
+node79var -> node79hijo0
+node79hijo0[label="mivar"];
+node79expre[label="Expresion"];
+node79expre -> node731
+node731[label="Suma"];
+node731derecha[label="Izquierda"];
+node731derecha -> node711
+node711[label="ToUpper"];
+node711cadena[label="Cadena"];
+node711cadena -> node726
+node726[label="Suma"];
+node726derecha[label="Izquierda"];
+node726derecha -> node726hijo0
+node726hijo0[label="QWERT"];
+node726izquierda[label="Derecha"];
+node726izquierda -> node726hijo1
+node726hijo1[label=" "];
+node726 -> node726derecha;
+node726 -> node726izquierda;
+node711->node711cadena;
+node731izquierda[label="Derecha"];
+node731izquierda -> node731hijo0
+node731hijo0[label="hola!"];
+node731 -> node731derecha;
+node731 -> node731izquierda;
+node79igual->node79var;
+node79igual->node79expre;
+node79as->node79igual;
+node10instrucciones -> node812as
+node812as[label="Asignacion"];
+node812igual[label="="];
+node812var[label="Variable"];
+node812var -> node812hijo0
+node812hijo0[label="v_2"];
+node812expre[label="Expresion"];
+node812expre -> node817
+node817[label="Casteo"];
+node8171[label="Casteo"];
+node8171 -> node817hijo0
+node817hijo0[label="boolean"];
+node8172[label="Expresion"];
+node8172 -> node817hijo1
+node817hijo1[label="12.25"];
+node817->node8171;
+node817->node8172;
+node812tipo[label="Tipo"];
+node812tipo -> node812hijo1
+node812hijo1[label="boolean"];
+node812igual -> node812tipo;
+node812igual -> node812var;
+node812igual -> node812expre;
+node812as -> node812igual;
+node10instrucciones -> node911as
+node911as[label="Asignacion"];
+node911igual[label="="];
+node911var[label="Variable"];
+node911var -> node911hijo0
+node911hijo0[label="a_1"];
+node911expre[label="Expresion"];
+node911expre -> node915
+node915[label="TypeOf"];
+node915cadena[label="Cadena"];
+node915cadena -> node915hijo0
+node915hijo0[label="15"];
+node915->node915cadena;
+node911tipo[label="Tipo"];
+node911tipo -> node911hijo1
+node911hijo1[label="string"];
+node911igual -> node911tipo;
+node911igual -> node911var;
+node911igual -> node911expre;
+node911as -> node911igual;
+node10instrucciones -> node1011as
+node1011as[label="Asignacion"];
+node1011igual[label="="];
+node1011var[label="Variable"];
+node1011var -> node1011hijo0
+node1011hijo0[label="a_2"];
+node1011expre[label="Expresion"];
+node1011expre -> node1015
+node1015[label="TypeOf"];
+node1015cadena[label="Cadena"];
+node1015cadena -> node1024
+node1024[label="Suma"];
+node1024derecha[label="Izquierda"];
+node1024derecha -> node1024hijo0
+node1024hijo0[label="15"];
+node1024izquierda[label="Derecha"];
+node1024izquierda -> node1024hijo1
+node1024hijo1[label="6.5"];
+node1024 -> node1024derecha;
+node1024 -> node1024izquierda;
+node1015->node1015cadena;
+node1011tipo[label="Tipo"];
+node1011tipo -> node1011hijo1
+node1011hijo1[label="string"];
+node1011igual -> node1011tipo;
+node1011igual -> node1011var;
+node1011igual -> node1011expre;
+node1011as -> node1011igual;
+node10instrucciones -> node1111as
+node1111as[label="Asignacion"];
+node1111igual[label="="];
+node1111var[label="Variable"];
+node1111var -> node1111hijo0
+node1111hijo0[label="a_3"];
+node1111expre[label="Expresion"];
+node1111expre -> node1115
+node1115[label="TypeOf"];
+node1115cadena[label="Cadena"];
+node1115cadena -> node1115hijo0
+node1115hijo0[label="'a'"];
+node1115->node1115cadena;
+node1111tipo[label="Tipo"];
+node1111tipo -> node1111hijo1
+node1111hijo1[label="string"];
+node1111igual -> node1111tipo;
+node1111igual -> node1111var;
+node1111igual -> node1111expre;
+node1111as -> node1111igual;
+node10instrucciones -> node1211as
+node1211as[label="Asignacion"];
+node1211igual[label="="];
+node1211var[label="Variable"];
+node1211var -> node1211hijo0
+node1211hijo0[label="a_4"];
+node1211expre[label="Expresion"];
+node1211expre -> node1215
+node1215[label="TypeOf"];
+node1215cadena[label="Cadena"];
+node1215cadena -> node1215hijo0
+node1215hijo0[label="true"];
+node1215->node1215cadena;
+node1211tipo[label="Tipo"];
+node1211tipo -> node1211hijo1
+node1211hijo1[label="string"];
+node1211igual -> node1211tipo;
+node1211igual -> node1211var;
+node1211igual -> node1211expre;
+node1211as -> node1211igual;
+node10instrucciones -> node1311as
+node1311as[label="Asignacion"];
+node1311igual[label="="];
+node1311var[label="Variable"];
+node1311var -> node1311hijo0
+node1311hijo0[label="a_5"];
+node1311expre[label="Expresion"];
+node1311expre -> node1315
+node1315[label="TypeOf"];
+node1315cadena[label="Cadena"];
+node1315cadena -> node1315hijo0
+node1315hijo0[label="dsafdsa"];
+node1315->node1315cadena;
+node1311tipo[label="Tipo"];
+node1311tipo -> node1311hijo1
+node1311hijo1[label="string"];
+node1311igual -> node1311tipo;
+node1311igual -> node1311var;
+node1311igual -> node1311expre;
+node1311as -> node1311igual;
+node10instrucciones -> node1411as
+node1411as[label="Asignacion"];
+node1411igual[label="="];
+node1411var[label="Variable"];
+node1411var -> node1411hijo0
+node1411hijo0[label="a_5"];
+node1411expre[label="Expresion"];
+node1411expre -> node1415
+node1415[label="ToString"];
+node1415numero[label="Valor"];
+node1415numero -> node1415hijo0
+node1415hijo0[label="melmv"];
+node1415->node1415numero;
+node1411tipo[label="Tipo"];
+node1411tipo -> node1411hijo1
+node1411hijo1[label="string"];
+node1411igual -> node1411tipo;
+node1411igual -> node1411var;
+node1411igual -> node1411expre;
+node1411as -> node1411igual;
+node10instrucciones -> node1511as
+node1511as[label="Asignacion"];
+node1511igual[label="="];
+node1511var[label="Variable"];
+node1511var -> node1511hijo0
+node1511hijo0[label="a_5"];
+node1511expre[label="Expresion"];
+node1511expre -> node1515
+node1515[label="ToString"];
+node1515numero[label="Valor"];
+node1515numero -> node1515hijo0
+node1515hijo0[label="15"];
+node1515->node1515numero;
+node1511tipo[label="Tipo"];
+node1511tipo -> node1511hijo1
+node1511hijo1[label="string"];
+node1511igual -> node1511tipo;
+node1511igual -> node1511var;
+node1511igual -> node1511expre;
+node1511as -> node1511igual;
+node10instrucciones -> node1611as
+node1611as[label="Asignacion"];
+node1611igual[label="="];
+node1611var[label="Variable"];
+node1611var -> node1611hijo0
+node1611hijo0[label="a_5"];
+node1611expre[label="Expresion"];
+node1611expre -> node1615
+node1615[label="ToString"];
+node1615numero[label="Valor"];
+node1615numero -> node1629
+node1629[label="Suma"];
+node1629derecha[label="Izquierda"];
+node1629derecha -> node1629hijo0
+node1629hijo0[label="15.23"];
+node1629izquierda[label="Derecha"];
+node1629izquierda -> node1629hijo1
+node1629hijo1[label="9.02"];
+node1629 -> node1629derecha;
+node1629 -> node1629izquierda;
+node1615->node1615numero;
+node1611tipo[label="Tipo"];
+node1611tipo -> node1611hijo1
+node1611hijo1[label="string"];
+node1611igual -> node1611tipo;
+node1611igual -> node1611var;
+node1611igual -> node1611expre;
+node1611as -> node1611igual;
+node10instrucciones -> node1711as
+node1711as[label="Asignacion"];
+node1711igual[label="="];
+node1711var[label="Variable"];
+node1711var -> node1711hijo0
+node1711hijo0[label="a_5"];
+node1711expre[label="Expresion"];
+node1711expre -> node1715
+node1715[label="ToString"];
+node1715numero[label="Valor"];
+node1715numero -> node1715hijo0
+node1715hijo0[label="true"];
+node1715->node1715numero;
+node1711tipo[label="Tipo"];
+node1711tipo -> node1711hijo1
+node1711hijo1[label="string"];
+node1711igual -> node1711tipo;
+node1711igual -> node1711var;
+node1711igual -> node1711expre;
+node1711as -> node1711igual;
+node10->node10identificador;
+node10->node10tipo;
+node10->node10instrucciones;
 }
