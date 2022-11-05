@@ -351,7 +351,7 @@ VECTOR_1D_T1: TIPOS '[' ']' 'expreID' '=' 'pr_new' TIPOS '[' VALORES ']' ';' {
 ;
 
 VECTOR_1D_T2: TIPOS '[' ']' 'expreID' '=' '{' LISTA_VALORES_VECTORES '}' ';' {
-    $$= new Vector_1D_T2($1,$4,$7,@1.first_line,@1.first_column);
+    $$= new Vector_1D_T2($1,$4,$7,@2.first_line,@2.first_column);
 }
 ;
 
@@ -361,17 +361,17 @@ LISTA_VALORES_VECTORES: LISTA_VALORES_VECTORES ',' VALORES {$$=$1; $1.push($3);}
 
 VECTOR_2D_T1: TIPOS '[' ']' '[' ']' 'expreID' '=' 'pr_new' TIPOS '[' VALORES ']' '[' VALORES ']' ';' {
 
-    $$= new Vector_2D_T1($1,$6,$9,$11,$14,@1.first_line,@1.first_column);
+    $$= new Vector_2D_T1($1,$6,$9,$11,$14,@2.first_line,@2.first_column);
 }
 ;
 
 VECTOR_2D_T2: TIPOS '[' ']' '[' ']' 'expreID' '=' '{' LISTA_VALORES_VECTORES_2D '}' ';' {
-    $$= new Vector_2D_T2($1,$6,$9,@1.first_line,@1.first_column);
+    $$= new Vector_2D_T2($1,$6,$9,@2.first_line,@2.first_column);
 }
 ;
 
-LISTA_VALORES_VECTORES_2D: LISTA_VALORES_VECTORES_2D ',' '{' LISTA_VALORES_VECTORES '}' {$$=$1; $1.push('{'+$4+'}');}
-    | '{' LISTA_VALORES_VECTORES '}' {$$=['{'+$2+'}'];}
+LISTA_VALORES_VECTORES_2D: LISTA_VALORES_VECTORES_2D ',' '{' LISTA_VALORES_VECTORES '}' {$$=$1; $1.push($4);}
+    | '{' LISTA_VALORES_VECTORES '}' {$$=[$2];}
 ;
 
 ACCESO_VECTOR_1D: 'expreID' '[' 'expreNUMBER' ']' {$$= new Acceso_Vector_1D($1,$3,@1.first_line,@1.first_column);

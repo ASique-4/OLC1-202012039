@@ -43,6 +43,7 @@ export class Vector_1D_T2 extends Instruccion {
 
     public getNodos(instrucciones: any,nombre:string) {
         //Si es un string
+        console.log(instrucciones);
         if (typeof instrucciones == "string") {
             //Instruccion sin comillas
             let instruccion = instrucciones.replace(/\"/g, "");
@@ -60,7 +61,21 @@ export class Vector_1D_T2 extends Instruccion {
                 );
                 return resultado;
               }catch{
-                return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
+                try{
+                    return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
+                }catch{
+                    let resultado = '';
+                    instrucciones.forEach((element: any) => {
+                        let instruccion = element.replace(/\"/g, "");
+                        let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+                        nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
+                        this.contador++;
+                        resultado += "node" + this.line + this.column + nombre + " -> " + nodo;
+                       
+                    }
+                    );
+                    return resultado;
+                }
               }
         }
     }

@@ -24,12 +24,14 @@ export class Acceso_Vector_2D extends Instruccion {
         let ast = "node" + this.line + this.column + "\n";
         let nodo = "node" + this.line + this.column + "[label=\"Acceso_Vector_2D\"];\n";
         let nodoVariable = "node" + this.line + this.column + "variable[label=\"" + this.variable + "\"];\n";
-        let nodoExpresion = this.getNodos(this.expresion,"expresion");
-        let nodoExpresion2 = this.getNodos(this.expresion2,"expresion2");
+        let nodoExpresion = "node" + this.line + this.column + "expresion[label=\"Expresion\"];\n";
+        let nodoExpresion2 = "node" + this.line + this.column + "expresion2[label=\"Expresion\"];\n";
+        nodoExpresion += this.getNodos(this.expresion,"expresion");
+        nodoExpresion2 += this.getNodos(this.expresion2,"expresion2");
         ast += nodo + nodoVariable + nodoExpresion + nodoExpresion2;
         ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "variable;\n";
-        ast += "node" + this.line + this.column + "->" + "nodo" + this.line + this.column + "hijo0;\n";
-        ast += "node" + this.line + this.column + "->" + "nodo" + this.line + this.column + "hijo1;\n";
+        ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "expresion;\n";
+        ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "expresion2;\n";
         return ast;
     }
 

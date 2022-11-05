@@ -24,12 +24,12 @@ export class Comentario extends Instruccion {
     public getNodo():string{
         //This.expresion whitoout the first and last character
         let expresion = this.comentario.substring(1, this.comentario.length-1);
-        let ast = "nodo"+this.line+this.column + "\n";
-        let nodo = "nodo"+this.line+this.column+"[label=\"Comentario\"];\n";
-        let nodo1 = "nodo"+this.line+this.column+"1[label=\"\\\" " + expresion + "\\\"\"];\n";
+        let ast = "node"+this.line+this.column + "\n";
+        let nodo = "node"+this.line+this.column+"[label=\"Comentario\"];\n";
+        let nodo1 = "node"+this.line+this.column+"1[label=\"\\\" " + expresion + "\\\"\"];\n";
         //Apuntar nodo a nodo1
         ast += nodo + nodo1;
-        ast += "nodo"+this.line+this.column+"->"+"nodo"+this.line+this.column+"1;\n";
+        ast += "node"+this.line+this.column+"->"+"node"+this.line+this.column+"1;\n";
         
         return ast;
     }

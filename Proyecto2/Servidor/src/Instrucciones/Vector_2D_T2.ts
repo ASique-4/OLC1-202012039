@@ -49,15 +49,32 @@ export class Vector_2D_T2 extends Instruccion {
         }else{
             
             try{
-                let resultado = '';
-                instrucciones.forEach((element: any) => {
-                    resultado += "node" + this.line + this.column + nombre + " -> " + element.getNodo();
-                }
-                );
-                return resultado;
-              }catch{
                 return "node" + this.line + this.column + nombre + " -> " + instrucciones.getNodo();
-              }
+            }catch{
+                if(typeof instrucciones == "object"){
+                    let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+                    nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"Lista\"];\n";
+                    this.contador++;
+                    let nodos = "";
+                    for (let i = 0; i < instrucciones.length; i++) {
+                        nodos += this.getNodos(instrucciones[i],"hijo" + this.contador);
+                    }
+                    return nodo + nodos;
+                }else{
+                    let resultado = '';
+                    console.log(instrucciones);
+                    instrucciones.forEach((element: any) => {
+                        let instruccion = element.replace(/\"/g, "");
+                        let nodo = "node" + this.line + this.column + "hijo" + this.contador + "\n";
+                        nodo += "node" + this.line + this.column + "hijo" + this.contador + "[label=\"" + instruccion + "\"];\n";
+                        this.contador++;
+                        resultado += "node" + this.line + this.column + nombre + " -> " + nodo + "\n";
+                        
+                    }
+                    );
+                    return resultado;
+                }
+            }
         }
     }
 }

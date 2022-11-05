@@ -229,7 +229,7 @@ case 90:
 break;
 case 91:
 
-    this.$= new Vector_1D_T2($$[$0-8],$$[$0-5],$$[$0-2],_$[$0-8].first_line,_$[$0-8].first_column);
+    this.$= new Vector_1D_T2($$[$0-8],$$[$0-5],$$[$0-2],_$[$0-7].first_line,_$[$0-7].first_column);
 
 break;
 case 92:
@@ -241,19 +241,19 @@ break;
 case 94:
 
 
-    this.$= new Vector_2D_T1($$[$0-15],$$[$0-10],$$[$0-7],$$[$0-5],$$[$0-2],_$[$0-15].first_line,_$[$0-15].first_column);
+    this.$= new Vector_2D_T1($$[$0-15],$$[$0-10],$$[$0-7],$$[$0-5],$$[$0-2],_$[$0-14].first_line,_$[$0-14].first_column);
 
 break;
 case 95:
 
-    this.$= new Vector_2D_T2($$[$0-10],$$[$0-5],$$[$0-2],_$[$0-10].first_line,_$[$0-10].first_column);
+    this.$= new Vector_2D_T2($$[$0-10],$$[$0-5],$$[$0-2],_$[$0-9].first_line,_$[$0-9].first_column);
 
 break;
 case 96:
-this.$=$$[$0-4]; $$[$0-4].push('{'+$$[$0-1]+'}');
+this.$=$$[$0-4]; $$[$0-4].push($$[$0-1]);
 break;
 case 97:
-this.$=['{'+$$[$0-1]+'}'];
+this.$=[$$[$0-1]];
 break;
 case 98:
 this.$= new Acceso_Vector_1D($$[$0-3],$$[$0-1],_$[$0-3].first_line,_$[$0-3].first_column);

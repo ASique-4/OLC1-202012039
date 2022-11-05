@@ -1,5 +1,6 @@
 import { Instruccion } from "../Abstractas/instruccion";
 import { Parametro } from "./Parametro";
+import { Singleton } from "../Singleton/Singleton";
 
 export class Funcion extends Instruccion {
 
@@ -48,6 +49,7 @@ export class Funcion extends Instruccion {
     }
 
     public getNodo() {
+        let s = Singleton.getInstance();
         if(this.parametros != null){
             console.log("Funcion");
             let ast = "node" + this.line + this.column + "\n";
@@ -66,6 +68,11 @@ export class Funcion extends Instruccion {
             ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "parametros;\n";
             ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "tipo;\n";
             ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "instrucciones;\n";
+            try{
+                s.add_symbol(this.identificador,"Funcion",this.tipo,"-",this.line.toString(),this.column.toString());
+            }catch{
+                
+            }
             return ast;
         }else{
             let ast = "node" + this.line + this.column + "\n";
@@ -80,7 +87,11 @@ export class Funcion extends Instruccion {
             ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "identificador;\n";
             ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "tipo;\n";
             ast += "node" + this.line + this.column + "->" + "node" + this.line + this.column + "instrucciones;\n";
-            
+            try{
+                s.add_symbol(this.identificador,"Funcion",this.tipo,"-",this.line.toString(),this.column.toString());
+            }catch{
+                console.log("Error al agregar simbolo");
+            }
             return ast;
         }
 

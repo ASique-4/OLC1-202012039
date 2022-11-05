@@ -13,6 +13,7 @@ class ApiRoutes {
     this.router.get("/errores", apiController.getErrores);
     this.router.post("/", apiController.funcion2);
     this.router.get("/ast", apiController.getAST);
+    this.router.get("/simbolos", apiController.getSimbolos);
   }
 }
 

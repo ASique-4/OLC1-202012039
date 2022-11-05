@@ -1,5 +1,5 @@
 import { Instruccion } from "../Abstractas/instruccion";
-
+import { Singleton } from "../Singleton/Singleton";
 export class Asignacion extends Instruccion {
 
     public contador = 0;
@@ -38,60 +38,76 @@ export class Asignacion extends Instruccion {
 
         //Create a nodo of graphviz for the AST
         public getNodo():string{
+            let s = Singleton.getInstance();
             //Si variable es un arreglo
                 if(this.tipo == null){
-                    let ast = "node"+this.line+this.column + "\n";
-                    let nodo = "node"+this.line+this.column+"[label=\"Asignacion\"];\n";
+                    let ast = "node"+this.line+this.column + "as" + "\n";
+                    let nodo = "node"+this.line+this.column+"as[label=\"Asignacion\"];\n";
                     let nodoIgual = "node"+this.line+this.column+"igual[label=\"=\"];\n";
-                    let nodo1 = "node"+this.line+this.column+"1[label=\"Variable\"];\n";
-                    let nodo2 = "node"+this.line+this.column+"2[label=\"Expresion\"];\n";
+                    let nodo1 = "node"+this.line+this.column+"var[label=\"Variable\"];\n";
+                    let nodo2 = "node"+this.line+this.column+"expre[label=\"Expresion\"];\n";
                     
-                    nodo1 += this.getNodos(this.variable,"1");
-                    ;
-                    nodo2 += this.getNodos(this.expresion,"2");
+                    nodo1 += this.getNodos(this.variable,"var");
+                    nodo2 += this.getNodos(this.expresion,"expre");
                     //Apuntar nodo a nodo1
                     ast += nodo + nodoIgual + nodo1 + nodo2;
                     //Nodo igual apunta a nodo1 y nodo2
-                    ast += "node"+this.line+this.column+"igual->"+"node"+this.line+this.column+"1;\n";
-                    ast += "node"+this.line+this.column+"igual->"+"node"+this.line+this.column+"2;\n";
+                    ast += "node"+this.line+this.column+"igual->"+"node"+this.line+this.column+"var;\n";
+                    ast += "node"+this.line+this.column+"igual->"+"node"+this.line+this.column+"expre;\n";
                     //Nodo apunta a nodo igual
-                    ast += "node"+this.line+this.column+"->"+"node"+this.line+this.column+"igual;\n";
+                    ast += "node"+this.line+this.column+"as->"+"node"+this.line+this.column+"igual;\n";
+                    try{
+                        s.add_symbol(this.variable.toString(),"N/A","Variable","Asignacion",this.line.toString(),this.column.toString());
+                    }catch{
+                        console.log("Error al agregar simbolo");
+                    }
                     return ast;
                 }
     
                 if(this.expresion != null){
-                    let ast = "node"+this.line+this.column + "\n";
-                    let nodo = "node"+this.line+this.column+"[label=\"Asignacion\"];\n";
+                    let ast = "node"+this.line+this.column + "as" + "\n";
+                    let nodo = "node"+this.line+this.column+"as[label=\"Asignacion\"];\n";
                     let nodoIgual = "node"+this.line+this.column+"igual[label=\"=\"];\n";
-                    let nodo1 = "node"+this.line+this.column+"1[label=\"Variable\"];\n";
-                    let nodo2 = "node"+this.line+this.column+"2[label=\"Expresion\"];\n";
+                    let nodo1 = "node"+this.line+this.column+"var[label=\"Variable\"];\n";
+                    let nodo2 = "node"+this.line+this.column+"expre[label=\"Expresion\"];\n";
                     let nodoTipo = "node"+this.line+this.column+"tipo[label=\"Tipo\"];\n";
-                    console.log(this.expresion);
-                    nodo1 +=   this.getNodos(this.variable,"1");
-                    nodo2 +=  this.getNodos(this.expresion,"2");
+                    
+                    nodo1 +=   this.getNodos(this.variable,"var");
+                    nodo2 +=  this.getNodos(this.expresion,"expre");
                     nodoTipo +=  this.getNodos(this.tipo,"tipo");
                     //Apuntar nodo a nodo1
                     ast += nodo + nodoIgual + nodo1 + nodo2 + nodoTipo;
                     //Nodo igual apunta a nodo1 y nodo2
                     ast += "node"+this.line+this.column+"igual -> "+"node"+this.line+this.column+"tipo;\n";
-                    ast += "node"+this.line+this.column+"igual -> "+"node"+this.line+this.column+"1;\n";
-                    ast += "node"+this.line+this.column+"igual -> "+"node"+this.line+this.column+"2;\n";
+                    ast += "node"+this.line+this.column+"igual -> "+"node"+this.line+this.column+"var;\n";
+                    ast += "node"+this.line+this.column+"igual -> "+"node"+this.line+this.column+"expre;\n";
                     //Nodo apunta a nodo igual
-                    ast += "node"+this.line+this.column+" -> "+"node"+this.line+this.column+"igual;\n";
+                    ast += "node"+this.line+this.column+"as -> "+"node"+this.line+this.column+"igual;\n";
+                    try{
+                        s.add_symbol(this.variable.toString(),this.tipo,"Variable","Asignacion",this.line,this.column);
+                    }catch{
+                        console.log("Error al agregar simbolo");
+                    }
                     return ast;
                 }else{
-                    let ast = "node"+this.line+this.column + "\n";
-                    let nodo = "node"+this.line+this.column+"[label=\"Declaracion\"];\n";
-                    let nodo1 = "node"+this.line+this.column+"1[label=\"Variable\"];\n";
+                    let ast = "node"+this.line+this.column + "as" + "\n";
+                    let nodo = "node"+this.line+this.column+"as[label=\"Declaracion\"];\n";
+                    let nodo1 = "node"+this.line+this.column+"var[label=\"Variable\"];\n";
                     let nodoTipo = "node"+this.line+this.column+"tipo[label=\"Tipo\"];\n";
-                    nodo1 +=  this.getNodos(this.variable, "1");
+                    nodo1 +=  this.getNodos(this.variable, "var");
                     nodoTipo +=  this.getNodos(this.tipo, "tipo");
+                    
                     //Apuntar nodo a nodo1
                     ast += nodo + nodo1 + nodoTipo;
                     //Nodo igual apunta a nodo1 y nodo2
-                    ast += "node"+this.line+this.column+"tipo -> "+"node"+this.line+this.column+"1;\n";
+                    ast += "node"+this.line+this.column+"tipo -> "+"node"+this.line+this.column+"var;\n";
                     //Nodo apunta a nodo igual
-                    ast += "node"+this.line+this.column+" -> "+"node"+this.line+this.column+"tipo;\n";
+                    ast += "node"+this.line+this.column+"as -> "+"node"+this.line+this.column+"tipo;\n";
+                    try{
+                        s.add_symbol(this.variable.toString(),this.tipo,"Variable","Asignacion",this.line,this.column);
+                    }catch{
+                        console.log("Error al agregar simbolo");
+                    }
                     return ast;
                 }    
             

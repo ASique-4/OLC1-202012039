@@ -25,17 +25,17 @@ export class Acceso_Vector_1D extends Instruccion {
 
     //Create a nodo of graphviz for the AST
     public getNodo():string{
-        let ast = "nodo"+this.line+this.column + "\n";
-        let nodo = "nodo"+this.line+this.column+"[label=\"Acceso_Vector\"];\n";
-        let nodo1 = "nodo"+this.line+this.column+"1[label=\"Variable\"];\n";
-        let nodo2 = "nodo"+this.line+this.column+"2[label=\"Expresion\"];\n";
+        let ast = "node"+this.line+this.column + "\n";
+        let nodo = "node"+this.line+this.column+"[label=\"Acceso_Vector\"];\n";
+        let nodo1 = "node"+this.line+this.column+"1[label=\"Variable\"];\n";
+        let nodo2 = "node"+this.line+this.column+"2[label=\"Expresion\"];\n";
         nodo1 += this.getNodos(this.variable,"1");
         nodo2 += this.getNodos(this.expresion,"2");
         //Apuntar nodo a nodo1
         ast += nodo + nodo1 + nodo2;
         //Nodo apunta a nodo1 y nodo2
-        ast += "nodo"+this.line+this.column+"->"+"nodo"+this.line+this.column+"1;\n";
-        ast += "nodo"+this.line+this.column+"->"+"nodo"+this.line+this.column+"2;\n";
+        ast += "node"+this.line+this.column+"->"+"node"+this.line+this.column+"1;\n";
+        ast += "node"+this.line+this.column+"->"+"node"+this.line+this.column+"2;\n";
         return ast;
     }
 

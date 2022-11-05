@@ -48,7 +48,6 @@ export class Llamada extends Instruccion {
             let nodo1 = "node" + this.line + this.column + "1[label=\"Id\"];\n";
             let nodo2 = "node" + this.line + this.column + "2[label=\"Parametros\"];\n";
             nodo1 +=  this.getNodos(this.id,"1");
-            console.log(this.parametros);
             nodo2 += this.getNodos(this.parametros,"2");
             //Apuntar nodo a nodo1
             ast += nodo + nodo1 + nodo2;

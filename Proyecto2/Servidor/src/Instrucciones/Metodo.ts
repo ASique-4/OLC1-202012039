@@ -1,5 +1,6 @@
 import { Instruccion } from "../Abstractas/instruccion";
 import { Parametro } from "./Parametro";
+import { Singleton } from "../Singleton/Singleton";
 
 export class Metodo extends Instruccion {
 
@@ -64,6 +65,7 @@ export class Metodo extends Instruccion {
     }
 
     public getNodo() {
+        let s = Singleton.getInstance();
         if(this.parametros != null){
             let ast = "node" + this.line + this.column + "\n";
             ast += "node" + this.line + this.column + "[label=\"Metodo\"];\n";
@@ -80,6 +82,11 @@ export class Metodo extends Instruccion {
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "param;\n";
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "inst;\n";
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "tipo;\n";
+            try{
+                s.add_symbol(this.id,"Metodo","void","-",this.line.toString(),this.column.toString());
+            }catch{
+                console.log("Error al agregar el metodo");
+            }
             return ast;
         }else{
             let ast = "node" + this.line + this.column + "\n";
@@ -94,6 +101,11 @@ export class Metodo extends Instruccion {
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "id;\n";
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "inst;\n";
             ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "tipo;\n";
+            try{
+                s.add_symbol(this.id,"Metodo","void","-",this.line.toString(),this.column.toString());
+            }catch{
+                console.log("Error al agregar el metodo");
+            }
             return ast;
         }
     }

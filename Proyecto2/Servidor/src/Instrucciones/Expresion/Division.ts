@@ -40,7 +40,7 @@ export class Division extends Instruccion {
         ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "0;\n";
         ast += "node" + this.line + this.column + " -> node" + this.line + this.column + "1;\n";   
         
-
+        
         return ast;
     }
 
