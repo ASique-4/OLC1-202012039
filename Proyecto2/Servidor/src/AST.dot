@@ -3,387 +3,3891 @@ node [shape=ellipse fillcolor="#6B728E" style=filled];
 rankdir=TB;
 bgcolor="#474E68";
 node0[label="Instrucciones"];
-node0->node10
-node10[label="Funcion"];
-node10identificador[label="Identificador"];
-node10identificador -> node10hijo0
-node10hijo0[label="division"];
-node10tipo[label="Tipo"];
-node10tipo -> node10hijo1
-node10hijo1[label="string"];
-node10instrucciones[label="Instrucciones"];
-node10instrucciones -> node211as
-node211as[label="Asignacion"];
-node211igual[label="="];
-node211var[label="Variable"];
-node211var -> node211hijo0
-node211hijo0[label="v_2"];
-node211expre[label="Expresion"];
-node211expre -> node216
-node216[label="Casteo"];
-node2161[label="Casteo"];
-node2161 -> node216hijo0
-node216hijo0[label="string"];
-node2162[label="Expresion"];
-node2162 -> node229
-node229[label="Suma"];
-node229derecha[label="Izquierda"];
-node229derecha -> node229hijo0
-node229hijo0[label="12.25"];
-node229izquierda[label="Derecha"];
-node229izquierda -> node229hijo1
-node229hijo1[label="1.20"];
-node229 -> node229derecha;
-node229 -> node229izquierda;
-node216->node2161;
-node216->node2162;
-node211tipo[label="Tipo"];
-node211tipo -> node211hijo1
-node211hijo1[label="string"];
-node211igual -> node211tipo;
-node211igual -> node211var;
-node211igual -> node211expre;
-node211as -> node211igual;
-node10instrucciones -> node311as
-node311as[label="Asignacion"];
-node311igual[label="="];
-node311var[label="Variable"];
-node311var -> node311hijo0
-node311hijo0[label="v_3"];
-node311expre[label="Expresion"];
-node311expre -> node316
-node316[label="Casteo"];
-node3161[label="Casteo"];
-node3161 -> node316hijo0
-node316hijo0[label="string"];
-node3162[label="Expresion"];
-node3162 -> node316hijo1
-node316hijo1[label="true"];
-node316->node3161;
-node316->node3162;
-node311tipo[label="Tipo"];
-node311tipo -> node311hijo1
-node311hijo1[label="string"];
-node311igual -> node311tipo;
-node311igual -> node311var;
-node311igual -> node311expre;
-node311as -> node311igual;
-node10instrucciones -> node411as
-node411as[label="Asignacion"];
-node411igual[label="="];
-node411var[label="Variable"];
-node411var -> node411hijo0
-node411hijo0[label="v_4"];
-node411expre[label="Expresion"];
-node411expre -> node416
-node416[label="Casteo"];
-node4161[label="Casteo"];
-node4161 -> node416hijo0
-node416hijo0[label="string"];
-node4162[label="Expresion"];
-node4162 -> node416hijo1
-node416hijo1[label="'A'"];
-node416->node4161;
-node416->node4162;
-node411tipo[label="Tipo"];
-node411tipo -> node411hijo1
-node411hijo1[label="string"];
-node411igual -> node411tipo;
-node411igual -> node411var;
-node411igual -> node411expre;
-node411as -> node411igual;
-node10instrucciones -> node54
-node54[label="Return"];
-node54expresion[label="Expresion"];
-node54expresion -> node54hijo0
-node54hijo0[label="olc1"];
+node0->node110
+node110[label="Declaracion"];
+node110tipo[label="Tipo"];
+node110tipo -> node110hijo0
+node110hijo0[label="int"];
+node110nombre[label="Nombre"];
+node110nombre -> node110hijo1
+node110hijo1[label="varible_1"];
+node110 -> node110tipo;
+node110 -> node110nombre;
+node0->node120
+node120[label="Declaracion"];
+node120tipo[label="Tipo"];
+node120tipo -> node120hijo0
+node120hijo0[label="double"];
+node120nombre[label="Nombre"];
+node120nombre -> node120hijo1
+node120hijo1[label="varible_2"];
+node120 -> node120tipo;
+node120 -> node120nombre;
+node0->node130
+node130[label="Declaracion"];
+node130tipo[label="Tipo"];
+node130tipo -> node130hijo0
+node130hijo0[label="boolean"];
+node130nombre[label="Nombre"];
+node130nombre -> node130hijo1
+node130hijo1[label="varible_3"];
+node130 -> node130tipo;
+node130 -> node130nombre;
+node0->node140
+node140[label="Declaracion"];
+node140tipo[label="Tipo"];
+node140tipo -> node140hijo0
+node140hijo0[label="char"];
+node140nombre[label="Nombre"];
+node140nombre -> node140hijo1
+node140hijo1[label="varible_4"];
+node140 -> node140tipo;
+node140 -> node140nombre;
+node0->node150
+node150[label="Declaracion"];
+node150tipo[label="Tipo"];
+node150tipo -> node150hijo0
+node150hijo0[label="string"];
+node150nombre[label="Nombre"];
+node150nombre -> node150hijo1
+node150hijo1[label="varible_5"];
+node150 -> node150tipo;
+node150 -> node150nombre;
+node0->node1625
+node1625[label="Declaracion"];
+node1625tipo[label="Tipo"];
+node1625tipo -> node1625hijo0
+node1625hijo0[label="int"];
+node1625nombre[label="Nombre"];
+node1625nombre -> node164
+node164[label="Variable"];
+node164id[label="varible_1"];
+node164->node164id;
+node1625nombre -> node1615
+node1615[label="Variable"];
+node1615id[label="varible_11"];
+node1615->node1615id;
+node1625 -> node1625tipo;
+node1625 -> node1625nombre;
+node0->node1728
+node1728[label="Declaracion"];
+node1728tipo[label="Tipo"];
+node1728tipo -> node1728hijo0
+node1728hijo0[label="double"];
+node1728nombre[label="Nombre"];
+node1728nombre -> node177
+node177[label="Variable"];
+node177id[label="varible_2"];
+node177->node177id;
+node1728nombre -> node1718
+node1718[label="Variable"];
+node1718id[label="varible_22"];
+node1718->node1718id;
+node1728 -> node1728tipo;
+node1728 -> node1728nombre;
+node0->node1829
+node1829[label="Declaracion"];
+node1829tipo[label="Tipo"];
+node1829tipo -> node1829hijo0
+node1829hijo0[label="boolean"];
+node1829nombre[label="Nombre"];
+node1829nombre -> node188
+node188[label="Variable"];
+node188id[label="varible_3"];
+node188->node188id;
+node1829nombre -> node1819
+node1819[label="Variable"];
+node1819id[label="varible_33"];
+node1819->node1819id;
+node1829 -> node1829tipo;
+node1829 -> node1829nombre;
+node0->node1926
+node1926[label="Declaracion"];
+node1926tipo[label="Tipo"];
+node1926tipo -> node1926hijo0
+node1926hijo0[label="char"];
+node1926nombre[label="Nombre"];
+node1926nombre -> node195
+node195[label="Variable"];
+node195id[label="varible_4"];
+node195->node195id;
+node1926nombre -> node1916
+node1916[label="Variable"];
+node1916id[label="varible_44"];
+node1916->node1916id;
+node1926 -> node1926tipo;
+node1926 -> node1926nombre;
+node0->node205as
+node205as[label="Asignacion"];
+node205igual[label="="];
+node205var[label="Variable"];
+node205var -> node205hijo0
+node205hijo0[label="variableCHARARRAY"];
+node205expre[label="Expresion"];
+node205expre -> node2025
+node2025[label="ToCharArray"];
+node2025cadena[label=" Cadena "];
+node2025cadena -> node2025hijo0
+node2025hijo0[label="ESTA es LA VariaBle Moises: Aver que TAL"];
 
-node54 -> node54expresion;
-node10instrucciones -> node69as
-node69as[label="Asignacion"];
-node69igual[label="="];
-node69var[label="Variable"];
-node69var -> node69hijo0
-node69hijo0[label="mivar"];
-node69expre[label="Expresion"];
-node69expre -> node631
-node631[label="Suma"];
-node631derecha[label="Izquierda"];
-node631derecha -> node611
-node611[label="ToLower"];
-node611cadena[label="Cadena"];
-node611cadena -> node626
-node626[label="Suma"];
-node626derecha[label="Izquierda"];
-node626derecha -> node626hijo0
-node626hijo0[label="QWERT"];
-node626izquierda[label="Derecha"];
-node626izquierda -> node626hijo1
-node626hijo1[label=" "];
-node626 -> node626derecha;
-node626 -> node626izquierda;
-node611->node611cadena;
-node631izquierda[label="Derecha"];
-node631izquierda -> node631hijo0
-node631hijo0[label="1+5"];
-node631 -> node631derecha;
-node631 -> node631izquierda;
-node69igual->node69var;
-node69igual->node69expre;
-node69as->node69igual;
-node10instrucciones -> node79as
-node79as[label="Asignacion"];
-node79igual[label="="];
-node79var[label="Variable"];
-node79var -> node79hijo0
-node79hijo0[label="mivar"];
-node79expre[label="Expresion"];
-node79expre -> node731
-node731[label="Suma"];
-node731derecha[label="Izquierda"];
-node731derecha -> node711
-node711[label="ToUpper"];
-node711cadena[label="Cadena"];
-node711cadena -> node726
-node726[label="Suma"];
-node726derecha[label="Izquierda"];
-node726derecha -> node726hijo0
-node726hijo0[label="QWERT"];
-node726izquierda[label="Derecha"];
-node726izquierda -> node726hijo1
-node726hijo1[label=" "];
-node726 -> node726derecha;
-node726 -> node726izquierda;
-node711->node711cadena;
-node731izquierda[label="Derecha"];
-node731izquierda -> node731hijo0
-node731hijo0[label="hola!"];
-node731 -> node731derecha;
-node731 -> node731izquierda;
-node79igual->node79var;
-node79igual->node79expre;
-node79as->node79igual;
-node10instrucciones -> node812as
-node812as[label="Asignacion"];
-node812igual[label="="];
-node812var[label="Variable"];
-node812var -> node812hijo0
-node812hijo0[label="v_2"];
-node812expre[label="Expresion"];
-node812expre -> node817
-node817[label="Casteo"];
-node8171[label="Casteo"];
-node8171 -> node817hijo0
-node817hijo0[label="boolean"];
-node8172[label="Expresion"];
-node8172 -> node817hijo1
-node817hijo1[label="12.25"];
-node817->node8171;
-node817->node8172;
-node812tipo[label="Tipo"];
-node812tipo -> node812hijo1
-node812hijo1[label="boolean"];
-node812igual -> node812tipo;
-node812igual -> node812var;
-node812igual -> node812expre;
-node812as -> node812igual;
-node10instrucciones -> node911as
-node911as[label="Asignacion"];
-node911igual[label="="];
-node911var[label="Variable"];
-node911var -> node911hijo0
-node911hijo0[label="a_1"];
-node911expre[label="Expresion"];
-node911expre -> node915
-node915[label="TypeOf"];
-node915cadena[label="Cadena"];
-node915cadena -> node915hijo0
-node915hijo0[label="15"];
-node915->node915cadena;
-node911tipo[label="Tipo"];
-node911tipo -> node911hijo1
-node911hijo1[label="string"];
-node911igual -> node911tipo;
-node911igual -> node911var;
-node911igual -> node911expre;
-node911as -> node911igual;
-node10instrucciones -> node1011as
-node1011as[label="Asignacion"];
-node1011igual[label="="];
-node1011var[label="Variable"];
-node1011var -> node1011hijo0
-node1011hijo0[label="a_2"];
-node1011expre[label="Expresion"];
-node1011expre -> node1015
-node1015[label="TypeOf"];
-node1015cadena[label="Cadena"];
-node1015cadena -> node1024
-node1024[label="Suma"];
-node1024derecha[label="Izquierda"];
-node1024derecha -> node1024hijo0
-node1024hijo0[label="15"];
-node1024izquierda[label="Derecha"];
-node1024izquierda -> node1024hijo1
-node1024hijo1[label="6.5"];
-node1024 -> node1024derecha;
-node1024 -> node1024izquierda;
-node1015->node1015cadena;
-node1011tipo[label="Tipo"];
-node1011tipo -> node1011hijo1
-node1011hijo1[label="string"];
-node1011igual -> node1011tipo;
-node1011igual -> node1011var;
-node1011igual -> node1011expre;
-node1011as -> node1011igual;
-node10instrucciones -> node1111as
-node1111as[label="Asignacion"];
-node1111igual[label="="];
-node1111var[label="Variable"];
-node1111var -> node1111hijo0
-node1111hijo0[label="a_3"];
-node1111expre[label="Expresion"];
-node1111expre -> node1115
-node1115[label="TypeOf"];
-node1115cadena[label="Cadena"];
-node1115cadena -> node1115hijo0
-node1115hijo0[label="'a'"];
-node1115->node1115cadena;
-node1111tipo[label="Tipo"];
-node1111tipo -> node1111hijo1
-node1111hijo1[label="string"];
-node1111igual -> node1111tipo;
-node1111igual -> node1111var;
-node1111igual -> node1111expre;
-node1111as -> node1111igual;
-node10instrucciones -> node1211as
-node1211as[label="Asignacion"];
-node1211igual[label="="];
-node1211var[label="Variable"];
-node1211var -> node1211hijo0
-node1211hijo0[label="a_4"];
-node1211expre[label="Expresion"];
-node1211expre -> node1215
-node1215[label="TypeOf"];
-node1215cadena[label="Cadena"];
-node1215cadena -> node1215hijo0
-node1215hijo0[label="true"];
-node1215->node1215cadena;
-node1211tipo[label="Tipo"];
-node1211tipo -> node1211hijo1
-node1211hijo1[label="string"];
-node1211igual -> node1211tipo;
-node1211igual -> node1211var;
-node1211igual -> node1211expre;
-node1211as -> node1211igual;
-node10instrucciones -> node1311as
-node1311as[label="Asignacion"];
-node1311igual[label="="];
-node1311var[label="Variable"];
-node1311var -> node1311hijo0
-node1311hijo0[label="a_5"];
-node1311expre[label="Expresion"];
-node1311expre -> node1315
-node1315[label="TypeOf"];
-node1315cadena[label="Cadena"];
-node1315cadena -> node1315hijo0
-node1315hijo0[label="dsafdsa"];
-node1315->node1315cadena;
-node1311tipo[label="Tipo"];
-node1311tipo -> node1311hijo1
-node1311hijo1[label="string"];
-node1311igual -> node1311tipo;
-node1311igual -> node1311var;
-node1311igual -> node1311expre;
-node1311as -> node1311igual;
-node10instrucciones -> node1411as
-node1411as[label="Asignacion"];
-node1411igual[label="="];
-node1411var[label="Variable"];
-node1411var -> node1411hijo0
-node1411hijo0[label="a_5"];
-node1411expre[label="Expresion"];
-node1411expre -> node1415
-node1415[label="ToString"];
-node1415numero[label="Valor"];
-node1415numero -> node1415hijo0
-node1415hijo0[label="melmv"];
-node1415->node1415numero;
-node1411tipo[label="Tipo"];
-node1411tipo -> node1411hijo1
-node1411hijo1[label="string"];
-node1411igual -> node1411tipo;
-node1411igual -> node1411var;
-node1411igual -> node1411expre;
-node1411as -> node1411igual;
-node10instrucciones -> node1511as
-node1511as[label="Asignacion"];
-node1511igual[label="="];
-node1511var[label="Variable"];
-node1511var -> node1511hijo0
-node1511hijo0[label="a_5"];
-node1511expre[label="Expresion"];
-node1511expre -> node1515
-node1515[label="ToString"];
-node1515numero[label="Valor"];
-node1515numero -> node1515hijo0
-node1515hijo0[label="15"];
-node1515->node1515numero;
-node1511tipo[label="Tipo"];
-node1511tipo -> node1511hijo1
-node1511hijo1[label="string"];
-node1511igual -> node1511tipo;
-node1511igual -> node1511var;
-node1511igual -> node1511expre;
-node1511as -> node1511igual;
-node10instrucciones -> node1611as
-node1611as[label="Asignacion"];
-node1611igual[label="="];
-node1611var[label="Variable"];
-node1611var -> node1611hijo0
-node1611hijo0[label="a_5"];
-node1611expre[label="Expresion"];
-node1611expre -> node1615
-node1615[label="ToString"];
-node1615numero[label="Valor"];
-node1615numero -> node1629
-node1629[label="Suma"];
-node1629derecha[label="Izquierda"];
-node1629derecha -> node1629hijo0
-node1629hijo0[label="15.23"];
-node1629izquierda[label="Derecha"];
-node1629izquierda -> node1629hijo1
-node1629hijo1[label="9.02"];
-node1629 -> node1629derecha;
-node1629 -> node1629izquierda;
-node1615->node1615numero;
-node1611tipo[label="Tipo"];
-node1611tipo -> node1611hijo1
-node1611hijo1[label="string"];
-node1611igual -> node1611tipo;
-node1611igual -> node1611var;
-node1611igual -> node1611expre;
-node1611as -> node1611igual;
-node10instrucciones -> node1711as
-node1711as[label="Asignacion"];
-node1711igual[label="="];
-node1711var[label="Variable"];
-node1711var -> node1711hijo0
-node1711hijo0[label="a_5"];
-node1711expre[label="Expresion"];
-node1711expre -> node1715
-node1715[label="ToString"];
-node1715numero[label="Valor"];
-node1715numero -> node1715hijo0
-node1715hijo0[label="true"];
-node1715->node1715numero;
-node1711tipo[label="Tipo"];
-node1711tipo -> node1711hijo1
-node1711hijo1[label="string"];
-node1711igual -> node1711tipo;
-node1711igual -> node1711var;
-node1711igual -> node1711expre;
-node1711as -> node1711igual;
-node10->node10identificador;
-node10->node10tipo;
-node10->node10instrucciones;
+node2025 -> node2025cadena
+node205tipo[label="Tipo"];
+node205tipo -> node205hijo1
+node205hijo1[label="char"];
+node205igual -> node205tipo;
+node205igual -> node205var;
+node205igual -> node205expre;
+node205as -> node205igual;
+node0->node2128
+node2128[label="Declaracion"];
+node2128tipo[label="Tipo"];
+node2128tipo -> node2128hijo0
+node2128hijo0[label="string"];
+node2128nombre[label="Nombre"];
+node2128nombre -> node217
+node217[label="Variable"];
+node217id[label="varible_5"];
+node217->node217id;
+node2128nombre -> node2118
+node2118[label="Variable"];
+node2118id[label="varible_55"];
+node2118->node2118id;
+node2128 -> node2128tipo;
+node2128 -> node2128nombre;
+node0->node224as
+node224as[label="Asignacion"];
+node224igual[label="="];
+node224var[label="Variable"];
+node224var -> node224hijo0
+node224hijo0[label="var_1"];
+node224expre[label="Expresion"];
+node224expre -> node224hijo1
+node224hijo1[label="12"];
+node224tipo[label="Tipo"];
+node224tipo -> node224hijo2
+node224hijo2[label="int"];
+node224igual -> node224tipo;
+node224igual -> node224var;
+node224igual -> node224expre;
+node224as -> node224igual;
+node0->node2327as
+node2327as[label="Asignacion"];
+node2327igual[label="="];
+node2327var[label="Variable"];
+node2327var -> node234
+node234[label="Variable"];
+node234id[label="tm1_"];
+node234->node234id;
+node2327var -> node239
+node239[label="Variable"];
+node239id[label="tmp2_"];
+node239->node239id;
+node2327var -> node2315
+node2315[label="Variable"];
+node2315id[label="tmp3_"];
+node2315->node2315id;
+node2327var -> node2321
+node2321[label="Variable"];
+node2321id[label="tmp4_"];
+node2321->node2321id;
+node2327expre[label="Expresion"];
+node2327expre -> node2331
+node2331[label="Suma"];
+node2331derecha[label="Izquierda"];
+node2331derecha -> node2331hijo0
+node2331hijo0[label="12"];
+node2331izquierda[label="Derecha"];
+node2331izquierda -> node2331hijo1
+node2331hijo1[label="5"];
+node2331 -> node2331derecha;
+node2331 -> node2331izquierda;
+node2327tipo[label="Tipo"];
+node2327tipo -> node2327hijo0
+node2327hijo0[label="int"];
+node2327igual -> node2327tipo;
+node2327igual -> node2327var;
+node2327igual -> node2327expre;
+node2327as -> node2327igual;
+node0->node247as
+node247as[label="Asignacion"];
+node247igual[label="="];
+node247var[label="Variable"];
+node247var -> node247hijo0
+node247hijo0[label="var_2"];
+node247expre[label="Expresion"];
+node247expre -> node247hijo1
+node247hijo1[label="15.02"];
+node247tipo[label="Tipo"];
+node247tipo -> node247hijo2
+node247hijo2[label="double"];
+node247igual -> node247tipo;
+node247igual -> node247var;
+node247igual -> node247expre;
+node247as -> node247igual;
+node0->node257as
+node257as[label="Asignacion"];
+node257igual[label="="];
+node257var[label="Variable"];
+node257var -> node257hijo0
+node257hijo0[label="var_2_1"];
+node257expre[label="Expresion"];
+node257expre -> node257hijo1
+node257hijo1[label="2022.00"];
+node257tipo[label="Tipo"];
+node257tipo -> node257hijo2
+node257hijo2[label="double"];
+node257igual -> node257tipo;
+node257igual -> node257var;
+node257igual -> node257expre;
+node257as -> node257igual;
+node0->node267as
+node267as[label="Asignacion"];
+node267igual[label="="];
+node267var[label="Variable"];
+node267var -> node267hijo0
+node267hijo0[label="var_2_2"];
+node267expre[label="Expresion"];
+node267expre -> node267hijo1
+node267hijo1[label="0.10"];
+node267tipo[label="Tipo"];
+node267tipo -> node267hijo2
+node267hijo2[label="double"];
+node267igual -> node267tipo;
+node267igual -> node267var;
+node267igual -> node267expre;
+node267as -> node267igual;
+node0->node277as
+node277as[label="Asignacion"];
+node277igual[label="="];
+node277var[label="Variable"];
+node277var -> node277hijo0
+node277hijo0[label="var_2_3"];
+node277expre[label="Expresion"];
+node277expre -> node277hijo1
+node277hijo1[label="1.0"];
+node277tipo[label="Tipo"];
+node277tipo -> node277hijo2
+node277hijo2[label="double"];
+node277igual -> node277tipo;
+node277igual -> node277var;
+node277igual -> node277expre;
+node277as -> node277igual;
+node0->node287as
+node287as[label="Asignacion"];
+node287igual[label="="];
+node287var[label="Variable"];
+node287var -> node287hijo0
+node287hijo0[label="var_2_4"];
+node287expre[label="Expresion"];
+node287expre -> node287hijo1
+node287hijo1[label="51.1589462625459"];
+node287tipo[label="Tipo"];
+node287tipo -> node287hijo2
+node287hijo2[label="double"];
+node287igual -> node287tipo;
+node287igual -> node287var;
+node287igual -> node287expre;
+node287as -> node287igual;
+node0->node298as
+node298as[label="Asignacion"];
+node298igual[label="="];
+node298var[label="Variable"];
+node298var -> node298hijo0
+node298hijo0[label="var_3"];
+node298expre[label="Expresion"];
+node298expre -> node298hijo1
+node298hijo1[label="true"];
+node298tipo[label="Tipo"];
+node298tipo -> node298hijo2
+node298hijo2[label="boolean"];
+node298igual -> node298tipo;
+node298igual -> node298var;
+node298igual -> node298expre;
+node298as -> node298igual;
+node0->node308as
+node308as[label="Asignacion"];
+node308igual[label="="];
+node308var[label="Variable"];
+node308var -> node308hijo0
+node308hijo0[label="var_3_1"];
+node308expre[label="Expresion"];
+node308expre -> node308hijo1
+node308hijo1[label="false"];
+node308tipo[label="Tipo"];
+node308tipo -> node308hijo2
+node308hijo2[label="boolean"];
+node308igual -> node308tipo;
+node308igual -> node308var;
+node308igual -> node308expre;
+node308as -> node308igual;
+node0->node315as
+node315as[label="Asignacion"];
+node315igual[label="="];
+node315var[label="Variable"];
+node315var -> node315hijo0
+node315hijo0[label="var_4_1"];
+node315expre[label="Expresion"];
+node315expre -> node315hijo1
+node315hijo1[label="'a'"];
+node315tipo[label="Tipo"];
+node315tipo -> node315hijo2
+node315hijo2[label="char"];
+node315igual -> node315tipo;
+node315igual -> node315var;
+node315igual -> node315expre;
+node315as -> node315igual;
+node0->node325as
+node325as[label="Asignacion"];
+node325igual[label="="];
+node325var[label="Variable"];
+node325var -> node325hijo0
+node325hijo0[label="var_4_2"];
+node325expre[label="Expresion"];
+node325expre -> node325hijo1
+node325hijo1[label="'2'"];
+node325tipo[label="Tipo"];
+node325tipo -> node325hijo2
+node325hijo2[label="char"];
+node325igual -> node325tipo;
+node325igual -> node325var;
+node325igual -> node325expre;
+node325as -> node325igual;
+node0->node335as
+node335as[label="Asignacion"];
+node335igual[label="="];
+node335var[label="Variable"];
+node335var -> node335hijo0
+node335hijo0[label="var_4_3"];
+node335expre[label="Expresion"];
+node335expre -> node335hijo1
+node335hijo1[label="'W'"];
+node335tipo[label="Tipo"];
+node335tipo -> node335hijo2
+node335hijo2[label="char"];
+node335igual -> node335tipo;
+node335igual -> node335var;
+node335igual -> node335expre;
+node335as -> node335igual;
+node0->node345as
+node345as[label="Asignacion"];
+node345igual[label="="];
+node345var[label="Variable"];
+node345var -> node345hijo0
+node345hijo0[label="var_4_4"];
+node345expre[label="Expresion"];
+node345expre -> node345hijo1
+node345hijo1[label="'@'"];
+node345tipo[label="Tipo"];
+node345tipo -> node345hijo2
+node345hijo2[label="char"];
+node345igual -> node345tipo;
+node345igual -> node345var;
+node345igual -> node345expre;
+node345as -> node345igual;
+node0->node355as
+node355as[label="Asignacion"];
+node355igual[label="="];
+node355var[label="Variable"];
+node355var -> node355hijo0
+node355hijo0[label="var_4_5"];
+node355expre[label="Expresion"];
+node355expre -> node355hijo1
+node355hijo1[label="'!'"];
+node355tipo[label="Tipo"];
+node355tipo -> node355hijo2
+node355hijo2[label="char"];
+node355igual -> node355tipo;
+node355igual -> node355var;
+node355igual -> node355expre;
+node355as -> node355igual;
+node0->node365as
+node365as[label="Asignacion"];
+node365igual[label="="];
+node365var[label="Variable"];
+node365var -> node365hijo0
+node365hijo0[label="var_4_6"];
+node365expre[label="Expresion"];
+node365expre -> node365hijo1
+node365hijo1[label="'%'"];
+node365tipo[label="Tipo"];
+node365tipo -> node365hijo2
+node365hijo2[label="char"];
+node365igual -> node365tipo;
+node365igual -> node365var;
+node365igual -> node365expre;
+node365as -> node365igual;
+node0->node375as
+node375as[label="Asignacion"];
+node375igual[label="="];
+node375var[label="Variable"];
+node375var -> node375hijo0
+node375hijo0[label="var_4_7"];
+node375expre[label="Expresion"];
+node375expre -> node375hijo1
+node375hijo1[label="'/'"];
+node375tipo[label="Tipo"];
+node375tipo -> node375hijo2
+node375hijo2[label="char"];
+node375igual -> node375tipo;
+node375igual -> node375var;
+node375igual -> node375expre;
+node375as -> node375igual;
+node0->node387as
+node387as[label="Asignacion"];
+node387igual[label="="];
+node387var[label="Variable"];
+node387var -> node387hijo0
+node387hijo0[label="var_5_1"];
+node387expre[label="Expresion"];
+node387expre -> node387hijo1
+node387hijo1[label="Hola"];
+node387tipo[label="Tipo"];
+node387tipo -> node387hijo2
+node387hijo2[label="string"];
+node387igual -> node387tipo;
+node387igual -> node387var;
+node387igual -> node387expre;
+node387as -> node387igual;
+node0->node397as
+node397as[label="Asignacion"];
+node397igual[label="="];
+node397var[label="Variable"];
+node397var -> node397hijo0
+node397hijo0[label="var_5_2"];
+node397expre[label="Expresion"];
+node397expre -> node397hijo1
+node397hijo1[label="Mundo"];
+node397tipo[label="Tipo"];
+node397tipo -> node397hijo2
+node397hijo2[label="string"];
+node397igual -> node397tipo;
+node397igual -> node397var;
+node397igual -> node397expre;
+node397as -> node397igual;
+node0->node407as
+node407as[label="Asignacion"];
+node407igual[label="="];
+node407var[label="Variable"];
+node407var -> node407hijo0
+node407hijo0[label="var_5_3"];
+node407expre[label="Expresion"];
+node407expre -> node407hijo1
+node407hijo1[label="este es un mensaje @"];
+node407tipo[label="Tipo"];
+node407tipo -> node407hijo2
+node407hijo2[label="string"];
+node407igual -> node407tipo;
+node407igual -> node407var;
+node407igual -> node407expre;
+node407as -> node407igual;
+node0->node455as
+node455as[label="Asignacion"];
+node455igual[label="="];
+node455var[label="Variable"];
+node455var -> node455hijo0
+node455hijo0[label="var_1"];
+node455expre[label="Expresion"];
+node455expre -> node4524
+node4524[label="Resta"];
+node4524derecha[label="Izquierda"];
+node4524izquierda -> node4522
+node4522[label="Suma"];
+node4522derecha[label="Izquierda"];
+node4522derecha -> node4520
+node4520[label="Resta"];
+node4520derecha[label="Izquierda"];
+node4520izquierda -> node4518
+node4518[label="Suma"];
+node4518derecha[label="Izquierda"];
+node4518derecha -> node4516
+node4516[label="Resta"];
+node4516derecha[label="Izquierda"];
+node4516izquierda -> node4514
+node4514[label="Suma"];
+node4514derecha[label="Izquierda"];
+node4514derecha -> node4512
+node4512[label="Resta"];
+node4512derecha[label="Izquierda"];
+node4512izquierda -> node4510
+node4510[label="Suma"];
+node4510derecha[label="Izquierda"];
+node4510derecha -> node4510hijo0
+node4510hijo0[label="1"];
+node4510izquierda[label="Derecha"];
+node4510izquierda -> node4510hijo1
+node4510hijo1[label="2"];
+node4510 -> node4510derecha;
+node4510 -> node4510izquierda;
+node4512izquierda[label="Derecha"];
+node4512derecha -> node4512hijo0
+node4512hijo0[label="3"];
+node4512 -> node4512derecha;
+node4512 -> node4512izquierda;
+node4514izquierda[label="Derecha"];
+node4514izquierda -> node4514hijo0
+node4514hijo0[label="4"];
+node4514 -> node4514derecha;
+node4514 -> node4514izquierda;
+node4516izquierda[label="Derecha"];
+node4516derecha -> node4516hijo0
+node4516hijo0[label="5"];
+node4516 -> node4516derecha;
+node4516 -> node4516izquierda;
+node4518izquierda[label="Derecha"];
+node4518izquierda -> node4518hijo0
+node4518hijo0[label="6"];
+node4518 -> node4518derecha;
+node4518 -> node4518izquierda;
+node4520izquierda[label="Derecha"];
+node4520derecha -> node4520hijo0
+node4520hijo0[label="7"];
+node4520 -> node4520derecha;
+node4520 -> node4520izquierda;
+node4522izquierda[label="Derecha"];
+node4522izquierda -> node4522hijo0
+node4522hijo0[label="8"];
+node4522 -> node4522derecha;
+node4522 -> node4522izquierda;
+node4524izquierda[label="Derecha"];
+node4524derecha -> node4524hijo0
+node4524hijo0[label="9"];
+node4524 -> node4524derecha;
+node4524 -> node4524izquierda;
+node455igual->node455var;
+node455igual->node455expre;
+node455as->node455igual;
+node0->node465as
+node465as[label="Asignacion"];
+node465igual[label="="];
+node465var[label="Variable"];
+node465var -> node465hijo0
+node465hijo0[label="var_1"];
+node465expre[label="Expresion"];
+node465expre -> node4616
+node4616[label="Suma"];
+node4616derecha[label="Izquierda"];
+node4616derecha -> node4613
+node4613[label="Suma"];
+node4613derecha[label="Izquierda"];
+node4613derecha -> node4611
+node4611[label="Suma"];
+node4611derecha[label="Izquierda"];
+node4611derecha -> node469
+node469[label="Suma"];
+node469derecha[label="Izquierda"];
+node469derecha -> node469hijo0
+node469hijo0[label="1"];
+node469izquierda[label="Derecha"];
+node469izquierda -> node469hijo1
+node469hijo1[label="2"];
+node469 -> node469derecha;
+node469 -> node469izquierda;
+node4611izquierda[label="Derecha"];
+node4611izquierda -> node4611hijo0
+node4611hijo0[label="3"];
+node4611 -> node4611derecha;
+node4611 -> node4611izquierda;
+node4613izquierda[label="Derecha"];
+node4613izquierda -> node4613hijo0
+node4613hijo0[label="4"];
+node4613 -> node4613derecha;
+node4613 -> node4613izquierda;
+node4616izquierda[label="Derecha"];
+node4616izquierda -> node4625
+node4625[label="Suma"];
+node4625derecha[label="Izquierda"];
+node4625derecha -> node4623
+node4623[label="Suma"];
+node4623derecha[label="Izquierda"];
+node4623derecha -> node4621
+node4621[label="Suma"];
+node4621derecha[label="Izquierda"];
+node4621derecha -> node4619
+node4619[label="Suma"];
+node4619derecha[label="Izquierda"];
+node4619derecha -> node4619hijo0
+node4619hijo0[label="5"];
+node4619izquierda[label="Derecha"];
+node4619izquierda -> node4619hijo1
+node4619hijo1[label="6"];
+node4619 -> node4619derecha;
+node4619 -> node4619izquierda;
+node4621izquierda[label="Derecha"];
+node4621izquierda -> node4621hijo0
+node4621hijo0[label="7"];
+node4621 -> node4621derecha;
+node4621 -> node4621izquierda;
+node4623izquierda[label="Derecha"];
+node4623izquierda -> node4623hijo0
+node4623hijo0[label="8"];
+node4623 -> node4623derecha;
+node4623 -> node4623izquierda;
+node4625izquierda[label="Derecha"];
+node4625izquierda -> node4625hijo0
+node4625hijo0[label="9"];
+node4625 -> node4625derecha;
+node4625 -> node4625izquierda;
+node4616 -> node4616derecha;
+node4616 -> node4616izquierda;
+node465igual->node465var;
+node465igual->node465expre;
+node465as->node465igual;
+node0->node475as
+node475as[label="Asignacion"];
+node475igual[label="="];
+node475var[label="Variable"];
+node475var -> node475hijo0
+node475hijo0[label="var_1"];
+node475expre[label="Expresion"];
+node475expre -> node4713
+node4713[label="Suma"];
+node4713derecha[label="Izquierda"];
+node4713derecha -> node479
+node479[label="Suma"];
+node479derecha[label="Izquierda"];
+node479derecha -> node479hijo0
+node479hijo0[label="-1"];
+node479izquierda[label="Derecha"];
+node479izquierda -> node4711
+node4711[label=" * "];
+node47110 [label="izquierda"];
+node47110 -> node4711hijo0
+node4711hijo0[label="2"];
+node47111 [label="derecha"];
+node47111 -> node4711hijo1
+node4711hijo1[label="3"];
+node4711 -> node47110;
+node4711 -> node47111;
+node479 -> node479derecha;
+node479 -> node479izquierda;
+node4713izquierda[label="Derecha"];
+node4713izquierda -> node4717
+node4717[label=" Division "];
+node47170 [label="izquierda"];
+node47170 -> node4715
+node4715[label=" * "];
+node47150 [label="izquierda"];
+node47150 -> node4715hijo0
+node4715hijo0[label="4"];
+node47151 [label="derecha"];
+node47151 -> node4715hijo1
+node4715hijo1[label="8"];
+node4715 -> node47150;
+node4715 -> node47151;
+node47171 [label="derecha"];
+node47171 -> node4719
+node4719[label="Modulo"];
+node4719derecha[label="Izquierda"];
+node4719derecha -> node4719hijo0
+node4719hijo0[label="8"];
+node4719izquierda[label="Derecha"];
+node4719izquierda -> node4719hijo1
+node4719hijo1[label="5789"];
+node4719 -> node4719derecha;
+node4719 -> node4719izquierda;
+node4717 -> node47170;
+node4717 -> node47171;
+node4713 -> node4713derecha;
+node4713 -> node4713izquierda;
+node475igual->node475var;
+node475igual->node475expre;
+node475as->node475igual;
+node0->node495as
+node495as[label="Asignacion"];
+node495igual[label="="];
+node495var[label="Variable"];
+node495var -> node495hijo0
+node495hijo0[label="var_3"];
+node495expre[label="Expresion"];
+node495expre -> node4922
+node4922[label="Condicion"];
+node4922valor1[label="Izquierda"];
+node4922valor1 -> node4916
+node4916[label="Suma"];
+node4916derecha[label="Izquierda"];
+node4916derecha -> node4912
+node4912[label="Suma"];
+node4912derecha[label="Izquierda"];
+node4912derecha -> node4910
+node4910[label="Resta"];
+node4910derecha[label="Izquierda"];
+node4910izquierda -> node498
+node498[label="Suma"];
+node498derecha[label="Izquierda"];
+node498derecha -> node498hijo0
+node498hijo0[label="5"];
+node498izquierda[label="Derecha"];
+node498izquierda -> node498hijo1
+node498hijo1[label="5"];
+node498 -> node498derecha;
+node498 -> node498izquierda;
+node4910izquierda[label="Derecha"];
+node4910derecha -> node4910hijo0
+node4910hijo0[label="8"];
+node4910 -> node4910derecha;
+node4910 -> node4910izquierda;
+node4912izquierda[label="Derecha"];
+node4912izquierda -> node4914
+node4914[label=" * "];
+node49140 [label="izquierda"];
+node49140 -> node4914hijo0
+node4914hijo0[label="6"];
+node49141 [label="derecha"];
+node49141 -> node4914hijo1
+node4914hijo1[label="8"];
+node4914 -> node49140;
+node4914 -> node49141;
+node4912 -> node4912derecha;
+node4912 -> node4912izquierda;
+node4916izquierda[label="Derecha"];
+node4916izquierda -> node4918
+node4918[label=" Division "];
+node49180 [label="izquierda"];
+node49180 -> node4918hijo0
+node4918hijo0[label="1"];
+node49181 [label="derecha"];
+node49181 -> node4920
+node4920[label="Modulo"];
+node4920derecha[label="Izquierda"];
+node4920derecha -> node4920hijo0
+node4920hijo0[label="7"];
+node4920izquierda[label="Derecha"];
+node4920izquierda -> node4920hijo1
+node4920hijo1[label="9"];
+node4920 -> node4920derecha;
+node4920 -> node4920izquierda;
+node4918 -> node49180;
+node4918 -> node49181;
+node4916 -> node4916derecha;
+node4916 -> node4916izquierda;
+
+node4922condicion[label="Condicion"];
+node4922condicion -> node4922hijo0
+node4922hijo0[label=">"];
+
+node4922valor2[label="Derecha"];
+node4922valor2 -> node4925
+node4925[label="Suma"];
+node4925derecha[label="Izquierda"];
+node4925derecha -> node4925hijo0
+node4925hijo0[label="45"];
+node4925izquierda[label="Derecha"];
+node4925izquierda -> node4925hijo1
+node4925hijo1[label="6"];
+node4925 -> node4925derecha;
+node4925 -> node4925izquierda;
+
+node4922 -> node4922valor1;
+node4922 -> node4922condicion;
+node4922 -> node4922valor2;
+node495igual->node495var;
+node495igual->node495expre;
+node495as->node495igual;
+node0->node505as
+node505as[label="Asignacion"];
+node505igual[label="="];
+node505var[label="Variable"];
+node505var -> node505hijo0
+node505hijo0[label="var_3"];
+node505expre[label="Expresion"];
+node505expre -> node5022
+node5022[label="Condicion"];
+node5022valor1[label="Izquierda"];
+node5022valor1 -> node5012
+node5012[label="Suma"];
+node5012derecha[label="Izquierda"];
+node5012derecha -> node5010
+node5010[label="Resta"];
+node5010derecha[label="Izquierda"];
+node5010izquierda -> node508
+node508[label="Suma"];
+node508derecha[label="Izquierda"];
+node508derecha -> node508hijo0
+node508hijo0[label="6"];
+node508izquierda[label="Derecha"];
+node508izquierda -> node508hijo1
+node508hijo1[label="4"];
+node508 -> node508derecha;
+node508 -> node508izquierda;
+node5010izquierda[label="Derecha"];
+node5010derecha -> node5010hijo0
+node5010hijo0[label="7"];
+node5010 -> node5010derecha;
+node5010 -> node5010izquierda;
+node5012izquierda[label="Derecha"];
+node5012izquierda -> node5018
+node5018[label=" Division "];
+node50180 [label="izquierda"];
+node50180 -> node5016
+node5016[label=" * "];
+node50160 [label="izquierda"];
+node50160 -> node5014
+node5014[label=" * "];
+node50140 [label="izquierda"];
+node50140 -> node5014hijo0
+node5014hijo0[label="9"];
+node50141 [label="derecha"];
+node50141 -> node5014hijo1
+node5014hijo1[label="8"];
+node5014 -> node50140;
+node5014 -> node50141;
+node50161 [label="derecha"];
+node50161 -> node5016hijo0
+node5016hijo0[label="9"];
+node5016 -> node50160;
+node5016 -> node50161;
+node50181 [label="derecha"];
+node50181 -> node5020
+node5020[label="Modulo"];
+node5020derecha[label="Izquierda"];
+node5020derecha -> node5020hijo0
+node5020hijo0[label="7"];
+node5020izquierda[label="Derecha"];
+node5020izquierda -> node5020hijo1
+node5020hijo1[label="9"];
+node5020 -> node5020derecha;
+node5020 -> node5020izquierda;
+node5018 -> node50180;
+node5018 -> node50181;
+node5012 -> node5012derecha;
+node5012 -> node5012izquierda;
+
+node5022condicion[label="Condicion"];
+node5022condicion -> node5022hijo0
+node5022hijo0[label="<"];
+
+node5022valor2[label="Derecha"];
+node5022valor2 -> node5025
+node5025[label="Suma"];
+node5025derecha[label="Izquierda"];
+node5025derecha -> node5025hijo0
+node5025hijo0[label="45"];
+node5025izquierda[label="Derecha"];
+node5025izquierda -> node5025hijo1
+node5025hijo1[label="6"];
+node5025 -> node5025derecha;
+node5025 -> node5025izquierda;
+
+node5022 -> node5022valor1;
+node5022 -> node5022condicion;
+node5022 -> node5022valor2;
+node505igual->node505var;
+node505igual->node505expre;
+node505as->node505igual;
+node0->node515as
+node515as[label="Asignacion"];
+node515igual[label="="];
+node515var[label="Variable"];
+node515var -> node515hijo0
+node515hijo0[label="var_3"];
+node515expre[label="Expresion"];
+node515expre -> node5124
+node5124[label="Condicion"];
+node5124valor1[label="Izquierda"];
+node5124valor1 -> node5118
+node5118[label="Suma"];
+node5118derecha[label="Izquierda"];
+node5118derecha -> node5114
+node5114[label="Suma"];
+node5114derecha[label="Izquierda"];
+node5114derecha -> node5112
+node5112[label="Resta"];
+node5112derecha[label="Izquierda"];
+node5112izquierda -> node519
+node519[label="Suma"];
+node519derecha[label="Izquierda"];
+node519derecha -> node519hijo0
+node519hijo0[label="7"];
+node519izquierda[label="Derecha"];
+node519izquierda -> node519hijo1
+node519hijo1[label="3"];
+node519 -> node519derecha;
+node519 -> node519izquierda;
+node5112izquierda[label="Derecha"];
+node5112derecha -> node5112hijo0
+node5112hijo0[label="8"];
+node5112 -> node5112derecha;
+node5112 -> node5112izquierda;
+node5114izquierda[label="Derecha"];
+node5114izquierda -> node5116
+node5116[label=" * "];
+node51160 [label="izquierda"];
+node51160 -> node5116hijo0
+node5116hijo0[label="6"];
+node51161 [label="derecha"];
+node51161 -> node5116hijo1
+node5116hijo1[label="8"];
+node5116 -> node51160;
+node5116 -> node51161;
+node5114 -> node5114derecha;
+node5114 -> node5114izquierda;
+node5118izquierda[label="Derecha"];
+node5118izquierda -> node5120
+node5120[label=" Division "];
+node51200 [label="izquierda"];
+node51200 -> node5120hijo0
+node5120hijo0[label="6"];
+node51201 [label="derecha"];
+node51201 -> node5122
+node5122[label="Modulo"];
+node5122derecha[label="Izquierda"];
+node5122derecha -> node5122hijo0
+node5122hijo0[label="7"];
+node5122izquierda[label="Derecha"];
+node5122izquierda -> node5122hijo1
+node5122hijo1[label="9"];
+node5122 -> node5122derecha;
+node5122 -> node5122izquierda;
+node5120 -> node51200;
+node5120 -> node51201;
+node5118 -> node5118derecha;
+node5118 -> node5118izquierda;
+
+node5124condicion[label="Condicion"];
+node5124condicion -> node5124hijo0
+node5124hijo0[label=">="];
+
+node5124valor2[label="Derecha"];
+node5124valor2 -> node5128
+node5128[label="Suma"];
+node5128derecha[label="Izquierda"];
+node5128derecha -> node5128hijo0
+node5128hijo0[label="45"];
+node5128izquierda[label="Derecha"];
+node5128izquierda -> node5128hijo1
+node5128hijo1[label="6"];
+node5128 -> node5128derecha;
+node5128 -> node5128izquierda;
+
+node5124 -> node5124valor1;
+node5124 -> node5124condicion;
+node5124 -> node5124valor2;
+node515igual->node515var;
+node515igual->node515expre;
+node515as->node515igual;
+node0->node525as
+node525as[label="Asignacion"];
+node525igual[label="="];
+node525var[label="Variable"];
+node525var -> node525hijo0
+node525hijo0[label="var_3"];
+node525expre[label="Expresion"];
+node525expre -> node5222
+node5222[label="Condicion"];
+node5222valor1[label="Izquierda"];
+node5222valor1 -> node5216
+node5216[label="Resta"];
+node5216derecha[label="Izquierda"];
+node5216izquierda -> node5212
+node5212[label="Suma"];
+node5212derecha[label="Izquierda"];
+node5212derecha -> node5210
+node5210[label="Resta"];
+node5210derecha[label="Izquierda"];
+node5210izquierda -> node528
+node528[label="Suma"];
+node528derecha[label="Izquierda"];
+node528derecha -> node528hijo0
+node528hijo0[label="8"];
+node528izquierda[label="Derecha"];
+node528izquierda -> node528hijo1
+node528hijo1[label="2"];
+node528 -> node528derecha;
+node528 -> node528izquierda;
+node5210izquierda[label="Derecha"];
+node5210derecha -> node5210hijo0
+node5210hijo0[label="7"];
+node5210 -> node5210derecha;
+node5210 -> node5210izquierda;
+node5212izquierda[label="Derecha"];
+node5212izquierda -> node5214
+node5214[label=" * "];
+node52140 [label="izquierda"];
+node52140 -> node5214hijo0
+node5214hijo0[label="9"];
+node52141 [label="derecha"];
+node52141 -> node5214hijo1
+node5214hijo1[label="8"];
+node5214 -> node52140;
+node5214 -> node52141;
+node5212 -> node5212derecha;
+node5212 -> node5212izquierda;
+node5216izquierda[label="Derecha"];
+node5216derecha -> node5218
+node5218[label=" Division "];
+node52180 [label="izquierda"];
+node52180 -> node5218hijo0
+node5218hijo0[label="9"];
+node52181 [label="derecha"];
+node52181 -> node5220
+node5220[label="Modulo"];
+node5220derecha[label="Izquierda"];
+node5220derecha -> node5220hijo0
+node5220hijo0[label="7"];
+node5220izquierda[label="Derecha"];
+node5220izquierda -> node5220hijo1
+node5220hijo1[label="9"];
+node5220 -> node5220derecha;
+node5220 -> node5220izquierda;
+node5218 -> node52180;
+node5218 -> node52181;
+node5216 -> node5216derecha;
+node5216 -> node5216izquierda;
+
+node5222condicion[label="Condicion"];
+node5222condicion -> node5222hijo0
+node5222hijo0[label="<="];
+
+node5222valor2[label="Derecha"];
+node5222valor2 -> node5226
+node5226[label="Suma"];
+node5226derecha[label="Izquierda"];
+node5226derecha -> node5226hijo0
+node5226hijo0[label="45"];
+node5226izquierda[label="Derecha"];
+node5226izquierda -> node5226hijo1
+node5226hijo1[label="6"];
+node5226 -> node5226derecha;
+node5226 -> node5226izquierda;
+
+node5222 -> node5222valor1;
+node5222 -> node5222condicion;
+node5222 -> node5222valor2;
+node525igual->node525var;
+node525igual->node525expre;
+node525as->node525igual;
+node0->node554as
+node554as[label="Asignacion"];
+node554igual[label="="];
+node554var[label="Variable"];
+node554var -> node554hijo0
+node554hijo0[label="v_5"];
+node554expre[label="Expresion"];
+node554expre -> node559
+node559[label="Casteo"];
+node5591[label="Casteo"];
+node5591 -> node559hijo0
+node559hijo0[label="int"];
+node5592[label="Expresion"];
+node5592 -> node559hijo1
+node559hijo1[label="hola"];
+node559->node5591;
+node559->node5592;
+node554tipo[label="Tipo"];
+node554tipo -> node554hijo1
+node554hijo1[label="int"];
+node554igual -> node554tipo;
+node554igual -> node554var;
+node554igual -> node554expre;
+node554as -> node554igual;
+node0->node567as
+node567as[label="Asignacion"];
+node567igual[label="="];
+node567var[label="Variable"];
+node567var -> node567hijo0
+node567hijo0[label="v_1"];
+node567expre[label="Expresion"];
+node567expre -> node5612
+node5612[label="Casteo"];
+node56121[label="Casteo"];
+node56121 -> node5612hijo0
+node5612hijo0[label="string"];
+node56122[label="Expresion"];
+node56122 -> node5622
+node5622[label="Modulo"];
+node5622derecha[label="Izquierda"];
+node5622derecha -> node5622hijo0
+node5622hijo0[label="12"];
+node5622izquierda[label="Derecha"];
+node5622izquierda -> node5622hijo1
+node5622hijo1[label="8"];
+node5622 -> node5622derecha;
+node5622 -> node5622izquierda;
+node5612->node56121;
+node5612->node56122;
+node567tipo[label="Tipo"];
+node567tipo -> node567hijo1
+node567hijo1[label="string"];
+node567igual -> node567tipo;
+node567igual -> node567var;
+node567igual -> node567expre;
+node567as -> node567igual;
+node0->node575as
+node575as[label="Asignacion"];
+node575igual[label="="];
+node575var[label="Variable"];
+node575var -> node575hijo0
+node575hijo0[label="v_3"];
+node575expre[label="Expresion"];
+node575expre -> node5710
+node5710[label="Casteo"];
+node57101[label="Casteo"];
+node57101 -> node5710hijo0
+node5710hijo0[label="char"];
+node57102[label="Expresion"];
+node57102 -> node5710hijo1
+node5710hijo1[label="true"];
+node5710->node57101;
+node5710->node57102;
+node575tipo[label="Tipo"];
+node575tipo -> node575hijo1
+node575hijo1[label="char"];
+node575igual -> node575tipo;
+node575igual -> node575var;
+node575igual -> node575expre;
+node575as -> node575igual;
+node0->node585as
+node585as[label="Asignacion"];
+node585igual[label="="];
+node585var[label="Variable"];
+node585var -> node585hijo0
+node585hijo0[label="v_4"];
+node585expre[label="Expresion"];
+node585expre -> node5810
+node5810[label="Casteo"];
+node58101[label="Casteo"];
+node58101 -> node5810hijo0
+node5810hijo0[label="char"];
+node58102[label="Expresion"];
+node58102 -> node5810hijo1
+node5810hijo1[label="'A'"];
+node5810->node58101;
+node5810->node58102;
+node585tipo[label="Tipo"];
+node585tipo -> node585hijo1
+node585hijo1[label="char"];
+node585igual -> node585tipo;
+node585igual -> node585var;
+node585igual -> node585expre;
+node585as -> node585igual;
+node0->node600
+node600[label="Funcion"];
+node600identificador[label="Identificador"];
+node600identificador -> node600hijo0
+node600hijo0[label="division"];
+node600tipo[label="Tipo"];
+node600tipo -> node600hijo1
+node600hijo1[label="string"];
+node600instrucciones[label="Instrucciones"];
+node600instrucciones -> node6111as
+node6111as[label="Asignacion"];
+node6111igual[label="="];
+node6111var[label="Variable"];
+node6111var -> node6111hijo0
+node6111hijo0[label="v_2"];
+node6111expre[label="Expresion"];
+node6111expre -> node6116
+node6116[label="Casteo"];
+node61161[label="Casteo"];
+node61161 -> node6116hijo0
+node6116hijo0[label="string"];
+node61162[label="Expresion"];
+node61162 -> node6129
+node6129[label="Suma"];
+node6129derecha[label="Izquierda"];
+node6129derecha -> node6129hijo0
+node6129hijo0[label="12.25"];
+node6129izquierda[label="Derecha"];
+node6129izquierda -> node6129hijo1
+node6129hijo1[label="1.20"];
+node6129 -> node6129derecha;
+node6129 -> node6129izquierda;
+node6116->node61161;
+node6116->node61162;
+node6111tipo[label="Tipo"];
+node6111tipo -> node6111hijo1
+node6111hijo1[label="string"];
+node6111igual -> node6111tipo;
+node6111igual -> node6111var;
+node6111igual -> node6111expre;
+node6111as -> node6111igual;
+node600instrucciones -> node6211as
+node6211as[label="Asignacion"];
+node6211igual[label="="];
+node6211var[label="Variable"];
+node6211var -> node6211hijo0
+node6211hijo0[label="v_3"];
+node6211expre[label="Expresion"];
+node6211expre -> node6216
+node6216[label="Casteo"];
+node62161[label="Casteo"];
+node62161 -> node6216hijo0
+node6216hijo0[label="string"];
+node62162[label="Expresion"];
+node62162 -> node6216hijo1
+node6216hijo1[label="true"];
+node6216->node62161;
+node6216->node62162;
+node6211tipo[label="Tipo"];
+node6211tipo -> node6211hijo1
+node6211hijo1[label="string"];
+node6211igual -> node6211tipo;
+node6211igual -> node6211var;
+node6211igual -> node6211expre;
+node6211as -> node6211igual;
+node600instrucciones -> node6311as
+node6311as[label="Asignacion"];
+node6311igual[label="="];
+node6311var[label="Variable"];
+node6311var -> node6311hijo0
+node6311hijo0[label="v_4"];
+node6311expre[label="Expresion"];
+node6311expre -> node6316
+node6316[label="Casteo"];
+node63161[label="Casteo"];
+node63161 -> node6316hijo0
+node6316hijo0[label="string"];
+node63162[label="Expresion"];
+node63162 -> node6316hijo1
+node6316hijo1[label="'A'"];
+node6316->node63161;
+node6316->node63162;
+node6311tipo[label="Tipo"];
+node6311tipo -> node6311hijo1
+node6311hijo1[label="string"];
+node6311igual -> node6311tipo;
+node6311igual -> node6311var;
+node6311igual -> node6311expre;
+node6311as -> node6311igual;
+node600instrucciones -> node644
+node644[label="Return"];
+node644expresion[label="Expresion"];
+node644expresion -> node644hijo0
+node644hijo0[label="olc1"];
+
+node644 -> node644expresion;
+node600instrucciones -> node659as
+node659as[label="Asignacion"];
+node659igual[label="="];
+node659var[label="Variable"];
+node659var -> node659hijo0
+node659hijo0[label="mivar"];
+node659expre[label="Expresion"];
+node659expre -> node6531
+node6531[label="Suma"];
+node6531derecha[label="Izquierda"];
+node6531derecha -> node6511
+node6511[label="ToLower"];
+node6511cadena[label="Cadena"];
+node6511cadena -> node6526
+node6526[label="Suma"];
+node6526derecha[label="Izquierda"];
+node6526derecha -> node6526hijo0
+node6526hijo0[label="QWERT"];
+node6526izquierda[label="Derecha"];
+node6526izquierda -> node6526hijo1
+node6526hijo1[label=" "];
+node6526 -> node6526derecha;
+node6526 -> node6526izquierda;
+node6511->node6511cadena;
+node6531izquierda[label="Derecha"];
+node6531izquierda -> node6531hijo0
+node6531hijo0[label="1+5"];
+node6531 -> node6531derecha;
+node6531 -> node6531izquierda;
+node659igual->node659var;
+node659igual->node659expre;
+node659as->node659igual;
+node600instrucciones -> node669as
+node669as[label="Asignacion"];
+node669igual[label="="];
+node669var[label="Variable"];
+node669var -> node669hijo0
+node669hijo0[label="mivar"];
+node669expre[label="Expresion"];
+node669expre -> node6631
+node6631[label="Suma"];
+node6631derecha[label="Izquierda"];
+node6631derecha -> node6611
+node6611[label="ToUpper"];
+node6611cadena[label="Cadena"];
+node6611cadena -> node6626
+node6626[label="Suma"];
+node6626derecha[label="Izquierda"];
+node6626derecha -> node6626hijo0
+node6626hijo0[label="QWERT"];
+node6626izquierda[label="Derecha"];
+node6626izquierda -> node6626hijo1
+node6626hijo1[label=" "];
+node6626 -> node6626derecha;
+node6626 -> node6626izquierda;
+node6611->node6611cadena;
+node6631izquierda[label="Derecha"];
+node6631izquierda -> node6631hijo0
+node6631hijo0[label="hola!"];
+node6631 -> node6631derecha;
+node6631 -> node6631izquierda;
+node669igual->node669var;
+node669igual->node669expre;
+node669as->node669igual;
+node600instrucciones -> node6712as
+node6712as[label="Asignacion"];
+node6712igual[label="="];
+node6712var[label="Variable"];
+node6712var -> node6712hijo0
+node6712hijo0[label="v_2"];
+node6712expre[label="Expresion"];
+node6712expre -> node6717
+node6717[label="Casteo"];
+node67171[label="Casteo"];
+node67171 -> node6717hijo0
+node6717hijo0[label="boolean"];
+node67172[label="Expresion"];
+node67172 -> node6717hijo1
+node6717hijo1[label="12.25"];
+node6717->node67171;
+node6717->node67172;
+node6712tipo[label="Tipo"];
+node6712tipo -> node6712hijo1
+node6712hijo1[label="boolean"];
+node6712igual -> node6712tipo;
+node6712igual -> node6712var;
+node6712igual -> node6712expre;
+node6712as -> node6712igual;
+node600instrucciones -> node6811as
+node6811as[label="Asignacion"];
+node6811igual[label="="];
+node6811var[label="Variable"];
+node6811var -> node6811hijo0
+node6811hijo0[label="a_1"];
+node6811expre[label="Expresion"];
+node6811expre -> node6815
+node6815[label="TypeOf"];
+node6815cadena[label="Cadena"];
+node6815cadena -> node6815hijo0
+node6815hijo0[label="15"];
+node6815->node6815cadena;
+node6811tipo[label="Tipo"];
+node6811tipo -> node6811hijo1
+node6811hijo1[label="string"];
+node6811igual -> node6811tipo;
+node6811igual -> node6811var;
+node6811igual -> node6811expre;
+node6811as -> node6811igual;
+node600instrucciones -> node6911as
+node6911as[label="Asignacion"];
+node6911igual[label="="];
+node6911var[label="Variable"];
+node6911var -> node6911hijo0
+node6911hijo0[label="a_2"];
+node6911expre[label="Expresion"];
+node6911expre -> node6915
+node6915[label="TypeOf"];
+node6915cadena[label="Cadena"];
+node6915cadena -> node6924
+node6924[label="Suma"];
+node6924derecha[label="Izquierda"];
+node6924derecha -> node6924hijo0
+node6924hijo0[label="15"];
+node6924izquierda[label="Derecha"];
+node6924izquierda -> node6924hijo1
+node6924hijo1[label="6.5"];
+node6924 -> node6924derecha;
+node6924 -> node6924izquierda;
+node6915->node6915cadena;
+node6911tipo[label="Tipo"];
+node6911tipo -> node6911hijo1
+node6911hijo1[label="string"];
+node6911igual -> node6911tipo;
+node6911igual -> node6911var;
+node6911igual -> node6911expre;
+node6911as -> node6911igual;
+node600instrucciones -> node7011as
+node7011as[label="Asignacion"];
+node7011igual[label="="];
+node7011var[label="Variable"];
+node7011var -> node7011hijo0
+node7011hijo0[label="a_3"];
+node7011expre[label="Expresion"];
+node7011expre -> node7015
+node7015[label="TypeOf"];
+node7015cadena[label="Cadena"];
+node7015cadena -> node7015hijo0
+node7015hijo0[label="'a'"];
+node7015->node7015cadena;
+node7011tipo[label="Tipo"];
+node7011tipo -> node7011hijo1
+node7011hijo1[label="string"];
+node7011igual -> node7011tipo;
+node7011igual -> node7011var;
+node7011igual -> node7011expre;
+node7011as -> node7011igual;
+node600instrucciones -> node7111as
+node7111as[label="Asignacion"];
+node7111igual[label="="];
+node7111var[label="Variable"];
+node7111var -> node7111hijo0
+node7111hijo0[label="a_4"];
+node7111expre[label="Expresion"];
+node7111expre -> node7115
+node7115[label="TypeOf"];
+node7115cadena[label="Cadena"];
+node7115cadena -> node7115hijo0
+node7115hijo0[label="true"];
+node7115->node7115cadena;
+node7111tipo[label="Tipo"];
+node7111tipo -> node7111hijo1
+node7111hijo1[label="string"];
+node7111igual -> node7111tipo;
+node7111igual -> node7111var;
+node7111igual -> node7111expre;
+node7111as -> node7111igual;
+node600instrucciones -> node7211as
+node7211as[label="Asignacion"];
+node7211igual[label="="];
+node7211var[label="Variable"];
+node7211var -> node7211hijo0
+node7211hijo0[label="a_5"];
+node7211expre[label="Expresion"];
+node7211expre -> node7215
+node7215[label="TypeOf"];
+node7215cadena[label="Cadena"];
+node7215cadena -> node7215hijo0
+node7215hijo0[label="dsafdsa"];
+node7215->node7215cadena;
+node7211tipo[label="Tipo"];
+node7211tipo -> node7211hijo1
+node7211hijo1[label="string"];
+node7211igual -> node7211tipo;
+node7211igual -> node7211var;
+node7211igual -> node7211expre;
+node7211as -> node7211igual;
+node600instrucciones -> node7311as
+node7311as[label="Asignacion"];
+node7311igual[label="="];
+node7311var[label="Variable"];
+node7311var -> node7311hijo0
+node7311hijo0[label="a_5"];
+node7311expre[label="Expresion"];
+node7311expre -> node7315
+node7315[label="ToString"];
+node7315numero[label="Valor"];
+node7315numero -> node7315hijo0
+node7315hijo0[label="melmv"];
+node7315->node7315numero;
+node7311tipo[label="Tipo"];
+node7311tipo -> node7311hijo1
+node7311hijo1[label="string"];
+node7311igual -> node7311tipo;
+node7311igual -> node7311var;
+node7311igual -> node7311expre;
+node7311as -> node7311igual;
+node600instrucciones -> node7411as
+node7411as[label="Asignacion"];
+node7411igual[label="="];
+node7411var[label="Variable"];
+node7411var -> node7411hijo0
+node7411hijo0[label="a_5"];
+node7411expre[label="Expresion"];
+node7411expre -> node7415
+node7415[label="ToString"];
+node7415numero[label="Valor"];
+node7415numero -> node7415hijo0
+node7415hijo0[label="15"];
+node7415->node7415numero;
+node7411tipo[label="Tipo"];
+node7411tipo -> node7411hijo1
+node7411hijo1[label="string"];
+node7411igual -> node7411tipo;
+node7411igual -> node7411var;
+node7411igual -> node7411expre;
+node7411as -> node7411igual;
+node600instrucciones -> node7511as
+node7511as[label="Asignacion"];
+node7511igual[label="="];
+node7511var[label="Variable"];
+node7511var -> node7511hijo0
+node7511hijo0[label="a_5"];
+node7511expre[label="Expresion"];
+node7511expre -> node7515
+node7515[label="ToString"];
+node7515numero[label="Valor"];
+node7515numero -> node7529
+node7529[label="Suma"];
+node7529derecha[label="Izquierda"];
+node7529derecha -> node7529hijo0
+node7529hijo0[label="15.23"];
+node7529izquierda[label="Derecha"];
+node7529izquierda -> node7529hijo1
+node7529hijo1[label="9.02"];
+node7529 -> node7529derecha;
+node7529 -> node7529izquierda;
+node7515->node7515numero;
+node7511tipo[label="Tipo"];
+node7511tipo -> node7511hijo1
+node7511hijo1[label="string"];
+node7511igual -> node7511tipo;
+node7511igual -> node7511var;
+node7511igual -> node7511expre;
+node7511as -> node7511igual;
+node600instrucciones -> node7611as
+node7611as[label="Asignacion"];
+node7611igual[label="="];
+node7611var[label="Variable"];
+node7611var -> node7611hijo0
+node7611hijo0[label="a_5"];
+node7611expre[label="Expresion"];
+node7611expre -> node7615
+node7615[label="ToString"];
+node7615numero[label="Valor"];
+node7615numero -> node7615hijo0
+node7615hijo0[label="true"];
+node7615->node7615numero;
+node7611tipo[label="Tipo"];
+node7611tipo -> node7611hijo1
+node7611hijo1[label="string"];
+node7611igual -> node7611tipo;
+node7611igual -> node7611var;
+node7611igual -> node7611expre;
+node7611as -> node7611igual;
+node600->node600identificador;
+node600->node600tipo;
+node600->node600instrucciones;
+node0->node790
+node790[label="Funcion"];
+node790identificador[label="Identificador"];
+node790identificador -> node790hijo0
+node790hijo0[label="Multiplicacion"];
+node790parametros[label="Parametros"];
+node790parametros -> node7915
+node7915[label="Parametro"];
+node7915tipo[label="Tipo"];
+node7915tipo -> node7915hijo0
+node7915hijo0[label="int"];
+
+node7915id[label="Id"];
+node7915id -> node7915hijo1
+node7915hijo1[label="numero1"];
+
+node7915 -> node7915tipo;
+node7915 -> node7915id;
+node790parametros -> node7928
+node7928[label="Parametro"];
+node7928tipo[label="Tipo"];
+node7928tipo -> node7928hijo0
+node7928hijo0[label="int"];
+
+node7928id[label="Id"];
+node7928id -> node7928hijo1
+node7928hijo1[label="numero2"];
+
+node7928 -> node7928tipo;
+node7928 -> node7928id;
+node790tipo[label="Tipo"];
+node790tipo -> node790hijo1
+node790hijo1[label="int"];
+node790instrucciones[label="Instrucciones"];
+node790instrucciones -> node804
+node804[label="IF"];
+node804condicion[label=" CONDICION "];
+node804condicion -> node8018
+node8018[label="Condicion"];
+node8018valor1[label="Izquierda"];
+node8018valor1 -> node8018hijo0
+node8018hijo0[label="Universidad"];
+
+node8018condicion[label="Condicion"];
+node8018condicion -> node8018hijo1
+node8018hijo1[label="=="];
+
+node8018valor2[label="Derecha"];
+node8018valor2 -> node8018hijo2
+node8018hijo2[label="usac"];
+
+node8018 -> node8018valor1;
+node8018 -> node8018condicion;
+node8018 -> node8018valor2;
+node804instrucciones[label="Instrucciones"];
+node804instrucciones -> node8113as
+node8113as[label="Asignacion"];
+node8113igual[label="="];
+node8113var[label="Variable"];
+node8113var -> node8113hijo0
+node8113hijo0[label="var_1"];
+node8113expre[label="Expresion"];
+node8113expre -> node8121
+node8121[label="Suma"];
+node8121derecha[label="Izquierda"];
+node8121derecha -> node8117
+node8117[label="Suma"];
+node8117derecha[label="Izquierda"];
+node8117derecha -> node8117hijo0
+node8117hijo0[label="-1"];
+node8117izquierda[label="Derecha"];
+node8117izquierda -> node8119
+node8119[label=" * "];
+node81190 [label="izquierda"];
+node81190 -> node8119hijo0
+node8119hijo0[label="2"];
+node81191 [label="derecha"];
+node81191 -> node8119hijo1
+node8119hijo1[label="3"];
+node8119 -> node81190;
+node8119 -> node81191;
+node8117 -> node8117derecha;
+node8117 -> node8117izquierda;
+node8121izquierda[label="Derecha"];
+node8121izquierda -> node8125
+node8125[label=" Division "];
+node81250 [label="izquierda"];
+node81250 -> node8123
+node8123[label=" * "];
+node81230 [label="izquierda"];
+node81230 -> node8123hijo0
+node8123hijo0[label="4"];
+node81231 [label="derecha"];
+node81231 -> node8123hijo1
+node8123hijo1[label="8"];
+node8123 -> node81230;
+node8123 -> node81231;
+node81251 [label="derecha"];
+node81251 -> node8127
+node8127[label="Potencia"];
+node8127derecha[label="Izquierda"];
+node8127derecha -> node8127hijo0
+node8127hijo0[label="8"];
+node8127izquierda[label="Derecha"];
+node8127izquierda -> node8127hijo1
+node8127hijo1[label="2"];
+node8127 -> node8127derecha;
+node8127 -> node8127izquierda;
+node8125 -> node81250;
+node8125 -> node81251;
+node8121 -> node8121derecha;
+node8121 -> node8121izquierda;
+node8113igual->node8113var;
+node8113igual->node8113expre;
+node8113as->node8113igual;
+node804instrucciones -> node8213as
+node8213as[label="Asignacion"];
+node8213igual[label="="];
+node8213var[label="Variable"];
+node8213var -> node8213hijo0
+node8213hijo0[label="var_2"];
+node8213expre[label="Expresion"];
+node8213expre -> node8222
+node8222[label="Suma"];
+node8222derecha[label="Izquierda"];
+node8222derecha -> node8217
+node8217[label="Suma"];
+node8217derecha[label="Izquierda"];
+node8217derecha -> node8217hijo0
+node8217hijo0[label="1.2"];
+node8217izquierda[label="Derecha"];
+node8217izquierda -> node8217hijo1
+node8217hijo1[label="78.1"];
+node8217 -> node8217derecha;
+node8217 -> node8217izquierda;
+node8222izquierda[label="Derecha"];
+node8222izquierda -> node8222hijo0
+node8222hijo0[label="89.000"];
+node8222 -> node8222derecha;
+node8222 -> node8222izquierda;
+node8213igual->node8213var;
+node8213igual->node8213expre;
+node8213as->node8213igual;
+node804instrucciones -> node8316as
+node8316as[label="Asignacion"];
+node8316igual[label="="];
+node8316var[label="Variable"];
+node8316var -> node8316hijo0
+node8316hijo0[label="val1"];
+node8316expre[label="Expresion"];
+node8316expre -> node8322
+node8322[label="Round"];
+node8322expresion[label="Expresion"];
+node8322expresion -> node8322hijo0
+node8322hijo0[label="5.800"];
+
+node8322 -> node8322expresion;
+node8316tipo[label="Tipo"];
+node8316tipo -> node8316hijo1
+node8316hijo1[label="double"];
+node8316igual -> node8316tipo;
+node8316igual -> node8316var;
+node8316igual -> node8316expre;
+node8316as -> node8316igual;
+node804instrucciones -> node8412as
+node8412as[label="Asignacion"];
+node8412igual[label="="];
+node8412var[label="Variable"];
+node8412var -> node8412hijo0
+node8412hijo0[label="val1"];
+node8412expre[label="Expresion"];
+node8412expre -> node8414
+node8414[label="Round"];
+node8414expresion[label="Expresion"];
+node8414expresion -> node8429
+node8429[label="Suma"];
+node8429derecha[label="Izquierda"];
+node8429derecha -> node8425
+node8425[label="Suma"];
+node8425derecha[label="Izquierda"];
+node8425derecha -> node8425hijo0
+node8425hijo0[label="5.800"];
+node8425izquierda[label="Derecha"];
+node8425izquierda -> node8425hijo1
+node8425hijo1[label="1.2"];
+node8425 -> node8425derecha;
+node8425 -> node8425izquierda;
+node8429izquierda[label="Derecha"];
+node8429izquierda -> node8429hijo0
+node8429hijo0[label="0.5"];
+node8429 -> node8429derecha;
+node8429 -> node8429izquierda;
+
+node8414 -> node8414expresion;
+node8412igual->node8412var;
+node8412igual->node8412expre;
+node8412as->node8412igual;
+node804instrucciones -> node858
+node858[label="Impresion"];
+node858expresion[label="Expresion"];
+node858expresion -> node858hijo0
+node858hijo0[label="tricentenadira"];
+
+node858tipo[label="Tipo: println"];
+node858 -> node858tipo;
+node858 -> node858expresion;
+node804instrucciones -> node868
+node868[label="IF"];
+node868condicion[label=" CONDICION "];
+node868condicion -> node8622
+node8622[label="Condicion"];
+node8622valor1[label="Izquierda"];
+node8622valor1 -> node8622hijo0
+node8622hijo0[label="Universidad"];
+
+node8622condicion[label="Condicion"];
+node8622condicion -> node8622hijo1
+node8622hijo1[label="=="];
+
+node8622valor2[label="Derecha"];
+node8622valor2 -> node8622hijo2
+node8622hijo2[label="usac"];
+
+node8622 -> node8622valor1;
+node8622 -> node8622condicion;
+node8622 -> node8622valor2;
+node868instrucciones[label="Instrucciones"];
+node868instrucciones -> node8712
+node8712[label="Impresion"];
+node8712expresion[label="Expresion"];
+node8712expresion -> node8712hijo0
+node8712hijo0[label="tricentenadira"];
+
+node8712tipo[label="Tipo: println"];
+node8712 -> node8712tipo;
+node8712 -> node8712expresion;
+node868instrucciones -> node8812
+node8812[label="IF"];
+node8812condicion[label=" CONDICION "];
+node8812condicion -> node8826
+node8826[label="Condicion"];
+node8826valor1[label="Izquierda"];
+node8826valor1 -> node8826hijo0
+node8826hijo0[label="Universidad"];
+
+node8826condicion[label="Condicion"];
+node8826condicion -> node8826hijo1
+node8826hijo1[label="=="];
+
+node8826valor2[label="Derecha"];
+node8826valor2 -> node8826hijo2
+node8826hijo2[label="usac"];
+
+node8826 -> node8826valor1;
+node8826 -> node8826condicion;
+node8826 -> node8826valor2;
+node8812instrucciones[label="Instrucciones"];
+node8812instrucciones -> node8916
+node8916[label="Impresion"];
+node8916expresion[label="Expresion"];
+node8916expresion -> node8916hijo0
+node8916hijo0[label="tricentenadira"];
+
+node8916tipo[label="Tipo: println"];
+node8916 -> node8916tipo;
+node8916 -> node8916expresion;
+node8812instrucciones -> node9016
+node9016[label="IF"];
+node9016condicion[label=" CONDICION "];
+node9016condicion -> node9030
+node9030[label="Condicion"];
+node9030valor1[label="Izquierda"];
+node9030valor1 -> node9030hijo0
+node9030hijo0[label="Universidad"];
+
+node9030condicion[label="Condicion"];
+node9030condicion -> node9030hijo1
+node9030hijo1[label="=="];
+
+node9030valor2[label="Derecha"];
+node9030valor2 -> node9030hijo2
+node9030hijo2[label="usac"];
+
+node9030 -> node9030valor1;
+node9030 -> node9030condicion;
+node9030 -> node9030valor2;
+node9016instrucciones[label="Instrucciones"];
+node9016instrucciones -> node9120
+node9120[label="Impresion"];
+node9120expresion[label="Expresion"];
+node9120expresion -> node9120hijo0
+node9120hijo0[label="tricentenadira"];
+
+node9120tipo[label="Tipo: println"];
+node9120 -> node9120tipo;
+node9120 -> node9120expresion;
+node9016instrucciones -> node9225as
+node9225as[label="Asignacion"];
+node9225igual[label="="];
+node9225var[label="Variable"];
+node9225var -> node9225hijo0
+node9225hijo0[label="v_1"];
+node9225expre[label="Expresion"];
+node9225expre -> node9230
+node9230[label="Casteo"];
+node92301[label="Casteo"];
+node92301 -> node9230hijo0
+node9230hijo0[label="char"];
+node92302[label="Expresion"];
+node92302 -> node9230hijo1
+node9230hijo1[label="12"];
+node9230->node92301;
+node9230->node92302;
+node9225tipo[label="Tipo"];
+node9225tipo -> node9225hijo1
+node9225hijo1[label="char"];
+node9225igual -> node9225tipo;
+node9225igual -> node9225var;
+node9225igual -> node9225expre;
+node9225as -> node9225igual;
+node9016instrucciones -> node9325as
+node9325as[label="Asignacion"];
+node9325igual[label="="];
+node9325var[label="Variable"];
+node9325var -> node9325hijo0
+node9325hijo0[label="v_2"];
+node9325expre[label="Expresion"];
+node9325expre -> node9330
+node9330[label="Casteo"];
+node93301[label="Casteo"];
+node93301 -> node9330hijo0
+node9330hijo0[label="char"];
+node93302[label="Expresion"];
+node93302 -> node9330hijo1
+node9330hijo1[label="12.25"];
+node9330->node93301;
+node9330->node93302;
+node9325tipo[label="Tipo"];
+node9325tipo -> node9325hijo1
+node9325hijo1[label="char"];
+node9325igual -> node9325tipo;
+node9325igual -> node9325var;
+node9325igual -> node9325expre;
+node9325as -> node9325igual;
+node9016->node9016condicion;
+node9016->node9016instrucciones;
+node8812->node8812condicion;
+node8812->node8812instrucciones;
+node868->node868condicion;
+node868->node868instrucciones;
+node804->node804condicion;
+node804->node804instrucciones;
+node790instrucciones -> node994
+node994[label="IF"];
+node994condicion[label="CONDICION"];
+node994condicion -> node9921
+node9921[label="Condicion"];
+node9921valor1[label="Izquierda"];
+node9921valor1 -> node9911
+node9911[label="Condicion"];
+node9911valor1[label="Izquierda"];
+node9911valor1 -> node9911hijo0
+node9911hijo0[label="anio"];
+
+node9911condicion[label="Condicion"];
+node9911condicion -> node9911hijo1
+node9911hijo1[label="=="];
+
+node9911valor2[label="Derecha"];
+node9911valor2 -> node9917
+node9917[label="Suma"];
+node9917derecha[label="Izquierda"];
+node9917derecha -> node9917hijo0
+node9917hijo0[label="2022"];
+node9917izquierda[label="Derecha"];
+node9917izquierda -> node9917hijo1
+node9917hijo1[label="22"];
+node9917 -> node9917derecha;
+node9917 -> node9917izquierda;
+
+node9911 -> node9911valor1;
+node9911 -> node9911condicion;
+node9911 -> node9911valor2;
+
+node9921condicion[label="Condicion"];
+node9921condicion -> node9921hijo0
+node9921hijo0[label="||"];
+
+node9921valor2[label="Derecha"];
+node9921valor2 -> node9943
+node9943[label="Condicion"];
+node9943valor1[label="Izquierda"];
+node9943valor1 -> node9932
+node9932[label="Condicion"];
+node9932valor1[label="Izquierda"];
+node9932valor1 -> node9932hijo0
+node9932hijo0[label="semestre"];
+
+node9932condicion[label="Condicion"];
+node9932condicion -> node9932hijo1
+node9932hijo1[label="=="];
+
+node9932valor2[label="Derecha"];
+node9932valor2 -> node9932hijo2
+node9932hijo2[label="Segundo"];
+
+node9932 -> node9932valor1;
+node9932 -> node9932condicion;
+node9932 -> node9932valor2;
+
+node9943condicion[label="Condicion"];
+node9943condicion -> node9943hijo0
+node9943hijo0[label="||"];
+
+node9943valor2[label="Derecha"];
+node9943valor2 -> node9946
+node9946[label="Condicion"];
+node9946valor1[label="Izquierda"];
+node9946valor1 -> node9946hijo0
+node9946hijo0[label="4"];
+
+node9946condicion[label="Condicion"];
+node9946condicion -> node9946hijo1
+node9946hijo1[label=">"];
+
+node9946valor2[label="Derecha"];
+node9946valor2 -> node9946hijo2
+node9946hijo2[label="2"];
+
+node9946 -> node9946valor1;
+node9946 -> node9946condicion;
+node9946 -> node9946valor2;
+
+node9943 -> node9943valor1;
+node9943 -> node9943condicion;
+node9943 -> node9943valor2;
+
+node9921 -> node9921valor1;
+node9921 -> node9921condicion;
+node9921 -> node9921valor2;
+
+node994instrucciones1[label="Instrucciones"];
+node994instrucciones1 -> node1008
+node1008[label="Impresion"];
+node1008expresion[label="Expresion"];
+node1008expresion -> node1008hijo0
+node1008hijo0[label="Usac!!!!"];
+
+node1008tipo[label="Tipo: println"];
+node1008 -> node1008tipo;
+node1008 -> node1008expresion;
+node994instrucciones1 -> node10116as
+node10116as[label="Asignacion"];
+node10116igual[label="="];
+node10116var[label="Variable"];
+node10116var -> node10116hijo0
+node10116hijo0[label="v_5"];
+node10116expre[label="Expresion"];
+node10116expre -> node10121
+node10121[label="Casteo"];
+node101211[label="Casteo"];
+node101211 -> node10121hijo0
+node10121hijo0[label="boolean"];
+node101212[label="Expresion"];
+node101212 -> node10121hijo1
+node10121hijo1[label="hola"];
+node10121->node101211;
+node10121->node101212;
+node10116tipo[label="Tipo"];
+node10116tipo -> node10116hijo1
+node10116hijo1[label="boolean"];
+node10116igual -> node10116tipo;
+node10116igual -> node10116var;
+node10116igual -> node10116expre;
+node10116as -> node10116igual;
+node994instrucciones1 -> node1028
+node1028[label="IF"];
+node1028condicion[label=" CONDICION "];
+node1028condicion -> node10216
+node10216[label="Condicion"];
+node10216valor1[label="Izquierda"];
+node10216valor1 -> node10216hijo0
+node10216hijo0[label="var_1"];
+
+node10216condicion[label="Condicion"];
+node10216condicion -> node10216hijo1
+node10216hijo1[label=">="];
+
+node10216valor2[label="Derecha"];
+node10216valor2 -> node10216hijo2
+node10216hijo2[label="var_2"];
+
+node10216 -> node10216valor1;
+node10216 -> node10216condicion;
+node10216 -> node10216valor2;
+node1028instrucciones[label="Instrucciones"];
+node1028instrucciones -> node10312
+node10312[label="Impresion"];
+node10312expresion[label="Expresion"];
+node10312expresion -> node10312hijo0
+node10312hijo0[label="Usac!!!!"];
+
+node10312tipo[label="Tipo: println"];
+node10312 -> node10312tipo;
+node10312 -> node10312expresion;
+node1028instrucciones -> node10417as
+node10417as[label="Asignacion"];
+node10417igual[label="="];
+node10417var[label="Variable"];
+node10417var -> node10417hijo0
+node10417hijo0[label="v_5"];
+node10417expre[label="Expresion"];
+node10417expre -> node10422
+node10422[label="Casteo"];
+node104221[label="Casteo"];
+node104221 -> node10422hijo0
+node10422hijo0[label="char"];
+node104222[label="Expresion"];
+node104222 -> node10422hijo1
+node10422hijo1[label="hola"];
+node10422->node104221;
+node10422->node104222;
+node10417tipo[label="Tipo"];
+node10417tipo -> node10417hijo1
+node10417hijo1[label="char"];
+node10417igual -> node10417tipo;
+node10417igual -> node10417var;
+node10417igual -> node10417expre;
+node10417as -> node10417igual;
+node1028->node1028condicion;
+node1028->node1028instrucciones;
+node994instrucciones2[label="ELSE"];
+node994instrucciones2 -> node10713as
+node10713as[label="Asignacion"];
+node10713igual[label="="];
+node10713var[label="Variable"];
+node10713var -> node10713hijo0
+node10713hijo0[label="var_1"];
+node10713expre[label="Expresion"];
+node10713expre -> node10716
+node10716[label="Suma"];
+node10716derecha[label="Izquierda"];
+node10716derecha -> node10716hijo0
+node10716hijo0[label="1"];
+node10716izquierda[label="Derecha"];
+node10716izquierda -> node10716hijo1
+node10716hijo1[label="var_1++"];
+node10716 -> node10716derecha;
+node10716 -> node10716izquierda;
+node10713igual->node10713var;
+node10713igual->node10713expre;
+node10713as->node10713igual;
+node994instrucciones2 -> node1088
+node1088[label="Impresion"];
+node1088expresion[label="Expresion"];
+node1088expresion -> node1088hijo0
+node1088hijo0[label="sale en otro semestre :( "];
+
+node1088tipo[label="Tipo: println"];
+node1088 -> node1088tipo;
+node1088 -> node1088expresion;
+node994->node994condicion;
+node994->node994instrucciones1;
+node994->node994instrucciones2;
+node790instrucciones -> node1114
+node1114[label="IF"];
+node1114condicion[label=" CONDICION "];
+node1114condicion -> node11121
+node11121[label="Condicion"];
+node11121valor1[label="Izquierda"];
+node11121valor1 -> node11117
+node11117[label="Condicion"];
+node11117valor1[label="Izquierda"];
+node11117valor1 -> node1118
+node1118[label="Llamada"];
+node11181[label="Id"];
+node11181 -> node1118hijo0
+node1118hijo0[label="suma"];
+node11182[label="Parametros"];
+node1118hijo1
+node1118hijo1[label="1"];
+node11182 -> node1118hijo1
+node1118hijo1[label="1"];
+node1118hijo2
+node1118hijo2[label="2"];
+node11182 -> node1118hijo2
+node1118hijo2[label="2"];
+node1118->node11181;
+node1118->node11182;
+
+node11117condicion[label="Condicion"];
+node11117condicion -> node11117hijo0
+node11117hijo0[label="=="];
+
+node11117valor2[label="Derecha"];
+node11117valor2 -> node11117hijo1
+node11117hijo1[label="3"];
+
+node11117 -> node11117valor1;
+node11117 -> node11117condicion;
+node11117 -> node11117valor2;
+
+node11121condicion[label="Condicion"];
+node11121condicion -> node11121hijo0
+node11121hijo0[label="&&"];
+
+node11121valor2[label="Derecha"];
+node11121valor2 -> node11129
+node11129[label="Condicion"];
+node11129valor1[label="Izquierda"];
+node11129valor1 -> node11126
+node11126[label="Suma"];
+node11126derecha[label="Izquierda"];
+node11126derecha -> node11126hijo0
+node11126hijo0[label="45"];
+node11126izquierda[label="Derecha"];
+node11126izquierda -> node11126hijo1
+node11126hijo1[label="56"];
+node11126 -> node11126derecha;
+node11126 -> node11126izquierda;
+
+node11129condicion[label="Condicion"];
+node11129condicion -> node11129hijo0
+node11129hijo0[label="=="];
+
+node11129valor2[label="Derecha"];
+node11129valor2 -> node11129hijo1
+node11129hijo1[label="12"];
+
+node11129 -> node11129valor1;
+node11129 -> node11129condicion;
+node11129 -> node11129valor2;
+
+node11121 -> node11121valor1;
+node11121 -> node11121condicion;
+node11121 -> node11121valor2;
+node1114instrucciones[label="Instrucciones"];
+node1114instrucciones -> node1128
+node1128[label="Impresion"];
+node1128expresion[label="Expresion"];
+node1128expresion -> node1128hijo0
+node1128hijo0[label="Esta bien"];
+
+node1128tipo[label="Tipo: println"];
+node1128 -> node1128tipo;
+node1128 -> node1128expresion;
+node1114instrucciones -> node1138
+node1138[label="Incremento"];
+node1138tipo[label="--"];
+node1138variable[label="var_1"];
+node1138->node1138tipo;
+node1138->node1138variable;
+node1114elif[label="Elif"];
+node1114elif -> node1145
+node1145[label="IF_ELIF"];
+node1145condicion[label="CONDICION"];
+node1145condicion->node11422
+node11422[label="Condicion"];
+node11422valor1[label="Izquierda"];
+node11422valor1 -> node11419
+node11419[label="Condicion"];
+node11419valor1[label="Izquierda"];
+node11419valor1 -> node11410
+node11410[label="Llamada"];
+node114101[label="Id"];
+node114101 -> node11410hijo0
+node11410hijo0[label="suma"];
+node114102[label="Parametros"];
+node11410hijo1
+node11410hijo1[label="1"];
+node114102 -> node11410hijo1
+node11410hijo1[label="1"];
+node11410hijo2
+node11410hijo2[label="3"];
+node114102 -> node11410hijo2
+node11410hijo2[label="3"];
+node11410->node114101;
+node11410->node114102;
+
+node11419condicion[label="Condicion"];
+node11419condicion -> node11419hijo0
+node11419hijo0[label="=="];
+
+node11419valor2[label="Derecha"];
+node11419valor2 -> node11419hijo1
+node11419hijo1[label="4"];
+
+node11419 -> node11419valor1;
+node11419 -> node11419condicion;
+node11419 -> node11419valor2;
+
+node11422condicion[label="Condicion"];
+node11422condicion -> node11422hijo0
+node11422hijo0[label="||"];
+
+node11422valor2[label="Derecha"];
+node11422valor2 -> node11438
+node11438[label="Condicion"];
+node11438valor1[label="Izquierda"];
+node11438valor1 -> node11438hijo0
+node11438hijo0[label="Universidad"];
+
+node11438condicion[label="Condicion"];
+node11438condicion -> node11438hijo1
+node11438hijo1[label="=="];
+
+node11438valor2[label="Derecha"];
+node11438valor2 -> node11438hijo2
+node11438hijo2[label="usac"];
+
+node11438 -> node11438valor1;
+node11438 -> node11438condicion;
+node11438 -> node11438valor2;
+
+node11422 -> node11422valor1;
+node11422 -> node11422condicion;
+node11422 -> node11422valor2;
+node1145instrucciones[label="Instrucciones"];
+node1145instrucciones -> node1158
+node1158[label="Impresion"];
+node1158expresion[label="Expresion"];
+node1158expresion -> node1158hijo0
+node1158hijo0[label="Esta es otra suma"];
+
+node1158tipo[label="Tipo: println"];
+node1158 -> node1158tipo;
+node1158 -> node1158expresion;
+node1145instrucciones -> node11616as
+node11616as[label="Asignacion"];
+node11616igual[label="="];
+node11616var[label="Variable"];
+node11616var -> node11616hijo0
+node11616hijo0[label="v_4"];
+node11616expre[label="Expresion"];
+node11616expre -> node11621
+node11621[label="Casteo"];
+node116211[label="Casteo"];
+node116211 -> node11621hijo0
+node11621hijo0[label="boolean"];
+node116212[label="Expresion"];
+node116212 -> node11621hijo1
+node11621hijo1[label="'A'"];
+node11621->node116211;
+node11621->node116212;
+node11616tipo[label="Tipo"];
+node11616tipo -> node11616hijo1
+node11616hijo1[label="boolean"];
+node11616igual -> node11616tipo;
+node11616igual -> node11616var;
+node11616igual -> node11616expre;
+node11616as -> node11616igual;
+node1145instrucciones -> node1178
+node1178[label="Pop"];
+node1178arreglo[label="vector1"];
+node1178->node1178arreglo;
+node1145->node1145condicion;
+node1145->node1145instrucciones;
+node1114elif -> node1185
+node1185[label="IF_ELIF"];
+node1185condicion[label="CONDICION"];
+node1185condicion->node11819
+node11819[label="Condicion"];
+node11819valor1[label="Izquierda"];
+node11819valor1 -> node11810
+node11810[label="Llamada"];
+node118101[label="Id"];
+node118101 -> node11810hijo0
+node11810hijo0[label="suma"];
+node118102[label="Parametros"];
+node11810hijo1
+node11810hijo1[label="1"];
+node118102 -> node11810hijo1
+node11810hijo1[label="1"];
+node11810hijo2
+node11810hijo2[label="4"];
+node118102 -> node11810hijo2
+node11810hijo2[label="4"];
+node11810->node118101;
+node11810->node118102;
+
+node11819condicion[label="Condicion"];
+node11819condicion -> node11819hijo0
+node11819hijo0[label="=="];
+
+node11819valor2[label="Derecha"];
+node11819valor2 -> node11822
+node11822[label="Suma"];
+node11822derecha[label="Izquierda"];
+node11822derecha -> node11822hijo0
+node11822hijo0[label="4"];
+node11822izquierda[label="Derecha"];
+node11822izquierda -> node11822hijo1
+node11822hijo1[label="1"];
+node11822 -> node11822derecha;
+node11822 -> node11822izquierda;
+
+node11819 -> node11819valor1;
+node11819 -> node11819condicion;
+node11819 -> node11819valor2;
+node1185instrucciones[label="Instrucciones"];
+node1185instrucciones -> node1198
+node1198[label="Push"];
+node1198arreglo[label="edades"];
+node1198valor[label="Valor"];
+node1198valor -> node11922
+node11922[label="Resta"];
+node11922derecha[label="Izquierda"];
+node11922izquierda -> node11922hijo0
+node11922hijo0[label="50"];
+node11922izquierda[label="Derecha"];
+node11922derecha -> node11925
+node11925[label=" * "];
+node119250 [label="izquierda"];
+node119250 -> node11925hijo0
+node11925hijo0[label="89"];
+node119251 [label="derecha"];
+node119251 -> node11925hijo1
+node11925hijo1[label="4"];
+node11925 -> node119250;
+node11925 -> node119251;
+node11922 -> node11922derecha;
+node11922 -> node11922izquierda;
+
+node1198->node1198arreglo;
+node1198->node1198valor;
+node1185instrucciones -> node1208
+node1208[label="Impresion"];
+node1208expresion[label="Expresion"];
+node1208expresion -> node1208hijo0
+node1208hijo0[label="Esta es otra suma"];
+
+node1208tipo[label="Tipo: println"];
+node1208 -> node1208tipo;
+node1208 -> node1208expresion;
+node1185instrucciones -> node1218
+node1218[label="Pop"];
+node1218arreglo[label="lista"];
+node1218->node1218arreglo;
+node1185instrucciones -> node1228
+node1228[label="Switch"];
+node1228condicion[label="edad"];
+node1228instrucciones[label="Instrucciones"];
+node1228instrucciones -> node12312
+node12312[label="Case"];
+node12312caso[label="Caso"];
+node12312caso -> node12312hijo0
+node12312hijo0[label="18"];
+node12312 -> node12312caso;
+node12312instrucciones[label="Instrucciones"];
+node12312instrucciones -> node12416
+node12416[label="Impresion"];
+node12416expresion[label="Expresion"];
+node12416expresion -> node12416hijo0
+node12416hijo0[label="mayoria de eddad en guatemala"];
+
+node12416tipo[label="Tipo: println"];
+node12416 -> node12416tipo;
+node12416 -> node12416expresion;
+node12312instrucciones -> node12523as
+node12523as[label="Asignacion"];
+node12523igual[label="="];
+node12523var[label="Variable"];
+node12523var -> node12523hijo0
+node12523hijo0[label="v_5"];
+node12523expre[label="Expresion"];
+node12523expre -> node12528
+node12528[label="Casteo"];
+node125281[label="Casteo"];
+node125281 -> node12528hijo0
+node12528hijo0[label="string"];
+node125282[label="Expresion"];
+node125282 -> node12542
+node12542[label="Suma"];
+node12542derecha[label="Izquierda"];
+node12542derecha -> node12542hijo0
+node12542hijo0[label="hola"];
+node12542izquierda[label="Derecha"];
+node12542izquierda -> node12542hijo1
+node12542hijo1[label=" usac"];
+node12542 -> node12542derecha;
+node12542 -> node12542izquierda;
+node12528->node125281;
+node12528->node125282;
+node12523tipo[label="Tipo"];
+node12523tipo -> node12523hijo1
+node12523hijo1[label="string"];
+node12523igual -> node12523tipo;
+node12523igual -> node12523var;
+node12523igual -> node12523expre;
+node12523as -> node12523igual;
+
+node12312 -> node12312instrucciones;
+node1228instrucciones -> node12712
+node12712[label="Case"];
+node12712caso[label="Caso"];
+node12712caso -> node12712hijo0
+node12712hijo0[label="21"];
+node12712 -> node12712caso;
+node12712instrucciones[label="Instrucciones"];
+node12712instrucciones -> node12916
+node12916[label="Impresion"];
+node12916expresion[label="Expresion"];
+node12916expresion -> node12916hijo0
+node12916hijo0[label="mayoria de edad en us"];
+
+node12916tipo[label="Tipo: println"];
+node12916 -> node12916tipo;
+node12916 -> node12916expresion;
+node12712instrucciones -> node13020as
+node13020as[label="Asignacion"];
+node13020igual[label="="];
+node13020var[label="Variable"];
+node13020var -> node13020hijo0
+node13020hijo0[label="v_1"];
+node13020expre[label="Expresion"];
+node13020expre -> node13025
+node13025[label="Casteo"];
+node130251[label="Casteo"];
+node130251 -> node13025hijo0
+node13025hijo0[label="int"];
+node130252[label="Expresion"];
+node130252 -> node13032
+node13032[label="Suma"];
+node13032derecha[label="Izquierda"];
+node13032derecha -> node13032hijo0
+node13032hijo0[label="12"];
+node13032izquierda[label="Derecha"];
+node13032izquierda -> node13032hijo1
+node13032hijo1[label="1"];
+node13032 -> node13032derecha;
+node13032 -> node13032izquierda;
+node13025->node130251;
+node13025->node130252;
+node13020tipo[label="Tipo"];
+node13020tipo -> node13020hijo1
+node13020hijo1[label="int"];
+node13020igual -> node13020tipo;
+node13020igual -> node13020var;
+node13020igual -> node13020expre;
+node13020as -> node13020igual;
+
+node12712 -> node12712instrucciones;
+
+node1228default[label="Default"];
+node1228default -> node13212
+node13212[label="Default"];
+node13212instrucciones[label="Instrucciones"];
+node13212instrucciones -> node13422as
+node13422as[label="Asignacion"];
+node13422igual[label="="];
+node13422var[label="Variable"];
+node13422var -> node13422hijo0
+node13422hijo0[label="var_3"];
+node13422expre[label="Expresion"];
+node13422expre -> node13424
+node13424[label="Ternario"];
+node13424booleano[label="Booleano"];
+node13424booleano -> node13431
+node13431[label="Condicion"];
+node13431valor1[label="Izquierda"];
+node13431valor1 -> node13431hijo0
+node13431hijo0[label="usac"];
+
+node13431condicion[label="Condicion"];
+node13431condicion -> node13431hijo1
+node13431hijo1[label="=="];
+
+node13431valor2[label="Derecha"];
+node13431valor2 -> node13431hijo2
+node13431hijo2[label="usac"];
+
+node13431 -> node13431valor1;
+node13431 -> node13431condicion;
+node13431 -> node13431valor2;
+
+node13424expresion[label="Expresion"];
+node13424expresion -> node13424hijo0
+node13424hijo0[label="1"];
+
+node13424expresion2[label="Expresion2"];
+node13424expresion2 -> node13445
+node13445[label="Suma"];
+node13445derecha[label="Izquierda"];
+node13445derecha -> node13445hijo0
+node13445hijo0[label="4"];
+node13445izquierda[label="Derecha"];
+node13445izquierda -> node13445hijo1
+node13445hijo1[label="5"];
+node13445 -> node13445derecha;
+node13445 -> node13445izquierda;
+
+node13424->node13424booleano;
+node13424->node13424expresion;
+node13424->node13424expresion2;
+node13422igual->node13422var;
+node13422igual->node13422expre;
+node13422as->node13422igual;
+node13212instrucciones -> node13520as
+node13520as[label="Asignacion"];
+node13520igual[label="="];
+node13520var[label="Variable"];
+node13520var -> node13520hijo0
+node13520hijo0[label="var_23"];
+node13520expre[label="Expresion"];
+node13520expre -> node13529
+node13529[label="Ternario"];
+node13529booleano[label="Booleano"];
+node13529booleano -> node13536
+node13536[label="Condicion"];
+node13536valor1[label="Izquierda"];
+node13536valor1 -> node13536hijo0
+node13536hijo0[label="usac"];
+
+node13536condicion[label="Condicion"];
+node13536condicion -> node13536hijo1
+node13536hijo1[label="=="];
+
+node13536valor2[label="Derecha"];
+node13536valor2 -> node13536hijo2
+node13536hijo2[label="usac"];
+
+node13536 -> node13536valor1;
+node13536 -> node13536condicion;
+node13536 -> node13536valor2;
+
+node13529expresion[label="Expresion"];
+node13529expresion -> node13529hijo0
+node13529hijo0[label="1"];
+
+node13529expresion2[label="Expresion2"];
+node13529expresion2 -> node13550
+node13550[label="Suma"];
+node13550derecha[label="Izquierda"];
+node13550derecha -> node13550hijo0
+node13550hijo0[label="4"];
+node13550izquierda[label="Derecha"];
+node13550izquierda -> node13550hijo1
+node13550hijo1[label="5"];
+node13550 -> node13550derecha;
+node13550 -> node13550izquierda;
+
+node13529->node13529booleano;
+node13529->node13529expresion;
+node13529->node13529expresion2;
+node13520tipo[label="Tipo"];
+node13520tipo -> node13520hijo1
+node13520hijo1[label="int"];
+node13520igual -> node13520tipo;
+node13520igual -> node13520var;
+node13520igual -> node13520expre;
+node13520as -> node13520igual;
+
+node13212 -> node13212instrucciones;
+
+node1228 -> node1228condicion;
+node1228 -> node1228instrucciones;
+node1228 -> node1228default;
+node1185->node1185condicion;
+node1185->node1185instrucciones;
+node1114->node1114condicion;
+node1114->node1114instrucciones;
+node1114->node1114elif;
+node790instrucciones -> node13912as
+node13912as[label="Asignacion"];
+node13912igual[label="="];
+node13912var[label="Variable"];
+node13912var -> node13912hijo0
+node13912hijo0[label="v_1"];
+node13912expre[label="Expresion"];
+node13912expre -> node13917
+node13917[label="Casteo"];
+node139171[label="Casteo"];
+node139171 -> node13917hijo0
+node13917hijo0[label="boolean"];
+node139172[label="Expresion"];
+node139172 -> node13933
+node13933[label="Suma"];
+node13933derecha[label="Izquierda"];
+node13933derecha -> node13930
+node13930[label=" * "];
+node139300 [label="izquierda"];
+node139300 -> node13930hijo0
+node13930hijo0[label="12"];
+node139301 [label="derecha"];
+node139301 -> node13930hijo1
+node13930hijo1[label="8"];
+node13930 -> node139300;
+node13930 -> node139301;
+node13933izquierda[label="Derecha"];
+node13933izquierda -> node13936
+node13936[label=" * "];
+node139360 [label="izquierda"];
+node139360 -> node13936hijo0
+node13936hijo0[label="5"];
+node139361 [label="derecha"];
+node139361 -> node13936hijo1
+node13936hijo1[label="8"];
+node13936 -> node139360;
+node13936 -> node139361;
+node13933 -> node13933derecha;
+node13933 -> node13933izquierda;
+node13917->node139171;
+node13917->node139172;
+node13912tipo[label="Tipo"];
+node13912tipo -> node13912hijo1
+node13912hijo1[label="boolean"];
+node13912igual -> node13912tipo;
+node13912igual -> node13912var;
+node13912igual -> node13912expre;
+node13912as -> node13912igual;
+node790instrucciones -> node14011as
+node14011as[label="Asignacion"];
+node14011igual[label="="];
+node14011var[label="Variable"];
+node14011var -> node14011hijo0
+node14011hijo0[label="resultado"];
+node14011expre[label="Expresion"];
+node14011expre -> node14028
+node14028[label=" * "];
+node140280 [label="izquierda"];
+node140280 -> node14028hijo0
+node14028hijo0[label="numero1"];
+node140281 [label="derecha"];
+node140281 -> node14028hijo1
+node14028hijo1[label="numero2"];
+node14028 -> node140280;
+node14028 -> node140281;
+node14011tipo[label="Tipo"];
+node14011tipo -> node14011hijo1
+node14011hijo1[label="string"];
+node14011igual -> node14011tipo;
+node14011igual -> node14011var;
+node14011igual -> node14011expre;
+node14011as -> node14011igual;
+node790instrucciones -> node1414
+node1414[label="Return"];
+node1414expresion[label="Expresion"];
+node1414expresion -> node1414hijo0
+node1414hijo0[label="resultado"];
+
+node1414 -> node1414expresion;
+node790instrucciones -> node1424
+node1424[label="Return"];
+node1424expresion[label="Expresion"];
+node1424expresion -> node14223
+node14223[label="Suma"];
+node14223derecha[label="Izquierda"];
+node14223derecha -> node14218
+node14218[label="Resta"];
+node14218derecha[label="Izquierda"];
+node14218izquierda -> node14212
+node14212[label="Suma"];
+node14212derecha[label="Izquierda"];
+node14212derecha -> node14212hijo0
+node14212hijo0[label="4"];
+node14212izquierda[label="Derecha"];
+node14212izquierda -> node14216
+node14216[label=" Division "];
+node142160 [label="izquierda"];
+node142160 -> node14214
+node14214[label=" * "];
+node142140 [label="izquierda"];
+node142140 -> node14214hijo0
+node14214hijo0[label="5"];
+node142141 [label="derecha"];
+node142141 -> node14214hijo1
+node14214hijo1[label="8"];
+node14214 -> node142140;
+node14214 -> node142141;
+node142161 [label="derecha"];
+node142161 -> node14216hijo0
+node14216hijo0[label="9"];
+node14216 -> node142160;
+node14216 -> node142161;
+node14212 -> node14212derecha;
+node14212 -> node14212izquierda;
+node14218izquierda[label="Derecha"];
+node14218derecha -> node14221
+node14221[label=" Division "];
+node142210 [label="izquierda"];
+node142210 -> node14221hijo0
+node14221hijo0[label="18"];
+node142211 [label="derecha"];
+node142211 -> node14221hijo1
+node14221hijo1[label="1"];
+node14221 -> node142210;
+node14221 -> node142211;
+node14218 -> node14218derecha;
+node14218 -> node14218izquierda;
+node14223izquierda[label="Derecha"];
+node14223izquierda -> node14223hijo0
+node14223hijo0[label="1"];
+node14223 -> node14223derecha;
+node14223 -> node14223izquierda;
+
+node1424 -> node1424expresion;
+node790instrucciones -> node1434
+node1434[label="Pop"];
+node1434arreglo[label="edades"];
+node1434->node1434arreglo;
+node790->node790identificador;
+node790->node790parametros;
+node790->node790tipo;
+node790->node790instrucciones;
+node0->node1460
+node1460[label="Metodo"];
+node1460id[label="Id"];
+node1460id -> node1460hijo0
+node1460hijo0[label="saludo"];
+
+node1460param[label="Parametros"];
+node1460param -> node1467
+node1467[label="Parametro"];
+node1467tipo[label="Tipo"];
+node1467tipo -> node1467hijo0
+node1467hijo0[label="String"];
+
+node1467id[label="Id"];
+node1467id -> node1467hijo1
+node1467hijo1[label="nombre"];
+
+node1467 -> node1467tipo;
+node1467 -> node1467id;
+
+node1460inst[label="Instrucciones"];
+node1460inst -> node1474
+node1474[label="Do_Until"];
+node1474instrucciones[label="Instrucciones"];
+node1474instrucciones -> node1488
+node1488[label="Do_While"];
+node1488instrucciones[label="Instrucciones"];
+node1488instrucciones -> node14917as
+node14917as[label="Asignacion"];
+node14917igual[label="="];
+node14917var[label="Variable"];
+node14917var -> node14917hijo0
+node14917hijo0[label="var_3"];
+node14917expre[label="Expresion"];
+node14917expre -> node14938
+node14938[label="Condicion"];
+node14938valor1[label="Izquierda"];
+node14938valor1 -> node14929
+node14929[label="Suma"];
+node14929derecha[label="Izquierda"];
+node14929derecha -> node14929hijo0
+node14929hijo0[label="compi 1 "];
+node14929izquierda[label="Derecha"];
+node14929izquierda -> node14929hijo1
+node14929hijo1[label=" usac"];
+node14929 -> node14929derecha;
+node14929 -> node14929izquierda;
+
+node14938condicion[label="Condicion"];
+node14938condicion -> node14938hijo0
+node14938hijo0[label="!="];
+
+node14938valor2[label="Derecha"];
+node14938valor2 -> node14949
+node14949[label="Suma"];
+node14949derecha[label="Izquierda"];
+node14949derecha -> node14949hijo0
+node14949hijo0[label="compi "];
+node14949izquierda[label="Derecha"];
+node14949izquierda -> node14949hijo1
+node14949hijo1[label="1"];
+node14949 -> node14949derecha;
+node14949 -> node14949izquierda;
+
+node14938 -> node14938valor1;
+node14938 -> node14938condicion;
+node14938 -> node14938valor2;
+node14917igual->node14917var;
+node14917igual->node14917expre;
+node14917as->node14917igual;
+node1488instrucciones -> node15018as
+node15018as[label="Asignacion"];
+node15018igual[label="="];
+node15018var[label="Variable"];
+node15018var -> node15018hijo0
+node15018hijo0[label="var_3"];
+node15018expre[label="Expresion"];
+node15018expre -> node15020
+node15020[label="Ternario"];
+node15020booleano[label="Booleano"];
+node15020booleano -> node15024
+node15024[label="Condicion"];
+node15024valor1[label="Izquierda"];
+node15024valor1 -> node15022
+node15022[label="Suma"];
+node15022derecha[label="Izquierda"];
+node15022derecha -> node15022hijo0
+node15022hijo0[label="5"];
+node15022izquierda[label="Derecha"];
+node15022izquierda -> node15022hijo1
+node15022hijo1[label="6"];
+node15022 -> node15022derecha;
+node15022 -> node15022izquierda;
+
+node15024condicion[label="Condicion"];
+node15024condicion -> node15024hijo0
+node15024hijo0[label=">"];
+
+node15024valor2[label="Derecha"];
+node15024valor2 -> node15024hijo1
+node15024hijo1[label="48"];
+
+node15024 -> node15024valor1;
+node15024 -> node15024condicion;
+node15024 -> node15024valor2;
+
+node15020expresion[label="Expresion"];
+node15020expresion -> node15031
+node15031[label="Suma"];
+node15031derecha[label="Izquierda"];
+node15031derecha -> node15031hijo0
+node15031hijo0[label="1"];
+node15031izquierda[label="Derecha"];
+node15031izquierda -> node15031hijo1
+node15031hijo1[label="1"];
+node15031 -> node15031derecha;
+node15031 -> node15031izquierda;
+
+node15020expresion2[label="Expresion2"];
+node15020expresion2 -> node15020hijo0
+node15020hijo0[label="45"];
+
+node15020->node15020booleano;
+node15020->node15020expresion;
+node15020->node15020expresion2;
+node15018igual->node15018var;
+node15018igual->node15018expre;
+node15018as->node15018igual;
+node1488instrucciones -> node15112
+node15112[label="Do_While"];
+node15112instrucciones[label="Instrucciones"];
+node15112instrucciones -> node15216
+node15216[label="While"];
+node15216condicion[label="Condicion"];
+node15216condicion -> node15226
+node15226[label="Condicion"];
+node15226valor1[label="Izquierda"];
+node15226valor1 -> node15226hijo0
+node15226hijo0[label="edad"];
+
+node15226condicion[label="Condicion"];
+node15226condicion -> node15226hijo1
+node15226hijo1[label="<"];
+
+node15226valor2[label="Derecha"];
+node15226valor2 -> node15226hijo2
+node15226hijo2[label="100"];
+
+node15226 -> node15226valor1;
+node15226 -> node15226condicion;
+node15226 -> node15226valor2;
+node15216instrucciones[label="Instrucciones"];
+node15216instrucciones -> node15320
+node15320[label="Incremento"];
+node15320tipo[label="--"];
+node15320variable[label="var_1"];
+node15320->node15320tipo;
+node15320->node15320variable;
+node15216instrucciones -> node15420
+node15420[label="Impresion"];
+node15420expresion[label="Expresion"];
+node15420expresion -> node15435
+node15435[label="Suma"];
+node15435derecha[label="Izquierda"];
+node15435derecha -> node15435hijo0
+node15435hijo0[label="Hola "];
+node15435izquierda[label="Derecha"];
+node15435izquierda -> node15435hijo1
+node15435hijo1[label="nombre"];
+node15435 -> node15435derecha;
+node15435 -> node15435izquierda;
+
+node15420tipo[label="Tipo: println"];
+node15420 -> node15420tipo;
+node15420 -> node15420expresion;
+node15216instrucciones -> node15520
+node15520[label="Impresion"];
+node15520expresion[label="Expresion"];
+node15520expresion -> node15520hijo0
+node15520hijo0[label="Segundo semestre 2022"];
+
+node15520tipo[label="Tipo: println"];
+node15520 -> node15520tipo;
+node15520 -> node15520expresion;
+node15216instrucciones -> node15620
+node15620[label="Incremento"];
+node15620tipo[label="++"];
+node15620variable[label="var_1"];
+node15620->node15620tipo;
+node15620->node15620variable;
+node15216instrucciones -> node15720
+node15720[label="Incremento"];
+node15720tipo[label="++"];
+node15720variable[label="edad"];
+node15720->node15720tipo;
+node15720->node15720variable;
+node15216instrucciones -> node15920
+node15920[label="IF"];
+node15920condicion[label=" CONDICION "];
+node15920condicion -> node15937
+node15937[label="Condicion"];
+node15937valor1[label="Izquierda"];
+node15937valor1 -> node15933
+node15933[label="Condicion"];
+node15933valor1[label="Izquierda"];
+node15933valor1 -> node15924
+node15924[label="Llamada"];
+node159241[label="Id"];
+node159241 -> node15924hijo0
+node15924hijo0[label="suma"];
+node159242[label="Parametros"];
+node15924hijo1
+node15924hijo1[label="1"];
+node159242 -> node15924hijo1
+node15924hijo1[label="1"];
+node15924hijo2
+node15924hijo2[label="2"];
+node159242 -> node15924hijo2
+node15924hijo2[label="2"];
+node15924->node159241;
+node15924->node159242;
+
+node15933condicion[label="Condicion"];
+node15933condicion -> node15933hijo0
+node15933hijo0[label="=="];
+
+node15933valor2[label="Derecha"];
+node15933valor2 -> node15933hijo1
+node15933hijo1[label="3"];
+
+node15933 -> node15933valor1;
+node15933 -> node15933condicion;
+node15933 -> node15933valor2;
+
+node15937condicion[label="Condicion"];
+node15937condicion -> node15937hijo0
+node15937hijo0[label="&&"];
+
+node15937valor2[label="Derecha"];
+node15937valor2 -> node15945
+node15945[label="Condicion"];
+node15945valor1[label="Izquierda"];
+node15945valor1 -> node15942
+node15942[label="Suma"];
+node15942derecha[label="Izquierda"];
+node15942derecha -> node15942hijo0
+node15942hijo0[label="45"];
+node15942izquierda[label="Derecha"];
+node15942izquierda -> node15942hijo1
+node15942hijo1[label="56"];
+node15942 -> node15942derecha;
+node15942 -> node15942izquierda;
+
+node15945condicion[label="Condicion"];
+node15945condicion -> node15945hijo0
+node15945hijo0[label="=="];
+
+node15945valor2[label="Derecha"];
+node15945valor2 -> node15945hijo1
+node15945hijo1[label="12"];
+
+node15945 -> node15945valor1;
+node15945 -> node15945condicion;
+node15945 -> node15945valor2;
+
+node15937 -> node15937valor1;
+node15937 -> node15937condicion;
+node15937 -> node15937valor2;
+node15920instrucciones[label="Instrucciones"];
+node15920instrucciones -> node16024
+node16024[label="Impresion"];
+node16024expresion[label="Expresion"];
+node16024expresion -> node16024hijo0
+node16024hijo0[label="Esta bien"];
+
+node16024tipo[label="Tipo: println"];
+node16024 -> node16024tipo;
+node16024 -> node16024expresion;
+node15920instrucciones -> node16124
+node16124[label="Incremento"];
+node16124tipo[label="--"];
+node16124variable[label="var_1"];
+node16124->node16124tipo;
+node16124->node16124variable;
+node15920elif[label="Elif"];
+node15920elif -> node16221
+node16221[label="IF_ELIF"];
+node16221condicion[label="CONDICION"];
+node16221condicion->node16238
+node16238[label="Condicion"];
+node16238valor1[label="Izquierda"];
+node16238valor1 -> node16235
+node16235[label="Condicion"];
+node16235valor1[label="Izquierda"];
+node16235valor1 -> node16226
+node16226[label="Llamada"];
+node162261[label="Id"];
+node162261 -> node16226hijo0
+node16226hijo0[label="suma"];
+node162262[label="Parametros"];
+node16226hijo1
+node16226hijo1[label="1"];
+node162262 -> node16226hijo1
+node16226hijo1[label="1"];
+node16226hijo2
+node16226hijo2[label="3"];
+node162262 -> node16226hijo2
+node16226hijo2[label="3"];
+node16226->node162261;
+node16226->node162262;
+
+node16235condicion[label="Condicion"];
+node16235condicion -> node16235hijo0
+node16235hijo0[label="=="];
+
+node16235valor2[label="Derecha"];
+node16235valor2 -> node16235hijo1
+node16235hijo1[label="4"];
+
+node16235 -> node16235valor1;
+node16235 -> node16235condicion;
+node16235 -> node16235valor2;
+
+node16238condicion[label="Condicion"];
+node16238condicion -> node16238hijo0
+node16238hijo0[label="||"];
+
+node16238valor2[label="Derecha"];
+node16238valor2 -> node16254
+node16254[label="Condicion"];
+node16254valor1[label="Izquierda"];
+node16254valor1 -> node16254hijo0
+node16254hijo0[label="Universidad"];
+
+node16254condicion[label="Condicion"];
+node16254condicion -> node16254hijo1
+node16254hijo1[label="=="];
+
+node16254valor2[label="Derecha"];
+node16254valor2 -> node16254hijo2
+node16254hijo2[label="usac"];
+
+node16254 -> node16254valor1;
+node16254 -> node16254condicion;
+node16254 -> node16254valor2;
+
+node16238 -> node16238valor1;
+node16238 -> node16238condicion;
+node16238 -> node16238valor2;
+node16221instrucciones[label="Instrucciones"];
+node16221instrucciones -> node16324
+node16324[label="Impresion"];
+node16324expresion[label="Expresion"];
+node16324expresion -> node16324hijo0
+node16324hijo0[label="Esta es otra suma"];
+
+node16324tipo[label="Tipo: println"];
+node16324 -> node16324tipo;
+node16324 -> node16324expresion;
+node16221instrucciones -> node16432as
+node16432as[label="Asignacion"];
+node16432igual[label="="];
+node16432var[label="Variable"];
+node16432var -> node16432hijo0
+node16432hijo0[label="v_4"];
+node16432expre[label="Expresion"];
+node16432expre -> node16437
+node16437[label="Casteo"];
+node164371[label="Casteo"];
+node164371 -> node16437hijo0
+node16437hijo0[label="boolean"];
+node164372[label="Expresion"];
+node164372 -> node16437hijo1
+node16437hijo1[label="'A'"];
+node16437->node164371;
+node16437->node164372;
+node16432tipo[label="Tipo"];
+node16432tipo -> node16432hijo1
+node16432hijo1[label="boolean"];
+node16432igual -> node16432tipo;
+node16432igual -> node16432var;
+node16432igual -> node16432expre;
+node16432as -> node16432igual;
+node16221->node16221condicion;
+node16221->node16221instrucciones;
+node15920elif -> node16521
+node16521[label="IF_ELIF"];
+node16521condicion[label="CONDICION"];
+node16521condicion->node16535
+node16535[label="Condicion"];
+node16535valor1[label="Izquierda"];
+node16535valor1 -> node16526
+node16526[label="Llamada"];
+node165261[label="Id"];
+node165261 -> node16526hijo0
+node16526hijo0[label="suma"];
+node165262[label="Parametros"];
+node16526hijo1
+node16526hijo1[label="1"];
+node165262 -> node16526hijo1
+node16526hijo1[label="1"];
+node16526hijo2
+node16526hijo2[label="4"];
+node165262 -> node16526hijo2
+node16526hijo2[label="4"];
+node16526->node165261;
+node16526->node165262;
+
+node16535condicion[label="Condicion"];
+node16535condicion -> node16535hijo0
+node16535hijo0[label=">"];
+
+node16535valor2[label="Derecha"];
+node16535valor2 -> node16537
+node16537[label="Suma"];
+node16537derecha[label="Izquierda"];
+node16537derecha -> node16537hijo0
+node16537hijo0[label="4"];
+node16537izquierda[label="Derecha"];
+node16537izquierda -> node16537hijo1
+node16537hijo1[label="1"];
+node16537 -> node16537derecha;
+node16537 -> node16537izquierda;
+
+node16535 -> node16535valor1;
+node16535 -> node16535condicion;
+node16535 -> node16535valor2;
+node16521instrucciones[label="Instrucciones"];
+node16521instrucciones -> node16624
+node16624[label="Impresion"];
+node16624expresion[label="Expresion"];
+node16624expresion -> node16624hijo0
+node16624hijo0[label="Esta es otra suma"];
+
+node16624tipo[label="Tipo: println"];
+node16624 -> node16624tipo;
+node16624 -> node16624expresion;
+node16521->node16521condicion;
+node16521->node16521instrucciones;
+node15920->node15920condicion;
+node15920->node15920instrucciones;
+node15920->node15920elif;
+node15216->node15216condicion;
+node15216->node15216instrucciones;
+node15112instrucciones -> node16916
+node16916[label="For"];
+node16916instrucciones[label="Instrucciones"];
+node16916instrucciones -> node17026as
+node17026as[label="Asignacion"];
+node17026igual[label="="];
+node17026var[label="Variable"];
+node17026var -> node17026hijo0
+node17026hijo0[label="var_3"];
+node17026expre[label="Expresion"];
+node17026expre -> node17028
+node17028[label="Ternario"];
+node17028booleano[label="Booleano"];
+node17028booleano -> node17032
+node17032[label="Condicion"];
+node17032valor1[label="Izquierda"];
+node17032valor1 -> node17030
+node17030[label="Suma"];
+node17030derecha[label="Izquierda"];
+node17030derecha -> node17030hijo0
+node17030hijo0[label="5"];
+node17030izquierda[label="Derecha"];
+node17030izquierda -> node17030hijo1
+node17030hijo1[label="6"];
+node17030 -> node17030derecha;
+node17030 -> node17030izquierda;
+
+node17032condicion[label="Condicion"];
+node17032condicion -> node17032hijo0
+node17032hijo0[label=">"];
+
+node17032valor2[label="Derecha"];
+node17032valor2 -> node17035
+node17035[label="Suma"];
+node17035derecha[label="Izquierda"];
+node17035derecha -> node17035hijo0
+node17035hijo0[label="48"];
+node17035izquierda[label="Derecha"];
+node17035izquierda -> node17037
+node17037[label=" Division "];
+node170370 [label="izquierda"];
+node170370 -> node17037hijo0
+node17037hijo0[label="9"];
+node170371 [label="derecha"];
+node170371 -> node17037hijo1
+node17037hijo1[label="8"];
+node17037 -> node170370;
+node17037 -> node170371;
+node17035 -> node17035derecha;
+node17035 -> node17035izquierda;
+
+node17032 -> node17032valor1;
+node17032 -> node17032condicion;
+node17032 -> node17032valor2;
+
+node17028expresion[label="Expresion"];
+node17028expresion -> node17028hijo0
+node17028hijo0[label="1"];
+
+node17028expresion2[label="Expresion2"];
+node17028expresion2 -> node17045
+node17045[label="Suma"];
+node17045derecha[label="Izquierda"];
+node17045derecha -> node17045hijo0
+node17045hijo0[label="4"];
+node17045izquierda[label="Derecha"];
+node17045izquierda -> node17045hijo1
+node17045hijo1[label="5"];
+node17045 -> node17045derecha;
+node17045 -> node17045izquierda;
+
+node17028->node17028booleano;
+node17028->node17028expresion;
+node17028->node17028expresion2;
+node17026igual->node17026var;
+node17026igual->node17026expre;
+node17026as->node17026igual;
+node16916instrucciones -> node17120
+node17120[label="Continue"];
+node16916instrucciones -> node17220
+node17220[label="Push"];
+node17220arreglo[label="edades"];
+node17220valor[label="Valor"];
+node17220valor -> node17233
+node17233[label="Suma"];
+node17233derecha[label="Izquierda"];
+node17233derecha -> node17233hijo0
+node17233hijo0[label="1"];
+node17233izquierda[label="Derecha"];
+node17233izquierda -> node17233hijo1
+node17233hijo1[label="50"];
+node17233 -> node17233derecha;
+node17233 -> node17233izquierda;
+
+node17220->node17220arreglo;
+node17220->node17220valor;
+node16916instrucciones -> node17320
+node17320[label="Impresion"];
+node17320expresion[label="Expresion"];
+node17320expresion -> node17320hijo0
+node17320hijo0[label="Hola mundo!!!"];
+
+node17320tipo[label="Tipo: println"];
+node17320 -> node17320tipo;
+node17320 -> node17320expresion;
+
+node16916asignacion[label="Asignacion"];
+node16916asignacion -> node16925as
+node16925as[label="Asignacion"];
+node16925igual[label="="];
+node16925var[label="Variable"];
+node16925var -> node16925hijo0
+node16925hijo0[label="x"];
+node16925expre[label="Expresion"];
+node16925expre -> node16925hijo1
+node16925hijo1[label="0"];
+node16925tipo[label="Tipo"];
+node16925tipo -> node16925hijo2
+node16925hijo2[label="int"];
+node16925igual -> node16925tipo;
+node16925igual -> node16925var;
+node16925igual -> node16925expre;
+node16925as -> node16925igual;
+
+node16916condicion[label="Condicion"];
+node16916condicion ->node16931
+node16931[label="Condicion"];
+node16931valor1[label="Izquierda"];
+node16931valor1 -> node16931hijo0
+node16931hijo0[label="x"];
+
+node16931condicion[label="Condicion"];
+node16931condicion -> node16931hijo1
+node16931hijo1[label="<"];
+
+node16931valor2[label="Derecha"];
+node16931valor2 -> node16934
+node16934[label="Suma"];
+node16934derecha[label="Izquierda"];
+node16934derecha -> node16934hijo0
+node16934hijo0[label="45"];
+node16934izquierda[label="Derecha"];
+node16934izquierda -> node16934hijo1
+node16934hijo1[label="8"];
+node16934 -> node16934derecha;
+node16934 -> node16934izquierda;
+
+node16931 -> node16931valor1;
+node16931 -> node16931condicion;
+node16931 -> node16931valor2;
+
+node16916actualizacion[label="Actualizacion"];
+node16916actualizacion -> node16937
+node16937[label="Incremento"];
+node16937tipo[label="++"];
+node16937variable[label="x"];
+node16937->node16937tipo;
+node16937->node16937variable;
+
+node16916 -> node16916asignacion;
+node16916 -> node16916condicion;
+node16916 -> node16916actualizacion;
+node16916 -> node16916instrucciones;
+
+node15112condicion[label="Condicion"];
+node15112condicion ->node17528
+node17528[label="Condicion"];
+node17528valor1[label="Izquierda"];
+node17528valor1 -> node17528hijo0
+node17528hijo0[label="lenguaje"];
+
+node17528condicion[label="Condicion"];
+node17528condicion -> node17528hijo1
+node17528hijo1[label="=="];
+
+node17528valor2[label="Derecha"];
+node17528valor2 -> node17536
+node17536[label="Suma"];
+node17536derecha[label="Izquierda"];
+node17536derecha -> node17536hijo0
+node17536hijo0[label="Type"];
+node17536izquierda[label="Derecha"];
+node17536izquierda -> node17536hijo1
+node17536hijo1[label="Script"];
+node17536 -> node17536derecha;
+node17536 -> node17536izquierda;
+
+node17528 -> node17528valor1;
+node17528 -> node17528condicion;
+node17528 -> node17528valor2;
+
+node15112 -> node15112condicion;
+node15112 -> node15112instrucciones;
+
+node1488condicion[label="Condicion"];
+node1488condicion ->node17620
+node17620[label="Condicion"];
+node17620valor1[label="Izquierda"];
+node17620valor1 -> node17620hijo0
+node17620hijo0[label="lenguaje"];
+
+node17620condicion[label="Condicion"];
+node17620condicion -> node17620hijo1
+node17620hijo1[label="=="];
+
+node17620valor2[label="Derecha"];
+node17620valor2 -> node17628
+node17628[label="Suma"];
+node17628derecha[label="Izquierda"];
+node17628derecha -> node17628hijo0
+node17628hijo0[label="Type"];
+node17628izquierda[label="Derecha"];
+node17628izquierda -> node17628hijo1
+node17628hijo1[label="Script"];
+node17628 -> node17628derecha;
+node17628 -> node17628izquierda;
+
+node17620 -> node17620valor1;
+node17620 -> node17620condicion;
+node17620 -> node17620valor2;
+
+node1488 -> node1488condicion;
+node1488 -> node1488instrucciones;
+
+node1474condicion[label="Condicion"];
+node1474condicion ->node17719
+node17719[label="Condicion"];
+node17719valor1[label="Izquierda"];
+node17719valor1 -> node17719hijo0
+node17719hijo0[label="lenguaje"];
+
+node17719condicion[label="Condicion"];
+node17719condicion -> node17719hijo1
+node17719hijo1[label="=="];
+
+node17719valor2[label="Derecha"];
+node17719valor2 -> node17727
+node17727[label="Suma"];
+node17727derecha[label="Izquierda"];
+node17727derecha -> node17727hijo0
+node17727hijo0[label="Type"];
+node17727izquierda[label="Derecha"];
+node17727izquierda -> node17727hijo1
+node17727hijo1[label="Script"];
+node17727 -> node17727derecha;
+node17727 -> node17727izquierda;
+
+node17719 -> node17719valor1;
+node17719 -> node17719condicion;
+node17719 -> node17719valor2;
+
+node1474 -> node1474condicion;
+node1474 -> node1474instrucciones;
+
+node1460tipo[label="Tipo"];
+node1460tipo -> node1460hijo1
+node1460hijo1[label="void"];
+
+node1460 -> node1460id;
+node1460 -> node1460param;
+node1460 -> node1460inst;
+node1460 -> node1460tipo;
+node0->node1800
+node1800[label="Funcion"];
+node1800identificador[label="Identificador"];
+node1800identificador -> node1800hijo0
+node1800hijo0[label="fibonacci_recursivo"];
+node1800parametros[label="Parametros"];
+node1800parametros -> node18020
+node18020[label="Parametro"];
+node18020tipo[label="Tipo"];
+node18020tipo -> node18020hijo0
+node18020hijo0[label="int"];
+
+node18020id[label="Id"];
+node18020id -> node18020hijo1
+node18020hijo1[label="valor"];
+
+node18020 -> node18020tipo;
+node18020 -> node18020id;
+node1800tipo[label="Tipo"];
+node1800tipo -> node1800hijo1
+node1800hijo1[label="int"];
+node1800instrucciones[label="Instrucciones"];
+node1800instrucciones -> node1811
+node1811[label="IF"];
+node1811condicion[label=" CONDICION "];
+node1811condicion -> node18110
+node18110[label="Condicion"];
+node18110valor1[label="Izquierda"];
+node18110valor1 -> node18110hijo0
+node18110hijo0[label="valor"];
+
+node18110condicion[label="Condicion"];
+node18110condicion -> node18110hijo1
+node18110hijo1[label="<"];
+
+node18110valor2[label="Derecha"];
+node18110valor2 -> node18110hijo2
+node18110hijo2[label="2"];
+
+node18110 -> node18110valor1;
+node18110 -> node18110condicion;
+node18110 -> node18110valor2;
+node1811instrucciones[label="Instrucciones"];
+node1811instrucciones -> node1822
+node1822[label="Return"];
+node1822expresion[label="Expresion"];
+node1822expresion -> node1822hijo0
+node1822hijo0[label="valor"];
+
+node1822 -> node1822expresion;
+node1811->node1811condicion;
+node1811->node1811instrucciones;
+node1800instrucciones -> node1841
+node1841[label="Return"];
+node1841expresion[label="Expresion"];
+node1841expresion -> node18437
+node18437[label="Suma"];
+node18437derecha[label="Izquierda"];
+node18437derecha -> node1848
+node1848[label="Llamada"];
+node18481[label="Id"];
+node18481 -> node1848hijo0
+node1848hijo0[label="fibonacci_recursivo"];
+node18482[label="Parametros"];
+node18482 -> node18433
+node18433[label="Resta"];
+node18433derecha[label="Izquierda"];
+node18433izquierda -> node18433hijo1
+node18433hijo1[label="valor"];
+node18433izquierda[label="Derecha"];
+node18433derecha -> node18433hijo0
+node18433hijo0[label="1"];
+node18433 -> node18433derecha;
+node18433 -> node18433izquierda;
+node1848->node18481;
+node1848->node18482;
+node18437izquierda[label="Derecha"];
+node18437izquierda -> node18439
+node18439[label="Llamada"];
+node184391[label="Id"];
+node184391 -> node18439hijo0
+node18439hijo0[label="fibonacci_recursivo"];
+node184392[label="Parametros"];
+node184392 -> node18464
+node18464[label="Resta"];
+node18464derecha[label="Izquierda"];
+node18464izquierda -> node18464hijo1
+node18464hijo1[label="valor"];
+node18464izquierda[label="Derecha"];
+node18464derecha -> node18464hijo0
+node18464hijo0[label="2"];
+node18464 -> node18464derecha;
+node18464 -> node18464izquierda;
+node18439->node184391;
+node18439->node184392;
+node18437 -> node18437derecha;
+node18437 -> node18437izquierda;
+
+node1841 -> node1841expresion;
+node1800->node1800identificador;
+node1800->node1800parametros;
+node1800->node1800tipo;
+node1800->node1800instrucciones;
+node0->node1860
+node1860[label="Funcion"];
+node1860identificador[label="Identificador"];
+node1860identificador -> node1860hijo0
+node1860hijo0[label="fibonacci_ciclico"];
+node1860parametros[label="Parametros"];
+node1860parametros -> node18618
+node18618[label="Parametro"];
+node18618tipo[label="Tipo"];
+node18618tipo -> node18618hijo0
+node18618hijo0[label="int"];
+
+node18618id[label="Id"];
+node18618id -> node18618hijo1
+node18618hijo1[label="valor"];
+
+node18618 -> node18618tipo;
+node18618 -> node18618id;
+node1860tipo[label="Tipo"];
+node1860tipo -> node1860hijo1
+node1860hijo1[label="int"];
+node1860instrucciones[label="Instrucciones"];
+node1860instrucciones -> node1875as
+node1875as[label="Asignacion"];
+node1875igual[label="="];
+node1875var[label="Variable"];
+node1875var -> node1875hijo0
+node1875hijo0[label="actual"];
+node1875expre[label="Expresion"];
+node1875expre -> node1875hijo1
+node1875hijo1[label="0"];
+node1875tipo[label="Tipo"];
+node1875tipo -> node1875hijo2
+node1875hijo2[label="int"];
+node1875igual -> node1875tipo;
+node1875igual -> node1875var;
+node1875igual -> node1875expre;
+node1875as -> node1875igual;
+node1860instrucciones -> node1885as
+node1885as[label="Asignacion"];
+node1885igual[label="="];
+node1885var[label="Variable"];
+node1885var -> node1885hijo0
+node1885hijo0[label="siguiente"];
+node1885expre[label="Expresion"];
+node1885expre -> node1885hijo1
+node1885hijo1[label="1"];
+node1885tipo[label="Tipo"];
+node1885tipo -> node1885hijo2
+node1885hijo2[label="int"];
+node1885igual -> node1885tipo;
+node1885igual -> node1885var;
+node1885igual -> node1885expre;
+node1885as -> node1885igual;
+node1860instrucciones -> node1895as
+node1895as[label="Asignacion"];
+node1895igual[label="="];
+node1895var[label="Variable"];
+node1895var -> node1895hijo0
+node1895hijo0[label="temporal"];
+node1895expre[label="Expresion"];
+node1895expre -> node1895hijo1
+node1895hijo1[label="0"];
+node1895tipo[label="Tipo"];
+node1895tipo -> node1895hijo2
+node1895hijo2[label="int"];
+node1895igual -> node1895tipo;
+node1895igual -> node1895var;
+node1895igual -> node1895expre;
+node1895as -> node1895igual;
+node1860instrucciones -> node1901
+node1901[label="For"];
+node1901instrucciones[label="Instrucciones"];
+node1901instrucciones -> node1912
+node1912[label="Llamada"];
+node19121[label="Id"];
+node19121 -> node1912hijo0
+node1912hijo0[label="printls"];
+node19122[label="Parametros"];
+node1912hijo1
+node1912hijo1[label="actual"];
+node19122 -> node1912hijo1
+node1912hijo1[label="actual"];
+node1912->node19121;
+node1912->node19122;
+node1901instrucciones -> node19211as
+node19211as[label="Asignacion"];
+node19211igual[label="="];
+node19211var[label="Variable"];
+node19211var -> node19211hijo0
+node19211hijo0[label="temporal"];
+node19211expre[label="Expresion"];
+node19211expre -> node19211hijo1
+node19211hijo1[label="actual"];
+node19211igual->node19211var;
+node19211igual->node19211expre;
+node19211as->node19211igual;
+node1901instrucciones -> node1939as
+node1939as[label="Asignacion"];
+node1939igual[label="="];
+node1939var[label="Variable"];
+node1939var -> node1939hijo0
+node1939hijo0[label="actual"];
+node1939expre[label="Expresion"];
+node1939expre -> node1939hijo1
+node1939hijo1[label="siguiente"];
+node1939igual->node1939var;
+node1939igual->node1939expre;
+node1939as->node1939igual;
+node1901instrucciones -> node19412as
+node19412as[label="Asignacion"];
+node19412igual[label="="];
+node19412var[label="Variable"];
+node19412var -> node19412hijo0
+node19412hijo0[label="siguiente"];
+node19412expre[label="Expresion"];
+node19412expre -> node19424
+node19424[label="Suma"];
+node19424derecha[label="Izquierda"];
+node19424derecha -> node19424hijo0
+node19424hijo0[label="siguiente"];
+node19424izquierda[label="Derecha"];
+node19424izquierda -> node19424hijo1
+node19424hijo1[label="temporal"];
+node19424 -> node19424derecha;
+node19424 -> node19424izquierda;
+node19412igual->node19412var;
+node19412igual->node19412expre;
+node19412as->node19412igual;
+
+node1901asignacion[label="Asignacion"];
+node1901asignacion -> node1909as
+node1909as[label="Asignacion"];
+node1909igual[label="="];
+node1909var[label="Variable"];
+node1909var -> node1909hijo0
+node1909hijo0[label="i"];
+node1909expre[label="Expresion"];
+node1909expre -> node1909hijo1
+node1909hijo1[label="0"];
+node1909tipo[label="Tipo"];
+node1909tipo -> node1909hijo2
+node1909hijo2[label="int"];
+node1909igual -> node1909tipo;
+node1909igual -> node1909var;
+node1909igual -> node1909expre;
+node1909as -> node1909igual;
+
+node1901condicion[label="Condicion"];
+node1901condicion ->node19017
+node19017[label="Condicion"];
+node19017valor1[label="Izquierda"];
+node19017valor1 -> node19017hijo0
+node19017hijo0[label="i"];
+
+node19017condicion[label="Condicion"];
+node19017condicion -> node19017hijo1
+node19017hijo1[label="<"];
+
+node19017valor2[label="Derecha"];
+node19017valor2 -> node19026
+node19026[label="Suma"];
+node19026derecha[label="Izquierda"];
+node19026derecha -> node19026hijo0
+node19026hijo0[label="posicion"];
+node19026izquierda[label="Derecha"];
+node19026izquierda -> node19026hijo1
+node19026hijo1[label="1"];
+node19026 -> node19026derecha;
+node19026 -> node19026izquierda;
+
+node19017 -> node19017valor1;
+node19017 -> node19017condicion;
+node19017 -> node19017valor2;
+
+node1901actualizacion[label="Actualizacion"];
+node1901actualizacion -> node19030
+node19030[label="Incremento"];
+node19030tipo[label="++"];
+node19030variable[label="i"];
+node19030->node19030tipo;
+node19030->node19030variable;
+
+node1901 -> node1901asignacion;
+node1901 -> node1901condicion;
+node1901 -> node1901actualizacion;
+node1901 -> node1901instrucciones;
+node1860instrucciones -> node1961
+node1961[label="Return"];
+node1961expresion[label="Expresion"];
+node1961expresion -> node1961hijo0
+node1961hijo0[label="temporal"];
+
+node1961 -> node1961expresion;
+node1860->node1860identificador;
+node1860->node1860parametros;
+node1860->node1860tipo;
+node1860->node1860instrucciones;
+node0->node1980
+node1980[label="Llamada"];
+node19801[label="Id"];
+node19801 -> node1980hijo0
+node1980hijo0[label="ImprimirArrayCiclico"];
+node1980->node19801;
+node0->node1990
+node1990[label="Impresion"];
+node1990expresion[label="Expresion"];
+node1990expresion -> node19931
+node19931[label="Suma"];
+node19931derecha[label="Izquierda"];
+node19931derecha -> node19931hijo0
+node19931hijo0[label="Fibonacci Recursivo: "];
+node19931izquierda[label="Derecha"];
+node19931izquierda -> node19932
+node19932[label="Llamada"];
+node199321[label="Id"];
+node199321 -> node19932hijo0
+node19932hijo0[label="fibonacci_recursivo"];
+node199322[label="Parametros"];
+node19932hijo1
+node19932hijo1[label="5"];
+node199322 -> node19932hijo1
+node19932hijo1[label="5"];
+node19932->node199321;
+node19932->node199322;
+node19931 -> node19931derecha;
+node19931 -> node19931izquierda;
+
+node1990tipo[label="Tipo: println"];
+node1990 -> node1990tipo;
+node1990 -> node1990expresion;
+node0->node2000
+node2000[label="Impresion"];
+node2000expresion[label="Expresion"];
+node2000expresion -> node20029
+node20029[label="Suma"];
+node20029derecha[label="Izquierda"];
+node20029derecha -> node20029hijo0
+node20029hijo0[label="Fibonacci Cicloco: "];
+node20029izquierda[label="Derecha"];
+node20029izquierda -> node20030
+node20030[label="Llamada"];
+node200301[label="Id"];
+node200301 -> node20030hijo0
+node20030hijo0[label="fibonacci_ciclico"];
+node200302[label="Parametros"];
+node20030hijo1
+node20030hijo1[label="5"];
+node200302 -> node20030hijo1
+node20030hijo1[label="5"];
+node20030->node200301;
+node20030->node200302;
+node20029 -> node20029derecha;
+node20029 -> node20029izquierda;
+
+node2000tipo[label="Tipo: println"];
+node2000 -> node2000tipo;
+node2000 -> node2000expresion;
+node0->node2010
+node2010[label="Llamada"];
+node20101[label="Id"];
+node20101 -> node2010hijo0
+node2010hijo0[label="Multiplicacion"];
+node20102[label="Parametros"];
+node20102 -> node20116
+node20116[label="Suma"];
+node20116derecha[label="Izquierda"];
+node20116derecha -> node20116hijo0
+node20116hijo0[label="1"];
+node20116izquierda[label="Derecha"];
+node20116izquierda -> node20116hijo1
+node20116hijo1[label="1"];
+node20116 -> node20116derecha;
+node20116 -> node20116izquierda;
+node20102 -> node20121
+node20121[label=" Division "];
+node201210 [label="izquierda"];
+node201210 -> node20121hijo0
+node20121hijo0[label="58"];
+node201211 [label="derecha"];
+node201211 -> node20121hijo1
+node20121hijo1[label="8"];
+node20121 -> node201210;
+node20121 -> node201211;
+node2010->node20101;
+node2010->node20102;
+node0->node2025as
+node2025as[label="Asignacion"];
+node2025igual[label="="];
+node2025var[label="Variable"];
+node2025var -> node2025hijo0
+node2025hijo0[label="var_3"];
+node2025expre[label="Expresion"];
+node2025expre -> node20217
+node20217[label="Condicion"];
+node20217valor1[label="Izquierda"];
+node20217valor1 -> node20217hijo0
+node20217hijo0[label="compi 1 "];
+
+node20217condicion[label="Condicion"];
+node20217condicion -> node20217hijo1
+node20217hijo1[label="=="];
+
+node20217valor2[label="Derecha"];
+node20217valor2 -> node20228
+node20228[label="Suma"];
+node20228derecha[label="Izquierda"];
+node20228derecha -> node20228hijo0
+node20228hijo0[label="compi "];
+node20228izquierda[label="Derecha"];
+node20228izquierda -> node20228hijo1
+node20228hijo1[label="1"];
+node20228 -> node20228derecha;
+node20228 -> node20228izquierda;
+
+node20217 -> node20217valor1;
+node20217 -> node20217condicion;
+node20217 -> node20217valor2;
+node2025igual->node2025var;
+node2025igual->node2025expre;
+node2025as->node2025igual;
+node0->node2030
+node2030[label="Llamada"];
+node20301[label="Id"];
+node20301 -> node2030hijo0
+node2030hijo0[label="holamundo"];
+node2030->node20301;
+node0->node2040
+node2040[label="Run"];
+node20401[label="Cadena"];
+node20401 -> node2040hijo0
+node2040hijo0[label="main"];
+
+node2040->node20401;
 }

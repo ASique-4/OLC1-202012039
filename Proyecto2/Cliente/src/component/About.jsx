@@ -38,6 +38,8 @@ const About = () => {
       <center>
         <img src="./arquitectura.jpeg" alt="arquitectura" />
       </center>
+      <br />
+      <br />
       
     </div>
   );
